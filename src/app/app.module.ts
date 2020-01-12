@@ -3,20 +3,27 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GoogleMapComponent } from './map/google-map/google-map.component';
 import { HomeComponent } from './components/home/home.component';
+
+import { MapComponent } from './components/map/map.component';
+import { DrinkComponent } from './components/drink/drink.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        GoogleMapComponent,
-        HomeComponent
+        HomeComponent,
+        MapComponent,
+        DrinkComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [
+        MapComponent,
+        DrinkComponent,
+    ],
 })
 export class AppModule { }
