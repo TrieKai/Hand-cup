@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GlobalService {
+  // for developer
+  public static showLog = false;
 
   constructor() { }
 }

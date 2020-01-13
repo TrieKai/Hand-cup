@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { GeolocationService } from 'src/app/service/geolocation.service';
+import { MapService } from 'src/app/service/map.service';
 
 @Component({
     selector: 'app-map',
@@ -14,6 +15,7 @@ export class MapComponent implements OnInit {
 
     constructor(
         private geolocationService: GeolocationService,
+        private mapService: MapService,
     ) { }
 
     ngOnInit() {
@@ -22,6 +24,7 @@ export class MapComponent implements OnInit {
             this.coordinate.longitude = pos.lng;
             this.coordinate.latitude = pos.lat;
             this.mapInitializer();
+            this.getNearByLocations();
         });
     }
 
@@ -37,5 +40,10 @@ export class MapComponent implements OnInit {
         });
         this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
         marker.setMap(this.map);
+    }
+
+    async getNearByLocations() {
+        const resp = await this.mapService.getNearByLocations();
+        console.log(resp)
     }
 }
