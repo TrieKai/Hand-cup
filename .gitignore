@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# API Key
+# /src/index.html
+
 # compiled output
 /dist
 /tmp

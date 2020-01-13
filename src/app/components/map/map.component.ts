@@ -29,7 +29,7 @@ export class MapComponent implements OnInit {
         const coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
         const mapOptions: google.maps.MapOptions = {
             center: coordinates,
-            zoom: 8,
+            zoom: 15,
         };
         const marker = new google.maps.Marker({
             position: coordinates,
