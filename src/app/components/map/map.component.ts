@@ -15,7 +15,8 @@ export class MapComponent implements OnInit {
     coordinate: Coordinate = { latitude: null, longitude: null };
     place: google.maps.places.PlacesService;
     coordinates: any;
-    resultArray: object[] = [];
+    resultArray: google.maps.places.PlaceResult[] = [];
+    isNextPage: boolean;
 
     constructor(
         private geolocationService: GeolocationService,
@@ -63,22 +64,34 @@ export class MapComponent implements OnInit {
     ) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             console.log('nearby search status:', status)
+            if (pagination.hasNextPage) {
+                this.isNextPage = true;
+                pagination.nextPage();
+            } else {
+                console.log('No more page!')
+                this.isNextPage = false;
+            }
             this.getTotalData(results);
+            this.showAllLocation();
         } else if (status === google.maps.places.PlacesServiceStatus.NOT_FOUND) {
             console.log('nearby search status:', status)
-        }
-
-        if (pagination.hasNextPage) {
-            pagination.nextPage();
-        } else {
-            console.log('No more page!')
         }
     }
 
     getTotalData(results: google.maps.places.PlaceResult[]) {
-        results.map(item => {
-            this.resultArray.push(item)
+        results.map(result => {
+            this.resultArray.push(result)
         });
         console.log(this.resultArray)
+    }
+
+    showAllLocation() {
+        if (!this.isNextPage) {
+            this.resultArray.map(result => {
+                const lat = result.geometry.location.lat();
+                const lng = result.geometry.location.lng();
+                console.log(lat, lng)
+            });
+        }
     }
 }
