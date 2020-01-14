@@ -14,9 +14,10 @@ export class MapComponent implements OnInit {
     map: google.maps.Map;
     coordinate: Coordinate = { latitude: null, longitude: null };
     place: google.maps.places.PlacesService;
-    coordinates: any;
+    coordinates: google.maps.LatLng;
     resultArray: google.maps.places.PlaceResult[] = [];
     isNextPage: boolean;
+    markers: google.maps.Marker[] = [];
 
     constructor(
         private geolocationService: GeolocationService,
@@ -51,7 +52,7 @@ export class MapComponent implements OnInit {
     async getNearByLocations() {
         const request = {
             location: this.coordinates,
-            radius: 400,
+            radius: 500,
             name: '飲料',
         };
         await this.mapService.getNearByLocations(this.map, request, this.NearbySearchCallback.bind(this));
@@ -87,11 +88,32 @@ export class MapComponent implements OnInit {
 
     showAllLocation() {
         if (!this.isNextPage) {
-            this.resultArray.map(result => {
+            this.resultArray.map((result, index) => {
                 const lat = result.geometry.location.lat();
                 const lng = result.geometry.location.lng();
+                const img = result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 });
+                // const img = null;
                 console.log(lat, lng)
+                this.addMarkerWithTimeout(lat, lng, index * 500, img);
             });
         }
+    }
+
+    addMarkerWithTimeout(lat: number, lng: number, timeout: number, img: string) {
+        window.setTimeout(() => {
+            const infoWindow = new google.maps.InfoWindow({
+                content: '<div><img src=' + img + '/></div>'
+            });
+            const marker = new google.maps.Marker({
+                position: { lat: lat, lng: lng },
+                map: this.map,
+                icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                animation: google.maps.Animation.DROP,
+            });
+            this.markers.push(marker);
+            marker.addListener('click', () => {
+                infoWindow.open(this.map, marker);
+            });
+        }, timeout);
     }
 }
