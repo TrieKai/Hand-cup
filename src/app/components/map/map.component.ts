@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
+import { ConstantsService } from 'src/app/util/constants/constants.service';
 
 @Component({
     selector: 'app-map',
@@ -12,10 +13,14 @@ export class MapComponent implements OnInit {
     @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
     map: google.maps.Map;
     coordinate: Coordinate = { latitude: null, longitude: null };
+    place: google.maps.places.PlacesService;
+    coordinates: any;
+    resultArray: object[] = [];
 
     constructor(
         private geolocationService: GeolocationService,
         private mapService: MapService,
+        private cons: ConstantsService,
     ) { }
 
     ngOnInit() {
@@ -29,13 +34,13 @@ export class MapComponent implements OnInit {
     }
 
     mapInitializer() {
-        const coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
+        this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
         const mapOptions: google.maps.MapOptions = {
-            center: coordinates,
+            center: this.coordinates,
             zoom: 15,
         };
         const marker = new google.maps.Marker({
-            position: coordinates,
+            position: this.coordinates,
             map: this.map,
         });
         this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
@@ -43,7 +48,37 @@ export class MapComponent implements OnInit {
     }
 
     async getNearByLocations() {
-        const resp = await this.mapService.getNearByLocations();
-        console.log(resp)
+        const request = {
+            location: this.coordinates,
+            radius: 400,
+            name: '飲料',
+        };
+        await this.mapService.getNearByLocations(this.map, request, this.NearbySearchCallback.bind(this));
+    }
+
+    NearbySearchCallback(
+        results: google.maps.places.PlaceResult[],
+        status: google.maps.places.PlacesServiceStatus,
+        pagination: google.maps.places.PlaceSearchPagination
+    ) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            console.log('nearby search status:', status)
+            this.getTotalData(results);
+        } else if (status === google.maps.places.PlacesServiceStatus.NOT_FOUND) {
+            console.log('nearby search status:', status)
+        }
+
+        if (pagination.hasNextPage) {
+            pagination.nextPage();
+        } else {
+            console.log('No more page!')
+        }
+    }
+
+    getTotalData(results: google.maps.places.PlaceResult[]) {
+        results.map(item => {
+            this.resultArray.push(item)
+        });
+        console.log(this.resultArray)
     }
 }

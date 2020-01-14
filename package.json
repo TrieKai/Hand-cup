@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@types/gapi": "0.0.39",
+    "@types/gapi.auth2": "0.0.51",
     "@types/googlemaps": "^3.39.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
