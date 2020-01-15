@@ -18,6 +18,7 @@ export class MapComponent implements OnInit {
     resultArray: google.maps.places.PlaceResult[] = [];
     isNextPage: boolean;
     markers: google.maps.Marker[] = [];
+    infoWindows: google.maps.InfoWindow[] = [];
 
     constructor(
         private geolocationService: GeolocationService,
@@ -39,7 +40,7 @@ export class MapComponent implements OnInit {
         this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
         const mapOptions: google.maps.MapOptions = {
             center: this.coordinates,
-            zoom: 15,
+            zoom: 17,
         };
         const marker = new google.maps.Marker({
             position: this.coordinates,
@@ -52,7 +53,7 @@ export class MapComponent implements OnInit {
     async getNearByLocations() {
         const request = {
             location: this.coordinates,
-            radius: 500,
+            radius: 5,
             name: '飲料',
         };
         await this.mapService.getNearByLocations(this.map, request, this.NearbySearchCallback.bind(this));
@@ -89,31 +90,81 @@ export class MapComponent implements OnInit {
     showAllLocation() {
         if (!this.isNextPage) {
             this.resultArray.map((result, index) => {
-                const lat = result.geometry.location.lat();
-                const lng = result.geometry.location.lng();
-                const img = result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 });
+                const infoWindowData: InfoWindowData = {
+                    position: {
+                        latitude: result.geometry.location.lat(),
+                        longitude: result.geometry.location.lng(),
+                    },
+                    name: result.name,
+                    img: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null,
+                    rating: result.rating,
+                    // openNow: result.opening_hours.open_now,
+                };
                 // const img = null;
-                console.log(lat, lng)
-                this.addMarkerWithTimeout(lat, lng, index * 500, img);
+                console.log(infoWindowData)
+                this.addMarkerWithTimeout(infoWindowData, index * 400);
             });
         }
     }
 
-    addMarkerWithTimeout(lat: number, lng: number, timeout: number, img: string) {
+    addMarkerWithTimeout(data: InfoWindowData, timeout: number) {
         window.setTimeout(() => {
             const infoWindow = new google.maps.InfoWindow({
-                content: '<div><img src=' + img + '/></div>'
+                content:
+                    '<div id="infoWindow" class="infoWindow">' +
+                    '<div id="infoWindowImg" class="infoWindowImg" style="background-image: url(' + data.img + ');"></div>' +
+                    '<span>' + data.name + '</span>' +
+                    '<span>' + data.rating + '</span>' +
+                    '<div>' +
+                    this.handleRatingStar(data.rating) +
+                    '</div>' +
+                    '</div>'
             });
+            this.infoWindows.push(infoWindow); // 統一管理 infoWindow
+
             const marker = new google.maps.Marker({
-                position: { lat: lat, lng: lng },
+                position: { lat: data.position.latitude, lng: data.position.longitude },
                 map: this.map,
                 icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
                 animation: google.maps.Animation.DROP,
             });
-            this.markers.push(marker);
+            this.markers.push(marker); // 統一管理 marker
+
             marker.addListener('click', () => {
+                this.hideAllInfoWindows();
                 infoWindow.open(this.map, marker);
             });
         }, timeout);
+    }
+
+    handleRatingStar(rating: number) {
+        const ratings = rating * 10 + 2; // 加二是因為好計算
+        const ratingRemainder = ratings % 5; // 取餘數
+        const starsFullNumber = Math.round(ratings / 10); // 得到星星整數
+        const starsHalfNumber = ratingRemainder % 2;
+        const starsEmptyNumber = 5 - starsFullNumber - starsHalfNumber; // 空的星星數量
+        let starContent: string = '';
+
+        console.log(ratingRemainder, starsFullNumber, starsHalfNumber, starsEmptyNumber)
+        for (let i: number = 0; i < starsFullNumber; i++) {
+            starContent = starContent + '<div style="width:25px; height:25px; background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_14.png);"></div>';
+        }
+        if (starsHalfNumber) {
+            starContent = starContent + '<div style="width:25px; height:25px; background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_half_14.png);"></div>';
+        }
+        if (starsEmptyNumber) {
+            for (let i: number = 0; i < starsEmptyNumber; i++) {
+                starContent = starContent + '<div style="width:25px; height:25px; background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_empty_14.png);"></div>';
+            }
+        }
+
+        return starContent;
+    }
+
+    hideAllInfoWindows() {
+        // 關掉全部的 InfoWindow
+        this.infoWindows.forEach(infoWindow => {
+            infoWindow.close();
+        })
     }
 }
