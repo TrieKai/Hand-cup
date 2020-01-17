@@ -109,17 +109,18 @@ export class MapComponent implements OnInit {
 
     addMarkerWithTimeout(data: InfoWindowData, timeout: number) {
         window.setTimeout(() => {
+
             const infoWindow = new google.maps.InfoWindow({
                 content:
-                    '<div id="infoWindow" class="infoWindow">' +
+                    '<div id="infoWindow" style="overflow: hidden; width: 400px; height: 600px;">' +
                     '<div id="infoWindowImg" class="infoWindowImg" style="background-image: url(' + data.img + ');"></div>' +
                     '<span>' + data.name + '</span>' +
                     '<span>' + data.rating + '</span>' +
-                    '<div>' +
-                    this.handleRatingStar(data.rating) +
-                    '</div>' +
-                    '</div>'
+                    '<div>' + this.handleRatingStar(data.rating) + '</div>' +
+                    '</div>',
+                maxWidth: 400,
             });
+            google.maps.event.addListener(infoWindow, 'domready', this.handleInfoWindow)
             this.infoWindows.push(infoWindow); // 統一管理 infoWindow
 
             const marker = new google.maps.Marker({
@@ -159,6 +160,11 @@ export class MapComponent implements OnInit {
         }
 
         return starContent;
+    }
+
+    handleInfoWindow() {
+        console.log('here')
+
     }
 
     hideAllInfoWindows() {
