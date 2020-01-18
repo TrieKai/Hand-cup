@@ -40,7 +40,7 @@ export class MapComponent implements OnInit {
         this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
         const mapOptions: google.maps.MapOptions = {
             center: this.coordinates,
-            zoom: 17,
+            zoom: 16,
         };
         const marker = new google.maps.Marker({
             position: this.coordinates,
@@ -53,7 +53,7 @@ export class MapComponent implements OnInit {
     async getNearByLocations() {
         const request = {
             location: this.coordinates,
-            radius: 5,
+            radius: 300,
             name: '飲料',
         };
         await this.mapService.getNearByLocations(this.map, request, this.NearbySearchCallback.bind(this));
@@ -96,7 +96,8 @@ export class MapComponent implements OnInit {
                         longitude: result.geometry.location.lng(),
                     },
                     name: result.name,
-                    img: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null,
+                    // img: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null,
+                    img: 'https://lh3.googleusercontent.com/p/AF1QipMXCg4FpZlTer6zgT_khxgAu-4YsJEjv5d1wtRG=s1600-w400-h300',
                     rating: result.rating,
                     // openNow: result.opening_hours.open_now,
                 };
@@ -112,11 +113,15 @@ export class MapComponent implements OnInit {
 
             const infoWindow = new google.maps.InfoWindow({
                 content:
-                    '<div id="infoWindow" style="overflow: hidden; width: 400px; height: 600px;">' +
-                    '<div id="infoWindowImg" class="infoWindowImg" style="background-image: url(' + data.img + ');"></div>' +
-                    '<span>' + data.name + '</span>' +
+                    '<div id="infoWindowBox">' +
+                    '<div id="infoWindowImg" style="background-image: url(' + data.img + ');"></div>' +
+                    '<div id="descriptionWrapper">' +
+                    '<div><h1 id="titleName">' + data.name + '</h1></div>' +
+                    '<div id="ratingWrapper">' +
                     '<span>' + data.rating + '</span>' +
-                    '<div>' + this.handleRatingStar(data.rating) + '</div>' +
+                    '<ol id="ratingStarsWrapper">' + this.handleRatingStar(data.rating) + '</ol>' +
+                    '</div>' +
+                    '</div>' +
                     '</div>',
                 maxWidth: 400,
             });
@@ -139,23 +144,23 @@ export class MapComponent implements OnInit {
     }
 
     handleRatingStar(rating: number) {
-        const ratings = rating * 10 + 2; // 加二是因為好計算
-        const ratingStars = Math.floor(ratings / 5) / 2; // 標準化成得到的星星數
-        const fullStars = Math.floor(ratingStars); // 滿星的數量
-        const halfStars = (ratingStars - fullStars) * 2; // 半星的數量
-        const emptyStars = 5 - fullStars - halfStars; // 空星的數量
+        const ratings: number = rating * 10 + 2; // 加二是因為好計算
+        const ratingStars: number = Math.floor(ratings / 5) / 2; // 標準化成得到的星星數
+        const fullStars: number = Math.floor(ratingStars); // 滿星的數量
+        const halfStars: number = (ratingStars - fullStars) * 2; // 半星的數量
+        const emptyStars: number = 5 - fullStars - halfStars; // 空星的數量
         let starContent: string = '';
 
         console.log(fullStars, halfStars, emptyStars)
         for (let i: number = 0; i < fullStars; i++) {
-            starContent = starContent + '<div style="width:25px; height:25px; background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_14.png);"></div>';
+            starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_14.png);"></li>';
         }
         if (halfStars) {
-            starContent = starContent + '<div style="width:25px; height:25px; background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_half_14.png);"></div>';
+            starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_half_14.png);"></li>';
         }
         if (emptyStars) {
             for (let i: number = 0; i < emptyStars; i++) {
-                starContent = starContent + '<div style="width:25px; height:25px; background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_empty_14.png);"></div>';
+                starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_empty_14.png);"></li>';
             }
         }
 
@@ -163,8 +168,48 @@ export class MapComponent implements OnInit {
     }
 
     handleInfoWindow() {
-        console.log('here')
+        const infoWindowWrapperElement = document.getElementsByClassName('gm-style-iw-c')[0]; // google infoWindow 最外面
+        const infoWindowcontainerElement = document.getElementsByClassName('gm-style-iw-d')[0]; // google infowindow 裡層
+        const infoWindowBoxElement = document.getElementById('infoWindowBox'); // 自己寫的 infowindow box
+        const infoWindowImgElement = document.getElementById('infoWindowImg'); // image in infowindow
+        const descriptionWrapperElement = document.getElementById('descriptionWrapper');
+        const titleNameElement = document.getElementById('titleName');
+        const ratingWrapperElement = document.getElementById('ratingWrapper');
+        const ratingStarsWrapperElement = document.getElementById('ratingStarsWrapper');
+        const ratingStarElementList = document.getElementsByClassName('ratingStar');
 
+        infoWindowWrapperElement.style.padding = '0px';
+        infoWindowcontainerElement.style.overflow = 'hidden'; // 去掉 infoWidow scroll 效果
+
+        infoWindowBoxElement.style.width = '400px';
+        infoWindowBoxElement.style.height = '300px';
+
+        descriptionWrapperElement.style.padding = '16px 24px';
+
+        titleNameElement.style.margin = '0';
+        titleNameElement.style.fontSize = '1.375rem';
+        titleNameElement.style.fontWeight = '600';
+        titleNameElement.style.lineHeight = '1.75rem';
+
+        ratingWrapperElement.style.marginTop = '8px';
+        ratingWrapperElement.style.display = 'flex';
+        ratingWrapperElement.style.alignItems = 'center';
+
+        ratingStarsWrapperElement.style.display = 'inline-flex';
+        ratingStarsWrapperElement.style.display = '-webkit-inline-flex';
+        ratingStarsWrapperElement.style.paddingLeft = '6px';
+
+        Array.prototype.forEach.call(ratingStarElementList, (ratingStarElement: ElementCSSInlineStyle) => {
+            ratingStarElement.style.backgroundSize = '14px 14px';
+            ratingStarElement.style.width = '14px';
+            ratingStarElement.style.height = '13px';
+            ratingStarElement.style.display = 'inline-block';
+        });
+
+        infoWindowImgElement.style.backgroundPosition = 'center center';
+        infoWindowImgElement.style.backgroundSize = 'cover';
+        infoWindowImgElement.style.width = '100%';
+        infoWindowImgElement.style.height = '70%';
     }
 
     hideAllInfoWindows() {
