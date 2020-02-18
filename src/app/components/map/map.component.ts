@@ -168,8 +168,8 @@ export class MapComponent implements OnInit {
     }
 
     handleInfoWindow() {
-        const infoWindowWrapperElement = document.getElementsByClassName('gm-style-iw-c')[0]; // google infoWindow 最外面
-        const infoWindowcontainerElement = document.getElementsByClassName('gm-style-iw-d')[0]; // google infowindow 裡層
+        const infoWindowWrapperElement = document.getElementsByClassName('gm-style-iw-c')[0] as HTMLElement; // google infoWindow 最外面
+        const infoWindowcontainerElement = document.getElementsByClassName('gm-style-iw-d')[0] as HTMLElement; // google infowindow 裡層
         const infoWindowBoxElement = document.getElementById('infoWindowBox'); // 自己寫的 infowindow box
         const infoWindowImgElement = document.getElementById('infoWindowImg'); // image in infowindow
         const descriptionWrapperElement = document.getElementById('descriptionWrapper');
