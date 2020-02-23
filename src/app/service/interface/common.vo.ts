@@ -1,15 +1,22 @@
 interface Coordinate {
-    latitude: number | null;
-    longitude: number | null;
+    latitude: number | null
+    longitude: number | null
 }
 
 interface InfoWindowData {
     position: {
-        latitude: number;
-        longitude: number;
+        latitude: number
+        longitude: number
     };
-    name: string;
-    img: string;
-    rating: number;
-    openNow?: boolean;
+    name: string
+    img: string
+    rating: number
+    openNow?: boolean
+}
+
+interface RespData {
+    body: any
+    header: {
+        status: string
+    }
 }

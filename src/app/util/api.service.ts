@@ -42,6 +42,17 @@ export class ApiService {
         return resp;
     }
 
+    async post(url: string, body?: object, header?: HttpHeaders): Promise<any> {
+        const options: any = {};
+        if (header) { options.headers = header; }
+        if (isDevMode() || global.showLog) {
+            console.log('url:', url);
+            console.log('body:', body);
+        }
+        const resp = await this.http.post(url, body, options).pipe(catchError(this.handleError)).toPromise();
+        return resp;
+    }
+
     async delete(url: string, param?: object, header?: HttpHeaders): Promise<any> {
         const options: any = {};
         if (param) { options.params = param; }
@@ -51,17 +62,6 @@ export class ApiService {
             console.log('para:', param);
         }
         const resp = await this.http.delete(url, options).pipe(catchError(this.handleError)).toPromise();
-        return resp;
-    }
-
-    async post(url: string, body?: object, header?: HttpHeaders): Promise<any> {
-        const options: any = {};
-        if (header) { options.headers = header; }
-        if (isDevMode() || global.showLog) {
-            console.log('url:', url);
-            console.log('body:', body);
-        }
-        const resp = await this.http.post(url, body, options).pipe(catchError(this.handleError)).toPromise();
         return resp;
     }
 
