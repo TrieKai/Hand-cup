@@ -51,13 +51,18 @@ export class MapComponent implements OnInit {
     }
 
     async getNearByLocations() {
-        const request = {
-            location: this.coordinates,
-            radius: 300,
-            name: '飲料',
-        };
-        await this.mapService.getNearByLocations(this.map, request, this.NearbySearchCallback.bind(this));
+        const resp = await this.mapService.getNearByLocations(this.coordinates);
+        console.log(resp)
     }
+
+    // async getNearByLocations() {
+    //     const request = {
+    //         location: this.coordinates,
+    //         radius: 300,
+    //         name: '飲料',
+    //     };
+    //     await this.mapService.getNearByLocations(this.map, request, this.NearbySearchCallback.bind(this));
+    // }
 
     NearbySearchCallback(
         results: google.maps.places.PlaceResult[],
