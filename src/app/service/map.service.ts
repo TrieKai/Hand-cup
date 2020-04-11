@@ -16,10 +16,10 @@ export class MapService {
         private apiCons: ApiConstantsService,
     ) { }
 
-    // async getNearByLocations(map: google.maps.Map, request: object, callBackFunc: any): Promise<void> {
-    //     const placesService = new google.maps.places.PlacesService(map);
-    //     placesService.nearbySearch(request, callBackFunc);
-    // }
+    async getNearByLocationsByFrontend(map: google.maps.Map, request: object, callBackFunc: any): Promise<void> {
+        const placesService = new google.maps.places.PlacesService(map);
+        placesService.nearbySearch(request, callBackFunc);
+    }
 
     async getNearByLocations(coordinates: google.maps.LatLng): Promise<RespData> {
         const header: HttpHeaders = new HttpHeaders({

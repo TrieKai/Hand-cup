@@ -32,12 +32,14 @@ export class MapComponent implements OnInit {
             this.coordinate.longitude = pos.lng;
             this.coordinate.latitude = pos.lat;
             this.mapInitializer();
-            this.getNearByLocations();
+            // this.getNearByLocations(); // Get data from backend microService
+            this.getNearByLocationsByFrontend(); // Get data from frontend Google API
         });
     }
 
     mapInitializer() {
-        this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
+        // this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
+        this.coordinates = new google.maps.LatLng(24.987004, 121.514250);
         const mapOptions: google.maps.MapOptions = {
             center: this.coordinates,
             zoom: 16,
@@ -55,14 +57,14 @@ export class MapComponent implements OnInit {
         console.log(resp)
     }
 
-    // async getNearByLocations() {
-    //     const request = {
-    //         location: this.coordinates,
-    //         radius: 300,
-    //         name: '飲料',
-    //     };
-    //     await this.mapService.getNearByLocations(this.map, request, this.NearbySearchCallback.bind(this));
-    // }
+    async getNearByLocationsByFrontend() {
+        const request = {
+            location: { lat: 24.987004, lng: 121.514250 },
+            radius: 50,
+            name: '飲料',
+        };
+        await this.mapService.getNearByLocationsByFrontend(this.map, request, this.NearbySearchCallback.bind(this));
+    }
 
     NearbySearchCallback(
         results: google.maps.places.PlaceResult[],
@@ -80,7 +82,7 @@ export class MapComponent implements OnInit {
             }
             this.getTotalData(results);
             this.showAllLocation();
-        } else if (status === google.maps.places.PlacesServiceStatus.NOT_FOUND) {
+        } else {
             console.log('nearby search status:', status)
         }
     }
