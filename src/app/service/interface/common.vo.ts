@@ -11,6 +11,7 @@ interface InfoWindowData {
     name: string
     img: string
     rating: number
+    ratingNum: number
     openNow?: boolean
 }
 

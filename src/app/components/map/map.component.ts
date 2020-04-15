@@ -103,13 +103,19 @@ export class MapComponent implements OnInit {
                         longitude: result.geometry.location.lng(),
                     },
                     name: result.name,
-                    img: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null,
-                    // img: 'https://lh3.googleusercontent.com/p/AF1QipMXCg4FpZlTer6zgT_khxgAu-4YsJEjv5d1wtRG=s1600-w400-h300',
+                    // img: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null,
+                    img: 'https://lh3.googleusercontent.com/p/AF1QipMXCg4FpZlTer6zgT_khxgAu-4YsJEjv5d1wtRG=s1600-w400-h300',
                     rating: result.rating,
+                    ratingNum: result.user_ratings_total,
                     // openNow: result.opening_hours.open_now,
                 };
                 console.log(infoWindowData)
                 this.addMarkerWithTimeout(infoWindowData, index * 400);
+
+                return {
+                    ...result,
+                    image: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null
+                }
             });
         }
     }

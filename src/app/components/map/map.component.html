@@ -1,33 +1,30 @@
 <div>
   <span>範圍(m)</span>
-
 </div>
 <div>
   <span>欲選擇的星等</span>
-
 </div>
 <div #mapContainer id="map"></div>
 
 <ng-container *ngFor="let result of resultArray">
   <div class="cardContainer">
     <div class="card">
-      <div id="cardImage" class="card-image"></div>
+      <div id="cardImage" class="card-image" style="background: url({{result.image}});"></div>
       <div class="card-text">
-        <span class="date">4 days ago</span>
         <h2>{{result.name}}</h2>
       </div>
       <div class="card-stats">
         <div class="stat">
-          <div class="value">4<sup>m</sup></div>
-          <div class="type">read</div>
-        </div>
-        <div class="stat border">
-          <div class="value">5123</div>
-          <div class="type">views</div>
+          <div class="value">{{result.rating}}</div>
+          <div class="type">rating</div>
         </div>
         <div class="stat">
-          <div class="value">32</div>
+          <div class="value">{{result.user_ratings_total}}</div>
           <div class="type">comments</div>
+        </div>
+        <div class="stat border">
+          <div class="value">1</div>
+          <div class="type">views</div>
         </div>
       </div>
     </div>
