@@ -6,10 +6,10 @@
 </div>
 <div #mapContainer id="map"></div>
 
-<ng-container *ngFor="let result of resultArray">
-  <div class="cardContainer">
+<div class="cardContainer">
+  <ng-container *ngFor="let result of resultArray">
     <div class="card">
-      <div id="cardImage" class="card-image" style="background: url({{result.image}});"></div>
+      <div id="cardImage" class="card-image" [ngStyle]="{'background-image':'url(' + result.image + ')'}"></div>
       <div class="card-text">
         <h2>{{result.name}}</h2>
       </div>
@@ -28,5 +28,5 @@
         </div>
       </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
+</div>

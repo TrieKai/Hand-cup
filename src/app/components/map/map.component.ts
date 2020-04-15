@@ -96,7 +96,7 @@ export class MapComponent implements OnInit {
 
     showAllLocation() {
         if (!this.isNextPage) {
-            this.resultArray.map((result, index) => {
+            this.resultArray = this.resultArray.map((result, index) => {
                 const infoWindowData: InfoWindowData = {
                     position: {
                         latitude: result.geometry.location.lat(),
@@ -117,6 +117,7 @@ export class MapComponent implements OnInit {
                     image: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null
                 }
             });
+            console.log(this.resultArray)
         }
     }
 
