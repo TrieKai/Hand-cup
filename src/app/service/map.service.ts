@@ -23,9 +23,9 @@ export class MapService {
 
     async getNearByLocations(coordinates: google.maps.LatLng): Promise<RespData> {
         const header: HttpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
+            'Content-Type': 'text/plain',
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
         });
         const body: NearbySearchQueryParam = {
             coordinates: coordinates
