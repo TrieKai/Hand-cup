@@ -16,8 +16,8 @@ interface InfoWindowData {
 }
 
 interface RespData {
-    body: any
     header: {
         status: string
     }
+    body: any
 }

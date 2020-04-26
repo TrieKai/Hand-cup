@@ -15,6 +15,7 @@ export class MapComponent implements OnInit {
     coordinate: Coordinate = { latitude: null, longitude: null };
     place: google.maps.places.PlacesService;
     coordinates: google.maps.LatLng;
+    distance: number;
     resultArray: google.maps.places.PlaceResult[] = [];
     isNextPage: boolean;
     markers: google.maps.Marker[] = [];
@@ -32,14 +33,15 @@ export class MapComponent implements OnInit {
             this.coordinate.longitude = pos.lng;
             this.coordinate.latitude = pos.lat;
             this.mapInitializer();
-            // this.getNearByLocations(); // Get data from backend microService
-            this.getNearByLocationsByFrontend(); // Get data from frontend Google API
+            this.getNearByLocations(); // Get data from backend microService
+            // this.getNearByLocationsByFrontend(); // Get data from frontend Google API
         });
     }
 
     mapInitializer() {
-        // this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
-        this.coordinates = new google.maps.LatLng(24.987004, 121.514250);
+        this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
+        // this.coordinates = new google.maps.LatLng(24.987004, 121.514250);
+        this.distance = 100; // default
         const mapOptions: google.maps.MapOptions = {
             center: this.coordinates,
             zoom: 16,
@@ -53,8 +55,12 @@ export class MapComponent implements OnInit {
     }
 
     async getNearByLocations() {
-        const resp = await this.mapService.getNearByLocations(this.coordinates);
+        const resp = await this.mapService.getNearByLocations(this.coordinates, this.distance);
         console.log(resp)
+        resp.body.map(resp => {
+            this.resultArray.push(resp);
+        });
+        this.showAllLocation();
     }
 
     async getNearByLocationsByFrontend() {

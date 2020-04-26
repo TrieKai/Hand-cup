@@ -1,3 +1,5 @@
 interface NearbySearchQueryParam {
-    coordinates: google.maps.LatLng
+    latitude: number
+    longitude: number
+    distance: number
 }
