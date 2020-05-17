@@ -5,21 +5,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
+import { MaterialModule } from './util/material/material.module';
 
 import { MapComponent } from './components/map/map.component';
 import { DrinkComponent } from './components/drink/drink.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
         MapComponent,
-        DrinkComponent
+        DrinkComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
+        MaterialModule,
+        BrowserAnimationsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

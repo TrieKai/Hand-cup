@@ -21,3 +21,13 @@ interface RespData {
     }
     body: any
 }
+
+interface Menu {
+    name: string
+    icon: string
+}
+
+interface UtilitiesMenu {
+    name: string
+    icon: string
+}

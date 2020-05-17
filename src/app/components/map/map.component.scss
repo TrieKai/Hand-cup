@@ -1,79 +1,134 @@
 #map {
     margin: auto;
-    height: 80vh;
-    width: 90%;
+    height: calc(100vh - 65px);
+    width : 100%;
 }
 
-.cardContainer {
-    margin: auto;
-    display: flex;
-    width: fit-content;
+mat-toolbar {
+    height: 65px;
 }
 
-.card {
-    margin: 30px;
-    display: grid;
-    grid-template-columns: 300px;
-    grid-template-rows: 210px 210px 80px;
-    grid-template-areas: "image""text""stats";
-    border-radius: 18px;
-    background: white;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
-    font-family: roboto;
-    text-align: center;
-    transition: 0.5s ease;
+.example-container {
+    position: absolute;
+    left    : 0;
+    right   : 0;
+}
+
+.example-sidenav {
+    display           : flex;
+    align-items       : center;
+    justify-content   : center;
+    width             : 300px;
+    // background     : rgba(255, 0, 0, 0.5);
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.searchContainer {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    position       : relative;
+    margin-right   : 15px;
+    width          : 250px;
+    height         : 40px;
+}
+
+.searchContainer input {
+    width : 250px;
+    height: 80%;
+
+    background   : #fcfcfc;
+    border       : 1px solid #aaa;
+    border-radius: 5px;
+    box-shadow   : 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+
+    text-indent: 15px;
+}
+
+.searchButton {
+    position: absolute;
+    right   : 10px;
+    color   : gray;
+    cursor  : pointer;
+}
+
+.accountButton {
     cursor: pointer;
 }
 
-.card:hover {
-    transform: scale(1.15);
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
-}
+// .cardContainer {
+//     margin : auto;
+//     display: flex;
+//     width  : fit-content;
+// }
 
-.card-image {
-    grid-area: image;
-    // background: url("https://lh3.googleusercontent.com/p/AF1QipMXCg4FpZlTer6zgT_khxgAu-4YsJEjv5d1wtRG=s1600-w400-h300");
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    background-size: cover;
-}
+// .card {
+//     margin               : 30px;
+//     display              : grid;
+//     grid-template-columns: 300px;
+//     grid-template-rows   : 210px 210px 80px;
+//     grid-template-areas  : "image""text""stats";
+//     border-radius        : 18px;
+//     background           : white;
+//     box-shadow           : 5px 5px 15px rgba(0, 0, 0, 0.9);
+//     font-family          : roboto;
+//     text-align           : center;
+//     transition           : 0.5s ease;
+//     cursor               : pointer;
+// }
 
-.card-text {
-    grid-area: text;
-    margin: 25px;
-}
+// .card:hover {
+//     transform : scale(1.15);
+//     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+// }
 
-.card-text .date {
-    color: rgb(255, 7, 110);
-    font-size: 13px;
-}
+// .card-image {
+//     grid-area              : image;
+//     // background: url("https://lh3.googleusercontent.com/p/AF1QipMXCg4FpZlTer6zgT_khxgAu-4YsJEjv5d1wtRG=s1600-w400-h300");
+//     border-top-left-radius : 15px;
+//     border-top-right-radius: 15px;
+//     background-size        : cover;
+// }
 
-.card-text p {
-    color: grey;
-    font-size: 15px;
-    font-weight: 300;
-}
+// .card-text {
+//     grid-area: text;
+//     margin   : 25px;
+// }
 
-.card-text h2 {
-    margin-top: 0px;
-    font-size: 28px;
-}
+// .card-text .date {
+//     color    : rgb(255, 7, 110);
+//     font-size: 13px;
+// }
 
-.card-stats {
-    grid-area: stats;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    background: rgb(255, 7, 110);
-}
+// .card-text p {
+//     color      : grey;
+//     font-size  : 15px;
+//     font-weight: 300;
+// }
 
-.card-stats .stat {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    color: white;
-    padding: 10px;
-}
+// .card-text h2 {
+//     margin-top: 0px;
+//     font-size : 28px;
+// }
+
+// .card-stats {
+//     grid-area                 : stats;
+//     display                   : grid;
+//     grid-template-columns     : 1fr 1fr 1fr;
+//     grid-template-rows        : 1fr;
+//     border-bottom-left-radius : 15px;
+//     border-bottom-right-radius: 15px;
+//     background                : rgb(255, 7, 110);
+// }
+
+// .card-stats .stat {
+//     display        : flex;
+//     align-items    : center;
+//     justify-content: center;
+//     flex-direction : column;
+//     color          : white;
+//     padding        : 10px;
+// }
