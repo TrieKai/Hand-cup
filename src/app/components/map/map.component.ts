@@ -17,7 +17,8 @@ export class MapComponent implements OnInit {
     place: google.maps.places.PlacesService;
     coordinates: google.maps.LatLng;
     distance: number;
-    resultArray: google.maps.places.PlaceResult[] = [];
+    // resultArray: google.maps.places.PlaceResult[] = [];
+    resultArray: any[] = [];
     isNextPage: boolean;
     markers: google.maps.Marker[] = [];
     infoWindows: google.maps.InfoWindow[] = [];
@@ -72,10 +73,11 @@ export class MapComponent implements OnInit {
     async getNearByLocations() {
         const resp = await this.mapService.getNearByLocations(this.coordinates, this.distance);
         console.log(resp)
-        resp.body.map(resp => {
+        resp.map(resp => {
             this.resultArray.push(resp);
         });
         this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, this.resultArray, 5); // 抓附近的五個地點
+        console.log(this.resultArray)
         this.showAllLocation();
     }
 
@@ -121,14 +123,17 @@ export class MapComponent implements OnInit {
             this.resultArray = this.resultArray.map((result, index) => {
                 const infoWindowData: InfoWindowData = {
                     position: {
-                        latitude: result.geometry.location.lat(),
-                        longitude: result.geometry.location.lng(),
+                        // latitude: result.geometry.location.lat(),
+                        // longitude: result.geometry.location.lng(),
+                        latitude: result.latitude,
+                        longitude: result.longitude,
                     },
                     name: result.name,
                     // img: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null,
-                    img: 'https://lh3.googleusercontent.com/p/AF1QipMXCg4FpZlTer6zgT_khxgAu-4YsJEjv5d1wtRG=s1600-w400-h300',
+                    img: result.image_url,
                     rating: result.rating,
-                    ratingNum: result.user_ratings_total,
+                    // ratingNum: result.user_ratings_total,
+                    ratingNum: result.ratings_total,
                     // openNow: result.opening_hours.open_now,
                 };
                 console.log(infoWindowData)
@@ -136,7 +141,8 @@ export class MapComponent implements OnInit {
 
                 return {
                     ...result,
-                    image: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null
+                    // image: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null
+                    image: result.image_url,
                 }
             });
             console.log(this.resultArray)

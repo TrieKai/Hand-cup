@@ -21,7 +21,7 @@ export class MapService {
         placesService.nearbySearch(request, callBackFunc);
     }
 
-    async getNearByLocations(coordinates: google.maps.LatLng, distance: number): Promise<RespData> {
+    async getNearByLocations(coordinates: google.maps.LatLng, distance: number): Promise<any> {
         // const header: HttpHeaders = new HttpHeaders({
         //     'Content-Type': 'text/html',
         //     'Access-Control-Allow-Origin': '*',
