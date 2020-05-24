@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { RouterConfigService } from './config/router-config.service';
+import { MenuConfigService } from './config/menu-config.service';
 
 @Component({
     selector: 'app-root',
@@ -8,14 +9,8 @@ import { RouterConfigService } from './config/router-config.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    menus: Menu[] = [
-        { name: "今天飲料喝什麼?", icon: "folder", },
-        { name: "今天飲料喝哪家?", icon: "folder", },
-        { name: "比較樣式", icon: "folder", },
-        { name: "客製化推薦", icon: "folder", },
-        { name: "我的收藏", icon: "folder", },
-        { name: "What's new!", icon: "folder", }
-    ];
+    @Output() onSelect = new EventEmitter();
+    menuList = [];
     utilitiesMenus: UtilitiesMenu[] = [
         { name: "登出", icon: "apps" },
         { name: "設定", icon: "apps" },
@@ -24,9 +19,11 @@ export class AppComponent implements OnInit {
 
     constructor(
         private routerCfg: RouterConfigService,
+        private menuCfg: MenuConfigService,
     ) { }
 
     ngOnInit(): void {
         this.routerCfg.setRoutes();
+        this.menuList = this.menuCfg.getMenu();
     }
 }

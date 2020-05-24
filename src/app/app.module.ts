@@ -32,6 +32,7 @@ import { DrinkShopComponent } from './components/drink-shop/drink-shop.component
     entryComponents: [
         MapComponent,
         DrinkComponent,
+        DrinkShopComponent,
     ],
 })
 export class AppModule { }

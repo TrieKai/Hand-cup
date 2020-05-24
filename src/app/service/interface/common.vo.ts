@@ -23,8 +23,9 @@ interface RespData {
 }
 
 interface Menu {
-    name: string
-    icon: string
+    title: string,
+    router: string,
+    icon: string,
 }
 
 interface UtilitiesMenu {
