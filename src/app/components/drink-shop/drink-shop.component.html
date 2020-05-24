@@ -1,139 +1,29 @@
-<div class="container">
-    <!-- <div class="cardContainer">
-      <ng-container *ngFor="let result of resultArray">
-        <div class="card">
-          <div id="cardImage" class="card-image" [ngStyle]="{'background-image':'url(' + result.image + ')'}"></div>
-          <div class="card-text">
-            <h2>{{result.name}}</h2>
-          </div>
-          <div class="card-stats">
-            <div class="stat">
-              <div class="value">{{result.rating}}</div>
-              <div class="type">rating</div>
-            </div>
-            <div class="stat">
-              <div class="value">{{result.ratings_total}}</div>
-              <div class="type">comments</div>
-            </div>
-            <div class="stat border">
-              <div class="value">{{result.views}}</div>
-              <div class="type">views</div>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-    </div> -->
+<ng-container>
+    <div #mapContainer id="map"></div>
 
-    <div class="cardContainer">
-        <div class="card">
-            <div class="card-text">
-                <h2>滑起來</h2>
-            </div>
-            <div id="cardImage" class="card-image"
-                [ngStyle]="{'background-image':'url(https://lh3.googleusercontent.com/p/AF1QipNl8-JdPU-uxpmLCbtBzieA1OcKGaK8CCjsG500=s1600-w400)'}">
-            </div>
-            <div class="card-stats">
-                <div class="stat">
-                    <div class="value">5.0</div>
-                    <div class="type">rating</div>
+    <div id="cardContainer" class="cardContainer">
+        <ng-container *ngFor="let result of resultArray">
+            <div class="card">
+                <div id="cardImage" class="card-image" [ngStyle]="{'background-image':'url(' + result.image + ')'}">
                 </div>
-                <div class="stat">
-                    <div class="value">87</div>
-                    <div class="type">comments</div>
+                <div class="card-text">
+                    <h2>{{result.name}}</h2>
                 </div>
-                <div class="stat border">
-                    <div class="value">5</div>
-                    <div class="type">views</div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div id="cardImage" class="card-image"
-                [ngStyle]="{'background-image':'url(https://lh3.googleusercontent.com/p/AF1QipNl8-JdPU-uxpmLCbtBzieA1OcKGaK8CCjsG500=s1600-w400)'}">
-            </div>
-            <div class="card-text">
-                <h2>滑起來</h2>
-            </div>
-            <div class="card-stats">
-                <div class="stat">
-                    <div class="value">5.0</div>
-                    <div class="type">rating</div>
-                </div>
-                <div class="stat">
-                    <div class="value">87</div>
-                    <div class="type">comments</div>
-                </div>
-                <div class="stat border">
-                    <div class="value">5</div>
-                    <div class="type">views</div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="value">{{result.rating}}</div>
+                        <div class="type">rating</div>
+                    </div>
+                    <div class="stat">
+                        <div class="value">{{result.ratings_total}}</div>
+                        <div class="type">comments</div>
+                    </div>
+                    <div class="stat border">
+                        <div class="value">{{result.views}}</div>
+                        <div class="type">views</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <div id="cardImage" class="card-image"
-                [ngStyle]="{'background-image':'url(https://lh3.googleusercontent.com/p/AF1QipNl8-JdPU-uxpmLCbtBzieA1OcKGaK8CCjsG500=s1600-w400)'}">
-            </div>
-            <div class="card-text">
-                <h2>滑起來</h2>
-            </div>
-            <div class="card-stats">
-                <div class="stat">
-                    <div class="value">5.0</div>
-                    <div class="type">rating</div>
-                </div>
-                <div class="stat">
-                    <div class="value">87</div>
-                    <div class="type">comments</div>
-                </div>
-                <div class="stat border">
-                    <div class="value">5</div>
-                    <div class="type">views</div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div id="cardImage" class="card-image"
-                [ngStyle]="{'background-image':'url(https://lh3.googleusercontent.com/p/AF1QipNl8-JdPU-uxpmLCbtBzieA1OcKGaK8CCjsG500=s1600-w400)'}">
-            </div>
-            <div class="card-text">
-                <h2>滑起來</h2>
-            </div>
-            <div class="card-stats">
-                <div class="stat">
-                    <div class="value">5.0</div>
-                    <div class="type">rating</div>
-                </div>
-                <div class="stat">
-                    <div class="value">87</div>
-                    <div class="type">comments</div>
-                </div>
-                <div class="stat border">
-                    <div class="value">5</div>
-                    <div class="type">views</div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div id="cardImage" class="card-image"
-                [ngStyle]="{'background-image':'url(https://lh3.googleusercontent.com/p/AF1QipNl8-JdPU-uxpmLCbtBzieA1OcKGaK8CCjsG500=s1600-w400)'}">
-            </div>
-            <div class="card-text">
-                <h2>滑起來</h2>
-            </div>
-            <div class="card-stats">
-                <div class="stat">
-                    <div class="value">5.0</div>
-                    <div class="type">rating</div>
-                </div>
-                <div class="stat">
-                    <div class="value">87</div>
-                    <div class="type">comments</div>
-                </div>
-                <div class="stat border">
-                    <div class="value">5</div>
-                    <div class="type">views</div>
-                </div>
-            </div>
-        </div>
+        </ng-container>
     </div>
-</div>
+</ng-container>

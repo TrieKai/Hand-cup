@@ -1,14 +1,17 @@
-.container {
+#map {
+    margin: auto;
     height: calc(100vh - 65px);
-    overflow: hidden;
+    width : 100%;
 }
 
 .cardContainer {
+    display        : flex;
     flex-wrap      : wrap;
     justify-content: center;
     margin         : auto;
-    display        : flex;
     width          : fit-content;
+    height         : calc(100vh - 65px);
+    overflow       : hidden;
 }
 
 .card {
@@ -32,16 +35,16 @@
 }
 
 .card-image {
-    grid-area              : image;
+    grid-area                 : image;
     // border-top-left-radius : 15px;
     // border-top-right-radius: 15px;
-    background-size        : cover;
+    background-size           : cover;
 }
 
 .card-text {
     grid-area: text;
     margin   : 25px;
-    color: black;
+    color    : black;
 }
 
 .card-text .date {
