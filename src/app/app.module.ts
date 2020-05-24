@@ -10,6 +10,7 @@ import { MaterialModule } from './util/material/material.module';
 import { MapComponent } from './components/map/map.component';
 import { DrinkComponent } from './components/drink/drink.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DrinkShopComponent } from './components/drink-shop/drink-shop.component';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         HomeComponent,
         MapComponent,
         DrinkComponent,
+        DrinkShopComponent,
     ],
     imports: [
         BrowserModule,

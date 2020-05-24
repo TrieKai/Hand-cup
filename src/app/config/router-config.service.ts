@@ -6,10 +6,12 @@ import { RouterConstantsService as routerCons } from '../util/constants/router-c
 import { HomeComponent } from 'src/app/components/home/home.component';
 import { MapComponent } from 'src/app/components/map/map.component';
 import { DrinkComponent } from 'src/app/components/drink/drink.component';
+import { DrinkShopComponent } from 'src/app/components/drink-shop/drink-shop.component';
 
 const routes = [
     { path: routerCons.ROUTER_MAP, component: MapComponent },
     { path: routerCons.ROUTER_DRINK, component: DrinkComponent },
+    { path: routerCons.ROUTER_DRINKSHOP, component: DrinkShopComponent },
 ];
 
 @Injectable({
