@@ -4,6 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class MenuConstantsService {
+  // Home
+  public readonly HOME: string = "飲料地圖";
+
+  public readonly HOME_ICON: string = "";
+
+  // Menu
   public readonly DRINK: string = "今天飲料喝什麼?";
   public readonly DRINK_SHOP: string = "今天飲料喝哪家?";
   public readonly COMPARE: string = "比較樣式";
@@ -17,6 +23,17 @@ export class MenuConstantsService {
   public readonly RECOMMENDATION_ICON: string = "folder";
   public readonly COLLECTION_ICON: string = "folder";
   public readonly NEWEST_ICON: string = "folder";
+
+  // UtilitiesMenu
+  public readonly LOGIN: string = "登入";
+  public readonly LOGOUT: string = "登出";
+  public readonly SETTING: string = "設定";
+  public readonly REPORT: string = "回報區";
+
+  public readonly LOGIN_ICON: string = "apps";
+  public readonly LOGOUT_ICON: string = "apps";
+  public readonly SETTING_ICON: string = "apps";
+  public readonly REPORT_ICON: string = "apps";
 
   constructor() { }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { RouterConfigService } from './config/router-config.service';
 import { MenuConfigService } from './config/menu-config.service';
@@ -9,13 +9,9 @@ import { MenuConfigService } from './config/menu-config.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    @Output() onSelect = new EventEmitter();
-    menuList = [];
-    utilitiesMenus: UtilitiesMenu[] = [
-        { name: "登出", icon: "apps" },
-        { name: "設定", icon: "apps" },
-        { name: "回報區", icon: "apps" },
-    ];
+    home: Menu;
+    menuList: Menu[] = [];
+    utilitiesMenuList: Menu[] = [];
 
     constructor(
         private routerCfg: RouterConfigService,
@@ -25,5 +21,7 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.routerCfg.setRoutes();
         this.menuList = this.menuCfg.getMenu();
+        this.utilitiesMenuList = this.menuCfg.getUtilitiesMenu();
+        this.home = this.menuCfg.getHome();
     }
 }

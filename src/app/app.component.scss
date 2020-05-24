@@ -2,6 +2,10 @@ mat-toolbar {
     height: 65px;
 }
 
+.toolBarTitle {
+    cursor: pointer;
+}
+
 .example-spacer {
     flex: 1 1 auto;
 }

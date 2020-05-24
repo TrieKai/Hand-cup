@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
-import { RouterConstantsService as routerCons } from 'src/app/util/constants/router-constants.service';
+import { GeolocationService } from 'src/app/service/geolocation.service';
 
 @Component({
     selector: 'app-home',
@@ -9,22 +8,35 @@ import { RouterConstantsService as routerCons } from 'src/app/util/constants/rou
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+    @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
+    map: google.maps.Map;
+    coordinate: Coordinate = { latitude: null, longitude: null };
+    coordinates: google.maps.LatLng;
 
     constructor(
-        private router: Router,
+        private geolocationService: GeolocationService,
     ) { }
 
     ngOnInit() {
+        this.geolocationService.getPosition().then(pos => {
+            console.log(`Positon: ${pos.lng} ${pos.lat}`);
+            this.coordinate.longitude = pos.lng;
+            this.coordinate.latitude = pos.lat;
+            this.mapInitializer();
+        });
     }
 
-    navigateByUrl(url: string) {
-        switch (url) {
-            case routerCons.ROUTER_MAP:
-                this.router.navigateByUrl("/" + routerCons.ROUTER_MAP);
-                break;
-            case routerCons.ROUTER_DRINK:
-                this.router.navigateByUrl("/" + routerCons.ROUTER_DRINK);
-                break;
-        }
+    mapInitializer() {
+        this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
+        const mapOptions: google.maps.MapOptions = {
+            center: this.coordinates,
+            zoom: 16,
+        };
+        const marker = new google.maps.Marker({
+            position: this.coordinates,
+            map: this.map,
+        });
+        this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
+        marker.setMap(this.map);
     }
 }

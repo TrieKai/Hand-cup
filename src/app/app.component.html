@@ -3,7 +3,7 @@
         <button mat-icon-button color="accent" (click)="sidenav.toggle()">
             <mat-icon>menu</mat-icon>
         </button>
-        <span>飲料地圖</span>
+        <span class="toolBarTitle" [routerLink]="home.router">{{home.title}}</span>
 
         <span class="example-spacer"></span>
 
@@ -18,12 +18,11 @@
             face
         </span>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item *ngFor="let utilitiesMenu of utilitiesMenus">
+            <button mat-menu-item *ngFor="let utilitiesMenu of utilitiesMenuList">
                 <mat-icon>{{utilitiesMenu.icon}}</mat-icon>
-                <span>{{utilitiesMenu.name}}</span>
+                <span>{{utilitiesMenu.title}}</span>
             </button>
         </mat-menu>
-
     </mat-toolbar-row>
 </mat-toolbar>
 
@@ -39,8 +38,6 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-
         <router-outlet></router-outlet>
-
     </mat-sidenav-content>
 </mat-sidenav-container>
