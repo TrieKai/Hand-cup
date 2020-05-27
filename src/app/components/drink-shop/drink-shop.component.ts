@@ -4,6 +4,7 @@ import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DrinkShopService } from 'src/app/util/drinkShop/drink-shop.service';
+import { resolve } from 'url';
 
 @Component({
     selector: 'app-drink-shop',
@@ -65,12 +66,7 @@ export class DrinkShopComponent implements OnInit {
         });
         this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, this.resultArray, 5); // 抓附近的五個地點
         console.log(this.resultArray)
-        await this.showAllLocation().then((value) => {
-            console.log(value)
-            // TODO: Wait async
-            // document.getElementById("map").style.display = 'none'; // Hidden map
-            // document.getElementById("cardContainer").style.display = 'flex'; // Show cards
-        });
+        this.showAllLocation();
     }
 
     async getNearByLocationsByFrontend() {
@@ -110,7 +106,7 @@ export class DrinkShopComponent implements OnInit {
         console.log(this.resultArray)
     }
 
-    async showAllLocation(): Promise<any> {
+    async showAllLocation() {
         if (!this.isNextPage) {
             this.resultArray = this.resultArray.map(async (result, index) => {
                 const infoWindowData: InfoWindowData = {
@@ -129,7 +125,14 @@ export class DrinkShopComponent implements OnInit {
                     // openNow: result.opening_hours.open_now,
                 };
                 console.log(infoWindowData)
-                await this.addMarkerWithTimeout(infoWindowData, index * 400);
+                this.addMarkerWithTimeout(infoWindowData, index * 500).then((value) => {
+                    console.log(value)
+                    if (index + 1 === this.resultArray.length) {
+                        // TODO: Wait async
+                        document.getElementById("map").style.display = 'none'; // Hidden map
+                        document.getElementById("cardContainer").style.display = 'flex'; // Show cards
+                    }
+                });
 
                 return {
                     ...result,
@@ -139,43 +142,76 @@ export class DrinkShopComponent implements OnInit {
             });
             console.log(this.resultArray)
         }
-
-        return 'abc';
     }
 
     async addMarkerWithTimeout(data: InfoWindowData, timeout: number) {
-        window.setTimeout(() => {
-            const infoWindow = new google.maps.InfoWindow({
-                content:
-                    '<div id="infoWindowBox">' +
-                    '<div id="infoWindowImg" style="background-image: url(' + data.img + ');"></div>' +
-                    '<div id="descriptionWrapper">' +
-                    '<div><h1 id="titleName">' + data.name + '</h1></div>' +
-                    '<div id="ratingWrapper">' +
-                    '<span>' + data.rating + '</span>' +
-                    '<ol id="ratingStarsWrapper">' + this.handleRatingStar(data.rating) + '</ol>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>',
-                maxWidth: 400,
-            });
-            google.maps.event.addListener(infoWindow, 'domready', this.handleInfoWindow)
-            this.infoWindows.push(infoWindow); // 統一管理 infoWindow
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const infoWindow = new google.maps.InfoWindow({
+                    content:
+                        '<div id="infoWindowBox">' +
+                        '<div id="infoWindowImg" style="background-image: url(' + data.img + ');"></div>' +
+                        '<div id="descriptionWrapper">' +
+                        '<div><h1 id="titleName">' + data.name + '</h1></div>' +
+                        '<div id="ratingWrapper">' +
+                        '<span>' + data.rating + '</span>' +
+                        '<ol id="ratingStarsWrapper">' + this.handleRatingStar(data.rating) + '</ol>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>',
+                    maxWidth: 400,
+                });
+                google.maps.event.addListener(infoWindow, 'domready', this.handleInfoWindow)
+                this.infoWindows.push(infoWindow); // 統一管理 infoWindow
 
-            const marker = new google.maps.Marker({
-                position: { lat: data.position.latitude, lng: data.position.longitude },
-                map: this.map,
-                icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-                animation: google.maps.Animation.DROP,
-            });
-            this.markers.push(marker); // 統一管理 marker
+                const marker = new google.maps.Marker({
+                    position: { lat: data.position.latitude, lng: data.position.longitude },
+                    map: this.map,
+                    icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                    animation: google.maps.Animation.DROP,
+                });
+                // this.markers.push(marker); // 統一管理 marker
 
-            marker.addListener('click', () => {
-                this.hideAllInfoWindows();
-                infoWindow.open(this.map, marker);
-            });
-        }, timeout);
-        console.log('aaa')
+                marker.addListener('click', () => {
+                    this.hideAllInfoWindows();
+                    infoWindow.open(this.map, marker);
+                });
+
+                resolve('我是傳下去LOVE');
+            }, timeout);
+        });
+
+        // window.setTimeout(async () => {
+        //     const infoWindow = new google.maps.InfoWindow({
+        //         content:
+        //             '<div id="infoWindowBox">' +
+        //             '<div id="infoWindowImg" style="background-image: url(' + data.img + ');"></div>' +
+        //             '<div id="descriptionWrapper">' +
+        //             '<div><h1 id="titleName">' + data.name + '</h1></div>' +
+        //             '<div id="ratingWrapper">' +
+        //             '<span>' + data.rating + '</span>' +
+        //             '<ol id="ratingStarsWrapper">' + this.handleRatingStar(data.rating) + '</ol>' +
+        //             '</div>' +
+        //             '</div>' +
+        //             '</div>',
+        //         maxWidth: 400,
+        //     });
+        //     google.maps.event.addListener(infoWindow, 'domready', this.handleInfoWindow)
+        //     this.infoWindows.push(infoWindow); // 統一管理 infoWindow
+
+        //     const marker = new google.maps.Marker({
+        //         position: { lat: data.position.latitude, lng: data.position.longitude },
+        //         map: this.map,
+        //         icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        //         animation: google.maps.Animation.DROP,
+        //     });
+        //     // this.markers.push(marker); // 統一管理 marker
+
+        //     marker.addListener('click', () => {
+        //         this.hideAllInfoWindows();
+        //         infoWindow.open(this.map, marker);
+        //     });
+        // }, timeout);
     }
 
     handleRatingStar(rating: number) {
