@@ -17,9 +17,10 @@
 .card {
     margin               : 30px;
     display              : grid;
-    grid-template-columns: 300px;
+    grid-template-columns: calc(33vw - 60px);
     grid-template-rows   : 80px 210px 80px;
     grid-template-areas  : "text""image""stats";
+    height               : fit-content;
     border-radius        : 18px;
     background           : white;
     box-shadow           : 5px 5px 15px rgba(0, 0, 0, 0.9);
@@ -45,6 +46,12 @@
     grid-area: text;
     margin   : 25px;
     color    : black;
+
+    h2 {
+        text-overflow: ellipsis;
+        overflow     : hidden;
+        white-space  : nowrap;
+    }
 }
 
 .card-text .date {
