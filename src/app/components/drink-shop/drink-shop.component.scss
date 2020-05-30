@@ -17,7 +17,8 @@
 .card {
     margin               : 30px;
     display              : grid;
-    grid-template-columns: calc(33vw - 60px);
+    // grid-template-columns: calc(33vw - 60px);
+    grid-template-columns: 300px;
     grid-template-rows   : 80px 210px 80px;
     grid-template-areas  : "text""image""stats";
     height               : fit-content;

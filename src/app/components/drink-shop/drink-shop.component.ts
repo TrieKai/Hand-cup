@@ -21,6 +21,7 @@ export class DrinkShopComponent implements OnInit {
     // resultArray: google.maps.places.PlaceResult[] = [];
     resultArray: any[] = [];
     isNextPage: boolean;
+    currentMarker: google.maps.Marker;
     markers: google.maps.Marker[] = [];
     infoWindows: google.maps.InfoWindow[] = [];
 
@@ -38,8 +39,6 @@ export class DrinkShopComponent implements OnInit {
             this.coordinate.longitude = pos.lng;
             this.coordinate.latitude = pos.lat;
             this.mapInitializer();
-            this.getNearByLocations(); // Get data from backend microService
-            // this.getNearByLocationsByFrontend(); // Get data from frontend Google API
         });
     }
 
@@ -50,12 +49,62 @@ export class DrinkShopComponent implements OnInit {
             center: this.coordinates,
             zoom: 16,
         };
-        const marker = new google.maps.Marker({
+        this.currentMarker = new google.maps.Marker({
             position: this.coordinates,
             map: this.map,
         });
         this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
-        marker.setMap(this.map);
+        this.currentMarker.setMap(this.map);
+        this.mapDragEvent();
+
+        const randomControlDiv = document.createElement('div');
+        this.randomControl(randomControlDiv);
+
+        // centerControlDiv.index = 1;
+        this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(randomControlDiv);
+    }
+
+    randomControl(controlDiv) {
+        // Set CSS for the control border.
+        const controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        // controlUI.title = 'Click to recenter the map';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        const controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = '開始搜尋附近飲料店';
+        controlUI.appendChild(controlText);
+
+        controlUI.addEventListener('click', () => {
+            this.getNearByLocations(); // Get data from backend microService
+            // this.getNearByLocationsByFrontend(); // Get data from frontend Google API
+        });
+    }
+
+    mapDragEvent() {
+        this.map.addListener('dragend', () => {
+            this.currentMarker.setMap(null); // Clear current marker
+            const currentPosition = this.map.getCenter();
+            this.currentMarker = new google.maps.Marker({
+                position: currentPosition,
+                map: this.map,
+            });
+            this.currentMarker.setMap(this.map);
+            this.coordinates = currentPosition;
+        });
     }
 
     async getNearByLocations() {
@@ -106,7 +155,7 @@ export class DrinkShopComponent implements OnInit {
         console.log(this.resultArray)
     }
 
-    async showAllLocation() {
+    showAllLocation() {
         if (!this.isNextPage) {
             this.resultArray = this.resultArray.map((result, index) => {
                 const infoWindowData: InfoWindowData = {
