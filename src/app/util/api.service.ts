@@ -14,7 +14,7 @@ export class ApiService {
     ) { }
 
     getHeader(accessToken?: string): HttpHeaders {
-        const header = { 'Content-Type': 'application/json' };
+        const header = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
         if (accessToken) { header['Authorization'] = `Bearer ${accessToken}` };
         return new HttpHeaders(header);
     }
