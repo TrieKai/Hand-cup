@@ -3,7 +3,10 @@
         <button mat-icon-button color="accent" (click)="sidenav.toggle()">
             <mat-icon>menu</mat-icon>
         </button>
-        <span class="toolBarTitle" [routerLink]="home.router">{{home.title}}</span>
+        <span class="toolBarTitle" [routerLink]="home.router">
+            {{home.icon}}
+            {{home.title}}
+        </span>
 
         <span class="example-spacer"></span>
 

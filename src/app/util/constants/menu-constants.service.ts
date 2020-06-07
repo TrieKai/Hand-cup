@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class MenuConstantsService {
   // Home
-  public readonly HOME: string = "飲料地圖";
+  public readonly HOME: string = "波吧飲料地圖";
 
   public readonly HOME_ICON: string = "";
 
