@@ -11,8 +11,8 @@ const uat_url = 'https://api.bobamaps.site';
 })
 export class ApiConstantsService {
   // map
-  public readonly GET_NEARBY_SEARCH = dev_url + '/map';
-  // public readonly GET_NEARBY_SEARCH = uat_url + '/map';
+  // public readonly GET_NEARBY_SEARCH = dev_url + '/map';
+  public readonly GET_NEARBY_SEARCH = uat_url + '/map';
 
   constructor() { }
 }

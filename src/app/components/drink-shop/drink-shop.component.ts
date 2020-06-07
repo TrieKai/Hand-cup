@@ -24,6 +24,7 @@ export class DrinkShopComponent implements OnInit {
     currentMarker: google.maps.Marker;
     markers: google.maps.Marker[] = [];
     infoWindows: google.maps.InfoWindow[] = [];
+    onloading: boolean;
 
     constructor(
         private geolocationService: GeolocationService,
@@ -33,6 +34,7 @@ export class DrinkShopComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.onloading = false;
         document.getElementById("cardContainer").style.display = 'none'; // Hidden cards first
         this.geolocationService.getPosition().then(pos => {
             console.log(`Positon: ${pos.lng} ${pos.lat}`);
@@ -67,6 +69,7 @@ export class DrinkShopComponent implements OnInit {
     randomControl(controlDiv) {
         // Set CSS for the control border.
         const controlUI = document.createElement('div');
+        controlUI.id = 'searchBtn';
         controlUI.style.backgroundColor = '#fff';
         controlUI.style.border = '2px solid #fff';
         controlUI.style.borderRadius = '3px';
@@ -104,17 +107,20 @@ export class DrinkShopComponent implements OnInit {
             });
             this.currentMarker.setMap(this.map);
             this.coordinates = currentPosition;
+            document.getElementById("searchBtn").style.display = 'block';
         });
     }
 
     async getNearByLocations() {
+        this.onloading = true;
         const resp = await this.mapService.getNearByLocations(this.coordinates, this.distance);
+        this.onloading = false;
         console.log(resp)
         resp.map(resp => {
             this.resultArray.push(resp);
         });
         this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, this.resultArray, 5); // 抓附近的五個地點
-        console.log(this.resultArray)
+        console.log('resultArray:', this.resultArray)
         this.showAllLocation();
     }
 
@@ -157,6 +163,10 @@ export class DrinkShopComponent implements OnInit {
 
     showAllLocation() {
         if (!this.isNextPage) {
+            if (this.markers.length > 0) {
+                this.markers.forEach((marker) => marker.setMap(null));
+                this.markers = [];
+            }
             this.resultArray = this.resultArray.map((result, index) => {
                 const infoWindowData: InfoWindowData = {
                     position: {
@@ -178,8 +188,7 @@ export class DrinkShopComponent implements OnInit {
                     if (index + 1 === this.resultArray.length) {
                         // Switch scenes with a delay of 1500 ms
                         setTimeout(() => {
-                            document.getElementById("map").style.display = 'none'; // Hidden map
-                            document.getElementById("cardContainer").style.display = 'flex'; // Show cards
+                            this.handleTransformScenes(true);
                         }, 1500);
                     }
                 });
@@ -220,7 +229,7 @@ export class DrinkShopComponent implements OnInit {
                     icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
                     animation: google.maps.Animation.DROP,
                 });
-                // this.markers.push(marker); // 統一管理 marker
+                this.markers.push(marker); // 統一管理 marker
 
                 marker.addListener('click', () => {
                     this.hideAllInfoWindows();
@@ -230,6 +239,17 @@ export class DrinkShopComponent implements OnInit {
                 resolve('Mark successful!');
             }, timeout);
         });
+    }
+
+    handleTransformScenes(showCard: boolean) {
+        if (showCard) {
+            document.getElementById("map").style.display = 'none'; // Hidden map
+            document.getElementById("cardContainer").style.display = 'flex'; // Show cards
+        } else {
+            document.getElementById("map").style.display = 'block'; // Show map
+            document.getElementById("cardContainer").style.display = 'none'; // Hidden cards
+            document.getElementById("searchBtn").style.display = 'none';
+        }
     }
 
     handleRatingStar(rating: number) {
