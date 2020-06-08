@@ -57,16 +57,16 @@ export class MapComponent implements OnInit {
         marker.setMap(this.map);
     }
 
-    async getNearByLocations() {
-        const resp = await this.mapService.getNearByLocations(this.coordinates, this.distance);
-        console.log(resp)
-        resp.map(resp => {
-            this.resultArray.push(resp);
-        });
-        this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, this.resultArray, 5); // 抓附近的五個地點
-        console.log(this.resultArray)
-        this.showAllLocation();
-    }
+    // async getNearByLocations() {
+    //     const resp = await this.mapService.getNearByLocations(this.coordinates, this.distance);
+    //     console.log(resp)
+    //     resp.map(resp => {
+    //         this.resultArray.push(resp);
+    //     });
+    //     this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, this.resultArray, 5); // 抓附近的五個地點
+    //     console.log(this.resultArray)
+    //     this.showAllLocation();
+    // }
 
     async getNearByLocationsByFrontend() {
         const request = {
