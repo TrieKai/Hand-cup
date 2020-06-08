@@ -11,5 +11,15 @@ body {
 }
 
 .spinner {
-    display: inline-block !important;
+    position: absolute !important;
+    top     : calc(50vh - 100px);
+    left    : calc(50vw - 50px);
+}
+
+.mask {
+    width           : 100vw;
+    height          : 100vh;
+    background-color: black;
+    opacity         : 0.4;
+    z-index         : 99;
 }

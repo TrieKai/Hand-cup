@@ -21,15 +21,15 @@ export class MapService {
         placesService.nearbySearch(request, callBackFunc);
     }
 
-    async getNearByLocations(coordinates: google.maps.LatLng, distance: number): Promise<any> {
+    async getNearByLocations(coordinate: Coordinate, distance: number): Promise<any> {
         // const header: HttpHeaders = new HttpHeaders({
         //     'Content-Type': 'text/html',
         //     'Access-Control-Allow-Origin': '*',
         // });
         const header: HttpHeaders = this.http.getHeader();
         const body: NearbySearchQueryParam = {
-            latitude: coordinates.lat(),
-            longitude: coordinates.lng(),
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
             distance: distance
         }
         console.log(body)

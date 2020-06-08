@@ -16,10 +16,8 @@ export class DrinkShopComponent implements OnInit {
     map: google.maps.Map;
     coordinate: Coordinate = { latitude: null, longitude: null };
     place: google.maps.places.PlacesService;
-    coordinates: google.maps.LatLng;
     distance: number;
-    // resultArray: google.maps.places.PlaceResult[] = [];
-    resultArray: any[] = [];
+    resultArray: drinkShopResults[] = [];
     isNextPage: boolean;
     currentMarker: google.maps.Marker;
     markers: google.maps.Marker[] = [];
@@ -45,19 +43,19 @@ export class DrinkShopComponent implements OnInit {
     }
 
     mapInitializer() {
-        this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
+        const coordinates: google.maps.LatLng = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
         this.distance = 100; // default
         const mapOptions: google.maps.MapOptions = {
-            center: this.coordinates,
+            center: coordinates,
             zoom: 16,
         };
         this.currentMarker = new google.maps.Marker({
-            position: this.coordinates,
+            position: coordinates,
             map: this.map,
         });
         this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
         this.currentMarker.setMap(this.map);
-        this.mapDragEvent();
+        this.mapIdleEvent();
 
         const randomControlDiv = document.createElement('div');
         this.randomControl(randomControlDiv);
@@ -93,12 +91,11 @@ export class DrinkShopComponent implements OnInit {
 
         controlUI.addEventListener('click', () => {
             this.getNearByLocations(); // Get data from backend microService
-            // this.getNearByLocationsByFrontend(); // Get data from frontend Google API
         });
     }
 
-    mapDragEvent() {
-        this.map.addListener('dragend', () => {
+    mapIdleEvent() {
+        this.map.addListener('idle', () => {
             this.currentMarker.setMap(null); // Clear current marker
             const currentPosition = this.map.getCenter();
             this.currentMarker = new google.maps.Marker({
@@ -106,16 +103,19 @@ export class DrinkShopComponent implements OnInit {
                 map: this.map,
             });
             this.currentMarker.setMap(this.map);
-            this.coordinates = currentPosition;
+            this.coordinate = { latitude: currentPosition.lat(), longitude: currentPosition.lng() };
             document.getElementById("searchBtn").style.display = 'block';
         });
     }
 
     async getNearByLocations() {
         this.onloading = true;
-        const resp = await this.mapService.getNearByLocations(this.coordinates, this.distance);
+        const resp = await this.mapService.getNearByLocations(this.coordinate, this.distance);
         this.onloading = false;
         console.log(resp)
+        if (this.resultArray.length > 0) {
+            this.resultArray = []; // Reset array
+        }
         resp.map(resp => {
             this.resultArray.push(resp);
         });
@@ -124,62 +124,22 @@ export class DrinkShopComponent implements OnInit {
         this.showAllLocation();
     }
 
-    async getNearByLocationsByFrontend() {
-        const request = {
-            location: { lat: 24.987004, lng: 121.514250 },
-            radius: 50,
-            name: '飲料',
-        };
-        await this.mapService.getNearByLocationsByFrontend(this.map, request, this.NearbySearchCallback.bind(this));
-    }
-
-    NearbySearchCallback(
-        results: google.maps.places.PlaceResult[],
-        status: google.maps.places.PlacesServiceStatus,
-        pagination: google.maps.places.PlaceSearchPagination
-    ) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-            console.log('nearby search status:', status)
-            if (pagination.hasNextPage) {
-                this.isNextPage = true;
-                pagination.nextPage();
-            } else {
-                console.log('No more page!')
-                this.isNextPage = false;
-            }
-            this.getTotalData(results);
-            this.showAllLocation();
-        } else {
-            console.log('nearby search status:', status)
-        }
-    }
-
-    getTotalData(results: google.maps.places.PlaceResult[]) {
-        results.map(result => {
-            this.resultArray.push(result);
-        });
-        console.log(this.resultArray)
-    }
-
     showAllLocation() {
         if (!this.isNextPage) {
             if (this.markers.length > 0) {
                 this.markers.forEach((marker) => marker.setMap(null));
                 this.markers = [];
             }
+
             this.resultArray = this.resultArray.map((result, index) => {
                 const infoWindowData: InfoWindowData = {
                     position: {
-                        // latitude: result.geometry.location.lat(),
-                        // longitude: result.geometry.location.lng(),
                         latitude: result.latitude,
                         longitude: result.longitude,
                     },
                     name: result.name,
-                    // img: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null,
                     img: result.image_url,
                     rating: result.rating,
-                    // ratingNum: result.user_ratings_total,
                     ratingNum: result.ratings_total,
                     // openNow: result.opening_hours.open_now,
                 };
@@ -193,11 +153,7 @@ export class DrinkShopComponent implements OnInit {
                     }
                 });
 
-                return {
-                    ...result,
-                    // image: result.photos[0] ? result.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 }) : null
-                    image: result.image_url,
-                }
+                return result;
             });
             console.log(this.resultArray)
         }

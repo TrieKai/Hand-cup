@@ -7,15 +7,16 @@ export class DrinkShopService {
 
   constructor() { }
 
-  getTopLocation(locataion: Coordinate, dataList: any, number: number): any {
+  getTopLocation(locataion: Coordinate, dataList: drinkShopResults[], number: number): any {
+    console.log(locataion.latitude, locataion.longitude)
     const resp = dataList.map((data) => {
-      const distanceGap = (locataion.latitude - data.longitude) + (locataion.longitude - data.latitute); // 距離差
+      const distanceGap = Math.abs(locataion.latitude - data.latitude) + Math.abs(locataion.longitude - data.longitude); // 距離差
       return {
         ...data,
         distanceGap: distanceGap
       }
     }).sort((a, b) => {
-      return a - b; // 升冪
+      return a.distanceGap - b.distanceGap; // 升冪
     }).slice(0, number); // 取前幾名
 
     return resp;
