@@ -10,7 +10,7 @@
         <div class="backBtn" (click)="handleTransformScenes(false)">返回</div>
         <ng-container *ngFor="let result of resultArray">
             <div class="card">
-                <div id="cardImage" class="card-image" [ngStyle]="{'background-image':'url(' + result.image + ')'}">
+                <div id="cardImage" class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}">
                 </div>
                 <div class="card-text">
                     <h2>{{result.name}}</h2>
