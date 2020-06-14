@@ -29,9 +29,11 @@ export class DrinkShopComponent implements OnInit {
         private mapService: MapService,
         private drinkShopService: DrinkShopService,
         private cons: ConstantsService,
+        private elRef: ElementRef,
     ) { }
 
     ngOnInit() {
+        console.log(this.elRef.nativeElement.parentNode)
         this.onloading = false;
         document.getElementById("cardContainer").style.display = 'none'; // Hidden cards first
         this.geolocationService.getPosition().then(pos => {
@@ -55,12 +57,9 @@ export class DrinkShopComponent implements OnInit {
         });
         this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
         this.currentMarker.setMap(this.map);
-        this.mapIdleEvent();
 
         const randomControlDiv = document.createElement('div');
         this.randomControl(randomControlDiv);
-
-        // centerControlDiv.index = 1;
         this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(randomControlDiv);
     }
 
