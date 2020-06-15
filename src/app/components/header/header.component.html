@@ -1,0 +1,46 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+      <button mat-icon-button color="accent" (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+      </button>
+      <span class="toolBarTitle" [routerLink]="home.router">
+          {{home.icon}}
+          {{home.title}}
+      </span>
+
+      <span class="example-spacer"></span>
+
+      <div class="searchContainer">
+          <span class="material-icons searchButton">
+              search
+          </span>
+          <input placeholder="Search...">
+      </div>
+
+      <span class="material-icons accountButton" [matMenuTriggerFor]="menu">
+          face
+      </span>
+      <mat-menu #menu="matMenu">
+          <button mat-menu-item *ngFor="let utilitiesMenu of utilitiesMenuList">
+              <mat-icon>{{utilitiesMenu.icon}}</mat-icon>
+              <span>{{utilitiesMenu.title}}</span>
+          </button>
+      </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" class="example-sidenav" mode="over">
+    <mat-list>
+      <!-- <div mat-subheader>Folders</div> -->
+      <mat-list-item *ngFor="let menu of menuList">
+        <mat-icon mat-list-icon>{{menu.icon}}</mat-icon>
+        <div mat-line [routerLink]="menu.router" (click)="sidenav.close()">{{menu.title}}</div>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -4,7 +4,6 @@ import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DrinkShopService } from 'src/app/util/drinkShop/drink-shop.service';
-import { resolve } from 'url';
 
 @Component({
     selector: 'app-drink-shop',
@@ -33,7 +32,6 @@ export class DrinkShopComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        console.log(this.elRef.nativeElement.parentNode)
         this.onloading = false;
         document.getElementById("cardContainer").style.display = 'none'; // Hidden cards first
         this.geolocationService.getPosition().then(pos => {

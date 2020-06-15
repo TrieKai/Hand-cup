@@ -11,6 +11,7 @@ import { MapComponent } from './components/map/map.component';
 import { DrinkComponent } from './components/drink/drink.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DrinkShopComponent } from './components/drink-shop/drink-shop.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { DrinkShopComponent } from './components/drink-shop/drink-shop.component
         MapComponent,
         DrinkComponent,
         DrinkShopComponent,
+        HeaderComponent,
     ],
     imports: [
         BrowserModule,
