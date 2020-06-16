@@ -4,7 +4,7 @@ import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DrinkShopService } from 'src/app/util/drinkShop/drink-shop.service';
-import { SharedService } from 'src/app/shared/shared.service';
+import { HtmlServiceService } from 'src/app/shared/html-service.service';
 
 @Component({
     selector: 'app-drink-shop',
@@ -30,8 +30,7 @@ export class DrinkShopComponent implements OnInit {
         private mapService: MapService,
         private drinkShopService: DrinkShopService,
         private cons: ConstantsService,
-        private elRef: ElementRef,
-        protected sharedService: SharedService,
+        protected htmlServiceService: HtmlServiceService,
     ) { }
 
     ngOnInit() {
@@ -43,7 +42,7 @@ export class DrinkShopComponent implements OnInit {
             this.coordinate.latitude = pos.lat;
             this.mapInitializer();
         });
-        this.gg = this.sharedService.get('searchInput').subscribe()
+        this.gg = this.htmlServiceService.get('searchInput');
         console.log(this.gg)
     }
 
