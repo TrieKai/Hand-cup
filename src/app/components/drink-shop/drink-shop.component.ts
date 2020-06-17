@@ -4,7 +4,7 @@ import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DrinkShopService } from 'src/app/util/drinkShop/drink-shop.service';
-import { HtmlServiceService } from 'src/app/shared/html-service.service';
+import { HtmlElementService } from 'src/app/shared/html-element.service';
 
 @Component({
     selector: 'app-drink-shop',
@@ -30,7 +30,7 @@ export class DrinkShopComponent implements OnInit {
         private mapService: MapService,
         private drinkShopService: DrinkShopService,
         private cons: ConstantsService,
-        protected htmlServiceService: HtmlServiceService,
+        protected htmlElementService: HtmlElementService,
     ) { }
 
     ngOnInit() {
@@ -42,8 +42,6 @@ export class DrinkShopComponent implements OnInit {
             this.coordinate.latitude = pos.lat;
             this.mapInitializer();
         });
-        this.gg = this.htmlServiceService.get('searchInput');
-        console.log(this.gg)
     }
 
     mapInitializer() {
@@ -63,6 +61,14 @@ export class DrinkShopComponent implements OnInit {
         const randomControlDiv = document.createElement('div');
         this.randomControl(randomControlDiv);
         this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(randomControlDiv);
+
+        this.gg = this.htmlElementService.get('searchInput');
+        console.log(this.gg)
+        var searchBox = new google.maps.places.SearchBox(this.gg.value);
+        searchBox.addListener('places_changed', function() {
+            console.log('qaeasew')
+        }
+        // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(this.gg);
     }
 
     randomControl(controlDiv) {

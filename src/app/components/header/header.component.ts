@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { RouterConfigService } from 'src/app/config/router-config.service';
 import { MenuConfigService } from 'src/app/config/menu-config.service';
-import { HtmlServiceService } from 'src/app/shared/html-service.service';
+import { HtmlElementService } from 'src/app/shared/html-element.service';
 
 @Component({
     selector: 'app-header',
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
     constructor(
         private routerCfg: RouterConfigService,
         private menuCfg: MenuConfigService,
-        protected htmlServiceService: HtmlServiceService,
+        protected htmlElementService: HtmlElementService,
     ) { }
 
     ngOnInit(): void {
@@ -30,10 +30,10 @@ export class HeaderComponent implements OnInit {
 
     ngAfterViewInit(): void {
         console.log(this.searchInput)
-        this.htmlServiceService.set('searchInput', this.searchInput.nativeElement);
+        this.htmlElementService.set('searchInput', this.searchInput.nativeElement);
     }
 
     ngOnDestroy(): void {
-        this.htmlServiceService.delete('searchInput');
+        this.htmlElementService.delete('searchInput');
     }
 }

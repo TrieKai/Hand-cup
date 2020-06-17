@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class HtmlServiceService {
+export class HtmlElementService {
   protected elements: any;
 
   constructor() {
