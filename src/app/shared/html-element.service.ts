@@ -11,7 +11,7 @@ export class HtmlElementService {
     this.elements = {};
   }
 
-  public set(key: string, value: HTMLElement): BehaviorSubject<any> {
+  public set(key: string, value: HTMLElement): BehaviorSubject<HTMLElement> {
     if (this.has(key)) {
       this.elements[key].next(value);
     } else {
@@ -20,7 +20,7 @@ export class HtmlElementService {
     return this.elements[key];
   }
 
-  public get(key: string): BehaviorSubject<any> {
+  public get(key: string): BehaviorSubject<HTMLElement> {
     // We'll always ensure a Subject is returned just incase the HTMLElement hasn't been registered "yet"
     if (!this.has(key)) {
       this.elements[key] = new BehaviorSubject(null);

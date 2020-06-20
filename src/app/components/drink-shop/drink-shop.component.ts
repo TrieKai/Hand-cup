@@ -23,7 +23,7 @@ export class DrinkShopComponent implements OnInit {
     markers: google.maps.Marker[] = [];
     infoWindows: google.maps.InfoWindow[] = [];
     onloading: boolean;
-    private gg: any;
+    private sInput: any;
 
     constructor(
         private geolocationService: GeolocationService,
@@ -50,6 +50,7 @@ export class DrinkShopComponent implements OnInit {
         const mapOptions: google.maps.MapOptions = {
             center: coordinates,
             zoom: 16,
+            mapTypeControl: false,
         };
         this.currentMarker = new google.maps.Marker({
             position: coordinates,
@@ -57,17 +58,39 @@ export class DrinkShopComponent implements OnInit {
         });
         this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
         this.currentMarker.setMap(this.map);
+        this.mapIdleEvent();
 
         const randomControlDiv = document.createElement('div');
         this.randomControl(randomControlDiv);
         this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(randomControlDiv);
 
-        this.gg = this.htmlElementService.get('searchInput');
-        console.log(this.gg)
-        var searchBox = new google.maps.places.SearchBox(this.gg.value);
-        searchBox.addListener('places_changed', function() {
-            console.log('qaeasew')
-        }
+        this.sInput = this.htmlElementService.get('searchInput');
+        console.log(this.sInput)
+        const autocomplete = new google.maps.places.Autocomplete(this.sInput.value);
+        autocomplete.addListener('place_changed', () => {
+            const place = autocomplete.getPlace();
+            console.log(place)
+            if (!place.geometry) {
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            // Clear out the old markers
+            this.markers.forEach((marker) => {
+                marker.setMap(null);
+            });
+            this.markers = [];
+
+            // If the place has a geometry, then present it on a map
+            if (place.geometry.viewport) {
+                this.map.fitBounds(place.geometry.viewport);
+            } else {
+                this.map.setCenter(place.geometry.location);
+                this.map.setZoom(17);
+            }
+            this.currentMarker.setPosition(place.geometry.location);
+            this.currentMarker.setVisible(true);
+        });
         // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(this.gg);
     }
 
@@ -103,6 +126,7 @@ export class DrinkShopComponent implements OnInit {
 
     mapIdleEvent() {
         this.map.addListener('idle', () => {
+            console.log('map idle')
             this.currentMarker.setMap(null); // Clear current marker
             const currentPosition = this.map.getCenter();
             this.currentMarker = new google.maps.Marker({
