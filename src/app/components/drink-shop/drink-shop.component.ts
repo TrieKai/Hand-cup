@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
@@ -13,6 +13,7 @@ import { HtmlElementService } from 'src/app/shared/html-element.service';
 })
 export class DrinkShopComponent implements OnInit {
     @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
+    @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
     map: google.maps.Map;
     coordinate: Coordinate = { latitude: null, longitude: null };
     place: google.maps.places.PlacesService;
@@ -31,17 +32,22 @@ export class DrinkShopComponent implements OnInit {
         private drinkShopService: DrinkShopService,
         private cons: ConstantsService,
         protected htmlElementService: HtmlElementService,
+        private renderer: Renderer2,
+        private el: ElementRef,
     ) { }
 
     ngOnInit() {
         this.onloading = false;
-        document.getElementById("cardContainer").style.display = 'none'; // Hidden cards first
         this.geolocationService.getPosition().then(pos => {
             console.log(`Positon: ${pos.lng} ${pos.lat}`);
             this.coordinate.longitude = pos.lng;
             this.coordinate.latitude = pos.lat;
             this.mapInitializer();
         });
+    }
+
+    ngAfterViewInit(): void {
+        this.renderer.setStyle(this.cardContainer.nativeElement, 'display', 'none'); // Hidden cards first
     }
 
     mapInitializer() {
@@ -60,7 +66,7 @@ export class DrinkShopComponent implements OnInit {
         this.currentMarker.setMap(this.map);
         this.mapIdleEvent();
 
-        const randomControlDiv = document.createElement('div');
+        const randomControlDiv = this.renderer.createElement('div');
         this.randomControl(randomControlDiv);
         this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(randomControlDiv);
 
@@ -95,8 +101,8 @@ export class DrinkShopComponent implements OnInit {
     }
 
     randomControl(controlDiv) {
-        // Set CSS for the control border.
-        const controlUI = document.createElement('div');
+        // Set CSS for the control border
+        const controlUI = this.renderer.createElement('div');
         controlUI.id = 'searchBtn';
         controlUI.style.backgroundColor = '#fff';
         controlUI.style.border = '2px solid #fff';
@@ -105,11 +111,11 @@ export class DrinkShopComponent implements OnInit {
         controlUI.style.cursor = 'pointer';
         controlUI.style.marginBottom = '22px';
         controlUI.style.textAlign = 'center';
-        // controlUI.title = 'Click to recenter the map';
-        controlDiv.appendChild(controlUI);
+        controlUI.title = 'Click me!';
+        this.renderer.appendChild(controlDiv, controlUI);
 
-        // Set CSS for the control interior.
-        const controlText = document.createElement('div');
+        // Set CSS for the control interior
+        const controlText = this.renderer.createElement('div');
         controlText.style.color = 'rgb(25,25,25)';
         controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
         controlText.style.fontSize = '16px';
@@ -117,7 +123,7 @@ export class DrinkShopComponent implements OnInit {
         controlText.style.paddingLeft = '5px';
         controlText.style.paddingRight = '5px';
         controlText.innerHTML = '開始搜尋附近飲料店';
-        controlUI.appendChild(controlText);
+        this.renderer.appendChild(controlUI, controlText);
 
         controlUI.addEventListener('click', () => {
             this.getNearByLocations(); // Get data from backend microService
@@ -230,11 +236,11 @@ export class DrinkShopComponent implements OnInit {
 
     handleTransformScenes(showCard: boolean) {
         if (showCard) {
-            document.getElementById("map").style.display = 'none'; // Hidden map
-            document.getElementById("cardContainer").style.display = 'flex'; // Show cards
+            this.renderer.setStyle(this.gmap.nativeElement, 'display', 'none'); // Hidden map
+            this.renderer.setStyle(this.cardContainer.nativeElement, 'display', 'flex'); // Show cards
         } else {
-            document.getElementById("map").style.display = 'block'; // Show map
-            document.getElementById("cardContainer").style.display = 'none'; // Hidden cards
+            this.renderer.setStyle(this.gmap.nativeElement, 'display', 'block'); // Show map
+            this.renderer.setStyle(this.cardContainer.nativeElement, 'display', 'none'); // Hidden cards
             document.getElementById("searchBtn").style.display = 'none';
         }
     }

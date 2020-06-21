@@ -6,12 +6,11 @@
     </div>
     <mat-spinner *ngIf="onloading" class="spinner"></mat-spinner>
     <!-- <div *ngIf="onloading" class="mask"></div> -->
-    <div id="cardContainer" class="cardContainer">
+    <div #cardContainer class="cardContainer">
         <div class="backBtn" (click)="handleTransformScenes(false)">返回</div>
         <ng-container *ngFor="let result of resultArray">
             <div class="card">
-                <div id="cardImage" class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}">
-                </div>
+                <div class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}"></div>
                 <div class="card-text">
                     <h2>{{result.name}}</h2>
                 </div>
