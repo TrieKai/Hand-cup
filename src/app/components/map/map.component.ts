@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
-import { DrinkShopService } from 'src/app/util/drinkShop/drink-shop.service';
+import { DrinkShopService } from 'src/app/service/drink-shop.service';
 
 @Component({
     selector: 'app-map',
