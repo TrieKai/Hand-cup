@@ -8,3 +8,8 @@ interface drinkShopResults {
     ratings_total: number
     distanceGap?: number
 }
+
+interface drinkShopSharedData {
+    showMap: boolean
+    drinkShopResults: drinkShopResults[]
+}

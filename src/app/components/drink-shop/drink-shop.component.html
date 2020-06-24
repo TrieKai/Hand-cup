@@ -1,11 +1,10 @@
-<ng-container>
+<!-- <ng-container>
     <div #mapContainer id="map">
         <div>
             <button>搜尋這個區域</button>
         </div>
     </div>
     <mat-spinner *ngIf="onloading" class="spinner"></mat-spinner>
-    <!-- <div *ngIf="onloading" class="mask"></div> -->
     <div #cardContainer class="cardContainer">
         <div class="backBtn" (click)="handleTransformScenes(false)">返回</div>
         <ng-container *ngFor="let result of resultArray">
@@ -31,7 +30,7 @@
             </div>
         </ng-container>
     </div>
-</ng-container>
+</ng-container> -->
 
-<app-drink-shop-map></app-drink-shop-map>
-<app-drink-shop-card *ngIf="resultArray?.length > 0" [resultArray]="resultArray"></app-drink-shop-card>
+<app-drink-shop-map *ngIf="showMap"></app-drink-shop-map>
+<app-drink-shop-card *ngIf="!showMap" [resultArray]="resultArray"></app-drink-shop-card>

@@ -3,13 +3,14 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/co
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
-import { DrinkShopService } from 'src/app/util/drinkShop/drink-shop.service';
+import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
-  selector: 'app-drink-shop-map',
-  templateUrl: './drink-shop-map.component.html',
-  styleUrls: ['./drink-shop-map.component.scss']
+    selector: 'app-drink-shop-map',
+    templateUrl: './drink-shop-map.component.html',
+    styleUrls: ['./drink-shop-map.component.scss']
 })
 export class DrinkShopMapComponent implements OnInit {
     @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
@@ -32,7 +33,7 @@ export class DrinkShopMapComponent implements OnInit {
         private cons: ConstantsService,
         protected htmlElementService: HtmlElementService,
         private renderer: Renderer2,
-        private el: ElementRef,
+        private sharedService: SharedService,
     ) { }
 
     ngOnInit() {
@@ -230,7 +231,10 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     handleTransformScenes() {
-      // Call parent component transform scenes
+        // TODO: Call parent component transform scenes
+        console.log('transform scenes')
+        this.drinkShopService.setSharedData('showMap', false);
+        this.sharedService.onInitEmit();
     }
 
     handleRatingStar(rating: number) {
