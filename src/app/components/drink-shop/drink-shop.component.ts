@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/co
 // import { MapService } from 'src/app/service/map.service';
 // import { ConstantsService } from 'src/app/util/constants/constants.service';
 // import { HtmlElementService } from 'src/app/shared/html-element.service';
+import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 
@@ -24,7 +25,7 @@ export class DrinkShopComponent implements OnInit {
     // currentMarker: google.maps.Marker;
     // markers: google.maps.Marker[] = [];
     // infoWindows: google.maps.InfoWindow[] = [];
-    // onloading: boolean;
+    onloading: boolean;
     // private sInput: any;
     showMap: boolean;
 
@@ -36,12 +37,15 @@ export class DrinkShopComponent implements OnInit {
         // protected htmlElementService: HtmlElementService,
         // private renderer: Renderer2,
         // private el: ElementRef,
+        private cons: ConstantsService,
         private sharedService: SharedService,
         private drinkShopService: DrinkShopService,
     ) {
         this.sharedService.onInitEmitted.subscribe(() => {
-            this.showMap = this.drinkShopService.getSharedData('showMap');
-            console.log('showMap!!!', this.showMap)
+            console.log('subscribe!')
+            this.onloading = drinkShopService.getSharedData(cons.SHAREDDATA_ONLOADING);
+            console.log('aaa', this.onloading)
+            this.showMap = this.drinkShopService.getSharedData(cons.SHAREDDATA_SHOWMAP);
         });
     }
 
@@ -53,7 +57,8 @@ export class DrinkShopComponent implements OnInit {
         //     this.coordinate.latitude = pos.lat;
         //     this.mapInitializer();
         // });
-        this.showMap = this.drinkShopService.getSharedData('showMap');
+        this.onloading = this.drinkShopService.getSharedData(this.cons.SHAREDDATA_ONLOADING);
+        this.showMap = this.drinkShopService.getSharedData(this.cons.SHAREDDATA_SHOWMAP);
     }
 
     // ngAfterViewInit(): void {

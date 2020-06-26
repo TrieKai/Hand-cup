@@ -11,6 +11,7 @@ export class SharedService {
   constructor() { }
 
   onInitEmit() {
+    console.log('onInitEmit')
     this.onInit.next();
   }
 }

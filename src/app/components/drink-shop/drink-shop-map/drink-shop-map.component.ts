@@ -34,10 +34,13 @@ export class DrinkShopMapComponent implements OnInit {
         protected htmlElementService: HtmlElementService,
         private renderer: Renderer2,
         private sharedService: SharedService,
-    ) { }
+    ) {
+        this.coordinate = drinkShopService.currentCoordinate
+    }
 
     ngOnInit() {
-        this.onloading = false;
+        this.onloading = this.drinkShopService.getSharedData(this.cons.SHAREDDATA_ONLOADING);
+        console.log('init', this.onloading)
         this.geolocationService.getPosition().then(pos => {
             console.log(`Positon: ${pos.lng} ${pos.lat}`);
             this.coordinate.longitude = pos.lng;
@@ -51,14 +54,15 @@ export class DrinkShopMapComponent implements OnInit {
         this.distance = 100; // default
         const mapOptions: google.maps.MapOptions = {
             center: coordinates,
-            zoom: 16,
+            zoom: 15,
             mapTypeControl: false,
         };
+        this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
+
         this.currentMarker = new google.maps.Marker({
             position: coordinates,
             map: this.map,
         });
-        this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
         this.currentMarker.setMap(this.map);
         this.mapIdleEvent();
 
@@ -66,37 +70,25 @@ export class DrinkShopMapComponent implements OnInit {
         this.randomControl(randomControlDiv);
         this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(randomControlDiv);
 
-        this.sInput = this.htmlElementService.get('searchInput');
-        console.log(this.sInput)
-        const autocomplete = new google.maps.places.Autocomplete(this.sInput.value);
-        autocomplete.addListener('place_changed', () => {
-            const place = autocomplete.getPlace();
-            console.log(place)
-            if (!place.geometry) {
-                window.alert("No details available for input: '" + place.name + "'");
-                return;
-            }
-
-            // Clear out the old markers
-            this.markers.forEach((marker) => {
-                marker.setMap(null);
-            });
-            this.markers = [];
-
-            // If the place has a geometry, then present it on a map
-            if (place.geometry.viewport) {
-                this.map.fitBounds(place.geometry.viewport);
-            } else {
-                this.map.setCenter(place.geometry.location);
-                this.map.setZoom(17);
-            }
-            this.currentMarker.setPosition(place.geometry.location);
-            this.currentMarker.setVisible(true);
-        });
-        // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(this.gg);
+        this.setAutoComplete();
     }
 
-    randomControl(controlDiv) {
+    mapIdleEvent() {
+        this.map.addListener('idle', () => {
+            console.log('map idle')
+            this.currentMarker.setMap(null); // Clear current marker
+            const currentPosition = this.map.getCenter();
+            this.currentMarker = new google.maps.Marker({
+                position: currentPosition,
+                map: this.map,
+            });
+            this.currentMarker.setMap(this.map);
+            this.coordinate = { latitude: currentPosition.lat(), longitude: currentPosition.lng() };
+            document.getElementById("searchBtn").style.display = 'block';
+        });
+    }
+
+    randomControl(controlDiv: HTMLElement) {
         // Set CSS for the control border
         const controlUI = this.renderer.createElement('div');
         controlUI.id = 'searchBtn';
@@ -126,70 +118,78 @@ export class DrinkShopMapComponent implements OnInit {
         });
     }
 
-    mapIdleEvent() {
-        this.map.addListener('idle', () => {
-            console.log('map idle')
-            this.currentMarker.setMap(null); // Clear current marker
-            const currentPosition = this.map.getCenter();
-            this.currentMarker = new google.maps.Marker({
-                position: currentPosition,
-                map: this.map,
+    setAutoComplete() {
+        this.sInput = this.htmlElementService.get('searchInput');
+        const autocomplete = new google.maps.places.Autocomplete(this.sInput.value);
+        autocomplete.addListener('place_changed', () => {
+            const place = autocomplete.getPlace();
+            console.log(place)
+            if (!place.geometry) {
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            // Clear out the old markers
+            this.markers.forEach((marker) => {
+                marker.setMap(null);
             });
-            this.currentMarker.setMap(this.map);
-            this.coordinate = { latitude: currentPosition.lat(), longitude: currentPosition.lng() };
-            document.getElementById("searchBtn").style.display = 'block';
+            this.markers = [];
+
+            // If the place has a geometry, then present it on a map
+            if (place.geometry.viewport) {
+                this.map.fitBounds(place.geometry.viewport);
+            } else {
+                this.map.setCenter(place.geometry.location);
+                this.map.setZoom(17);
+            }
+            this.currentMarker.setPosition(place.geometry.location);
+            this.currentMarker.setVisible(true);
         });
     }
 
     async getNearByLocations() {
-        this.onloading = true;
-        const resp = await this.mapService.getNearByLocations(this.coordinate, this.distance);
-        this.onloading = false;
-        console.log(resp)
+        this.drinkShopService.setSharedData(this.cons.SHAREDDATA_ONLOADING, true);
+        const respData = await this.mapService.getNearByLocations(this.coordinate, this.distance);
+        this.drinkShopService.setSharedData(this.cons.SHAREDDATA_ONLOADING, false);
+        console.log(respData)
         if (this.resultArray.length > 0) {
             this.resultArray = []; // Reset array
         }
-        resp.map(resp => {
-            this.resultArray.push(resp);
-        });
-        this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, this.resultArray, 5); // 抓附近的五個地點
+        this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, respData, 5); // 抓附近的五個地點
         console.log('resultArray:', this.resultArray)
         this.showAllLocation();
     }
 
     showAllLocation() {
-        if (!this.isNextPage) {
-            if (this.markers.length > 0) {
-                this.markers.forEach((marker) => marker.setMap(null));
-                this.markers = [];
-            }
-
-            this.resultArray = this.resultArray.map((result, index) => {
-                const infoWindowData: InfoWindowData = {
-                    position: {
-                        latitude: result.latitude,
-                        longitude: result.longitude,
-                    },
-                    name: result.name,
-                    img: result.image_url,
-                    rating: result.rating,
-                    ratingNum: result.ratings_total,
-                    // openNow: result.opening_hours.open_now,
-                };
-                console.log(infoWindowData)
-                this.addMarkerWithTimeout(infoWindowData, index * 1000).then((value) => {
-                    if (index + 1 === this.resultArray.length) {
-                        // Switch scenes with a delay of 1500 ms
-                        setTimeout(() => {
-                            this.handleTransformScenes();
-                        }, 1500);
-                    }
-                });
-
-                return result;
-            });
-            console.log(this.resultArray)
+        if (this.markers.length > 0) {
+            this.markers.forEach(marker => marker.setMap(null));
+            this.markers = [];
         }
+
+        this.resultArray.map((result, index) => {
+            const infoWindowData: InfoWindowData = {
+                position: {
+                    latitude: result.latitude,
+                    longitude: result.longitude,
+                },
+                name: result.name,
+                img: result.image_url,
+                rating: result.rating,
+                ratingNum: result.ratings_total,
+                // openNow: result.opening_hours.open_now,
+            };
+            console.log(infoWindowData)
+            this.addMarkerWithTimeout(infoWindowData, index * 1000).then((value) => {
+                if (index + 1 === this.resultArray.length) {
+                    // Switch scenes with a delay of 1500 ms
+                    setTimeout(() => {
+                        this.handleTransformScenes();
+                    }, 1500);
+                }
+            });
+
+            return result;
+        });
     }
 
     async addMarkerWithTimeout(data: InfoWindowData, timeout: number) {
@@ -203,7 +203,7 @@ export class DrinkShopMapComponent implements OnInit {
                         '<div><h1 id="titleName">' + data.name + '</h1></div>' +
                         '<div id="ratingWrapper">' +
                         '<span>' + data.rating + '</span>' +
-                        '<ol id="ratingStarsWrapper">' + this.handleRatingStar(data.rating) + '</ol>' +
+                        '<ol id="ratingStarsWrapper">' + this.drinkShopService.handleRatingStar(data.rating) + '</ol>' +
                         '</div>' +
                         '</div>' +
                         '</div>',
@@ -231,34 +231,10 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     handleTransformScenes() {
+        console.log('transform')
         // TODO: Call parent component transform scenes
-        console.log('transform scenes')
-        this.drinkShopService.setSharedData('showMap', false);
-        this.sharedService.onInitEmit();
-    }
-
-    handleRatingStar(rating: number) {
-        const ratings: number = rating * 10 + 2; // 加二是因為好計算
-        const ratingStars: number = Math.floor(ratings / 5) / 2; // 標準化成得到的星星數
-        const fullStars: number = Math.floor(ratingStars); // 滿星的數量
-        const halfStars: number = (ratingStars - fullStars) * 2; // 半星的數量
-        const emptyStars: number = 5 - fullStars - halfStars; // 空星的數量
-        let starContent: string = '';
-
-        console.log(fullStars, halfStars, emptyStars)
-        for (let i: number = 0; i < fullStars; i++) {
-            starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_14.png);"></li>';
-        }
-        if (halfStars) {
-            starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_half_14.png);"></li>';
-        }
-        if (emptyStars) {
-            for (let i: number = 0; i < emptyStars; i++) {
-                starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_empty_14.png);"></li>';
-            }
-        }
-
-        return starContent;
+        this.drinkShopService.setSharedData(this.cons.SHAREDDATA_SHOWMAP, false);
+        this.drinkShopService.setSharedData(this.cons.SHAREDDATA_DRINKSHOPRESULTS, this.resultArray);
     }
 
     handleInfoWindow() {

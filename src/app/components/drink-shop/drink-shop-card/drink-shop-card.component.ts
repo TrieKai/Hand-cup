@@ -11,7 +11,7 @@ import { SharedService } from 'src/app/shared/shared.service';
     styleUrls: ['./drink-shop-card.component.scss']
 })
 export class DrinkShopCardComponent implements OnInit {
-    @Input() resultArray: drinkShopResults[];
+    resultArray: drinkShopResults[] = [];
     @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
 
     constructor(
@@ -22,10 +22,12 @@ export class DrinkShopCardComponent implements OnInit {
         private sharedService: SharedService,
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.resultArray = this.drinkShopService.getSharedData(this.cons.SHAREDDATA_DRINKSHOPRESULTS);
+        console.log(this.resultArray)
+    }
 
     handleTransformScenes() {
-        this.drinkShopService.setShowMap(true);
-        this.sharedService.onInitEmit();
+        this.drinkShopService.setSharedData(this.cons.SHAREDDATA_SHOWMAP, true);
     }
 }
