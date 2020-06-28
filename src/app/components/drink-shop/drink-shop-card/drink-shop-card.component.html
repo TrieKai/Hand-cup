@@ -1,25 +1,54 @@
-<div #cardContainer class="cardContainer">
-  <div class="backBtn" (click)="handleTransformScenes()">返回</div>
-  <ng-container *ngFor="let result of resultArray">
-      <div class="card">
-          <div class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}"></div>
-          <div class="card-text">
-              <h2>{{result.name}}</h2>
-          </div>
-          <div class="card-stats">
-              <div class="stat">
-                  <div class="value">{{result.rating}}</div>
-                  <div class="type">rating</div>
-              </div>
-              <div class="stat">
-                  <div class="value">{{result.ratings_total}}</div>
-                  <div class="type">comments</div>
-              </div>
-              <div class="stat border">
-                  <div class="value">{{result.views}}</div>
-                  <div class="type">views</div>
-              </div>
-          </div>
-      </div>
-  </ng-container>
+<div #cardContainer class="cardContainer" *ngIf="!showChosenCard">
+    <div class="btnBox">
+        <button mat-raised-button color="warn" (click)="handleTransformScenes('map')">返回</button>
+        <button mat-raised-button class="drawBtn" color="warn" (click)="handleDraw()">抽卡</button>
+    </div>
+    <ng-container *ngFor="let result of resultArray">
+        <div class="card">
+            <div class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}"></div>
+            <div class="card-text">
+                <h2>{{result.name}}</h2>
+            </div>
+            <div class="card-stats">
+                <div class="stat">
+                    <div class="value">{{result.rating}}</div>
+                    <div class="type">rating</div>
+                </div>
+                <div class="stat">
+                    <div class="value">{{result.ratings_total}}</div>
+                    <div class="type">comments</div>
+                </div>
+                <div class="stat border">
+                    <div class="value">{{result.views}}</div>
+                    <div class="type">views</div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<div class="cardContainer" *ngIf="showChosenCard">
+    <div class="btnBox">
+        <button mat-raised-button color="warn" (click)="handleTransformScenes('cards')">返回</button>
+    </div>
+    <div class="card">
+        <div class="card-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
+        <div class="card-text">
+            <h2>{{chosenShop.name}}</h2>
+        </div>
+        <div class="card-stats">
+            <div class="stat">
+                <div class="value">{{chosenShop.rating}}</div>
+                <div class="type">rating</div>
+            </div>
+            <div class="stat">
+                <div class="value">{{chosenShop.ratings_total}}</div>
+                <div class="type">comments</div>
+            </div>
+            <div class="stat border">
+                <div class="value">{{chosenShop.views}}</div>
+                <div class="type">views</div>
+            </div>
+        </div>
+    </div>
 </div>

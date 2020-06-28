@@ -1,37 +1,5 @@
-<!-- <ng-container>
-    <div #mapContainer id="map">
-        <div>
-            <button>搜尋這個區域</button>
-        </div>
-    </div>
-    <mat-spinner *ngIf="onloading" class="spinner"></mat-spinner>
-    <div #cardContainer class="cardContainer">
-        <div class="backBtn" (click)="handleTransformScenes(false)">返回</div>
-        <ng-container *ngFor="let result of resultArray">
-            <div class="card">
-                <div class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}"></div>
-                <div class="card-text">
-                    <h2>{{result.name}}</h2>
-                </div>
-                <div class="card-stats">
-                    <div class="stat">
-                        <div class="value">{{result.rating}}</div>
-                        <div class="type">rating</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">{{result.ratings_total}}</div>
-                        <div class="type">comments</div>
-                    </div>
-                    <div class="stat border">
-                        <div class="value">{{result.views}}</div>
-                        <div class="type">views</div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
-    </div>
-</ng-container> -->
-
-<mat-spinner *ngIf="onloading" class="spinner"></mat-spinner>
-<app-drink-shop-map *ngIf="showMap"></app-drink-shop-map>
-<app-drink-shop-card *ngIf="!showMap"></app-drink-shop-card>
+<ng-container>
+  <mat-spinner *ngIf="onloading" class="spinner"></mat-spinner>
+  <app-drink-shop-map *ngIf="showMap"></app-drink-shop-map>
+  <app-drink-shop-card *ngIf="!showMap"></app-drink-shop-card>
+</ng-container>

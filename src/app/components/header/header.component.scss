@@ -1,62 +1,66 @@
 mat-toolbar {
-  height: 65px;
+    height: 65px;
 }
 
 .toolBarTitle {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .example-spacer {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .searchContainer {
-  display        : flex;
-  justify-content: center;
-  align-items    : center;
-  position       : relative;
-  margin-right   : 15px;
-  width          : 250px;
-  height         : 40px;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    position       : relative;
+    margin-right   : 15px;
+    width          : 250px;
+    height         : 40px;
 }
 
 .searchContainer input {
-  width : 250px;
-  height: 80%;
+    width : 250px;
+    height: 80%;
 
-  background   : #fcfcfc;
-  border       : 1px solid #aaa;
-  border-radius: 5px;
-  box-shadow   : 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+    background   : #fcfcfc;
+    border       : 1px solid #aaa;
+    border-radius: 5px;
+    box-shadow   : 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
 
-  text-indent: 15px;
+    text-indent: 15px;
 }
 
 .searchButton {
-  position: absolute;
-  right   : 10px;
-  color   : gray;
-  cursor  : pointer;
+    position: absolute;
+    right   : 10px;
+    color   : gray;
+    cursor  : pointer;
 }
 
 .accountButton {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .example-container {
-  position: absolute;
-  left    : 0;
-  right   : 0;
+    position: absolute;
+    left    : 0;
+    right   : 0;
 }
 
 .example-sidenav {
-  display           : flex;
-  align-items       : center;
-  justify-content   : center;
-  width             : 300px;
-  // background     : rgba(255, 0, 0, 0.5);
+    display           : flex;
+    align-items       : center;
+    justify-content   : center;
+    width             : 300px;
+    // background     : rgba(255, 0, 0, 0.5);
 
-  mat-list-item {
-      cursor: pointer;
-  }
+    mat-list-item {
+        cursor: pointer;
+
+        .menuSpan {
+            margin-left: 10px;
+        }
+    }
 }

@@ -5,7 +5,6 @@ import { MapService } from 'src/app/service/map.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
-import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
     selector: 'app-drink-shop-map',
@@ -33,7 +32,6 @@ export class DrinkShopMapComponent implements OnInit {
         private cons: ConstantsService,
         protected htmlElementService: HtmlElementService,
         private renderer: Renderer2,
-        private sharedService: SharedService,
     ) {
         this.coordinate = drinkShopService.currentCoordinate
     }

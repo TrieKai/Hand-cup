@@ -35,7 +35,7 @@
       <!-- <div mat-subheader>Folders</div> -->
       <mat-list-item *ngFor="let menu of menuList">
         <mat-icon mat-list-icon>{{menu.icon}}</mat-icon>
-        <div mat-line [routerLink]="menu.router" (click)="sidenav.close()">{{menu.title}}</div>
+        <span class="menuSpan" [routerLink]="menu.router" (click)="sidenav.close()">{{menu.title}}</span>
       </mat-list-item>
     </mat-list>
   </mat-sidenav>

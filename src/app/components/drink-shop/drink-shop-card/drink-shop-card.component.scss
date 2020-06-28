@@ -1,16 +1,23 @@
 .cardContainer {
-  display        : flex;
-  flex-wrap      : wrap;
-  justify-content: center;
-  margin         : auto;
-  width          : fit-content;
-  height         : calc(100vh - 65px);
+  display           : flex;
+  flex-wrap         : wrap;
+  justify-content   : center;
+  margin            : auto;
+  width             : fit-content;
+  height            : calc(100vh - 65px);
   // overflow       : hidden;
 }
 
-.backBtn {
+.btnBox {
   position: absolute;
-  cursor  : pointer;
+}
+
+// .backBtn{
+//   margin-right: 10px;
+// }
+
+.drawBtn {
+  margin-left: 25px;
 }
 
 .card {
@@ -48,9 +55,9 @@
   color    : black;
 
   h2 {
-      text-overflow: ellipsis;
-      overflow     : hidden;
-      white-space  : nowrap;
+    text-overflow: ellipsis;
+    overflow     : hidden;
+    white-space  : nowrap;
   }
 }
 
