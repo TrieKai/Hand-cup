@@ -6,6 +6,7 @@ interface drinkShopResults {
     image_url: string
     rating: number
     ratings_total: number
+    views: number
     distanceGap?: number
 }
 
