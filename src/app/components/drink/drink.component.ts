@@ -12,4 +12,7 @@ export class DrinkComponent implements OnInit {
   ngOnInit() {
   }
 
+  recommendDrinks() {
+    console.log('recommend!')
+  }
 }

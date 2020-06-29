@@ -1,3 +1,36 @@
 .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     height: calc(100vh - 65px);
+    background-color: #c0cebd;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 60%;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+.pressBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #424242;
+    cursor: pointer;
+
+    span {
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: 600;
+    }
 }
