@@ -1,5 +1,7 @@
+@import '../../../assets/css/sepcial-property.scss';
+
 #map {
   margin: auto;
-  height: calc(100vh - 65px);
+  height: height(layout);
   width : 100%;
 }

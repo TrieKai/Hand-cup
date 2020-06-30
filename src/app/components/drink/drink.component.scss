@@ -1,9 +1,11 @@
+@import '../../assets/css/sepcial-property.scss';
+
 .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 65px);
+    height: height(layout);
     background-color: #c0cebd;
 }
 

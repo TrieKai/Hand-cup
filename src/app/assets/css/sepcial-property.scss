@@ -1,0 +1,19 @@
+@function height($type) {
+  @if $type==layout {
+    @return calc(100vh - 65px);
+  }
+}
+
+@function zIndex($type) {
+  @if $type==spinner {
+    @return 100;
+  }
+
+  @else if $type==message {
+    @return 50;
+  }
+
+  @else {
+    @return initial;
+  }
+}

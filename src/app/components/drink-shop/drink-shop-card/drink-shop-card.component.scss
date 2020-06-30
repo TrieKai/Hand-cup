@@ -1,10 +1,12 @@
+@import '../../../assets/css/sepcial-property.scss';
+
 .cardContainer {
   display           : flex;
   flex-wrap         : wrap;
   justify-content   : center;
   margin            : auto;
   width             : fit-content;
-  height            : calc(100vh - 65px);
+  height            : height(layout);
   // overflow       : hidden;
 }
 
