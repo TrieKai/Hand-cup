@@ -1,1 +1,5 @@
-<p>message works!</p>
+<div id="message-container">
+  <div *ngFor="let message of messages; let i=index" class="messageContainer" [ngStyle]="getBottom(i)">
+    <app-message-block [message]="message" [index]="i" (remove)="removeMessage($event)"></app-message-block>
+  </div>
+</div>

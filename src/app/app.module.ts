@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { MaterialModule } from './util/material/material.module';
+import { CommonComponentModule } from './components/common/common-component.module';
 
 import { MapComponent } from './components/map/map.component';
 import { DrinkComponent } from './components/drink/drink.component';
@@ -14,9 +15,6 @@ import { DrinkShopComponent } from './components/drink-shop/drink-shop.component
 import { HeaderComponent } from './components/header/header.component';
 import { DrinkShopMapComponent } from './components/drink-shop/drink-shop-map/drink-shop-map.component';
 import { DrinkShopCardComponent } from './components/drink-shop/drink-shop-card/drink-shop-card.component';
-import { MessageComponent } from './components/common/message/message.component';
-import { MessageBlockComponent } from './components/common/message/message-block/message-block.component';
-import { LockLoadingComponent } from './components/common/lock-loading/lock-loading.component';
 
 @NgModule({
     declarations: [
@@ -28,15 +26,13 @@ import { LockLoadingComponent } from './components/common/lock-loading/lock-load
         HeaderComponent,
         DrinkShopMapComponent,
         DrinkShopCardComponent,
-        MessageComponent,
-        MessageBlockComponent,
-        LockLoadingComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
         MaterialModule,
+        CommonComponentModule,
         BrowserAnimationsModule,
     ],
     providers: [],

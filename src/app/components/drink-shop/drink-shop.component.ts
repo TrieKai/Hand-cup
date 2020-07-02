@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
-import { Subscribable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-drink-shop',
     templateUrl: './drink-shop.component.html',
     styleUrls: ['./drink-shop.component.scss']
 })
-export class DrinkShopComponent implements OnInit {
+export class DrinkShopComponent implements OnInit, OnDestroy {
     onloading: boolean;
     showMap: boolean;
-    subscription: Subscription
+    subscribe: Subscription
 
     constructor(
         private cons: ConstantsService,
         private sharedService: SharedService,
         private drinkShopService: DrinkShopService,
     ) {
-        this.subscription = this.sharedService.onInitEmitted.subscribe(() => {
+        this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
             console.log('subscribe!')
             this.onloading = drinkShopService.getSharedData(cons.SHAREDDATA_ONLOADING);
             console.log('aaa', this.onloading)
@@ -33,7 +33,9 @@ export class DrinkShopComponent implements OnInit {
         this.showMap = this.drinkShopService.getSharedData(this.cons.SHAREDDATA_SHOWMAP);
     }
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+    ngOnDestroy() {
+        if (this.subscribe) {
+            this.subscribe.unsubscribe();
+        }
     }
 }

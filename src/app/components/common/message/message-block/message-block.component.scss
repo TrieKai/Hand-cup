@@ -1,0 +1,91 @@
+.message-block-container {
+  position: relative;
+  width: 284px;
+  height: 74px;
+  overflow: hidden;
+
+  .message-block {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    left: 2px;
+    padding: 5px 10px;
+    height: 60px;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    transition: top 0.5s;
+    overflow: hidden;
+    animation: floatUp 0.5s;
+
+    .icon,
+    .text {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .icon {
+      margin: 7.5px 10px 7.5px 5px;
+
+      svg {
+        display: block;
+      }
+    }
+
+    .text {
+      width: 200px;
+
+      .title {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    svg {
+      display: block;
+    }
+  }
+
+  .remove {
+    top: -74px;
+  }
+}
+
+.success {
+  background-color: #b7d8b7;
+}
+
+.info {
+  background-color: #7fbcec;
+}
+
+.warn {
+  background-color: #ffe399;
+}
+
+.error {
+  background-color: #f8b7bd;
+}
+
+@keyframes floatUp {
+  from {
+    top: 74px;
+  }
+
+  to {
+    top: 1px;
+  }
+}

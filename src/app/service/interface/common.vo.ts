@@ -32,3 +32,11 @@ interface UtilitiesMenu {
     name: string
     icon: string
 }
+
+interface Message {
+    type: string
+    title: string
+    content: string
+    time?: number
+    sticky?: boolean
+}

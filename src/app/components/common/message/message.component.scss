@@ -1,0 +1,9 @@
+@import '../../../assets/css/sepcial-property.scss';
+
+.messageContainer {
+  position: fixed;
+  right: 5px;
+  bottom: 5px;
+  z-index: zIndex(message);
+  transition: bottom 0.3s;
+}

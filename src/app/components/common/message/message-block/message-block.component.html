@@ -1,1 +1,23 @@
-<p>message-block works!</p>
+<div class="message-block-container">
+  <div class="message-block" [ngClass]="class">
+    <div *ngIf="message.type==='success'" class="icon">
+      <i-done [width]="45" [height]="45"></i-done>
+    </div>
+    <div *ngIf="message.type==='info'" class="icon">
+      <i-info [width]="45" [height]="45"></i-info>
+    </div>
+    <div *ngIf="message.type==='warn'" class="icon">
+      <i-warning [width]="45" [height]="45"></i-warning>
+    </div>
+    <div *ngIf="message.type==='error'" class="icon">
+      <i-close [width]="45" [height]="45"></i-close>
+    </div>
+    <div class="text">
+      <div class="title">{{message.title}}</div>
+      <div class="content">{{message.content}}</div>
+    </div>
+    <div class="close" (click)="removeMessage()">
+      <i-close></i-close>
+    </div>
+  </div>
+</div>

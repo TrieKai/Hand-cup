@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ConstantsService } from 'src/app/util/constants/constants.service';
+import { MessageService } from 'src/app/service/message.service';
+
 @Component({
   selector: 'app-drink',
   templateUrl: './drink.component.html',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DrinkComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private cons: ConstantsService,
+    private message: MessageService
+  ) { }
 
   ngOnInit() {
+    this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: 'Hiiiiiiii', content: 'GGGGGGGGG' });
   }
 
   recommendDrinks() {

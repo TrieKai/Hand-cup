@@ -14,11 +14,3 @@ export class MessageService {
     this.subject.next(message);
   }
 }
-
-export interface Message {
-  type: string
-  title: string
-  content: string
-  time?: number
-  sticky?: boolean
-}
