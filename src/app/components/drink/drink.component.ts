@@ -16,10 +16,9 @@ export class DrinkComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: 'Hiiiiiiii', content: 'GGGGGGGGG' });
   }
 
   recommendDrinks() {
-    console.log('recommend!')
+    this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '注意!', content: '還沒做啦QQ' });
   }
 }
