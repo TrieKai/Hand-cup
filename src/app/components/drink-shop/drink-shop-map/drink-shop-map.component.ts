@@ -37,7 +37,7 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.onloading = this.drinkShopService.getSharedData(this.cons.SHAREDDATA_ONLOADING);
+        this.onloading = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.onloading);
         console.log('init', this.onloading)
         this.geolocationService.getPosition().then(pos => {
             console.log(`Positon: ${pos.lng} ${pos.lat}`);
@@ -146,9 +146,9 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     async getNearByLocations() {
-        this.drinkShopService.setSharedData(this.cons.SHAREDDATA_ONLOADING, true);
+        this.drinkShopService.setSharedData(this.cons.SHAREDDATA.onloading, true);
         const respData = await this.mapService.getNearByLocations(this.coordinate, this.distance);
-        this.drinkShopService.setSharedData(this.cons.SHAREDDATA_ONLOADING, false);
+        this.drinkShopService.setSharedData(this.cons.SHAREDDATA.onloading, false);
         console.log(respData)
         if (this.resultArray.length > 0) {
             this.resultArray = []; // Reset array
@@ -231,8 +231,8 @@ export class DrinkShopMapComponent implements OnInit {
     handleTransformScenes() {
         console.log('transform')
         // TODO: Call parent component transform scenes
-        this.drinkShopService.setSharedData(this.cons.SHAREDDATA_SHOWMAP, false);
-        this.drinkShopService.setSharedData(this.cons.SHAREDDATA_DRINKSHOPRESULTS, this.resultArray);
+        this.drinkShopService.setSharedData(this.cons.SHAREDDATA.showMap, false);
+        this.drinkShopService.setSharedData(this.cons.SHAREDDATA.drinkShopResults, this.resultArray);
     }
 
     handleInfoWindow() {

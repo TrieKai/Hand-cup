@@ -16,7 +16,7 @@ export class MessageBlockComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.class = { [`${this.message.type}`]: true }
+    this.class = { [`${this.message.type}`]: true };
   }
 
   ngAfterViewInit() {

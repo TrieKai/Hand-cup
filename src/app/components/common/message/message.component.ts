@@ -24,7 +24,7 @@ export class MessageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.max = Math.floor((window.innerHeight - 10) / 84);
 
     while (this.messages.length > this.max) {
-      this.messages.shift();
+      this.messages.shift(); // Remove first element
     }
   }
 

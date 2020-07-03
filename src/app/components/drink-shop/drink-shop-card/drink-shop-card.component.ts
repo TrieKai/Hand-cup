@@ -20,13 +20,13 @@ export class DrinkShopCardComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.resultArray = this.drinkShopService.getSharedData(this.cons.SHAREDDATA_DRINKSHOPRESULTS);
+        this.resultArray = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.drinkShopResults);
         console.log(this.resultArray)
     }
 
     handleTransformScenes(status: string) {
         if (status === 'map') {
-            this.drinkShopService.setSharedData(this.cons.SHAREDDATA_SHOWMAP, true);
+            this.drinkShopService.setSharedData(this.cons.SHAREDDATA.showMap, true);
         } else if (status === 'cards') {
           console.log('ggg')
             this.showChosenCard = false;
