@@ -1,5 +1,7 @@
+@import '../../assets/css/special-property.scss';
+
 mat-toolbar {
-    height: 65px;
+    height: height(header);
 }
 
 .toolBarTitle {

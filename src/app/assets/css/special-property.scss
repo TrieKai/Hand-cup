@@ -1,4 +1,8 @@
 @function height($type) {
+  @if $type==header {
+    @return 65px;
+  }
+
   @if $type==layout {
     @return calc(100vh - 65px);
   }
