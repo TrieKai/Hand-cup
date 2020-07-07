@@ -31,12 +31,12 @@
     <div class="btnBox">
         <button mat-raised-button color="warn" (click)="handleTransformScenes('cards')">返回</button>
     </div>
-    <div class="card">
-        <div class="card-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
-        <div class="card-text">
+    <div class="chosenCard">
+        <div class="chosenCard-title">
             <h2>{{chosenShop.name}}</h2>
         </div>
-        <div class="card-stats">
+        <div class="chosenCard-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
+        <div class="chosenCard-content">
             <div class="stat">
                 <div class="value">{{chosenShop.rating}}</div>
                 <div class="type">rating</div>
