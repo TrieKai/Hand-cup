@@ -98,22 +98,48 @@
   padding: 10px;
 }
 
+// .chosenCard {
+//   height: 80vh;
+//   width: 70vw;
+//   margin: 30px;
+//   display: grid;
+//   // grid-template-columns: calc(33vw - 60px);
+//   grid-template-columns: 150px 300px;
+//   grid-template-rows: 50px 500px;
+//   // grid-template-areas: "title""image""content";
+//   height: fit-content;
+//   border-radius: 18px;
+//   background: white;
+//   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
+//   text-align: center;
+// }
+
 .chosenCard {
-  margin: 30px;
   display: grid;
-  // grid-template-columns: calc(33vw - 60px);
-  grid-template-columns: 300px;
-  grid-template-rows: 25px 210px 80px;
-  grid-template-areas: "title""image""content";
-  height: fit-content;
-  border-radius: 18px;
-  background: white;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
-  text-align: center;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 150px 300px;
+  grid-template-rows: 50px calc(80vh - 50px);
+  grid-template-areas:
+    "title title"
+    "image content";
+  height: 80vh;
+  width: 940px;
+  margin: 0 auto;
 }
 
 .chosenCard-title {
-  grid-area: titles;
+  grid-area: title;
+  text-align: center;
+}
+
+.chosenCard-image {
+  grid-area: image;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
 }
 
 .cardContainer-content {

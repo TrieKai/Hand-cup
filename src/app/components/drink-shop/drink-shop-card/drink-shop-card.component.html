@@ -37,18 +37,11 @@
         </div>
         <div class="chosenCard-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
         <div class="chosenCard-content">
-            <div class="stat">
-                <div class="value">{{chosenShop.rating}}</div>
-                <div class="type">rating</div>
-            </div>
-            <div class="stat">
-                <div class="value">{{chosenShop.ratings_total}}</div>
-                <div class="type">comments</div>
-            </div>
-            <div class="stat border">
-                <div class="value">{{chosenShop.views}}</div>
-                <div class="type">views</div>
-            </div>
+            <ul>
+                <li>{{chosenShop.rating}}</li>
+                <li>{{chosenShop.ratings_total}}</li>
+                <li>{{chosenShop.views}}</li>
+            </ul>
         </div>
     </div>
 </div>
