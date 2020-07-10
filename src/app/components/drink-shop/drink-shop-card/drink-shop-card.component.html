@@ -33,14 +33,15 @@
     </div>
     <div class="chosenCard">
         <div class="chosenCard-title">
-            <h2>{{chosenShop.name}}</h2>
+            <span>恭喜! 今天飲料喝這家~</span>
         </div>
         <div class="chosenCard-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
         <div class="chosenCard-content">
             <ul>
-                <li>{{chosenShop.rating}}</li>
-                <li>{{chosenShop.ratings_total}}</li>
-                <li>{{chosenShop.views}}</li>
+                <li>店名: {{chosenShop.name}}</li>
+                <li>評分: {{chosenShop.rating}}</li>
+                <li>評價數: {{chosenShop.ratings_total}}</li>
+                <li>觀看次數: {{chosenShop.views}}</li>
             </ul>
         </div>
     </div>

@@ -116,14 +116,15 @@
 
 .chosenCard {
   display: grid;
+  align-self: center;
   align-items: center;
   justify-content: center;
-  grid-template-columns: 150px 300px;
-  grid-template-rows: 50px calc(80vh - 50px);
+  grid-template-columns: 300px 450px;
+  grid-template-rows: 40px calc(70vh - 40px);
   grid-template-areas:
     "title title"
     "image content";
-  height: 80vh;
+  height: 70vh;
   width: 940px;
   margin: 0 auto;
 }
@@ -131,6 +132,12 @@
 .chosenCard-title {
   grid-area: title;
   text-align: center;
+  justify-content: center;
+  height: 100%;
+  background-color: rgb(74, 183, 187);
+  color: black;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .chosenCard-image {
@@ -142,6 +149,9 @@
   height: 100%;
 }
 
-.cardContainer-content {
+.chosenCard-content {
   grid-area: content;
+  height: 100%;
+  background-color: white;
+  color: rgb(204, 151, 160);
 }
