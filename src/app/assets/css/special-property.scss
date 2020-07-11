@@ -8,6 +8,12 @@
   }
 }
 
+@function color($type) {
+  @if $type==themeOfBlue {
+    @return rgb(154, 213, 227);
+  }
+}
+
 @function zIndex($type) {
   @if $type==spinner {
     @return 100;

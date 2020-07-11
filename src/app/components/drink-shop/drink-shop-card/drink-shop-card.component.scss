@@ -98,22 +98,6 @@
   padding: 10px;
 }
 
-// .chosenCard {
-//   height: 80vh;
-//   width: 70vw;
-//   margin: 30px;
-//   display: grid;
-//   // grid-template-columns: calc(33vw - 60px);
-//   grid-template-columns: 150px 300px;
-//   grid-template-rows: 50px 500px;
-//   // grid-template-areas: "title""image""content";
-//   height: fit-content;
-//   border-radius: 18px;
-//   background: white;
-//   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
-//   text-align: center;
-// }
-
 .chosenCard {
   display: grid;
   align-self: center;
@@ -131,10 +115,12 @@
 
 .chosenCard-title {
   grid-area: title;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: rgb(74, 183, 187);
+  background-color: color(themeOfBlue);
   color: black;
   font-size: 24px;
   font-weight: 600;
@@ -154,4 +140,5 @@
   height: 100%;
   background-color: white;
   color: rgb(204, 151, 160);
+  font-size: 20px;
 }
