@@ -1,7 +1,7 @@
-<div #cardContainer class="cardContainer" *ngIf="!showChosenCard">
-    <div class="btnBox">
+<div #cardContainer class="card-container" *ngIf="!showChosenCard">
+    <div class="button-box">
         <button mat-raised-button color="warn" (click)="handleTransformScenes('map')">返回</button>
-        <button mat-raised-button class="drawBtn" color="warn" (click)="handleDraw()">抽卡</button>
+        <button mat-raised-button class="draw-button" color="warn" (click)="handleDraw()">抽卡</button>
     </div>
     <ng-container *ngFor="let result of resultArray">
         <div class="card">
@@ -27,16 +27,16 @@
     </ng-container>
 </div>
 
-<div class="cardContainer" *ngIf="showChosenCard">
-    <div class="btnBox">
+<div class="card-container" *ngIf="showChosenCard">
+    <div class="button-box">
         <button mat-raised-button color="warn" (click)="handleTransformScenes('cards')">返回</button>
     </div>
-    <div class="chosenCard">
-        <div class="chosenCard-title">
+    <div class="chosen-card">
+        <div class="chosen-card-title">
             <span>恭喜! 今天飲料喝這家~</span>
         </div>
-        <div class="chosenCard-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
-        <div class="chosenCard-content">
+        <div class="chosen-card-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
+        <div class="chosen-card-content">
             <ul>
                 <li>店名: {{chosenShop.name}}</li>
                 <li>評分: {{chosenShop.rating}}</li>

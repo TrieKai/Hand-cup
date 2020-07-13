@@ -12,7 +12,7 @@ export class MenuConstantsService {
   // Menu
   public readonly DRINK: string = "今天飲料喝什麼?";
   public readonly DRINK_SHOP: string = "今天飲料喝哪家?";
-  public readonly COMPARE: string = "比較樣式";
+  public readonly COMPARE: string = "比較模式";
   public readonly RECOMMENDATION: string = "客製化推薦";
   public readonly COLLECTION: string = "我的收藏";
   public readonly NEWEST: string = "What's new!";

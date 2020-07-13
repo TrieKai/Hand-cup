@@ -1,6 +1,6 @@
 @import '../../../assets/css/special-property.scss';
 
-.cardContainer {
+.card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -10,7 +10,7 @@
   // overflow       : hidden;
 }
 
-.btnBox {
+.button-box {
   position: absolute;
 }
 
@@ -18,7 +18,7 @@
 //   margin-right: 10px;
 // }
 
-.drawBtn {
+.draw-button {
   margin-left: 25px;
 }
 
@@ -98,7 +98,7 @@
   padding: 10px;
 }
 
-.chosenCard {
+.chosen-card {
   display: grid;
   align-self: center;
   align-items: center;
@@ -108,12 +108,12 @@
   grid-template-areas:
     "title title"
     "image content";
+  margin: 0 auto;
   height: 70vh;
   width: 940px;
-  margin: 0 auto;
 }
 
-.chosenCard-title {
+.chosen-card-title {
   grid-area: title;
   display: flex;
   justify-content: center;
@@ -124,21 +124,25 @@
   color: black;
   font-size: 24px;
   font-weight: 600;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
-.chosenCard-image {
+.chosen-card-image {
   grid-area: image;
   display: inline-block;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
+  border-bottom-left-radius: 5px;
 }
 
-.chosenCard-content {
+.chosen-card-content {
   grid-area: content;
   height: 100%;
   background-color: white;
   color: rgb(204, 151, 160);
   font-size: 20px;
+  border-bottom-right-radius: 5px;
 }
