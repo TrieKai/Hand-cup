@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/co
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
+import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
 
@@ -28,8 +29,9 @@ export class DrinkShopMapComponent implements OnInit {
     constructor(
         private geolocationService: GeolocationService,
         private mapService: MapService,
-        private drinkShopService: DrinkShopService,
         private cons: ConstantsService,
+        private sharedService: SharedService,
+        private drinkShopService: DrinkShopService,
         protected htmlElementService: HtmlElementService,
         private renderer: Renderer2,
     ) {
@@ -37,7 +39,7 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.onloading = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.onloading);
+        this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
         console.log('init', this.onloading)
         this.geolocationService.getPosition().then(pos => {
             console.log(`Positon: ${pos.lng} ${pos.lat}`);
@@ -146,9 +148,9 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     async getNearByLocations() {
-        this.drinkShopService.setSharedData(this.cons.SHAREDDATA.onloading, true);
+        this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
         const respData = await this.mapService.getNearByLocations(this.coordinate, this.distance);
-        this.drinkShopService.setSharedData(this.cons.SHAREDDATA.onloading, false);
+        this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
         console.log(respData)
         if (this.resultArray.length > 0) {
             this.resultArray = []; // Reset array

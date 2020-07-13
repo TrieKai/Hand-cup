@@ -40,3 +40,7 @@ interface Message {
     time?: number
     sticky?: boolean
 }
+
+interface commonSharedData {
+    onloading: boolean
+}

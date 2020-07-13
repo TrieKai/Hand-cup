@@ -15,7 +15,7 @@
 }
 
 @function zIndex($type) {
-  @if $type==spinner {
+  @if $type==loading {
     @return 100;
   }
 
