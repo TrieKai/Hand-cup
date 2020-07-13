@@ -7,7 +7,7 @@ export class MenuConstantsService {
   // Home
   public readonly HOME: string = "波吧飲料地圖";
 
-  public readonly HOME_ICON: string = "";
+  public readonly HOME_ICON: string = "../../assets/img/Logo.png";
 
   // Menu
   public readonly DRINK: string = "今天飲料喝什麼?";
@@ -17,12 +17,12 @@ export class MenuConstantsService {
   public readonly COLLECTION: string = "我的收藏";
   public readonly NEWEST: string = "What's new!";
 
-  public readonly DRINK_ICON: string = 'folder';
-  public readonly DRINK_SHOP_ICON: string = "folder";
-  public readonly COMPARE_ICON: string = "folder";
-  public readonly RECOMMENDATION_ICON: string = "folder";
-  public readonly COLLECTION_ICON: string = "folder";
-  public readonly NEWEST_ICON: string = "folder";
+  public readonly DRINK_ICON: string = "../../assets/img/Icon-What kinda drink.png";
+  public readonly DRINK_SHOP_ICON: string = "../../assets/img/Icon-Which shop.png";
+  public readonly COMPARE_ICON: string = "../../assets/img/Icon-Comparison.png";
+  public readonly RECOMMENDATION_ICON: string = "../../assets/img/Icon-Recommendation.png";
+  public readonly COLLECTION_ICON: string = "../../assets/img/Icon-Saved.png";
+  public readonly NEWEST_ICON: string = "../../assets/img/Icon-New.png";
 
   // UtilitiesMenu
   public readonly LOGIN: string = "登入";

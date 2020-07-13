@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-drink-shop',
@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class DrinkShopComponent implements OnInit, OnDestroy {
     onloading: boolean;
     showMap: boolean;
-    subscribe: Subscription
+    subscribe: Subscription;
 
     constructor(
         private cons: ConstantsService,
