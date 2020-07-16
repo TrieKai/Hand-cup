@@ -6,6 +6,7 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
     selector: 'app-drink-shop-map',
@@ -34,6 +35,7 @@ export class DrinkShopMapComponent implements OnInit {
         private drinkShopService: DrinkShopService,
         protected htmlElementService: HtmlElementService,
         private renderer: Renderer2,
+        private messageService: MessageService,
     ) {
         this.coordinate = drinkShopService.currentCoordinate
     }
@@ -149,13 +151,17 @@ export class DrinkShopMapComponent implements OnInit {
 
     async getNearByLocations() {
         this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
-        const respData = await this.mapService.getNearByLocations(this.coordinate, this.distance);
+        const respData: any[] = await this.mapService.getNearByLocations(this.coordinate, this.distance);
         this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
         console.log(respData)
         if (this.resultArray.length > 0) {
             this.resultArray = []; // Reset array
         }
-        this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, respData, 5); // 抓附近的五個地點
+        if (respData.length > 0) {
+            this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, respData, 5); // 抓附近的五個地點
+        } else {
+            this.messageService.add({ type: this.cons.MESSAGE_TYPE.warn, title: '可憐哪', content: '附近沒飲料店!' });
+        }
         console.log('resultArray:', this.resultArray)
         this.showAllLocation();
     }

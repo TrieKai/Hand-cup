@@ -28,13 +28,13 @@ export class DrinkShopCardComponent implements OnInit {
         if (status === 'map') {
             this.drinkShopService.setSharedData(this.cons.SHAREDDATA.showMap, true);
         } else if (status === 'cards') {
-          console.log('ggg')
+            console.log('ggg')
             this.showChosenCard = false;
         } else { return; }
     }
 
     handleDraw() {
-        const randomIndex = Math.floor(Math.random() * Math.floor(5));
+        const randomIndex = Math.floor(Math.random() * Math.floor(this.resultArray.length));
         this.chosenShop = this.resultArray[randomIndex];
         this.showChosenCard = true;
     }
