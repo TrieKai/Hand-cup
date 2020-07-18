@@ -2,9 +2,9 @@
 @include mat-core();
 
 .main-theme {
-  $alternate-primary: mat-palette($mat-light-blue, 500);
-  $alternate-accent: mat-palette($mat-blue-grey, 200);
-  $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+  $main-primary: mat-palette($mat-light-blue, 500);
+  $main-accent: mat-palette($mat-blue-grey, 200);
+  $main-theme: mat-dark-theme($main-primary, $main-accent);
 
-  @include angular-material-theme($alternate-theme);
+  @include angular-material-theme($main-theme);
 }

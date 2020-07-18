@@ -23,6 +23,10 @@
     @return 50;
   }
 
+  @else if $type==header {
+    @return 40;
+  }
+
   @else {
     @return initial;
   }
