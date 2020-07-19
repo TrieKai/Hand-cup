@@ -47,21 +47,25 @@
   <span class="material-icons account-button" [matMenuTriggerFor]="menu">
     face
   </span>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let utilitiesMenu of utilitiesMenuList">
+      <mat-icon>{{utilitiesMenu.icon}}</mat-icon>
+      <span>{{utilitiesMenu.title}}</span>
+    </button>
+  </mat-menu>
 </div>
 <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
 <label for="openSidebarMenu" class="sidebarIconToggle">
-  <div class="spinner diagonal part-1"></div>
-  <div class="spinner horizontal"></div>
-  <div class="spinner diagonal part-2"></div>
+  <div class="hamburger diagonal part-1"></div>
+  <div class="hamburger horizontal"></div>
+  <div class="hamburger diagonal part-2"></div>
 </label>
 <div id="sidebarMenu">
   <ul class="sidebarMenuInner">
-    <li>Jelena Jovanovic <span>Web Developer</span></li>
-    <li><a href="https://vanila.io" target="_blank">Company</a></li>
-    <li><a href="https://instagram.com/plavookac" target="_blank">Instagram</a></li>
-    <li><a href="https://twitter.com/plavookac" target="_blank">Twitter</a></li>
-    <li><a href="https://www.youtube.com/channel/UCDfZM0IK6RBgud8HYGFXAJg" target="_blank">YouTube</a></li>
-    <li><a href="https://www.linkedin.com/in/plavookac/" target="_blank">Linkedin</a></li>
+    <li *ngFor="let menu of menuList">
+      <img class="menu-icon" [src]="menu.icon" alt="menu-icon" />
+      <span class="menu-span" [routerLink]="menu.router" (click)="sidenav.close()">{{menu.title}}</span>
+    </li>
   </ul>
 </div>
 <div id='center' class="main center">
@@ -69,20 +73,3 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-
-<!-- <mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="side" class="example-sidenav" mode="over">
-    <mat-list>
-      <mat-list-item *ngFor="let menu of menuList">
-        <img class="menu-icon" [src]="menu.icon" alt="menu-icon" />
-        <span class="menu-span" [routerLink]="menu.router" (click)="sidenav.close()">{{menu.title}}</span>
-      </mat-list-item>
-    </mat-list>
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-
-    <router-outlet></router-outlet>
-
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
