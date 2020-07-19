@@ -64,7 +64,7 @@
   <ul class="sidebarMenuInner">
     <li *ngFor="let menu of menuList">
       <img class="menu-icon" [src]="menu.icon" alt="menu-icon" />
-      <span class="menu-span" [routerLink]="menu.router" (click)="sidenav.close()">{{menu.title}}</span>
+      <span class="menu-span" [routerLink]="menu.router" (click)="close()">{{menu.title}}</span>
     </li>
   </ul>
 </div>

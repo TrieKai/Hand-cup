@@ -36,4 +36,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     ngOnDestroy(): void {
         this.htmlElementService.delete('searchInput');
     }
+
+    close() {
+
+    }
 }
