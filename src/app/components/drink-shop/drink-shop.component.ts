@@ -14,6 +14,7 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
     onloading: boolean;
     showMap: boolean;
     subscribe: Subscription;
+    infoMessage: string;
 
     constructor(
         private cons: ConstantsService,
@@ -31,6 +32,7 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.onloading = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.onloading);
         this.showMap = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.showMap);
+        this.infoMessage = this.cons.INFO_MESSAGE.drinkShops;
     }
 
     ngOnDestroy() {

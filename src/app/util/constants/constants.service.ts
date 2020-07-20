@@ -20,13 +20,19 @@ export class ConstantsService {
     drinkShopResults: 'drinkShopResults'
   };
 
-  // message type
+  // Message type
   public readonly MESSAGE_TYPE = {
     success: 'success',
     info: 'info',
     warn: 'warn',
     error: 'error'
   };
+
+  // Info message
+  public readonly INFO_MESSAGE = {
+    drinks: '今天飲料喝甚麼?',
+    drinkShops: '今天飲料喝哪家?'
+  }
 
   constructor() { }
 }

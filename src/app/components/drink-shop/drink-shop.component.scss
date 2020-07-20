@@ -1,0 +1,12 @@
+@import '../../assets/css/special-property.scss';
+
+.info-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: height(infoBar);
+  font-size: 24px;
+  color: white;
+  background-color: #438EB9;
+}

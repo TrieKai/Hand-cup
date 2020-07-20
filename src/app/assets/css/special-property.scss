@@ -3,8 +3,12 @@
     @return 65px;
   }
 
+  @if $type==infoBar {
+    @return 45px;
+  }
+
   @if $type==layout {
-    @return calc(100vh - 65px);
+    @return calc(100vh - 65px - 45px); // Minus header[65px] & infoBar[45px]
   }
 }
 
