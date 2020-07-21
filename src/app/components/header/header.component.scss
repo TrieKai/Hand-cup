@@ -92,14 +92,13 @@ body {
     background : #fff;
     padding    : 0;
     margin     : 0;
-    font-family: 'Varela Round', sans-serif;
 }
 
 .header {
     display         : flex;
     align-items     : center;
-    // margin: 0 auto;
-    margin-left     : 45px;
+    margin          : 0 auto;
+    padding-left    : 45px;
     width           : 100%;
     max-width       : 100%;
     box-shadow      : none;
@@ -185,23 +184,23 @@ input[type=checkbox] {
 .sidebarIconToggle {
     transition: all 0.3s;
     box-sizing: border-box;
-    cursor    : pointer;
-    position  : absolute;
-    z-index   : zIndex(header);
-    height    : 100%;
+    position  : fixed;
     width     : 100%;
+    height    : 100%;
     top       : 22px;
     left      : 15px;
-    height    : 22px;
     width     : 22px;
+    height    : 22px;
+    cursor    : pointer;
+    z-index   : zIndex(header);
 }
 
 .hamburger {
     transition      : all 0.3s;
     box-sizing      : border-box;
     position        : absolute;
-    height          : 3px;
     width           : 100%;
+    height          : 3px;
     background-color: gray;
 }
 
