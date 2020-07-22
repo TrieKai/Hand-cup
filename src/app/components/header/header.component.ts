@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.htmlElementService.delete('searchInput');
     }
 
-    handleSidebar(status: boolean) {
+    handleSidebar(status?: boolean) {
         // When status variable not undefined
         if (status !== undefined) {
             if (status) {
