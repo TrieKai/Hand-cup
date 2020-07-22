@@ -1,37 +1,6 @@
-<!-- <mat-toolbar color="primary">
-  <mat-toolbar-row>
-      <button mat-icon-button color="accent" (click)="sidenav.toggle()">
-          <mat-icon>menu</mat-icon>
-      </button>
-      <img class="home-icon" [src]="home.icon" alt="home_icon" />
-      <span class="toolBar-title" [routerLink]="home.router">
-          {{home.title}}
-      </span>
-
-      <span class="example-spacer"></span>
-
-      <div class="search-container">
-          <span class="material-icons search-button">
-              search
-          </span>
-          <input #searchInput placeholder="Search...">
-      </div>
-
-      <span class="material-icons account-button" [matMenuTriggerFor]="menu">
-          face
-      </span>
-      <mat-menu #menu="matMenu">
-          <button mat-menu-item *ngFor="let utilitiesMenu of utilitiesMenuList">
-              <mat-icon>{{utilitiesMenu.icon}}</mat-icon>
-              <span>{{utilitiesMenu.title}}</span>
-          </button>
-      </mat-menu>
-  </mat-toolbar-row>
-</mat-toolbar> -->
-
 <div class="header">
   <img class="home-icon" [src]="home.icon" alt="home_icon" />
-  <span class="toolBar-title" [routerLink]="home.router">
+  <span class="toolBar-title" [routerLink]="home.router" (click)="handleSidebar(false)">
     {{home.title}}
   </span>
 
@@ -54,22 +23,23 @@
     </button>
   </mat-menu>
 </div>
-<input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
-<label for="openSidebarMenu" class="sidebarIconToggle">
+<label #sidebarIconToggle class="sidebarIconToggle" (click)="handleSidebar()">
   <div class="hamburger diagonal part-1"></div>
   <div class="hamburger horizontal"></div>
   <div class="hamburger diagonal part-2"></div>
 </label>
-<div id="sidebarMenu">
+<div class="sidebarMenu" #sidebarMenu>
   <ul class="sidebarMenuInner">
     <li *ngFor="let menu of menuList">
       <img class="menu-icon" [src]="menu.icon" alt="menu-icon" />
-      <span class="menu-span" [routerLink]="menu.router" (click)="close()">{{menu.title}}</span>
+      <span class="menu-span" [routerLink]="menu.router" (click)="handleSidebar()">{{menu.title}}</span>
     </li>
   </ul>
 </div>
-<div id='center' class="main center">
+<div class="main">
   <div class="mainInner">
+
     <router-outlet></router-outlet>
+
   </div>
 </div>
