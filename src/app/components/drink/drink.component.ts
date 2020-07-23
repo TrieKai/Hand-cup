@@ -9,6 +9,7 @@ import { MessageService } from 'src/app/service/message.service';
   styleUrls: ['./drink.component.scss']
 })
 export class DrinkComponent implements OnInit {
+  infoMessage: string;
 
   constructor(
     private cons: ConstantsService,
@@ -16,6 +17,7 @@ export class DrinkComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.infoMessage = this.cons.INFO_MESSAGE.drinks;
   }
 
   recommendDrinks() {

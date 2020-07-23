@@ -8,7 +8,8 @@
   }
 
   @if $type==layout {
-    @return calc(100vh - 65px - 45px); // Minus header[65px] & infoBar[45px]
+    // Use 99.9vh becuz 100vh will show scroll bar
+    @return calc(99.9vh - 65px - 45px); // Minus header[65px] & infoBar[45px]
   }
 }
 
