@@ -1,5 +1,7 @@
+@import '../../assets/css/special-property.scss';
+
 #map {
     margin: auto;
-    height: calc(100vh - 65px);
+    height: height(layoutBasic);
     width : 100%;
 }
