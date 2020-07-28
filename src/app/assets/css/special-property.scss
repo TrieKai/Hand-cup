@@ -20,7 +20,7 @@
 
 @function color($type) {
   @if $type==themeOfBlue {
-    @return rgb(154, 213, 227);
+    @return #438EB9;
   }
 }
 

@@ -5,8 +5,9 @@
   flex-wrap: wrap;
   justify-content: center;
   margin: auto;
-  width: fit-content;
+  width: 100%;
   height: height(layout);
+  background: linear-gradient(180deg, #a3e6e9 0%, #FFFFFF 100%);
   // overflow       : hidden;
 }
 
@@ -30,7 +31,7 @@
   grid-template-rows: 80px 210px 80px;
   grid-template-areas: "text""image""stats";
   height: fit-content;
-  border-radius: 18px;
+  border-radius: 10px;
   background: white;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
   // font-family             : roboto;
@@ -84,9 +85,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  background: rgb(255, 7, 110);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .card-stats .stat {
@@ -96,6 +96,16 @@
   flex-direction: column;
   color: white;
   padding: 10px;
+
+  .stat-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: color(themeOfBlue);
+    border-radius: 50%;
+  }
 }
 
 .chosen-card {
