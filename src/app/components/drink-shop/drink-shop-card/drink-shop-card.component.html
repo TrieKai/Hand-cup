@@ -1,8 +1,9 @@
 <div #cardContainer class="card-container" *ngIf="!showChosenCard">
     <div class="button-box">
-        <button mat-raised-button color="warn" (click)="handleTransformScenes('map')">返回</button>
-        <button mat-raised-button class="draw-button" color="warn" (click)="handleDraw()">抽卡</button>
+        <button mat-raised-button (click)="handleTransformScenes('map')">返回</button>
+        <button mat-raised-button class="draw-button" (click)="handleDraw()">抽卡</button>
     </div>
+    <div class="space-box"></div>
     <ng-container *ngFor="let result of resultArray">
         <div class="card">
             <div class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}"></div>
@@ -35,8 +36,10 @@
 
 <div class="card-container" *ngIf="showChosenCard">
     <div class="button-box">
-        <button mat-raised-button color="warn" (click)="handleTransformScenes('cards')">返回</button>
+        <button mat-raised-button color="white" (click)="handleTransformScenes('cards')">返回</button>
+        <button mat-raised-button class="draw-button" color="white" (click)="handleDraw()">再一次</button>
     </div>
+    <div class="space-box"></div>
     <div class="chosen-card">
         <div class="chosen-card-title">
             <span>恭喜! 今天飲料喝這家~</span>
