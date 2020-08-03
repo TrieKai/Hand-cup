@@ -8,7 +8,6 @@ import { HomeComponent } from './components/home/home.component';
 import { MaterialModule } from './util/material/material.module';
 import { CommonComponentModule } from './components/common/common-component.module';
 
-import { MapComponent } from './components/map/map.component';
 import { DrinkComponent } from './components/drink/drink.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DrinkShopComponent } from './components/drink-shop/drink-shop.component';
@@ -20,7 +19,6 @@ import { DrinkShopCardComponent } from './components/drink-shop/drink-shop-card/
     declarations: [
         AppComponent,
         HomeComponent,
-        MapComponent,
         DrinkComponent,
         DrinkShopComponent,
         HeaderComponent,
@@ -38,7 +36,6 @@ import { DrinkShopCardComponent } from './components/drink-shop/drink-shop-card/
     providers: [],
     bootstrap: [AppComponent],
     entryComponents: [
-        MapComponent,
         DrinkComponent,
         DrinkShopComponent,
     ],

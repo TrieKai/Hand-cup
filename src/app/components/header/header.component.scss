@@ -29,10 +29,16 @@
     margin-right   : 15px;
     width          : 250px;
     height         : 40px;
+    order: 1;
+
+    @media screen and (max-width: 570px){
+        width: calc(100% - 70px);
+        order: 2;
+    }
 }
 
 .search-container input {
-    width : 250px;
+    width : 100%;
     height: 80%;
 
     background   : #fcfcfc;
@@ -50,9 +56,14 @@
     cursor  : pointer;
 }
 
-// .account-button {
-//     cursor: pointer;
-// }
+.account-button {
+    cursor: pointer;
+    order: 2;
+    
+    @media screen and (max-width: 570px){
+        order: 1;
+    }
+}
 
 // .example-container {
 //     position: absolute;
@@ -107,6 +118,11 @@ body {
     height          : height(header) !important;
     overflow        : hidden;
     z-index         : zIndex(header);
+
+    @media screen and (max-width: 570px) {
+        flex-wrap: wrap;
+        height: height(header_small) !important;
+    }
 }
 
 .main {
@@ -114,6 +130,10 @@ body {
     display    : block;
     height     : 100%;
     padding-top: height(header);
+
+    @media screen and (max-width: 570px) {
+        padding-top: height(header_small);
+    }
 }
 
 .mainInner {
@@ -141,6 +161,10 @@ body {
     transition: transform 250ms ease-in-out;
     background: linear-gradient(180deg, #FC466B 0%, #3F5EFB 100%);
     z-index   : zIndex(header);
+
+    @media screen and (max-width: 570px) {
+        margin-top: height(header_small);
+    }
 }
 
 .sidebarMenuInner {

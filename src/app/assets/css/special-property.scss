@@ -16,6 +16,22 @@
     // Use 99.9vh becuz 100vh will show scroll bar
     @return calc(99.9vh - 65px - 45px); // Minus header[65px] & infoBar[45px]
   }
+
+  // ========== Small area =========== //
+
+  @if $type==header_small {
+    @return 90px;
+  }
+
+  @if $type==layoutBasic_small {
+    // Use 99.9vh becuz 100vh will show scroll bar
+    @return calc(99.9vh - 90px); // Minus header[90px]
+  }
+
+  @if $type==layout_small {
+    // Use 99.9vh becuz 100vh will show scroll bar
+    @return calc(99.9vh - 90px - 45px); // Minus header[90px] & infoBar[45px]
+  }
 }
 
 @function color($type) {

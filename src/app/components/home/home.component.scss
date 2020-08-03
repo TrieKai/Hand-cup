@@ -1,7 +1,11 @@
 @import '../../assets/css/special-property.scss';
 
-#map {
+.map {
     margin: auto;
     height: height(layoutBasic);
     width : 100%;
+
+    @media screen and (max-width: 570px) {
+        height: height(layoutBasic_small);
+    }
 }
