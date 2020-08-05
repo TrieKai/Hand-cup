@@ -8,6 +8,14 @@ interface drinkShopResults {
     ratings_total: number
     views: number
     distanceGap?: number
+    website: string
+    price_level: number
+    reviews: {
+        profile_photo_url: string
+        author_name: string
+        rating: number
+        text: string
+    }
 }
 
 interface drinkShopSharedData {
