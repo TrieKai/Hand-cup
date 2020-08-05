@@ -31,7 +31,7 @@
     height         : 40px;
     order: 1;
 
-    @media screen and (max-width: 570px){
+    @media screen and (max-width: 570px) {
         width: calc(100% - 70px);
         order: 2;
     }
@@ -60,7 +60,7 @@
     cursor: pointer;
     order: 2;
     
-    @media screen and (max-width: 570px){
+    @media screen and (max-width: 570px) {
         order: 1;
     }
 }
@@ -211,6 +211,10 @@ body {
     height    : 22px;
     cursor    : pointer;
     z-index   : zIndex(header);
+
+    @media screen and (max-width: 570px) {
+        top: 34px;
+    }
 }
 
 .hamburger {
