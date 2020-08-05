@@ -51,6 +51,17 @@
                 <li>評分: {{chosenShop.rating}}</li>
                 <li>評價數: {{chosenShop.ratings_total}}</li>
                 <li>觀看次數: {{chosenShop.views}}</li>
+                <li *ngIf="chosenShop.website">網站: {{chosenShop.website}}</li>
+                <li *ngIf="chosenShop.price_level">價位: {{chosenShop.price_level}}</li>
+                <li *ngIf="chosenShop.reviews">
+                    評論: 
+                    <div *ngFor="let review of chosenShop.reviews">
+                        <img class="authorImg" src="{{review.profile_photo_url}}" alt="author_img" />
+                        <span>{{review.author_name}}</span>
+                        <span>{{review.rating}}</span>
+                        <div>{{review.text}}</div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
