@@ -15,7 +15,7 @@ interface drinkShopResults {
         author_name: string
         rating: number
         text: string
-    }
+    }[]
 }
 
 interface drinkShopSharedData {

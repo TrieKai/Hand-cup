@@ -54,17 +54,13 @@
                 <li *ngIf="chosenShop.website" class="website">網站: {{chosenShop.website}}</li>
                 <li *ngIf="chosenShop.price_level">價位: {{chosenShop.price_level}}</li>
                 <li *ngIf="chosenShop.reviews">
-                    評論: 
+                    評論:
                     <div *ngFor="let review of chosenShop.reviews" class="review-container">
                         <div class="author-box">
                             <img class="author-img" src="{{review.profile_photo_url}}" alt="author_img" />
                             <span class="author-name">{{review.author_name}}</span>
-                            <!-- <span class="author-rating">{{review.rating}}</span> -->
-                            <div style="background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_14.png);"></div>
-                            <div style="background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_empty_14.png);"></div>
-                            <div style="background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_empty_14.png);"></div>
-                            <div style="background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_empty_14.png);"></div>
-                            <div style="background-image: url(http://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_empty_14.png);"></div>
+                            <span class="author-rating">{{review.rating}}</span>
+                            <app-rating-stars [rating]="review.rating"></app-rating-stars>
                         </div>
                         <div class="text-box">{{review.text}}</div>
                     </div>
