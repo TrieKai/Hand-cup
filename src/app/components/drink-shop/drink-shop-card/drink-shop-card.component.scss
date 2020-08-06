@@ -164,8 +164,31 @@
   font-size: 20px;
   border-bottom-right-radius: 5px;
 
-  .authorImg{
-    width: 40px;
-    height: 40px;
+  .website {
+    overflow-wrap: break-word;
+  }
+
+  .review-container {
+    margin-bottom: 10px;
+
+    .author-box {
+      display: flex;
+      align-items: center;
+
+      .author-img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .author-name {
+        margin-left: 10px;
+      }
+
+      .author-rating {
+        margin-left: 10px;
+      }
+    }
+
+    .text-box {}
   }
 }
