@@ -23,21 +23,10 @@ export class RatingStarsComponent implements OnInit {
   handleRatingStar(rating: number) {
     const ratings: number = rating * 10 + 2; // 加二是因為好計算
     const ratingStars: number = Math.floor(ratings / 5) / 2; // 標準化成得到的星星數
-    const fullStars: number = Math.floor(ratingStars); // 滿星的數量
-    const halfStars: number = (ratingStars - fullStars) * 2; // 半星的數量
-    const emptyStars: number = 5 - fullStars - halfStars; // 空星的數量
+    this.fullStars = Math.floor(ratingStars); // 滿星的數量
+    this.halfStars = (ratingStars - this.fullStars) * 2; // 半星的數量
+    this.emptyStars = 5 - this.fullStars - this.halfStars; // 空星的數量
 
-    console.log(fullStars, halfStars, emptyStars)
-    for (let i: number = 0; i < fullStars; i++) {
-      this.fullStars++;
-    }
-    if (halfStars) {
-      this.halfStars++;
-    }
-    if (emptyStars) {
-      for (let i: number = 0; i < emptyStars; i++) {
-        this.emptyStars++;
-      }
-    }
+    console.log(this.fullStars, this.halfStars, this.emptyStars)
   }
 }

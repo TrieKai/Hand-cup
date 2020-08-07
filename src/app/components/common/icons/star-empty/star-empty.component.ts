@@ -8,4 +8,11 @@ import { Component, Input } from '@angular/core';
 export class StarEmptyComponent {
   @Input() width: number = 15;
   @Input() height: number = 15;
+
+  setStyle() {
+    return {
+      'width': this.width + 'px',
+      'height': this.height + 'px'
+    };
+  }
 }
