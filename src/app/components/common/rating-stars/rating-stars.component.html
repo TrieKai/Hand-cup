@@ -1,11 +1,11 @@
 <div class="rating-stars-box">
   <ng-container *ngFor="let i of [].constructor(fullStars)">
-    <i-star-full></i-star-full>
+    <i-star-full [width]="width" [height]="height"></i-star-full>
   </ng-container>
   <ng-container *ngFor="let i of [].constructor(halfStars)">
-    <i-star-half></i-star-half>
+    <i-star-half [width]="width" [height]="height"></i-star-half>
   </ng-container>
   <ng-container *ngFor="let i of [].constructor(emptyStars)">
-    <i-star-empty></i-star-empty>
+    <i-star-empty [width]="width" [height]="height"></i-star-empty>
   </ng-container>
 </div>

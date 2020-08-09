@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
+import { DialogComponent } from 'src/app/components/common/dialog/dialog.component';
 
 @Component({
   selector: 'app-drink-shop-card',
@@ -17,6 +19,7 @@ export class DrinkShopCardComponent implements OnInit {
   constructor(
     private drinkShopService: DrinkShopService,
     private cons: ConstantsService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -28,7 +31,6 @@ export class DrinkShopCardComponent implements OnInit {
     if (status === 'map') {
       this.drinkShopService.setSharedData(this.cons.SHAREDDATA.showMap, true);
     } else if (status === 'cards') {
-      console.log('ggg')
       this.showChosenCard = false;
     } else { return; }
   }
@@ -41,5 +43,13 @@ export class DrinkShopCardComponent implements OnInit {
 
   openUrl(url: string): void {
     window.open(url, '_blank');
+  }
+
+  openDialog(index: number): void {
+    this.dialog.open(DialogComponent, {
+      maxWidth: 500,
+      minWidth: 300,
+      data: { reviews: this.chosenShop.reviews[index] }
+    });
   }
 }

@@ -10,6 +10,8 @@ import { Component, OnInit, Input, Pipe } from '@angular/core';
 })
 export class RatingStarsComponent implements OnInit {
   @Input() rating: number;
+  @Input() width: number = 15;
+  @Input() height: number = 15;
   fullStars: number = 0;
   halfStars: number = 0;
   emptyStars: number = 0;

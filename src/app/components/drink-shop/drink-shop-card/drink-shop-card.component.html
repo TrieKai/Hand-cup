@@ -57,7 +57,7 @@
         <li *ngIf="chosenShop.price_level">價位: {{chosenShop.price_level}}</li>
         <li *ngIf="chosenShop.reviews">
           評論:
-          <div *ngFor="let review of chosenShop.reviews" class="review-container">
+          <div *ngFor="let review of chosenShop.reviews; let i = index;" class="review-container">
             <div class="review-title">
               <div class="author-box" (click)="openUrl(review.author_url)">
                 <img class="author-img" src="{{review.profile_photo_url}}" alt="author_img" />
@@ -68,7 +68,7 @@
               <span class="review-time"
                 title="{{review.time * 1000 | date:'long'}}">{{review.time * 1000 | date:'yyyy/MM/dd'}}</span>
             </div>
-            <div class="text-box">{{review.text}}</div>
+            <div class="text-box" (click)="openDialog(i)">{{review.text}}</div>
           </div>
         </li>
       </ul>
