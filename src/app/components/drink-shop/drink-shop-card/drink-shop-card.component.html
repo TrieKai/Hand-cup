@@ -1,71 +1,77 @@
 <div #cardContainer class="card-container" *ngIf="!showChosenCard">
-    <div class="button-box">
-        <button mat-raised-button (click)="handleTransformScenes('map')">返回</button>
-        <button mat-raised-button class="draw-button" (click)="handleDraw()">抽卡</button>
-    </div>
-    <div class="space-box"></div>
-    <ng-container *ngFor="let result of resultArray">
-        <div class="card">
-            <div class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}"></div>
-            <div class="card-text">
-                <h2>{{result.name}}</h2>
-            </div>
-            <div class="card-stats">
-                <div class="stat">
-                    <div class="stat-box">
-                        <div class="value">{{result.rating}}</div>
-                        <div class="type">rating</div>
-                    </div>
-                </div>
-                <div class="stat">
-                    <div class="stat-box">
-                        <div class="value">{{result.ratings_total}}</div>
-                        <div class="type">comments</div>
-                    </div>
-                </div>
-                <div class="stat border">
-                    <div class="stat-box">
-                        <div class="value">{{result.views}}</div>
-                        <div class="type">views</div>
-                    </div>
-                </div>
-            </div>
+  <div class="button-box">
+    <button mat-raised-button (click)="handleTransformScenes('map')">返回</button>
+    <button mat-raised-button class="draw-button" (click)="handleDraw()">抽卡</button>
+  </div>
+  <div class="space-box"></div>
+  <ng-container *ngFor="let result of resultArray">
+    <div class="card">
+      <div class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}"></div>
+      <div class="card-text">
+        <h2>{{result.name}}</h2>
+      </div>
+      <div class="card-stats">
+        <div class="stat">
+          <div class="stat-box">
+            <div class="value">{{result.rating}}</div>
+            <div class="type">rating</div>
+          </div>
         </div>
-    </ng-container>
+        <div class="stat">
+          <div class="stat-box">
+            <div class="value">{{result.ratings_total}}</div>
+            <div class="type">comments</div>
+          </div>
+        </div>
+        <div class="stat border">
+          <div class="stat-box">
+            <div class="value">{{result.views}}</div>
+            <div class="type">views</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>
 
 <div class="card-container" *ngIf="showChosenCard">
-    <div class="button-box">
-        <button mat-raised-button color="white" (click)="handleTransformScenes('cards')">返回</button>
-        <button mat-raised-button class="draw-button" color="white" (click)="handleDraw()">再一次</button>
+  <div class="button-box">
+    <button mat-raised-button color="white" (click)="handleTransformScenes('cards')">返回</button>
+    <button mat-raised-button class="draw-button" color="white" (click)="handleDraw()">再一次</button>
+  </div>
+  <div class="space-box"></div>
+  <div class="chosen-card">
+    <div class="chosen-card-title">
+      <span>恭喜! 今天飲料喝這家~</span>
     </div>
-    <div class="space-box"></div>
-    <div class="chosen-card">
-        <div class="chosen-card-title">
-            <span>恭喜! 今天飲料喝這家~</span>
-        </div>
-        <div class="chosen-card-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
-        <div class="chosen-card-content">
-            <ul>
-                <li>店名: {{chosenShop.name}}</li>
-                <li>評分: {{chosenShop.rating}}</li>
-                <li>評價數: {{chosenShop.ratings_total}}</li>
-                <li>觀看次數: {{chosenShop.views}}</li>
-                <li *ngIf="chosenShop.website" class="website">網站: {{chosenShop.website}}</li>
-                <li *ngIf="chosenShop.price_level">價位: {{chosenShop.price_level}}</li>
-                <li *ngIf="chosenShop.reviews">
-                    評論:
-                    <div *ngFor="let review of chosenShop.reviews" class="review-container">
-                        <div class="author-box">
-                            <img class="author-img" src="{{review.profile_photo_url}}" alt="author_img" />
-                            <span class="author-name">{{review.author_name}}</span>
-                            <span class="author-rating">{{review.rating}}</span>
-                            <app-rating-stars [rating]="review.rating"></app-rating-stars>
-                        </div>
-                        <div class="text-box">{{review.text}}</div>
-                    </div>
-                </li>
-            </ul>
-        </div>
+    <div class="chosen-card-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
+    <div class="chosen-card-content">
+      <ul>
+        <li title="{{chosenShop.name}}">店名: {{chosenShop.name}}</li>
+        <li>評分: {{chosenShop.rating}}</li>
+        <li>評價數: {{chosenShop.ratings_total}}</li>
+        <li>觀看次數: {{chosenShop.views}}</li>
+        <li *ngIf="chosenShop.website" class="website">
+          網站: <a title="{{chosenShop.website}}" href="{{chosenShop.website}}" target="_blank">{{chosenShop.website}}</a>
+        </li>
+        <li *ngIf="chosenShop.price_level">價位: {{chosenShop.price_level}}</li>
+        <li *ngIf="chosenShop.reviews">
+          評論:
+          <div *ngFor="let review of chosenShop.reviews" class="review-container">
+            <div class="review-title">
+              <div class="author-box" (click)="openUrl(review.author_url)">
+                <img class="author-img" src="{{review.profile_photo_url}}" alt="author_img" />
+                <span class="author-name" title="{{review.author_name}}">{{review.author_name}}</span>
+              </div>
+              <span class="author-rating">{{review.rating}}</span>
+              <app-rating-stars [rating]="review.rating" class="rating-stars"></app-rating-stars>
+              <span class="review-time"
+                title="{{review.time * 1000 | date:'long'}}">{{review.time * 1000 | date:'yyyy/MM/dd'}}</span>
+            </div>
+            <div class="text-box">{{review.text}}</div>
+          </div>
+        </li>
+      </ul>
     </div>
+  </div>
 </div>

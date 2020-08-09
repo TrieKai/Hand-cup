@@ -36,7 +36,11 @@
 
 @function color($type) {
   @if $type==themeOfBlue {
-    @return #438EB9;
+    @return rgb(67,142,185);
+  }
+
+  @if $type==themeOfPink {
+    @return rgb(204, 151, 160);
   }
 }
 

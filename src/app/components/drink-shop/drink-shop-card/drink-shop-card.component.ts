@@ -24,7 +24,7 @@ export class DrinkShopCardComponent implements OnInit {
     console.log(this.resultArray)
   }
 
-  handleTransformScenes(status: string) {
+  handleTransformScenes(status: string): void {
     if (status === 'map') {
       this.drinkShopService.setSharedData(this.cons.SHAREDDATA.showMap, true);
     } else if (status === 'cards') {
@@ -33,9 +33,13 @@ export class DrinkShopCardComponent implements OnInit {
     } else { return; }
   }
 
-  handleDraw() {
+  handleDraw(): void {
     const randomIndex = Math.floor(Math.random() * Math.floor(this.resultArray.length));
     this.chosenShop = this.resultArray[randomIndex];
     this.showChosenCard = true;
+  }
+
+  openUrl(url: string): void {
+    window.open(url, '_blank');
   }
 }
