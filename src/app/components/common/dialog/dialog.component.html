@@ -1,0 +1,19 @@
+<!-- <h1 mat-dialog-title>Favorite Animal</h1> -->
+<div mat-dialog-content class="review-container">
+  <div class="review-title">
+    <div class="author-box" (click)="openUrl(data.reviews.author_url)">
+      <img class="author-img" src="{{data.reviews.profile_photo_url}}" alt="author_img" />
+      <span class="author-name" title="{{data.reviews.author_name}}">{{data.reviews.author_name}}</span>
+    </div>
+    <div class="rating-box">
+      <span class="author-rating">{{data.reviews.rating}}</span>
+      <app-rating-stars [rating]="data.reviews.rating" [width]="25" [height]="25" class="rating-stars">
+      </app-rating-stars>
+    </div>
+  </div>
+  <div>
+    <span class="review-time"
+      title="{{data.reviews.time * 1000 | date:'long'}}">{{data.reviews.time * 1000 | date:'long'}}</span>
+  </div>
+  <div class="text-box" (click)="openDialog(i)">{{data.reviews.text}}</div>
+</div>

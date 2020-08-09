@@ -1,0 +1,56 @@
+.review-container {
+  .review-title {
+    display    : flex;
+    align-items: center;
+    margin     : 5px 0;
+    position   : relative;
+
+    .author-box {
+      display    : flex;
+      align-items: center;
+      cursor     : pointer;
+
+      .author-img {
+        width : 80px;
+        height: 80px;
+      }
+
+      .author-name {
+        margin-left  : 10px;
+        width        : 7rem;
+        overflow     : hidden;
+        white-space  : nowrap;
+        text-overflow: ellipsis;
+        font-size    : 2rem;
+      }
+    }
+
+    .rating-box {
+      display : flex;
+      position: absolute;
+      right   : 0;
+
+      .author-rating {
+        margin-left: 10px;
+        font-size  : 1.5rem;
+      }
+
+      .rating-stars {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .review-time {
+    right    : 0px;
+    color    : darkgray;
+    font-size: 1rem;
+  }
+
+  .text-box {
+    margin     : 5px 0;
+    white-space: pre-line;
+    font-size  : 1.5rem;
+    cursor     : default;
+  }
+}

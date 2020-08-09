@@ -14,6 +14,7 @@ import { DrinkShopComponent } from './components/drink-shop/drink-shop.component
 import { HeaderComponent } from './components/header/header.component';
 import { DrinkShopMapComponent } from './components/drink-shop/drink-shop-map/drink-shop-map.component';
 import { DrinkShopCardComponent } from './components/drink-shop/drink-shop-card/drink-shop-card.component';
+import { DialogComponent } from './components/common/dialog/dialog.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { DrinkShopCardComponent } from './components/drink-shop/drink-shop-card/
     entryComponents: [
         DrinkComponent,
         DrinkShopComponent,
+        DialogComponent,
     ],
 })
 export class AppModule { }

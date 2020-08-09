@@ -15,6 +15,7 @@ import { WarningComponent } from './icons/warning/warning.component';
 import { StarFullComponent } from './icons/star-full/star-full.component';
 import { StarHalfComponent } from './icons/star-half/star-half.component';
 import { StarEmptyComponent } from './icons/star-empty/star-empty.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { StarEmptyComponent } from './icons/star-empty/star-empty.component';
     WarningComponent,
     StarFullComponent,
     StarHalfComponent,
-    StarEmptyComponent
+    StarEmptyComponent,
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { StarEmptyComponent } from './icons/star-empty/star-empty.component';
     WarningComponent,
     StarFullComponent,
     StarHalfComponent,
-    StarEmptyComponent
+    StarEmptyComponent,
+    DialogComponent,
   ]
 })
 export class CommonComponentModule { }
