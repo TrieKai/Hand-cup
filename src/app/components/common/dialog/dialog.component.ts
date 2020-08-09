@@ -15,4 +15,8 @@ export class DialogComponent implements OnInit {
   ngOnInit() {
     console.log(this.data)
   }
+
+  openUrl(url: string): void {
+    window.open(url, '_blank');
+  }
 }
