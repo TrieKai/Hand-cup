@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -14,13 +14,22 @@ export class DrinkShopCardComponent implements OnInit {
   @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
   resultArray: drinkShopResults[] = [];
   chosenShop: drinkShopResults;
+  chosenShopDetail: drinkShopDetail;
   showChosenCard: boolean = false;
+  windowWidth: any;
+  windowHeight: any;
 
   constructor(
     private drinkShopService: DrinkShopService,
     private cons: ConstantsService,
     private dialog: MatDialog,
   ) { }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.windowWidth = event.target.innerWidth;
+    this.windowHeight = event.target.innerHeight;
+  }
 
   ngOnInit() {
     this.resultArray = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.drinkShopResults);
@@ -35,9 +44,10 @@ export class DrinkShopCardComponent implements OnInit {
     } else { return; }
   }
 
-  handleDraw(): void {
+  async handleDraw(): Promise<void> {
     const randomIndex = Math.floor(Math.random() * Math.floor(this.resultArray.length));
     this.chosenShop = this.resultArray[randomIndex];
+    this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
     this.showChosenCard = true;
   }
 
@@ -49,7 +59,8 @@ export class DrinkShopCardComponent implements OnInit {
     this.dialog.open(DialogComponent, {
       maxWidth: 500,
       minWidth: 300,
-      data: { reviews: this.chosenShop.reviews[index] }
+      maxHeight: this.windowHeight * 0.8,
+      data: { review: this.chosenShopDetail.reviews[index] }
     });
   }
 }

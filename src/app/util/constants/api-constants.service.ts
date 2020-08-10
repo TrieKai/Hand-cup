@@ -13,6 +13,8 @@ export class ApiConstantsService {
   // map
   // public readonly GET_NEARBY_SEARCH = dev_url + '/map';
   public readonly GET_NEARBY_SEARCH = uat_url + '/map';
+  // public readonly GET_PLACE_DETAIL = dev_url + '/map/';
+  public readonly GET_PLACE_DETAIL = uat_url + '/map/';
 
   constructor() { }
 }

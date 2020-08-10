@@ -1,7 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 
+import { ApiService } from '../util/api.service';
+import { ApiConstantsService } from '../util/constants/api-constants.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
+
+import { GlobalService as global } from '../service/global.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +16,21 @@ export class DrinkShopService {
     currentCoordinate: Coordinate = { latitude: null, longitude: null };
 
     constructor(
+        private http: ApiService,
+        private apiCons: ApiConstantsService,
         private cons: ConstantsService,
         private sharedService: SharedService,
     ) { }
+
+    async getPlaceDetail(placeId: string): Promise<any> {
+        const header: HttpHeaders = this.http.getHeader();
+        const resp: RespData = await this.http.get(this.apiCons.GET_PLACE_DETAIL + placeId, null, header);
+        if (isDevMode() || global.showLog) {
+            console.log(resp);
+        }
+
+        return resp;
+    }
 
     setSharedData(key: string, value: any) {
         console.log('setSharedData:', key, value)

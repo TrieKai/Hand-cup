@@ -51,13 +51,13 @@
         <li>評分: {{chosenShop.rating}}</li>
         <li>評價數: {{chosenShop.ratings_total}}</li>
         <li>觀看次數: {{chosenShop.views}}</li>
-        <li *ngIf="chosenShop.website" class="website">
-          網站: <a title="{{chosenShop.website}}" href="{{chosenShop.website}}" target="_blank">{{chosenShop.website}}</a>
+        <li *ngIf="chosenShopDetail.website" class="website">
+          網站: <a title="{{chosenShopDetail.website}}" href="{{chosenShopDetail.website}}" target="_blank">{{chosenShopDetail.website}}</a>
         </li>
-        <li *ngIf="chosenShop.price_level">價位: {{chosenShop.price_level}}</li>
-        <li *ngIf="chosenShop.reviews">
+        <li *ngIf="chosenShopDetail.price_level">價位: {{chosenShopDetail.price_level}}</li>
+        <li *ngIf="chosenShopDetail.reviews">
           評論:
-          <div *ngFor="let review of chosenShop.reviews; let i = index;" class="review-container">
+          <div *ngFor="let review of chosenShopDetail.reviews; let i = index;" class="review-container">
             <div class="review-title">
               <div class="author-box" (click)="openUrl(review.author_url)">
                 <img class="author-img" src="{{review.profile_photo_url}}" alt="author_img" />

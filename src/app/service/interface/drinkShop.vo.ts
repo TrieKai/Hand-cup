@@ -8,6 +8,9 @@ interface drinkShopResults {
     ratings_total: number
     views: number
     distanceGap?: number
+}
+
+interface drinkShopDetail {
     website: string
     price_level: number
     reviews: {

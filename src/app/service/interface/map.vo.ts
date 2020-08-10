@@ -3,3 +3,7 @@ interface NearbySearchQueryParam {
     longitude: number
     distance: number
 }
+
+interface PlaceDetailQueryParm {
+    placeId: string
+}

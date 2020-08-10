@@ -22,10 +22,6 @@ export class MapService {
     }
 
     async getNearByLocations(coordinate: Coordinate, distance: number): Promise<any> {
-        // const header: HttpHeaders = new HttpHeaders({
-        //     'Content-Type': 'text/html',
-        //     'Access-Control-Allow-Origin': '*',
-        // });
         const header: HttpHeaders = this.http.getHeader();
         const body: NearbySearchQueryParam = {
             latitude: coordinate.latitude,
