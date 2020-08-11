@@ -11,6 +11,8 @@ interface drinkShopResults {
 }
 
 interface drinkShopDetail {
+    formatted_address: string
+    formatted_phone_number: string
     website: string
     price_level: number
     reviews: {
