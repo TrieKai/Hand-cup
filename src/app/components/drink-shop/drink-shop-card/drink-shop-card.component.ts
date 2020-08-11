@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -10,7 +10,7 @@ import { DialogComponent } from 'src/app/components/common/dialog/dialog.compone
   templateUrl: './drink-shop-card.component.html',
   styleUrls: ['./drink-shop-card.component.scss']
 })
-export class DrinkShopCardComponent implements OnInit {
+export class DrinkShopCardComponent implements OnInit, AfterViewInit {
   @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef;
   resultArray: drinkShopResults[] = [];
   chosenShop: drinkShopResults;
@@ -26,14 +26,19 @@ export class DrinkShopCardComponent implements OnInit {
   ) { }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.windowWidth = event.target.innerWidth;
-    this.windowHeight = event.target.innerHeight;
+  onResize() {
+    this.windowWidth = window.innerWidth;
+    this.windowHeight = window.innerHeight;
+    console.log('window_width:', this.windowWidth, 'window_height:', this.windowHeight)
   }
 
   ngOnInit() {
     this.resultArray = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.drinkShopResults);
     console.log(this.resultArray)
+  }
+
+  ngAfterViewInit() {
+    this.onResize();
   }
 
   handleTransformScenes(status: string): void {
@@ -57,10 +62,22 @@ export class DrinkShopCardComponent implements OnInit {
 
   openDialog(index: number): void {
     this.dialog.open(DialogComponent, {
-      maxWidth: 500,
-      minWidth: 300,
+      maxWidth: this.handleWidth()[0],
+      minWidth: this.handleWidth()[1],
       maxHeight: this.windowHeight * 0.8,
       data: { review: this.chosenShopDetail.reviews[index] }
     });
+  }
+
+  handleWidth(): number[] {
+    if (this.windowWidth >= 1280) {
+      return [800, 500];
+    } else if (this.windowWidth >= 800 && this.windowWidth < 1280) {
+      return [500, 350];
+    } else if (this.windowWidth >= 320 && this.windowWidth < 550) {
+      return [300, 250];
+    } else {
+      return [this.windowWidth * 0.9, this.windowWidth * 0.8];
+    }
   }
 }
