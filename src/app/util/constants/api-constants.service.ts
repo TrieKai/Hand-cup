@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 
-// const domain = 'localhost';
-// const port = ':5487';
-// const pre_url = domain + port;
 const dev_url = 'http://bobamaps.ap-southeast-1.elasticbeanstalk.com';
 const uat_url = 'https://api.bobamaps.site';
 
