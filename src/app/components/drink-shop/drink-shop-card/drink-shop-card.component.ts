@@ -25,7 +25,7 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
   ) { }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', [])
   onResize() {
     this.windowWidth = window.innerWidth;
     this.windowHeight = window.innerHeight;
