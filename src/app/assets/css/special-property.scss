@@ -1,3 +1,21 @@
+@function rwdBoundary($type) {
+  @if $type==minimum {
+    @return 320px;
+  }
+
+  @if $type==small {
+    @return 600px;
+  }
+
+  @if $type==middle {
+    @return 800px;
+  }
+
+  @if $type==large {
+    @return 1280px;
+  }
+}
+
 @function height($type) {
   @if $type==header {
     @return 65px;
@@ -36,7 +54,7 @@
 
 @function color($type) {
   @if $type==themeOfBlue {
-    @return rgb(67,142,185);
+    @return rgb(67, 142, 185);
   }
 
   @if $type==themeOfPink {

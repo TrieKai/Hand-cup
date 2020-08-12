@@ -51,14 +51,15 @@
         <li>評分: {{chosenShop.rating}}</li>
         <li>評價數: {{chosenShop.ratings_total}}</li>
         <li>觀看次數: {{chosenShop.views}}</li>
-        <li *ngIf="chosenShopDetail.formatted_address">
+        <li *ngIf="chosenShopDetail.formatted_address" title="{{chosenShopDetail.formatted_address}}">
           地址: {{chosenShopDetail.formatted_address}}
         </li>
         <li *ngIf="chosenShopDetail.formatted_phone_number">
           電話: {{chosenShopDetail.formatted_phone_number}}
         </li>
         <li *ngIf="chosenShopDetail.website" class="website">
-          網站: <a title="{{chosenShopDetail.website}}" href="{{chosenShopDetail.website}}" target="_blank">{{chosenShopDetail.website}}</a>
+          網站: <a title="{{chosenShopDetail.website}}" href="{{chosenShopDetail.website}}"
+            target="_blank">{{chosenShopDetail.website}}</a>
         </li>
         <li *ngIf="chosenShopDetail.price_level">價位: {{chosenShopDetail.price_level}}</li>
         <li *ngIf="chosenShopDetail.reviews">
@@ -69,8 +70,10 @@
                 <img class="author-img" src="{{review.profile_photo_url}}" alt="author_img" />
                 <span class="author-name" title="{{review.author_name}}">{{review.author_name}}</span>
               </div>
-              <span class="author-rating">{{review.rating}}</span>
-              <app-rating-stars [rating]="review.rating" class="rating-stars"></app-rating-stars>
+              <div class="rating-box">
+                <span class="author-rating">{{review.rating}}</span>
+                <app-rating-stars class="rating-stars" [rating]="review.rating"></app-rating-stars>
+              </div>
               <span class="review-time"
                 title="{{review.time * 1000 | date:'long'}}">{{review.time * 1000 | date:'yyyy/MM/dd'}}</span>
             </div>

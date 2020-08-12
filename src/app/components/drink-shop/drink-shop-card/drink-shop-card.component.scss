@@ -127,8 +127,21 @@
     "image content";
   margin: 30px;
   height: 70vh;
-  width : 940px;
+  width : 100%;
   cursor: default;
+
+  @media screen and (max-width: rwdBoundary(middle)) {
+    grid-template-columns: 200px 350px;
+  }
+
+  @media screen and (max-width: rwdBoundary(small)) {
+    grid-template-columns: 300px;
+    grid-template-rows   : 40px 250px calc(80vh - 40px - 250px);
+    grid-template-areas  :
+    "title"
+    "image"
+    "content";
+  }
 }
 
 .chosen-card-title {
@@ -154,6 +167,10 @@
   background-size          : cover;
   height                   : 100%;
   border-bottom-left-radius: 5px;
+
+  @media screen and (max-width: rwdBoundary(small)) {
+    border-bottom-left-radius: 0;
+  }
 }
 
 .chosen-card-content {
@@ -189,16 +206,29 @@
     margin     : 0 0 5px 28px;
     white-space: initial;
 
+    @media screen and (max-width: rwdBoundary(small)) {
+      position: relative;
+    }
+
     .review-title {
       display    : flex;
       align-items: center;
       margin     : 5px 0;
-      position   : relative;
+      flex-wrap  : wrap;
 
       .author-box {
         display    : flex;
         align-items: center;
+        width      : calc(100% - 95px - 90px); // Minus rating-box & time-box
         cursor     : pointer;
+
+        @media screen and (max-width: rwdBoundary(middle)) {
+          width: calc(100% - 100px); // Minus rating-box
+        }
+
+        @media screen and (max-width: rwdBoundary(small)) {
+          width: 100%;
+        }
 
         .author-img {
           width : 40px;
@@ -214,20 +244,50 @@
         }
       }
 
-
-      .author-rating {
-        margin-left: 10px;
-      }
-
-      .rating-stars {
+      .rating-box {
+        display    : flex;
+        align-items: center;
         margin-left: 5px;
+        width      : 90px;
+
+        @media screen and (max-width: rwdBoundary(small)) {
+          margin: 5px 0 0 0;
+          width : auto;
+          height: 25px;
+        }
+
+        .author-rating {
+          width    : 10px;
+          font-size: 1.25rem;
+  
+          @media screen and (max-width: rwdBoundary(small)) {
+            font-size: 1rem;
+          }
+        }
+
+        .rating-stars {
+          margin-left: 5px;
+          width      : 75px;
+        }
       }
+
 
       .review-time {
-        position : absolute;
-        right    : 0px;
-        color    : darkgray;
-        font-size: 1rem;
+        margin     : 5px 0 0 5px;
+        width      : 85px;
+        height     : 25px;
+        color      : darkgray;
+        font-size  : 1rem;
+
+        @media screen and (max-width: rwdBoundary(middle)) {
+          margin: 5px 0 0 0;
+        }
+
+        @media screen and (max-width: rwdBoundary(small)) {
+          position: absolute;
+          right   : 0;
+          top     : 42.5px;
+        }
       }
     }
 

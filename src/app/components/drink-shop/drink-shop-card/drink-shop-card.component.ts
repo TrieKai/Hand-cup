@@ -16,8 +16,11 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
   chosenShop: drinkShopResults;
   chosenShopDetail: drinkShopDetail;
   showChosenCard: boolean = false;
-  windowWidth: any;
-  windowHeight: any;
+  dialogMaxWidth: number;
+  dialogMinWidth: number;
+  dialogMaxHeight: number;
+  ratingStarWidth: number;
+  ratingStarHeight: number;
 
   constructor(
     private drinkShopService: DrinkShopService,
@@ -27,9 +30,27 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize', [])
   onResize() {
-    this.windowWidth = window.innerWidth;
-    this.windowHeight = window.innerHeight;
-    console.log('window_width:', this.windowWidth, 'window_height:', this.windowHeight)
+    console.log('window_width:', window.innerWidth, 'window_height:', window.innerHeight)
+    this.dialogMaxHeight = window.innerHeight * 0.8;
+    this.ratingStarWidth = 15;
+    this.ratingStarHeight = 15;
+    if (window.innerWidth >= 1280) {
+      this.dialogMaxWidth = 800;
+      this.dialogMinWidth = 500;
+    } else if (window.innerWidth >= 800 && window.innerWidth < 1280) {
+      this.dialogMaxWidth = 500;
+      this.dialogMinWidth = 350;
+    } else if (window.innerWidth >= 320 && window.innerWidth < 600) {
+      this.dialogMaxWidth = 300;
+      this.dialogMinWidth = 250;
+      this.ratingStarWidth = 10;
+      this.ratingStarHeight = 10;
+    } else if (window.innerWidth < 320) {
+      this.dialogMaxWidth = window.innerWidth * 0.9;
+      this.dialogMinWidth = window.innerWidth * 0.8;
+      this.ratingStarWidth = 10;
+      this.ratingStarHeight = 10;
+    }
   }
 
   ngOnInit() {
@@ -62,22 +83,10 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
 
   openDialog(index: number): void {
     this.dialog.open(DialogComponent, {
-      maxWidth: this.handleWidth()[0],
-      minWidth: this.handleWidth()[1],
-      maxHeight: this.windowHeight * 0.8,
+      maxWidth: this.dialogMaxWidth,
+      minWidth: this.dialogMinWidth,
+      maxHeight: this.dialogMaxHeight,
       data: { review: this.chosenShopDetail.reviews[index] }
     });
-  }
-
-  handleWidth(): number[] {
-    if (this.windowWidth >= 1280) {
-      return [800, 500];
-    } else if (this.windowWidth >= 800 && this.windowWidth < 1280) {
-      return [500, 350];
-    } else if (this.windowWidth >= 320 && this.windowWidth < 550) {
-      return [300, 250];
-    } else {
-      return [this.windowWidth * 0.9, this.windowWidth * 0.8];
-    }
   }
 }
