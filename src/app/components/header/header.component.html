@@ -28,18 +28,16 @@
   <div class="hamburger horizontal"></div>
   <div class="hamburger diagonal part-2"></div>
 </label>
-<div class="sidebarMenu" #sidebarMenu>
-  <ul class="sidebarMenuInner">
+<div class="sidebar-menu" #sidebarMenu>
+  <ul class="sidebar-menu-inner">
     <li *ngFor="let menu of menuList">
       <img class="menu-icon" [src]="menu.icon" alt="menu-icon" />
       <span class="menu-span" [routerLink]="menu.router" (click)="handleSidebar()">{{menu.title}}</span>
     </li>
   </ul>
 </div>
-<div class="main">
-  <div class="mainInner">
+<div class="main-container">
 
     <router-outlet></router-outlet>
 
-  </div>
 </div>

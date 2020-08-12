@@ -125,33 +125,18 @@ body {
     }
 }
 
-.main {
-    margin     : 0 auto;
+.main-container {
     display    : block;
-    height     : 100%;
+    margin     : 0 auto;
     padding-top: height(header);
+    height     : 100%;
 
     @media screen and (max-width: rwdBoundary(small)) {
         padding-top: height(header_small);
     }
 }
 
-.mainInner {
-    display   : table;
-    height    : 100%;
-    width     : 100%;
-    text-align: center;
-}
-
-.mainInner div {
-    display       : table-cell;
-    vertical-align: middle;
-    font-size     : 3em;
-    font-weight   : bold;
-    letter-spacing: 1.25px;
-}
-
-.sidebarMenu {
+.sidebar-menu {
     height    : 100%;
     position  : fixed;
     left      : 0;
@@ -167,7 +152,7 @@ body {
     }
 }
 
-.sidebarMenuInner {
+.sidebar-menu-inner {
     margin    : 0;
     padding   : 0;
     border-top: 1px solid rgba(255, 255, 255, 0.10);
@@ -184,7 +169,7 @@ body {
     }
 }
 
-.sidebarMenuInner li {
+.sidebar-menu-inner li {
     display       : flex;
     align-items   : center;
     list-style    : none;
@@ -195,7 +180,7 @@ body {
     font-weight   : bold;
 }
 
-.open~.sidebarMenu {
+.open~.sidebar-menu {
     transform: translateX(0);
 }
 

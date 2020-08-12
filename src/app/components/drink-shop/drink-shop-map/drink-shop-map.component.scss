@@ -5,7 +5,7 @@
   height: height(layout);
   width : 100%;
 
-  @media screen and (max-width: rwdBoundary(middle)) {
+  @media screen and (max-width: rwdBoundary(small)) {
     height: height(layout_small);
   }
 }

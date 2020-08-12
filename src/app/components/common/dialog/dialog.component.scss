@@ -1,5 +1,8 @@
+@import '../../../assets/css/special-property.scss';
+
 .review-title {
   display    : flex;
+  flex-wrap  : wrap;
   align-items: center;
   margin     : 5px 0;
   position   : relative;
@@ -7,36 +10,59 @@
   .author-box {
     display    : flex;
     align-items: center;
+    width      : calc(100% - 155px); // Minus rating-box
     cursor     : pointer;
+
+    @media screen and (max-width: rwdBoundary(small)) {
+      width: 100%;
+    }
 
     .author-img {
       width : 80px;
       height: 80px;
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        width : 40px;
+        height: 40px;
+      }
     }
 
     .author-name {
       margin-left  : 10px;
-      width        : 7rem;
+      width        : 100%;
       overflow     : hidden;
       white-space  : nowrap;
       text-overflow: ellipsis;
       font-size    : 2rem;
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        font-size: 1.5rem;
+      }
     }
   }
 
   .rating-box {
-    display : flex;
-    position: absolute;
-    right   : 0;
+    display    : flex;
+    align-items: center;
     margin-left: 5px;
+
+    @media screen and (max-width: rwdBoundary(small)) {
+      margin: 5px 0 0 0;
+    }
 
     .author-rating {
       margin-left: 10px;
+      width      : 15px;
       font-size  : 1.5rem;
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        font-size: 1.25rem;
+      }
     }
 
     .rating-stars {
       margin-left: 5px;
+      width      : 125px;
     }
   }
 }
