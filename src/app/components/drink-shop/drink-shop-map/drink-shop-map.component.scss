@@ -4,4 +4,8 @@
   margin: auto;
   height: height(layout);
   width : 100%;
+
+  @media screen and (max-width: rwdBoundary(middle)) {
+    height: height(layout_small);
+  }
 }
