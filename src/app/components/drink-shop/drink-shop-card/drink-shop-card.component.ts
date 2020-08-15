@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { DialogComponent } from 'src/app/components/common/dialog/dialog.component';
+import { LocalstorageService } from 'src/app/util/localstorage.service';
 
 @Component({
   selector: 'app-drink-shop-card',
@@ -21,11 +22,13 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
   dialogMaxHeight: number;
   ratingStarWidth: number;
   ratingStarHeight: number;
+  beenThere: boolean;
 
   constructor(
     private drinkShopService: DrinkShopService,
     private cons: ConstantsService,
     private dialog: MatDialog,
+    private localStorageService: LocalstorageService,
   ) { }
 
   @HostListener('window:resize', [])
@@ -89,4 +92,54 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
       data: { review: this.chosenShopDetail.reviews[index] }
     });
   }
+
+  checkMark(placeId: string, type?: string) {
+    const value = this.localStorageService.getLocalStorage(placeId);
+    if (value) {
+      if (type === this.cons.LOCAL_STORAGE_TYPE.favorite) {
+        return value.indexOf(this.cons.LOCAL_STORAGE_TYPE.favorite) > -1 ? true : false;
+      } else if (type === this.cons.LOCAL_STORAGE_TYPE.haveBeen) {
+        return value.indexOf(this.cons.LOCAL_STORAGE_TYPE.haveBeen) > -1 ? true : false;
+      }
+    } else { return null; }
+  }
+
+  favoritetShop(placeId: string) {
+    const value = this.localStorageService.getLocalStorage(placeId);
+    if (value && value.indexOf(this.cons.LOCAL_STORAGE_TYPE.favorite) === -1) {
+      console.log('favoritetShop', this.localStorageService.getLocalStorage(placeId))
+      const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.favorite + ';';
+      this.localStorageService.setLocalStorage(placeId, valueStr);
+    } else if (!value) {
+      this.localStorageService.setLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite + ';');
+    }
+  }
+
+  unFavoriteShop(placeId: string) {
+    const value = this.localStorageService.getLocalStorage(placeId);
+    if (value) {
+      const valAry = value.split(';');
+      const index = valAry.indexOf(this.cons.LOCAL_STORAGE_TYPE.favorite);
+      console.log(valAry)
+      if (index > -1) {
+        valAry.splice(index, 1);
+        console.log('ss', valAry)
+        if (valAry[0] !== '') {
+          this.localStorageService.setLocalStorage(placeId, valAry[0] + ';');
+        } else {
+          this.localStorageService.removeLocalStorage(placeId);
+        }
+      } else {
+        this.localStorageService.removeLocalStorage(placeId);
+      }
+    }
+  }
+
+  // haveBeen(placeId: string) {
+  //   this.localStorageService.setLocalStorage(placeId);
+  // }
+
+  // neverBeen(placeId: string) {
+  //   this.localStorageService.removeLocalStorage(placeId);
+  // }
 }

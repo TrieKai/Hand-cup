@@ -117,7 +117,6 @@
 
 .chosen-card {
   display              : grid;
-  align-self           : center;
   align-items          : center;
   justify-content      : center;
   grid-template-columns: 300px 450px;
@@ -125,10 +124,10 @@
   grid-template-areas  :
     "title title"
     "image content";
-  margin: 30px;
-  height: 70vh;
-  width : 100%;
-  cursor: default;
+  margin-top: 60px;
+  height    : 70vh;
+  width     : 100%;
+  cursor    : default;
 
   @media screen and (max-width: rwdBoundary(middle)) {
     grid-template-columns: 200px 350px;
@@ -138,9 +137,9 @@
     grid-template-columns: 300px;
     grid-template-rows   : 40px 250px calc(80vh - 40px - 250px);
     grid-template-areas  :
-    "title"
-    "image"
-    "content";
+      "title"
+      "image"
+      "content";
   }
 }
 
@@ -259,7 +258,7 @@
         .author-rating {
           width    : 10px;
           font-size: 1.25rem;
-  
+
           @media screen and (max-width: rwdBoundary(small)) {
             font-size: 1rem;
           }
@@ -273,11 +272,11 @@
 
 
       .review-time {
-        margin     : 5px 0 0 5px;
-        width      : 85px;
-        height     : 25px;
-        color      : darkgray;
-        font-size  : 1rem;
+        margin   : 5px 0 0 5px;
+        width    : 85px;
+        height   : 25px;
+        color    : darkgray;
+        font-size: 1rem;
 
         @media screen and (max-width: rwdBoundary(middle)) {
           margin: 5px 0 0 0;
@@ -303,6 +302,37 @@
       text-overflow     : ellipsis;
       overflow          : hidden;
       cursor            : pointer;
+    }
+  }
+
+  .favorite-box {
+    display        : flex;
+    justify-content: flex-end;
+    color          : darkred;
+
+    .favorite:hover {
+      color : red;
+      cursor: pointer;
+    }
+
+    .unfavorite:hover {
+      cursor: pointer;
+    }
+
+    .never-been-box:hover>.add_location_alt {
+      display: inline-block;
+    }
+
+    .never-been-box:hover>.not_listed_location ~ .wrong_location {
+      display: none;
+    }
+
+    .have-been-box:hover>.add_location_alt ~ .not_listed_location {
+      display: none;
+    }
+
+    .have-been-box:hover>.wrong_location {
+      display: inline-block;
     }
   }
 }

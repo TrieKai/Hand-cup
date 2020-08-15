@@ -34,5 +34,10 @@ export class ConstantsService {
     drinkShops: '今天飲料喝哪家?'
   }
 
+  public readonly LOCAL_STORAGE_TYPE = {
+    favorite: 'favorite',
+    haveBeen: 'haaveBeen'
+  }
+
   constructor() { }
 }

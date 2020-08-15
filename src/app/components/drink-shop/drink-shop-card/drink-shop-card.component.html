@@ -39,7 +39,6 @@
     <button mat-raised-button color="white" (click)="handleTransformScenes('cards')">返回</button>
     <button mat-raised-button class="draw-button" color="white" (click)="handleDraw()">再一次</button>
   </div>
-  <div class="space-box"></div>
   <div class="chosen-card">
     <div class="chosen-card-title">
       <span>恭喜! 今天飲料喝這家~</span>
@@ -80,6 +79,27 @@
             <div class="text-box" (click)="openDialog(i)">{{review.text}}</div>
           </div>
         </li>
+        <div class="favorite-box">
+          <span *ngIf="!checkMark(chosenShopDetail.place_id, 'favorite')" class="material-icons unfavorite"
+            title="收藏這家!" (click)="favoritetShop(chosenShopDetail.place_id)">
+            favorite_border
+          </span>
+          <span *ngIf="checkMark(chosenShopDetail.place_id, 'favorite')" class="material-icons favorite"
+            title="取消收藏" (click)="unFavoriteShop(chosenShopDetail.place_id)">
+            favorite
+          </span>
+          <!-- <div [ngClass]="{'have-been-box': haveBeen, 'never-been-box': !haveBeen}">
+            <span class="material-icons not_listed_location">
+              not_listed_location
+            </span>
+            <span class="material-icons add_location_alt" (click)="mark(chosenShopDetail.place_id, 'haveBeen')">
+              add_location_alt
+            </span>
+            <span class="material-icons wrong_location">
+              wrong_location
+            </span>
+          </div> -->
+        </div>
       </ul>
     </div>
   </div>
