@@ -15,6 +15,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { DrinkShopMapComponent } from './components/drink-shop/drink-shop-map/drink-shop-map.component';
 import { DrinkShopCardComponent } from './components/drink-shop/drink-shop-card/drink-shop-card.component';
 import { DialogComponent } from './components/common/dialog/dialog.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { DialogComponent } from './components/common/dialog/dialog.component';
         HeaderComponent,
         DrinkShopMapComponent,
         DrinkShopCardComponent,
+        LoginComponent,
     ],
     imports: [
         BrowserModule,
