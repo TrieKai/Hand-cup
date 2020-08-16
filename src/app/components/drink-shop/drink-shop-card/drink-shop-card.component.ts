@@ -93,7 +93,7 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
     });
   }
 
-  checkMark(placeId: string, type?: string) {
+  checkLocalStorage(placeId: string, type: string) {
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value) {
       if (type === this.cons.LOCAL_STORAGE_TYPE.favorite) {
@@ -106,8 +106,7 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
 
   favoritetShop(placeId: string) {
     const value = this.localStorageService.getLocalStorage(placeId);
-    if (value && value.indexOf(this.cons.LOCAL_STORAGE_TYPE.favorite) === -1) {
-      console.log('favoritetShop', this.localStorageService.getLocalStorage(placeId))
+    if (value && !this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite)) {
       const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.favorite + ';';
       this.localStorageService.setLocalStorage(placeId, valueStr);
     } else if (!value) {
@@ -120,10 +119,8 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
     if (value) {
       const valAry = value.split(';');
       const index = valAry.indexOf(this.cons.LOCAL_STORAGE_TYPE.favorite);
-      console.log(valAry)
       if (index > -1) {
         valAry.splice(index, 1);
-        console.log('ss', valAry)
         if (valAry[0] !== '') {
           this.localStorageService.setLocalStorage(placeId, valAry[0] + ';');
         } else {
@@ -135,11 +132,33 @@ export class DrinkShopCardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // haveBeen(placeId: string) {
-  //   this.localStorageService.setLocalStorage(placeId);
-  // }
+  haveBeen(placeId: string) {
+    const value = this.localStorageService.getLocalStorage(placeId);
+    if (value && !this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.haveBeen)) {
+      const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.haveBeen + ';';
+      this.localStorageService.setLocalStorage(placeId, valueStr);
+    } else if (!value) {
+      this.localStorageService.setLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.haveBeen + ';');
+    }
+    this.beenThere = true;
+  }
 
-  // neverBeen(placeId: string) {
-  //   this.localStorageService.removeLocalStorage(placeId);
-  // }
+  neverBeen(placeId: string) {
+    const value = this.localStorageService.getLocalStorage(placeId);
+    if (value) {
+      const valAry = value.split(';');
+      const index = valAry.indexOf(this.cons.LOCAL_STORAGE_TYPE.haveBeen);
+      if (index > -1) {
+        valAry.splice(index, 1);
+        if (valAry[0] !== '') {
+          this.localStorageService.setLocalStorage(placeId, valAry[0] + ';');
+        } else {
+          this.localStorageService.removeLocalStorage(placeId);
+        }
+      } else {
+        this.localStorageService.removeLocalStorage(placeId);
+      }
+    }
+    this.beenThere = false;
+  }
 }

@@ -36,7 +36,7 @@ export class ConstantsService {
 
   public readonly LOCAL_STORAGE_TYPE = {
     favorite: 'favorite',
-    haveBeen: 'haaveBeen'
+    haveBeen: 'haveBeen'
   }
 
   constructor() { }

@@ -305,13 +305,13 @@
     }
   }
 
-  .favorite-box {
+  .info-box {
     display        : flex;
     justify-content: flex-end;
-    color          : darkred;
+    color          : red;
 
     .favorite:hover {
-      color : red;
+      color : darkred;
       cursor: pointer;
     }
 
@@ -319,19 +319,63 @@
       cursor: pointer;
     }
 
+    .have-been-box {
+      color : #d62e1f;
+      cursor: pointer;
+
+      .not_listed_location {
+        display: none;
+      }
+
+      .add_location_alt {
+        display: none;
+      }
+
+      .wrong_location {
+        display: inline-block;
+      }
+    }
+
+    .never-been-box {
+      color : #d62e1f;
+      cursor: pointer;
+
+      .not_listed_location {
+        display: inline-block;
+        color  : gray;
+      }
+
+      .add_location_alt {
+        display: none;
+      }
+
+      .wrong_location {
+        display: none;
+      }
+    }
+
     .never-been-box:hover>.add_location_alt {
       display: inline-block;
     }
 
-    .never-been-box:hover>.not_listed_location ~ .wrong_location {
+    .never-been-box:hover>.not_listed_location {
       display: none;
     }
 
-    .have-been-box:hover>.add_location_alt ~ .not_listed_location {
+    .never-been-box:hover>.wrong_location {
+      display: none;
+    }
+
+    .have-been-box:hover>.add_location_alt {
+      display: none;
+    }
+
+    .have-been-box:hover>.not_listed_location {
       display: none;
     }
 
     .have-been-box:hover>.wrong_location {
+      color  : darkred;
       display: inline-block;
     }
   }

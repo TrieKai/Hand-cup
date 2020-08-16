@@ -79,26 +79,27 @@
             <div class="text-box" (click)="openDialog(i)">{{review.text}}</div>
           </div>
         </li>
-        <div class="favorite-box">
-          <span *ngIf="!checkMark(chosenShopDetail.place_id, 'favorite')" class="material-icons unfavorite"
+        <div class="info-box">
+          <span *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons unfavorite"
             title="收藏這家!" (click)="favoritetShop(chosenShopDetail.place_id)">
             favorite_border
           </span>
-          <span *ngIf="checkMark(chosenShopDetail.place_id, 'favorite')" class="material-icons favorite"
+          <span *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons favorite"
             title="取消收藏" (click)="unFavoriteShop(chosenShopDetail.place_id)">
             favorite
           </span>
-          <!-- <div [ngClass]="{'have-been-box': haveBeen, 'never-been-box': !haveBeen}">
+          <div
+            [ngClass]="{'have-been-box': checkLocalStorage(chosenShopDetail.place_id, 'haveBeen'), 'never-been-box': !checkLocalStorage(chosenShopDetail.place_id, 'haveBeen')}">
             <span class="material-icons not_listed_location">
               not_listed_location
             </span>
-            <span class="material-icons add_location_alt" (click)="mark(chosenShopDetail.place_id, 'haveBeen')">
+            <span class="material-icons add_location_alt" (click)="haveBeen(chosenShopDetail.place_id, 'haveBeen')">
               add_location_alt
             </span>
-            <span class="material-icons wrong_location">
+            <span class="material-icons wrong_location" (click)="neverBeen(chosenShopDetail.place_id, 'haveBeen')">
               wrong_location
             </span>
-          </div> -->
+          </div>
         </div>
       </ul>
     </div>
