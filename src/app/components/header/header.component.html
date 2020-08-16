@@ -17,7 +17,7 @@
     face
   </span>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item *ngFor="let utilitiesMenu of utilitiesMenuList">
+    <button mat-menu-item *ngFor="let utilitiesMenu of utilitiesMenuList" (click)="handleUtilMenu()">
       <mat-icon>{{utilitiesMenu.icon}}</mat-icon>
       <span>{{utilitiesMenu.title}}</span>
     </button>

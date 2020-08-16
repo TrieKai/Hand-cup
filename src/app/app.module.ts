@@ -42,6 +42,7 @@ import { LoginComponent } from './components/login/login.component';
         DrinkComponent,
         DrinkShopComponent,
         DialogComponent,
+        LoginComponent,
     ],
 })
 export class AppModule { }
