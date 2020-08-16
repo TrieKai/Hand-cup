@@ -79,7 +79,7 @@
             <div class="text-box" (click)="openDialog(i)">{{review.text}}</div>
           </div>
         </li>
-        <div class="info-box">
+        <div *ngIf="chosenShopDetail.place_id" class="info-box">
           <span *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons unfavorite"
             title="收藏這家!" (click)="favoritetShop(chosenShopDetail.place_id)">
             favorite_border
@@ -93,10 +93,10 @@
             <span class="material-icons not_listed_location">
               not_listed_location
             </span>
-            <span class="material-icons add_location_alt" (click)="haveBeen(chosenShopDetail.place_id, 'haveBeen')">
+            <span class="material-icons add_location_alt" (click)="haveBeen(chosenShopDetail.place_id)">
               add_location_alt
             </span>
-            <span class="material-icons wrong_location" (click)="neverBeen(chosenShopDetail.place_id, 'haveBeen')">
+            <span class="material-icons wrong_location" (click)="neverBeen(chosenShopDetail.place_id)">
               wrong_location
             </span>
           </div>

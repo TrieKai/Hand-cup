@@ -11,6 +11,7 @@ interface drinkShopResults {
 }
 
 interface drinkShopDetail {
+    place_id: string
     formatted_address: string
     formatted_phone_number: string
     website: string
