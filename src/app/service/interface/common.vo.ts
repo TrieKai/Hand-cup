@@ -23,9 +23,10 @@ interface RespData {
 }
 
 interface Menu {
-    title: string,
-    router: string,
-    icon: string,
+    title: string
+    router: string
+    icon: string
+    componentRef?: any
 }
 
 interface UtilitiesMenu {
@@ -43,4 +44,5 @@ interface Message {
 
 interface commonSharedData {
     onloading: boolean
+    loginComponentRef: any
 }
