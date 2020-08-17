@@ -1,10 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 
 import { RouterConfigService } from 'src/app/config/router-config.service';
 import { MenuConfigService } from 'src/app/config/menu-config.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
-import { LoginComponent } from 'src/app/components/login/login.component';
+import { DomService } from 'src/app/util/dom.service';
 
 @Component({
   selector: 'app-header',
@@ -19,13 +18,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   menuList: Menu[] = [];
   utilitiesMenuList: Menu[] = [];
   sidebarStatus: boolean = false;
+  showLogin: boolean;
 
   constructor(
     private routerCfg: RouterConfigService,
     private menuCfg: MenuConfigService,
     protected htmlElementService: HtmlElementService,
     private renderer: Renderer2,
-    private dialog: MatDialog,
+    private domService: DomService,
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +66,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  handleUtilMenu() {
-    this.dialog.open(LoginComponent);
+  handleUtilMenu(menuData: Menu) {
+    if (menuData.componentRef !== null && menuData.componentRef !== undefined) {
+      const componentRef = this.domService.createComponent(menuData.componentRef);
+      this.domService.attachComponent(componentRef, document.body);
+    }
   }
 }

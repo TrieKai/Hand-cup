@@ -17,10 +17,12 @@
     face
   </span>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item *ngFor="let utilitiesMenu of utilitiesMenuList" (click)="handleUtilMenu()">
-      <mat-icon>{{utilitiesMenu.icon}}</mat-icon>
-      <span>{{utilitiesMenu.title}}</span>
-    </button>
+    <div *ngFor="let utilitiesMenu of utilitiesMenuList">
+      <button mat-menu-item (click)="handleUtilMenu(utilitiesMenu)">
+        <mat-icon>{{utilitiesMenu.icon}}</mat-icon>
+        <span>{{utilitiesMenu.title}}</span>
+      </button>
+    </div>
   </mat-menu>
 </div>
 <label #sidebarIconToggle class="sidebarIconToggle" (click)="handleSidebar()">
@@ -36,8 +38,4 @@
     </li>
   </ul>
 </div>
-<div class="main-container">
-
-    <router-outlet></router-outlet>
-
-</div>
+<div class="main-container"></div>
