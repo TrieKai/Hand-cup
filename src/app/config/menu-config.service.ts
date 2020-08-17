@@ -15,7 +15,7 @@ const menus: Menu[] = [
   { title: menuCons.NEWEST, router: '', icon: menuCons.NEWEST_ICON },
 ];
 const utilitiesMenus: Menu[] = [
-  { title: menuCons.LOGIN_ICON, router: '', icon: menuCons.LOGIN_ICON, componentRef: LoginComponent },
+  { title: menuCons.LOGIN, router: '', icon: menuCons.LOGIN_ICON, componentRef: LoginComponent },
   { title: menuCons.SETTING, router: '', icon: menuCons.SETTING_ICON },
   { title: menuCons.REPORT, router: '', icon: menuCons.REPORT_ICON },
 ];
