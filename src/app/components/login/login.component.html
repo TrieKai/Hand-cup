@@ -1,38 +1,41 @@
-<div class="container">
-  <input id="signin" type="radio" name="tab" checked="checked" />
-  <input id="register" type="radio" name="tab" />
-  <div class="pages">
-    <div class="page">
-      <div class="input">
-        <div class="title"><i class="material-icons">account_box</i> USERNAME</div>
-        <input class="text" type="text" placeholder="" />
+<div class="overlay-container">
+  <div class="overlay-background" (click)="closeDialog()"></div>
+  <div class="login-wrapper">
+    <div class="login-box">
+      <input id="signin" type="radio" name="tab" checked="checked" />
+      <input id="register" type="radio" name="tab" />
+      <div class="pages">
+        <div class="page">
+          <div class="input">
+            <div class="title"><i class="material-icons">account_box</i> USERNAME</div>
+            <input class="text" type="text" placeholder="" />
+          </div>
+          <div class="input">
+            <div class="title"><i class="material-icons">lock</i> PASSWORD</div>
+            <input class="text" type="password" placeholder="" />
+          </div>
+          <div class="input">
+            <input class="enter-btn" type="submit" value="ENTER" />
+          </div>
+        </div>
+        <div class="page signup">
+          <div class="input">
+            <div class="title"><i class="material-icons">person</i> NAME</div>
+            <input class="text" type="text" placeholder="" />
+          </div>
+          <div class="input">
+            <div class="title"><i class="material-icons">email</i> EMAIL</div>
+            <input class="text" type="password" placeholder="" />
+          </div>
+          <div class="input">
+            <input class="sign-up-btn" type="submit" value="SIGN ME UP!" />
+          </div>
+        </div>
       </div>
-      <div class="input">
-        <div class="title"><i class="material-icons">lock</i> PASSWORD</div>
-        <input class="text" type="password" placeholder="" />
-      </div>
-      <div class="input">
-        <input type="submit" value="ENTER" />
+      <div class="tabs">
+        <label class="tab text" for="signin">Sign In</label>
+        <label class="tab text" for="register">Register</label>
       </div>
     </div>
-    <div class="page signup">
-      <div class="input">
-        <div class="title"><i class="material-icons">person</i> NAME</div>
-        <input class="text" type="text" placeholder="" />
-      </div>
-      <div class="input">
-        <div class="title"><i class="material-icons">markunread_mailbox</i> EMAIL</div>
-        <input class="text" type="password" placeholder="" />
-      </div>
-      <div class="input">
-        <input type="submit" value="SIGN ME UP!" />
-      </div>
-    </div>
-  </div>
-  <div class="tabs">
-    <label class="tab text" for="signin">
-      Sign In</label>
-    <label class="tab text" for="register">
-      Register</label>
   </div>
 </div>

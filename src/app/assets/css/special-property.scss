@@ -63,11 +63,19 @@
 }
 
 @function zIndex($type) {
-  @if $type==loading {
-    @return 100;
+  @if $type==message {
+    @return 80;
   }
 
-  @else if $type==message {
+  @else if $type==login {
+    @return 70;
+  }
+
+  @else if $type==mask {
+    @return 60;
+  }
+
+  @else if $type==loading {
     @return 50;
   }
 
