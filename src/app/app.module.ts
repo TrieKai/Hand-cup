@@ -1,15 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
 import { MaterialModule } from './util/material/material.module';
 import { CommonComponentModule } from './components/common/common-component.module';
-
-import { DrinkComponent } from './components/drink/drink.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { environment } from '../environments/environment';
+
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { DrinkComponent } from './components/drink/drink.component';
 import { DrinkShopComponent } from './components/drink-shop/drink-shop.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DrinkShopMapComponent } from './components/drink-shop/drink-shop-map/drink-shop-map.component';
@@ -35,6 +39,8 @@ import { LoginComponent } from './components/login/login.component';
         MaterialModule,
         CommonComponentModule,
         BrowserAnimationsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
