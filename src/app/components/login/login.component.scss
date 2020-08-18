@@ -7,7 +7,7 @@
   width         : 100%;
   height        : 100%;
   pointer-events: none;
-  z-index       : zIndex(mask);
+  z-index       : zIndex(dialogMask);
 
   .overlay-background {
     position                   : absolute;
@@ -154,6 +154,12 @@
   }
 }
 
+.error {
+  // outline-color    : red;
+  animation        : shake .5s linear;
+  -webkit-animation: shake .5s linear;
+}
+
 input[type=radio] {
   display: none;
 }
@@ -193,5 +199,31 @@ input[type=radio] {
   from {
     transform: translateY(50%) scale(0, 0);
     opacity  : 0;
+  }
+}
+
+@keyframes shake {
+
+  8%,
+  41% {
+    -webkit-transform: translateX(-10px);
+  }
+
+  25%,
+  58% {
+    -webkit-transform: translateX(10px);
+  }
+
+  75% {
+    -webkit-transform: translateX(-5px);
+  }
+
+  92% {
+    -webkit-transform: translateX(5px);
+  }
+
+  0%,
+  100% {
+    -webkit-transform: translateX(0);
   }
 }

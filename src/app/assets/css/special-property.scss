@@ -71,7 +71,7 @@
     @return 70;
   }
 
-  @else if $type==mask {
+  @else if $type==dialogMask {
     @return 60;
   }
 

@@ -8,14 +8,14 @@
         <div class="page">
           <div class="input">
             <div class="title"><i class="material-icons">account_box</i> USERNAME</div>
-            <input class="text" type="text" placeholder="" />
+            <input #username class="text" type="text" placeholder="username" />
           </div>
           <div class="input">
             <div class="title"><i class="material-icons">lock</i> PASSWORD</div>
-            <input class="text" type="password" placeholder="" />
+            <input #password class="text" type="password" placeholder="password" />
           </div>
           <div class="input">
-            <input class="enter-btn" type="submit" value="ENTER" />
+            <input class="enter-btn" type="submit" value="ENTER" (click)="login()"/>
           </div>
         </div>
         <div class="page signup">
