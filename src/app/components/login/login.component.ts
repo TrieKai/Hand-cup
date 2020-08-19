@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/co
 import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
-import { FirebaseService } from 'src/app/service/firebase.service';
+import { LoginService } from 'src/app/service/login.service';
 
 @Component({
   selector: 'app-login',
@@ -11,17 +11,17 @@ import { FirebaseService } from 'src/app/service/firebase.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('username', { static: false }) username: ElementRef;
-  @ViewChild('password', { static: false }) password: ElementRef;
-  @ViewChild('nickname', { static: false }) nickname: ElementRef;
-  @ViewChild('email', { static: false }) email: ElementRef;
+  @ViewChild('loginEmail', { static: false }) loginEmail: ElementRef;
+  @ViewChild('loginPassword', { static: false }) loginPassword: ElementRef;
+  @ViewChild('signUpEmail', { static: false }) signUpEmail: ElementRef;
+  @ViewChild('signUpPassword', { static: false }) signUpPassword: ElementRef;
 
   constructor(
     private domService: DomService,
     private sharedService: SharedService,
     private cons: ConstantsService,
     private renderer: Renderer2,
-    private firebaseService: FirebaseService,
+    private loginService: LoginService,
   ) { }
 
   ngOnInit() {
@@ -31,44 +31,61 @@ export class LoginComponent implements OnInit {
     this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
   }
 
-  login() {
-    const username = this.username.nativeElement.value;
-    const password = this.password.nativeElement.value;
-    console.log(username, password)
+  async login() {
+    const email = this.loginEmail.nativeElement.value;
+    const password = this.loginPassword.nativeElement.value;
+    console.log('Login: ', email, password)
 
-    this.renderer.removeClass(this.username.nativeElement, 'error');
-    this.renderer.removeClass(this.password.nativeElement, 'error');
-    setTimeout(() => {
-      if (username === '' || username === null || username === undefined) {
-        this.renderer.addClass(this.username.nativeElement, 'error');
-        return;
-      }
-      if (password === '' || password === null || password === undefined) {
-        this.renderer.addClass(this.password.nativeElement, 'error');
-        return;
-      }
-    }, 10);
+    this.renderer.removeClass(this.loginEmail.nativeElement, 'error');
+    this.renderer.removeClass(this.loginPassword.nativeElement, 'error');
+    await new Promise(resolve => {
+      setTimeout(() => {
+        if (email === '' || email === null || email === undefined) {
+          this.renderer.addClass(this.loginEmail.nativeElement, 'error');
+          return;
+        }
+        if (password === '' || password === null || password === undefined) {
+          this.renderer.addClass(this.loginPassword.nativeElement, 'error');
+          return;
+        }
+        resolve();
+      }, 10);
+    });
     // TODO: Better way to replace setTimeout
+
+    await this.loginService.login(email, password)
+      .then(() => {
+        this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+      });
   }
 
-  async signup() {
-    const nickname = this.nickname.nativeElement.value;
-    const email = this.email.nativeElement.value;
-    console.log(nickname, email)
+  async signUp() {
+    const email = this.signUpEmail.nativeElement.value;
+    const password = this.signUpPassword.nativeElement.value;
+    console.log('SignUp: ', email, password)
 
-    this.renderer.removeClass(this.nickname.nativeElement, 'error');
-    this.renderer.removeClass(this.email.nativeElement, 'error');
-    setTimeout(() => {
-      if (nickname === '' || nickname === null || nickname === undefined) {
-        this.renderer.addClass(this.nickname.nativeElement, 'error');
-        return;
-      }
-      if (email === '' || email === null || email === undefined) {
-        this.renderer.addClass(this.email.nativeElement, 'error');
-        return;
-      }
-    }, 10);
+    this.renderer.removeClass(this.signUpEmail.nativeElement, 'error');
+    this.renderer.removeClass(this.signUpPassword.nativeElement, 'error');
+    await new Promise(resolve => {
+      setTimeout(() => {
+        if (email === '' || email === null || email === undefined) {
+          this.renderer.addClass(this.signUpEmail.nativeElement, 'error');
+          return;
+        }
+        if (password === '' || password === null || password === undefined) {
+          this.renderer.addClass(this.signUpPassword.nativeElement, 'error');
+          return;
+        }
+        resolve();
+      }, 10);
+    });
+    // TODO: Better way to replace setTimeout
 
-    await this.firebaseService.register(email, nickname);
+    const signUpResult = await this.loginService.signUp(email, password)
+      .then(() => {
+        this.signUpEmail.nativeElement.value = '';
+        this.signUpPassword.nativeElement.value = '';
+      });
+    console.log('Sign up result: ', signUpResult)
   }
 }

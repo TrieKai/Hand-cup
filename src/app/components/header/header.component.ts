@@ -4,6 +4,9 @@ import { RouterConfigService } from 'src/app/config/router-config.service';
 import { MenuConfigService } from 'src/app/config/menu-config.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
 import { DomService } from 'src/app/util/dom.service';
+import { LoginService } from 'src/app/service/login.service';
+
+import { LoginComponent } from 'src/app/components/login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -16,9 +19,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   @ViewChild('sidebarMenu', { static: false }) sidebarMenu: ElementRef;
   home: Menu;
   menuList: Menu[] = [];
-  utilitiesMenuList: Menu[] = [];
+  // utilitiesMenuList: Menu[] = [];
   sidebarStatus: boolean = false;
-  showLogin: boolean;
+  isLogin: boolean;
 
   constructor(
     private routerCfg: RouterConfigService,
@@ -26,13 +29,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     protected htmlElementService: HtmlElementService,
     private renderer: Renderer2,
     private domService: DomService,
+    private loginService: LoginService,
   ) { }
 
   ngOnInit(): void {
     this.routerCfg.setRoutes();
     this.menuList = this.menuCfg.getMenu();
-    this.utilitiesMenuList = this.menuCfg.getUtilitiesMenu();
+    // this.utilitiesMenuList = this.menuCfg.getUtilitiesMenu();
     this.home = this.menuCfg.getHome();
+    this.isLogin = this.loginService.getUserData() ? true : false;
   }
 
   ngAfterViewInit(): void {
@@ -66,10 +71,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  handleUtilMenu(menuData: Menu) {
-    if (menuData.componentRef !== null && menuData.componentRef !== undefined) {
-      const componentRef = this.domService.createComponent(menuData.componentRef);
-      this.domService.attachComponent(componentRef, document.body);
-    }
+  login() {
+    console.log(this.loginService.getUserData())
+    const componentRef = this.domService.createComponent(LoginComponent);
+    this.domService.attachComponent(componentRef, document.body);
+    this.isLogin = true;
+  }
+
+  logout() {
+    this.loginService.logOut();
+    this.isLogin = false;
   }
 }

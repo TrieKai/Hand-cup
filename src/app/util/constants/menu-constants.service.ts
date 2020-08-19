@@ -25,15 +25,15 @@ export class MenuConstantsService {
   public readonly NEWEST_ICON: string = "../../assets/img/Icon-New.png";
 
   // UtilitiesMenu
-  public readonly LOGIN: string = "登入";
-  public readonly LOGOUT: string = "登出";
-  public readonly SETTING: string = "設定";
-  public readonly REPORT: string = "回報區";
+  // public readonly LOGIN: string = "登入";
+  // public readonly LOGOUT: string = "登出";
+  // public readonly SETTING: string = "設定";
+  // public readonly REPORT: string = "回報區";
 
-  public readonly LOGIN_ICON: string = "apps";
-  public readonly LOGOUT_ICON: string = "apps";
-  public readonly SETTING_ICON: string = "apps";
-  public readonly REPORT_ICON: string = "apps";
+  // public readonly LOGIN_ICON: string = "login";
+  // public readonly LOGOUT_ICON: string = "logout";
+  // public readonly SETTING_ICON: string = "apps";
+  // public readonly REPORT_ICON: string = "apps";
 
   constructor() { }
 }

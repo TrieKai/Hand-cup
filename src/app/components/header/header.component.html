@@ -17,10 +17,28 @@
     face
   </span>
   <mat-menu #menu="matMenu">
-    <div *ngFor="let utilitiesMenu of utilitiesMenuList">
-      <button mat-menu-item (click)="handleUtilMenu(utilitiesMenu)">
-        <mat-icon>{{utilitiesMenu.icon}}</mat-icon>
-        <span>{{utilitiesMenu.title}}</span>
+    <div *ngIf="!isLogin">
+      <button mat-menu-item (click)="login()">
+        <mat-icon>login</mat-icon>
+        <span>登入</span>
+      </button>
+    </div>
+    <div *ngIf="isLogin">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>登出</span>
+      </button>
+    </div>
+    <div>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>設定</span>
+      </button>
+    </div>
+    <div>
+      <button mat-menu-item>
+        <mat-icon>support_agent</mat-icon>
+        <span>回報區</span>
       </button>
     </div>
   </mat-menu>

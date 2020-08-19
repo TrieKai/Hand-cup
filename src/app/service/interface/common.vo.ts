@@ -26,7 +26,6 @@ interface Menu {
     title: string
     router: string
     icon: string
-    componentRef?: any
 }
 
 interface UtilitiesMenu {
