@@ -44,5 +44,10 @@ interface Message {
 interface commonSharedData {
     onloading: boolean
     loginComponentRef: any
-    settingsComponentRef: any
+    profileComponentRef: any
+}
+
+interface firebaseProfile {
+    displayName?: string;
+    photoURL?: string;
 }

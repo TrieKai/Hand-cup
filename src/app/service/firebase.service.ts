@@ -74,4 +74,14 @@ export class FirebaseService {
   getUserData(): firebase.User {
     return this.afAuth.auth.currentUser;
   }
+
+  async updateProfile(profile: firebaseProfile) {
+    await this.afAuth.auth.currentUser.updateProfile(profile)
+      .then(() => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '通知', content: '更新個人資料成功' });
+      })
+      .catch((error) => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '更新個人資料失敗', content: error });
+      });
+  }
 }

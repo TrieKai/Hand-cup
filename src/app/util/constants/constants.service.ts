@@ -17,7 +17,7 @@ export class ConstantsService {
   public readonly SHAREDDATA = {
     onloading: 'onloading',
     loginComponentRef: 'loginComponentRef',
-    settingsComponentRef: 'settingsComponentRef',
+    profileComponentRef: 'profileComponentRef',
     showMap: 'showMap',
     drinkShopResults: 'drinkShopResults'
   };

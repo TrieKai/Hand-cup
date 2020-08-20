@@ -20,7 +20,7 @@ import { DrinkShopMapComponent } from './components/drink-shop/drink-shop-map/dr
 import { DrinkShopCardComponent } from './components/drink-shop/drink-shop-card/drink-shop-card.component';
 import { DialogComponent } from './components/common/dialog/dialog.component';
 import { LoginComponent } from './components/login/login.component';
-import { SettingsComponent } from './components/settings/settings.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +32,7 @@ import { SettingsComponent } from './components/settings/settings.component';
         DrinkShopMapComponent,
         DrinkShopCardComponent,
         LoginComponent,
-        SettingsComponent,
+        ProfileComponent,
     ],
     imports: [
         BrowserModule,
@@ -51,7 +51,7 @@ import { SettingsComponent } from './components/settings/settings.component';
         DrinkShopComponent,
         DialogComponent,
         LoginComponent,
-        SettingsComponent,
+        ProfileComponent,
     ],
 })
 export class AppModule { }

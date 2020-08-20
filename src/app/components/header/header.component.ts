@@ -9,7 +9,7 @@ import { DomService } from 'src/app/util/dom.service';
 import { LoginService } from 'src/app/service/login.service';
 
 import { LoginComponent } from 'src/app/components/login/login.component';
-import { SettingsComponent } from 'src/app/components/settings/settings.component';
+import { ProfileComponent } from 'src/app/components/profile/profile.component';
 
 @Component({
   selector: 'app-header',
@@ -87,8 +87,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.isLogin = false;
   }
 
-  settings() {
-    const componentRef = this.domService.createComponent(SettingsComponent, this.cons.SHAREDDATA.settingsComponentRef);
+  profile() {
+    const componentRef = this.domService.createComponent(ProfileComponent, this.cons.SHAREDDATA.profileComponentRef);
     this.domService.attachComponent(componentRef, this.document.body);
   }
 }
