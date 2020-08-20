@@ -1,12 +1,15 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 import { RouterConfigService } from 'src/app/config/router-config.service';
 import { MenuConfigService } from 'src/app/config/menu-config.service';
+import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
 import { DomService } from 'src/app/util/dom.service';
 import { LoginService } from 'src/app/service/login.service';
 
 import { LoginComponent } from 'src/app/components/login/login.component';
+import { SettingsComponent } from 'src/app/components/settings/settings.component';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +27,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isLogin: boolean;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private routerCfg: RouterConfigService,
+    private cons: ConstantsService,
     private menuCfg: MenuConfigService,
     protected htmlElementService: HtmlElementService,
     private renderer: Renderer2,
@@ -72,14 +77,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   login() {
-    console.log(this.loginService.getUserData())
-    const componentRef = this.domService.createComponent(LoginComponent);
-    this.domService.attachComponent(componentRef, document.body);
+    const componentRef = this.domService.createComponent(LoginComponent, this.cons.SHAREDDATA.loginComponentRef);
+    this.domService.attachComponent(componentRef, this.document.body);
     this.isLogin = true;
   }
 
   logout() {
     this.loginService.logOut();
     this.isLogin = false;
+  }
+
+  settings() {
+    const componentRef = this.domService.createComponent(SettingsComponent, this.cons.SHAREDDATA.settingsComponentRef);
+    this.domService.attachComponent(componentRef, this.document.body);
   }
 }

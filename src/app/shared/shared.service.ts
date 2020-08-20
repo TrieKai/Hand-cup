@@ -7,7 +7,11 @@ import { Subject } from 'rxjs/internal/Subject';
 export class SharedService {
   private onInit = new Subject<any>();
   onInitEmitted = this.onInit.asObservable();
-  commonSharedData: commonSharedData = { onloading: false, loginComponentRef: null };
+  commonSharedData: commonSharedData = {
+    onloading: false,
+    loginComponentRef: null,
+    settingsComponentRef: null
+  };
 
   constructor() { }
 

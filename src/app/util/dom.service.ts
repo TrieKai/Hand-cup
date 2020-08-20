@@ -16,7 +16,7 @@ export class DomService {
     private cons: ConstantsService,
   ) { }
 
-  createComponent(component: any, componentProps?: object) {
+  createComponent(component: any, name: string, componentProps?: object) {
     // Create a component reference from the component 
     const componentRef = this.componentFactoryResolver
       .resolveComponentFactory(component)
@@ -26,7 +26,7 @@ export class DomService {
       Object.assign(componentRef.instance as object, componentProps);
     }
     // Set componentRef into shared data service
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.loginComponentRef, componentRef);
+    this.sharedService.setSharedData(name, componentRef);
 
     return componentRef;
   }
