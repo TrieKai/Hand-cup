@@ -42,7 +42,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.menuList = this.menuCfg.getMenu();
     // this.utilitiesMenuList = this.menuCfg.getUtilitiesMenu();
     this.home = this.menuCfg.getHome();
-    this.isLogin = this.loginService.getUserData() ? true : false;
+    this.loginService.checkUserLoggedIn().subscribe(status => {
+      this.isLogin = status;
+    });
   }
 
   ngAfterViewInit(): void {
@@ -52,6 +54,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnDestroy(): void {
     this.htmlElementService.delete('searchInput');
+    this.loginService.checkUserLoggedIn().unsubscribe();
   }
 
   handleSidebar(status?: boolean) {
@@ -79,12 +82,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   login() {
     const componentRef = this.domService.createComponent(LoginComponent, this.cons.SHAREDDATA.loginComponentRef);
     this.domService.attachComponent(componentRef, this.document.body);
-    this.isLogin = true;
+    // this.isLogin = true;
   }
 
   logout() {
     this.loginService.logOut();
-    this.isLogin = false;
+    // this.isLogin = false;
   }
 
   profile() {

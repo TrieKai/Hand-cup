@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, Subscription, Subject } from 'rxjs';
 
 import { RouterConstantsService } from '../util/constants/router-constants.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
@@ -10,13 +11,20 @@ import { MessageService } from 'src/app/service/message.service';
   providedIn: 'root'
 })
 export class LoginService {
+  signIn: boolean;
 
   constructor(
     private router: Router,
     private firebaseService: FirebaseService,
     private cons: ConstantsService,
     private message: MessageService,
-  ) { }
+  ) {
+    firebaseService.checkAuthStatus();
+  }
+
+  checkUserLoggedIn(): Subject<boolean> {
+    return this.firebaseService.userLoggedIn;
+  }
 
   async signUp(email: string, password: string) {
     await this.firebaseService.signUp(email, password);

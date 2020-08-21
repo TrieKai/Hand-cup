@@ -12,8 +12,15 @@ export class ProfileService {
   ) { }
 
   updateProfile(userData: firebaseProfile) {
-    if (this.firebaseService.getUserData()) {
-      this.firebaseService.updateProfile(userData);
-    }
+    this.firebaseService.checkTokenExpired()
+      .then((tokenExpired) => {
+        console.log('tokenExpired: ', tokenExpired)
+        if (!tokenExpired) {
+          if (this.firebaseService.checkAuthStatus()) {
+            console.log('updateProfile: ', this.firebaseService.getUserData())
+            this.firebaseService.updateProfile(userData);
+          }
+        }
+      });
   }
 }

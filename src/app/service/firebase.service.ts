@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -9,6 +10,9 @@ import { MessageService } from 'src/app/service/message.service';
   providedIn: 'root'
 })
 export class FirebaseService {
+  signIn: boolean;
+  authenticated: boolean;
+  userLoggedIn = new Subject<boolean>();
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -57,19 +61,32 @@ export class FirebaseService {
       });
   }
 
-  // async getUserData(): Promise<firebase.User> {
-  //   let userData: firebase.User = null;
-  //   this.afAuth.auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       userData = user;
-  //       console.log('User is signed in')
-  //       return user;
-  //     } else {
-  //       return;
-  //     }
-  //   });
-  //   return userData;
-  // }
+  checkAuthStatus(): boolean {
+    console.log('Firebase checkAuthStatus')
+    firebase.auth().onAuthStateChanged((user) => {
+      this.authenticated = !!user;
+      this.userLoggedIn.next(this.authenticated);
+    });
+
+    return this.authenticated;
+  }
+
+  async checkTokenExpired(): Promise<boolean> {
+    const now = new Date().toUTCString();
+    let tokenExpired: boolean;
+    await this.afAuth.auth.currentUser.getIdTokenResult()
+      .then((result) => {
+        const tokenExpirationTime = result.expirationTime;
+        if (now > tokenExpirationTime) {
+          tokenExpired = true;
+          this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '', content: '登入逾期 請重新登入' });
+        } else {
+          tokenExpired = false;
+        }
+      });
+
+    return tokenExpired;
+  }
 
   getUserData(): firebase.User {
     return this.afAuth.auth.currentUser;
