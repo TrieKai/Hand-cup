@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-image-editor',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./image-editor.component.scss']
 })
 export class ImageEditorComponent implements OnInit {
+  @ViewChild('image', { static: false }) imageRef: ElementRef;
+  @Output() image = new EventEmitter();
   originalFile: File = null;
 
   constructor() { }
@@ -18,12 +20,12 @@ export class ImageEditorComponent implements OnInit {
     if (event.target.files.length < 1) { return; }
     if (event.target.files[0].type.indexOf('image') < 0) { return; }
     this.originalFile = event.target.files[0];
-    // const imageRef = this.ele.nativeElement.querySelector('#image');
     // if (this.isIEBrowser) {
-    //   imageRef.style.width = '100%';
-    //   imageRef.style.height = 'auto';
+    //   this.imageRef.nativeElement.width = '100%';
+    //   this.imageRef.nativeElement.height = 'auto';
     // }
-    // imageRef.src = URL.createObjectURL(this.originalFile);
+    this.image.emit(this.originalFile);
+    this.imageRef.nativeElement.src = URL.createObjectURL(this.originalFile);
     event.target.value = null;
   }
 }

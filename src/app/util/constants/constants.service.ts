@@ -36,9 +36,15 @@ export class ConstantsService {
     drinkShops: '今天飲料喝哪家?'
   }
 
+  // Local storage
   public readonly LOCAL_STORAGE_TYPE = {
     favorite: 'favorite',
     haveBeen: 'haveBeen'
+  }
+
+  // Upload target
+  public readonly UPLOAD_TARGET_TYPE = {
+    profile: 'profile'
   }
 
   constructor() { }

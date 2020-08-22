@@ -2,11 +2,12 @@
   <div class="select-image">
     <label>
       <div class="button">
-        <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> 選取圖片
+        <span aria-hidden="true"></span> 選取圖片
       </div>
       <input type="file" accept="image/*" (change)="selectImage($event);">
     </label>
   </div>
+  <img #image class="image" alt="" />
   <!-- <ng-container *ngIf="!isIEBrowser">
     <div id="image-editor-container">
       <div id="image-editor" (mousedown)="onDrag($event);" (touchstart)="onDragMobile($event);">

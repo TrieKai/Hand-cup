@@ -20,9 +20,14 @@
     }
 
     input {
-      position: fixed;
-      top     : 100%;
-      left    : 100%;
+      // position: fixed;
+      // top     : 100%;
+      // left    : 100%;
+      display: none;
     }
   }
+}
+
+.image {
+  width: 100%;
 }

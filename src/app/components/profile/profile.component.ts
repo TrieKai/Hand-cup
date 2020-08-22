@@ -4,6 +4,7 @@ import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { ProfileService } from 'src/app/service/profile.service';
+import { UploadService } from 'src/app/util/upload.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,7 @@ export class ProfileComponent implements OnInit {
   name: string;
   email: string;
   phoneNumber: string;
+  photo: File = null;
   photoURL: string;
 
   constructor(
@@ -21,9 +23,21 @@ export class ProfileComponent implements OnInit {
     private sharedService: SharedService,
     private cons: ConstantsService,
     private profileService: ProfileService,
+    private uploadService: UploadService,
   ) { }
 
   ngOnInit() {
+  }
+
+  loadImage(image: File) {
+    console.log('loadImage: ', image)
+    this.photo = image;
+  }
+
+  submit() {
+    if (this.photo) {
+      this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
+    }
   }
 
   confirm() {
