@@ -1,0 +1,35 @@
+<div>
+  <div class="select-image">
+    <label>
+      <div class="button">
+        <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> 選取圖片
+      </div>
+      <input type="file" accept="image/*" (change)="selectImage($event);">
+    </label>
+  </div>
+  <!-- <ng-container *ngIf="!isIEBrowser">
+    <div id="image-editor-container">
+      <div id="image-editor" (mousedown)="onDrag($event);" (touchstart)="onDragMobile($event);">
+        <img id="image" alt="" (load)="imageOnload();">
+        <div id="filter"></div>
+      </div>
+    </div>
+    <div id="edit-image-ui">
+      <button (click)="zoom(0.1);">
+        <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+      </button>
+      <button (click)="zoom(-0.1);">
+        <span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>
+      </button>
+      <button class="last" (click)="rotate(90);">
+        <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div id="output-image">
+      <canvas id="filter-image"></canvas>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="isIEBrowser">
+    <img id="image" class="img" alt="" />
+  </ng-container> -->
+</div>

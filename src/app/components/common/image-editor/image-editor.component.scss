@@ -1,0 +1,28 @@
+.select-image {
+  margin-bottom   : 1px;
+  background-color: #23d5ea;
+  user-select     : none;
+
+  label {
+    margin: 0;
+    width : 100%;
+
+    .button {
+      padding   : 5px 0px;
+      text-align: center;
+      color     : #eeeeee;
+      cursor    : pointer;
+
+      &:active {
+        background-color: #b5def3;
+        border-color    : #b5def3;
+      }
+    }
+
+    input {
+      position: fixed;
+      top     : 100%;
+      left    : 100%;
+    }
+  }
+}

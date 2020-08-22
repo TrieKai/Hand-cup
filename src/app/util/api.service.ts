@@ -1,6 +1,6 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest, HttpEventType } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 import { GlobalService as global } from '../service/global.service';
 
@@ -73,6 +73,31 @@ export class ApiService {
             console.log('body:', body);
         }
         const resp = await this.http.put(url, body, options).pipe(catchError(this.handleError)).toPromise();
+        return resp;
+    }
+
+    async postFile(url: string, file: FormData, param?: object, header?: any): Promise<any> {
+        if (param) {
+            url = url + '?';
+            for (const key of Object.keys(param)) {
+                url = url + `${key}=${param[key]}&`;
+            }
+            url = url.slice(0, -1);
+        }
+        const req = new HttpRequest('POST', url, file, {
+            headers: header
+        });
+        if (isDevMode() || global.showLog) {
+            console.log('url:', url);
+            console.log('para:', param);
+            console.log('file:', file);
+        }
+        const resp = await this.http.request(req).pipe(map(event => {
+            switch (event.type) {
+                case HttpEventType.Response:
+                    return Promise.resolve(event.body);
+            }
+        }), catchError(this.handleError)).toPromise();
         return resp;
     }
 }
