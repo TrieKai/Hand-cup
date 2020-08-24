@@ -34,16 +34,16 @@ export class ProfileComponent implements OnInit {
     this.photo = image;
   }
 
-  submit() {
+  async submit() {
     if (this.photo) {
-      this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
+      this.photoURL = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
     }
   }
 
   confirm() {
     const userData: firebaseProfile = {
       displayName: this.name,
-      // photoURL: null
+      photoURL: this.photoURL
     }
     this.profileService.updateProfile(userData);
   }

@@ -19,6 +19,12 @@ export class ApiService {
         return new HttpHeaders(header);
     }
 
+    // TODO: Temporary write
+    getUploadGeader(): HttpHeaders {
+        const header = { 'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*' }
+        return new HttpHeaders(header);
+    }
+
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
             console.error('An error occurred:', error.error.message);

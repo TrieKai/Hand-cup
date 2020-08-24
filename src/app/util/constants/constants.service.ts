@@ -47,5 +47,8 @@ export class ConstantsService {
     profile: 'profile'
   }
 
+  // Upload resource key
+  public readonly UPLOAD_RESOURCE_KEY = 'file';
+
   constructor() { }
 }
