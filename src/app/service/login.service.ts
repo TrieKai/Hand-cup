@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription, Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 import { RouterConstantsService } from '../util/constants/router-constants.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
@@ -23,6 +23,7 @@ export class LoginService {
   }
 
   checkUserLoggedIn(): Subject<boolean> {
+    console.log(this.firebaseService.userLoggedIn)
     return this.firebaseService.userLoggedIn;
   }
 

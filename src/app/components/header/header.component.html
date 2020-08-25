@@ -13,9 +13,19 @@
     <input #searchInput placeholder="Search...">
   </div>
 
-  <span class="material-icons account-button" [matMenuTriggerFor]="menu">
-    face
-  </span>
+  <ng-container *ngIf="isLogin">
+    <span *ngIf="userPhotoURL" class="account-button" [matMenuTriggerFor]="menu">
+      <img [src]="userPhotoURL" />
+    </span>
+    <span *ngIf="!userPhotoURL" class="material-icons account-button" [matMenuTriggerFor]="menu">
+      <img src="https://boba-maps.s3-ap-southeast-1.amazonaws.com/media/biblethump.png" />
+    </span>
+  </ng-container>
+  <ng-container *ngIf="!isLogin">
+    <span class="material-icons account-button" [matMenuTriggerFor]="menu">
+      face
+    </span>
+  </ng-container>
   <mat-menu #menu="matMenu">
     <div *ngIf="!isLogin">
       <button mat-menu-item (click)="login()">

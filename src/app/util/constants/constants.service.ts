@@ -16,10 +16,11 @@ export class ConstantsService {
   // Shared data
   public readonly SHAREDDATA = {
     onloading: 'onloading',
+    userData: 'userData',
+    showMap: 'showMap',
+    drinkShopResults: 'drinkShopResults',
     loginComponentRef: 'loginComponentRef',
     profileComponentRef: 'profileComponentRef',
-    showMap: 'showMap',
-    drinkShopResults: 'drinkShopResults'
   };
 
   // Message type

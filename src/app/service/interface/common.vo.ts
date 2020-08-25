@@ -43,6 +43,7 @@ interface Message {
 
 interface commonSharedData {
     onloading: boolean
+    userData: any
     loginComponentRef: any
     profileComponentRef: any
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { RouterConfigService } from 'src/app/config/router-config.service';
@@ -7,6 +7,7 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
 import { DomService } from 'src/app/util/dom.service';
 import { LoginService } from 'src/app/service/login.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { ProfileComponent } from 'src/app/components/profile/profile.component';
@@ -16,7 +17,7 @@ import { ProfileComponent } from 'src/app/components/profile/profile.component';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
   @ViewChild('sidebarIconToggle', { static: false }) sidebarToggle: ElementRef;
   @ViewChild('sidebarMenu', { static: false }) sidebarMenu: ElementRef;
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   // utilitiesMenuList: Menu[] = [];
   sidebarStatus: boolean = false;
   isLogin: boolean;
+  userPhotoURL: string;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -35,6 +37,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private domService: DomService,
     private loginService: LoginService,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +46,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     // this.utilitiesMenuList = this.menuCfg.getUtilitiesMenu();
     this.home = this.menuCfg.getHome();
     this.loginService.checkUserLoggedIn().subscribe(status => {
+      console.log('amy', status)
       this.isLogin = status;
+    });
+    this.sharedService.onInitEmitted.subscribe(() => {
+      const userData: firebase.UserInfo = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
+      this.userPhotoURL = userData.photoURL;
     });
   }
 

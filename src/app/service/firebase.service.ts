@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription, ReplaySubject, BehaviorSubject } from 'rxjs';
 
-import * as firebase from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { MessageService } from 'src/app/service/message.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +12,13 @@ import { MessageService } from 'src/app/service/message.service';
 export class FirebaseService {
   signIn: boolean;
   authenticated: boolean;
-  userLoggedIn = new Subject<boolean>();
+  userLoggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(
     private afAuth: AngularFireAuth,
     private cons: ConstantsService,
     private message: MessageService,
+    private sharedService: SharedService,
   ) { }
 
   async signUp(email: string, password: string) {
@@ -66,9 +67,11 @@ export class FirebaseService {
 
   checkAuthStatus(): boolean {
     console.log('Firebase checkAuthStatus')
-    firebase.auth().onAuthStateChanged((user) => {
+    this.afAuth.auth.onAuthStateChanged((user) => {
+      console.log('===checkAuthStatus===')
       this.authenticated = !!user;
       this.userLoggedIn.next(this.authenticated);
+      this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, user);
     });
 
     return this.authenticated;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
@@ -13,7 +13,7 @@ import { MessageService } from 'src/app/service/message.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   isLogin: boolean;
   name: string;
   email: string;
@@ -29,13 +29,17 @@ export class ProfileComponent implements OnInit {
     private uploadService: UploadService,
     private loginService: LoginService,
     private message: MessageService,
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.loginService.checkUserLoggedIn().subscribe(status => {
+      console.log('profile service status: ', status)
       this.isLogin = status;
     });
   }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    this.loginService.checkUserLoggedIn().unsubscribe();
   }
 
   loadImage(image: File) {
@@ -44,6 +48,7 @@ export class ProfileComponent implements OnInit {
   }
 
   async submit() {
+    console.log('isLogin: ', this.isLogin)
     if (this.isLogin) {
       if (this.photo) {
         this.photoURL = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
