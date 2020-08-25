@@ -21,14 +21,15 @@ export class FirebaseService {
   ) { }
 
   async signUp(email: string, password: string) {
-    const result = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+    return await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(() => {
         this.sendEmailVerification();
+        return true;
       })
       .catch((error) => {
         this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '註冊發生錯誤', content: error });
+        return false;
       });
-    return result;
   }
 
   async sendEmailVerification() {
@@ -42,12 +43,14 @@ export class FirebaseService {
   }
 
   async login(email: string, password: string) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password)
+    return await this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '通知', content: '登錄成功' });
+        return true;
       })
       .catch((error) => {
         this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登錄發生錯誤', content: error });
+        return false;
       });
   }
 

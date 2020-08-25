@@ -54,8 +54,10 @@ export class LoginComponent implements OnInit {
     // TODO: Better way to replace setTimeout
 
     await this.loginService.login(email, password)
-      .then(() => {
-        this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+      .then((status) => {
+        if (status) {
+          this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+        }
       });
   }
 
@@ -82,9 +84,11 @@ export class LoginComponent implements OnInit {
     // TODO: Better way to replace setTimeout
 
     const signUpResult = await this.loginService.signUp(email, password)
-      .then(() => {
-        this.signUpEmail.nativeElement.value = '';
-        this.signUpPassword.nativeElement.value = '';
+      .then((status) => {
+        if (status) {
+          this.signUpEmail.nativeElement.value = '';
+          this.signUpPassword.nativeElement.value = '';
+        }
       });
     console.log('Sign up result: ', signUpResult)
   }

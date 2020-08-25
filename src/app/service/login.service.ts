@@ -27,17 +27,18 @@ export class LoginService {
   }
 
   async signUp(email: string, password: string) {
-    await this.firebaseService.signUp(email, password);
+    return await this.firebaseService.signUp(email, password);
   }
 
   async login(email: string, password: string) {
-    await this.firebaseService.login(email, password)
-      .then(async () => {
-        console.log('讀取使用者資訊')
+    return await this.firebaseService.login(email, password)
+      .then((status) => {
+        console.log('讀取使用者資訊', status)
         const user = this.firebaseService.getUserData();
         if (user && !user.emailVerified) {
           this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '警告', content: '請去註冊信箱完成驗證!' });
         }
+        return status;
       });
   }
 
