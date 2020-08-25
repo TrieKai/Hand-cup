@@ -22,10 +22,11 @@ export class UploadService {
     };
     const formData: FormData = new FormData();
     formData.append(this.cons.UPLOAD_RESOURCE_KEY, file);
+    // TODO: Authorization
     // const authorization = { key: 'Authorization', value: `Bearer ${token}` };
     // const header = this.api.getHeader([authorization]);
-    const header = this.api.getUploadGeader();
-    const resp = await this.api.postFile(this.apiCons.UPLOAD_FILE, formData, null, header);
+    // Do not use headers.append('Content-Type', 'multipart/form-data');
+    const resp = await this.api.postFile(this.apiCons.UPLOAD_FILE, formData, null, null);
     if (isDevMode() || global.showLog) { console.log('uploadResource:', resp); }
     return resp;
   }

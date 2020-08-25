@@ -5,6 +5,8 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { ProfileService } from 'src/app/service/profile.service';
 import { UploadService } from 'src/app/util/upload.service';
+import { LoginService } from 'src/app/service/login.service';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,6 +14,7 @@ import { UploadService } from 'src/app/util/upload.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  isLogin: boolean;
   name: string;
   email: string;
   phoneNumber: string;
@@ -24,7 +27,13 @@ export class ProfileComponent implements OnInit {
     private cons: ConstantsService,
     private profileService: ProfileService,
     private uploadService: UploadService,
-  ) { }
+    private loginService: LoginService,
+    private message: MessageService,
+  ) {
+    this.loginService.checkUserLoggedIn().subscribe(status => {
+      this.isLogin = status;
+    });
+  }
 
   ngOnInit() {
   }
@@ -35,8 +44,14 @@ export class ProfileComponent implements OnInit {
   }
 
   async submit() {
-    if (this.photo) {
-      this.photoURL = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
+    if (this.isLogin) {
+      if (this.photo) {
+        this.photoURL = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
+      } else {
+        this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先選擇照片' });
+      }
+    } else {
+      this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先登入' });
     }
   }
 
