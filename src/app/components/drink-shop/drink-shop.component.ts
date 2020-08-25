@@ -22,9 +22,7 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
         private drinkShopService: DrinkShopService,
     ) {
         this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
-            console.log('subscribe!')
             this.onloading = drinkShopService.getSharedData(cons.SHAREDDATA.onloading);
-            console.log('aaa', this.onloading)
             this.showMap = this.drinkShopService.getSharedData(cons.SHAREDDATA.showMap);
         });
     }

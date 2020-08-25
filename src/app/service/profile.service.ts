@@ -11,8 +11,8 @@ export class ProfileService {
     private firebaseService: FirebaseService
   ) { }
 
-  updateProfile(userData: firebaseProfile) {
-    this.firebaseService.checkTokenExpired()
+  async updateProfile(userData: firebaseProfile) {
+    await this.firebaseService.checkTokenExpired()
       .then((tokenExpired) => {
         console.log('tokenExpired: ', tokenExpired)
         if (!tokenExpired) {

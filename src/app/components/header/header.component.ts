@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { RouterConfigService } from 'src/app/config/router-config.service';
 import { MenuConfigService } from 'src/app/config/menu-config.service';
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   sidebarStatus: boolean = false;
   isLogin: boolean;
   userPhotoURL: string;
+  subscribe: Subscription;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -45,13 +47,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.menuList = this.menuCfg.getMenu();
     // this.utilitiesMenuList = this.menuCfg.getUtilitiesMenu();
     this.home = this.menuCfg.getHome();
-    this.loginService.checkUserLoggedIn().subscribe(status => {
-      console.log('amy', status)
+    this.subscribe = this.loginService.checkUserLoggedIn().subscribe(status => {
       this.isLogin = status;
     });
     this.sharedService.onInitEmitted.subscribe(() => {
       const userData: firebase.UserInfo = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
-      this.userPhotoURL = userData.photoURL;
+      if (userData) { this.userPhotoURL = userData.photoURL; }
     });
   }
 
@@ -62,7 +63,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.htmlElementService.delete('searchInput');
-    this.loginService.checkUserLoggedIn().unsubscribe();
+    if (this.subscribe) {
+      this.subscribe.unsubscribe();
+    }
   }
 
   handleSidebar(status?: boolean) {

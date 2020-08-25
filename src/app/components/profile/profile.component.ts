@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
@@ -20,6 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   phoneNumber: string;
   photo: File = null;
   photoURL: string;
+  subscribe: Subscription;
 
   constructor(
     private domService: DomService,
@@ -32,14 +34,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.loginService.checkUserLoggedIn().subscribe(status => {
+    this.subscribe = this.loginService.checkUserLoggedIn().subscribe(status => {
       console.log('profile service status: ', status)
       this.isLogin = status;
     });
   }
 
   ngOnDestroy(): void {
-    this.loginService.checkUserLoggedIn().unsubscribe();
+    if (this.subscribe) {
+      this.subscribe.unsubscribe();
+    }
   }
 
   loadImage(image: File) {
@@ -65,7 +69,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       displayName: this.name,
       photoURL: this.photoURL
     }
-    this.profileService.updateProfile(userData);
+    this.profileService.updateProfile(userData)
+      .then(() => {
+        this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.profileComponentRef));
+      });
   }
 
   closeDialog() {

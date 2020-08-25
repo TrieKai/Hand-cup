@@ -23,7 +23,6 @@ export class LoginService {
   }
 
   checkUserLoggedIn(): Subject<boolean> {
-    console.log(this.firebaseService.userLoggedIn)
     return this.firebaseService.userLoggedIn;
   }
 
