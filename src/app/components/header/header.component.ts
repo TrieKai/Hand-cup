@@ -28,7 +28,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   sidebarStatus: boolean = false;
   isLogin: boolean;
   userPhotoURL: string;
-  subscribe: Subscription;
+  loginSubscribe: Subscription;
+  sharedSubscribe: Subscription;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -47,10 +48,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.menuList = this.menuCfg.getMenu();
     // this.utilitiesMenuList = this.menuCfg.getUtilitiesMenu();
     this.home = this.menuCfg.getHome();
-    this.subscribe = this.loginService.checkUserLoggedIn().subscribe(status => {
+    this.loginSubscribe = this.loginService.checkUserLoggedIn().subscribe(status => {
       this.isLogin = status;
     });
-    this.sharedService.onInitEmitted.subscribe(() => {
+    this.sharedSubscribe = this.sharedService.onInitEmitted.subscribe(() => {
       const userData: firebase.UserInfo = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
       if (userData) { this.userPhotoURL = userData.photoURL; }
     });
@@ -63,8 +64,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.htmlElementService.delete('searchInput');
-    if (this.subscribe) {
-      this.subscribe.unsubscribe();
+    if (this.loginSubscribe) {
+      this.loginSubscribe.unsubscribe();
+    }
+    if (this.sharedSubscribe) {
+      this.sharedSubscribe.unsubscribe();
     }
   }
 

@@ -21,7 +21,7 @@ export class SharedService {
     this.onInit.next();
   }
 
-  setSharedData(key: string, value: any) {
+  setSharedData(key: string, value: any): commonSharedData {
     console.log('setCommonSharedData:', key, value)
     if (this.hasKey(key)) {
       this.commonSharedData[key] = value;

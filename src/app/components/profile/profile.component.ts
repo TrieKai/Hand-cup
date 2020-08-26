@@ -18,10 +18,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   isLogin: boolean;
   name: string;
   email: string;
-  phoneNumber: string;
   photo: File = null;
   photoURL: string;
   subscribe: Subscription;
+  onloading: boolean;
 
   constructor(
     private domService: DomService,
@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       console.log('profile service status: ', status)
       this.isLogin = status;
     });
+    this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
   }
 
   ngOnDestroy(): void {
@@ -64,15 +65,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  confirm() {
+  async confirm() {
+    if (this.photoURL === '' || this.photoURL === null || this.photoURL === undefined) {
+      if (this.photo) {
+        this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先上傳照片' });
+        return;
+      }
+      if (this.name === '' || this.name === null || this.name === undefined) {
+        return;
+      }
+    }
     const userData: firebaseProfile = {
       displayName: this.name,
       photoURL: this.photoURL
     }
-    this.profileService.updateProfile(userData)
+    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
+    await this.profileService.updateProfile(userData)
       .then(() => {
         this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.profileComponentRef));
       });
+    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
   }
 
   closeDialog() {

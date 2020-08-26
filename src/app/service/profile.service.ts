@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { FirebaseService } from 'src/app/service/firebase.service';
+import { SharedService } from 'src/app/shared/shared.service';
+import { ConstantsService } from 'src/app/util/constants/constants.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +10,21 @@ import { FirebaseService } from 'src/app/service/firebase.service';
 export class ProfileService {
 
   constructor(
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    private sharedService: SharedService,
+    private cons: ConstantsService,
   ) { }
 
   async updateProfile(userData: firebaseProfile) {
     await this.firebaseService.checkTokenExpired()
-      .then((tokenExpired) => {
+      .then(async(tokenExpired) => {
         console.log('tokenExpired: ', tokenExpired)
         if (!tokenExpired) {
           if (this.firebaseService.checkAuthStatus()) {
-            console.log('updateProfile: ', this.firebaseService.getUserData())
-            this.firebaseService.updateProfile(userData);
+            console.log('===updateProfile===')
+            await this.firebaseService.updateProfile(userData);
+            const updatedUserData = this.firebaseService.getUserData();
+            this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, updatedUserData);
           }
         }
       });

@@ -71,7 +71,6 @@ export class FirebaseService {
       console.log('===checkAuthStatus===')
       this.authenticated = !!user;
       this.userLoggedIn.next(this.authenticated);
-      this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, user);
     });
 
     return this.authenticated;
