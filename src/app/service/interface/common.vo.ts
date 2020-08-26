@@ -52,3 +52,10 @@ interface firebaseProfile {
     displayName?: string;
     photoURL?: string;
 }
+
+// normal
+interface ReturnStatus {
+    returnStatus?: string;
+    msg?: any;
+    error?: any;
+}

@@ -15,5 +15,8 @@ export class ApiConstantsService {
   // public readonly UPLOAD_FILE = dev_url + '/upload';
   public readonly UPLOAD_FILE = uat_url + '/upload';
 
+  public readonly API_RESULT_SUCCESS: string = 'success';
+  public readonly API_RESULT_ERROR: string = 'error';
+
   constructor() { }
 }

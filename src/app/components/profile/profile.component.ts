@@ -8,6 +8,7 @@ import { ProfileService } from 'src/app/service/profile.service';
 import { UploadService } from 'src/app/util/upload.service';
 import { LoginService } from 'src/app/service/login.service';
 import { MessageService } from 'src/app/service/message.service';
+import { CheckService } from 'src/app/service/check.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,6 +32,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private uploadService: UploadService,
     private loginService: LoginService,
     private message: MessageService,
+    private check: CheckService,
   ) { }
 
   ngOnInit() {
@@ -52,11 +54,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.photo = image;
   }
 
-  async submit() {
+  async upload() {
     console.log('isLogin: ', this.isLogin)
     if (this.isLogin) {
       if (this.photo) {
-        this.photoURL = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
+        const resp = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
+        if (!this.check.apiResult(resp)) {
+          this.message.add({ 'type': this.cons.MESSAGE_TYPE.error, 'title': '錯誤', 'content': '上傳照片發生錯誤' });
+          return;
+        }
+        this.photoURL = resp;
+        this.message.add({ 'type': this.cons.MESSAGE_TYPE.success, 'title': '成功', 'content': '上傳照片成功' });
       } else {
         this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先選擇照片' });
       }
