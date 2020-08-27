@@ -45,12 +45,13 @@ export class CheckService {
   // }
 
   apiResult(resp: any) {
+    // TODO: Finish check api result
     if (resp instanceof ProgressEvent) {
       return false;
     }
-    if (!(resp instanceof Array) && !(resp instanceof Object)) {
-      return false;
-    }
+    // if (!(resp instanceof Array) && !(resp instanceof Object)) {
+    //   return false;
+    // }
     // if (resp.hasOwnProperty('type') && resp.type === this.apiCons.API_RESULT_ERROR) {
     //   return false;
     // }
