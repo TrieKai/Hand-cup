@@ -9,6 +9,7 @@ import { UploadService } from 'src/app/util/upload.service';
 import { LoginService } from 'src/app/service/login.service';
 import { MessageService } from 'src/app/service/message.service';
 import { CheckService } from 'src/app/service/check.service';
+import { ImageEditorComponent } from 'src/app/components/common/image-editor/image-editor.component';
 
 @Component({
   selector: 'app-profile',
@@ -33,6 +34,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private message: MessageService,
     private check: CheckService,
+    private imageEitor: ImageEditorComponent,
   ) { }
 
   ngOnInit() {
@@ -49,9 +51,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadImage(image: File) {
+  async loadImage(image: File) {
     console.log('loadImage: ', image)
-    this.photo = image;
+    this.photo = await this.imageEitor.cropImage();
+    // this.photo = image;
   }
 
   async upload() {

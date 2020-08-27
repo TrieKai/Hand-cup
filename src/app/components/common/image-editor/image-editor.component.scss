@@ -1,3 +1,25 @@
+@import '../../../assets/css/special-property.scss';
+
+.image-editor {
+  position   : relative;
+  // overflow: hidden;
+  cursor     : grab;
+  cursor     : -webkit-grab;
+
+  .image {
+    position: absolute;
+    width   : 100%;
+  }
+
+  .image-filter {
+    position: absolute;
+    top     : 0;
+    right   : 0;
+    bottom  : 0;
+    left    : 0;
+  }
+}
+
 .select-image {
   margin-bottom   : 1px;
   background-color: #23d5ea;
@@ -26,8 +48,4 @@
       display: none;
     }
   }
-}
-
-.image {
-  width: 100%;
 }
