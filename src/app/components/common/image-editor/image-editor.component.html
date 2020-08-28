@@ -1,15 +1,17 @@
 <div>
-  <div #imageEditor class="image-editor" (mousedown)="onDrag($event);" (touchstart)="onDragMobile($event);">
-    <img #image class="image" alt="" />
+  <div #imageEditor class="image-editor" (mousedown)="onDrag($event)" (touchstart)="onDragMobile($event)">
+    <img #image class="image" alt="" (load)="imageOnload()" />
     <div class="image-filter"></div>
   </div>
-  <canvas #canvas></canvas>
+  <div class="output-image-box">
+    <canvas #canvas></canvas>
+  </div>
   <div class="select-image">
     <label>
       <div class="button">
         <span aria-hidden="true"></span> 選取圖片
       </div>
-      <input type="file" accept=".jpg,.png" (change)="selectImage($event);" />
+      <input type="file" accept=".jpg,.png" (change)="selectImage($event)" />
     </label>
   </div>
 </div>

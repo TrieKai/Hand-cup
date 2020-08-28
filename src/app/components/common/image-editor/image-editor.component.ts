@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '
   styleUrls: ['./image-editor.component.scss']
 })
 export class ImageEditorComponent implements OnInit {
-  @ViewChild('image', { static: false }) imageRef: ElementRef;
+  @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
   @ViewChild('canvas', { static: true }) canvasRef: ElementRef<HTMLCanvasElement>;
   @Output() output = new EventEmitter();
   originalFile: File = null;
@@ -29,7 +29,7 @@ export class ImageEditorComponent implements OnInit {
     this.canvasRef.nativeElement.height = this.height;
   }
 
-  selectImage(event: any) {
+  async selectImage(event: any) {
     console.log(event)
     if (event.target.files.length < 1) { return; }
     if (event.target.files[0].type.indexOf('image') < 0) { return; }
@@ -38,9 +38,14 @@ export class ImageEditorComponent implements OnInit {
     //   this.imageRef.nativeElement.width = '100%';
     //   this.imageRef.nativeElement.height = 'auto';
     // }
-    this.output.emit(this.originalFile);
+    // this.output.emit(this.originalFile);
     this.imageRef.nativeElement.src = URL.createObjectURL(this.originalFile);
     event.target.value = null;
+  }
+
+  async imageOnload() {
+    const outputImage = await this.cropImage();
+    this.output.emit(outputImage);
   }
 
   onDrag(e: any) {
@@ -61,11 +66,15 @@ export class ImageEditorComponent implements OnInit {
   }
 
   async cropImage(): Promise<File> {
-    const ctx = this.canvasRef.nativeElement.getContext('2d');
-    ctx.clearRect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
-    ctx.rect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
-    ctx.fillStyle = '#eeeeee';
+    const canvas = this.canvasRef.nativeElement;
+    const ctx = canvas.getContext('2d');
+    // ctx.clearRect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
+    // ctx.rect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
+    ctx.arc(this.width / 2, this.height / 2, 100, 0, Math.PI * 2, true);
+    ctx.clip();
+    ctx.fillStyle = '#ffffff';
     ctx.fill();
+    ctx.drawImage(this.imageRef.nativeElement, 0, 0, 250, 250);
 
     const dataURL = this.canvasRef.nativeElement.toDataURL();
     let file: File;

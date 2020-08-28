@@ -2,6 +2,7 @@
 
 .image-editor {
   position   : relative;
+  height     : 250px;
   // overflow: hidden;
   cursor     : grab;
   cursor     : -webkit-grab;
@@ -17,6 +18,14 @@
     right   : 0;
     bottom  : 0;
     left    : 0;
+  }
+}
+
+.output-image-box {
+  // display: none;
+
+  canvas {
+    background-color: bisque;
   }
 }
 
