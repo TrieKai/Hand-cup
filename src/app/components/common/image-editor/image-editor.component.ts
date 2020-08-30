@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-image-editor',
@@ -9,11 +9,32 @@ export class ImageEditorComponent implements OnInit {
   @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
   @ViewChild('canvas', { static: true }) canvasRef: ElementRef<HTMLCanvasElement>;
   @Output() output = new EventEmitter();
+  imageLoaded: boolean = false;
   originalFile: File = null;
-  width: number = 250;
-  height: number = 250;
-  imageDragPos = { newPosX: 0, newPosY: 0, posX: 0, posY: 0 };
+  width: number = 300;
+  height: number = 300;
+  imageDeg = 0;
+  imagePosX = 0;
+  imagePosY = 0;
+  magnification = 1;
+  imageDragPos = { originPosX: 0, originPosY: 0, newPosX: 0, newPosY: 0, posX: 0, posY: 0 };
   dragEnabled = false;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMove(e: any) {
+    if (!this.dragEnabled) { return; }
+    this.dragging(e);
+  }
+
+  @HostListener('document:mouseup')
+  async onDrop() {
+    this.dragEnabled = false;
+    if (this.imageLoaded) {
+      this.renderCanvas();
+      const outputImage = await this.cropImage();
+      this.output.emit(outputImage);
+    }
+  }
 
   constructor() { }
 
@@ -44,10 +65,33 @@ export class ImageEditorComponent implements OnInit {
   }
 
   async imageOnload() {
+    this.resetImage(); // Initial image
     const outputImage = await this.cropImage();
     this.output.emit(outputImage);
+    this.imageLoaded = true;
   }
 
+  resetImage() {
+    const image = this.imageRef.nativeElement;
+    const imageScale = image.height / image.width;
+    if (image.width > image.height) {
+      image.height = this.height;
+      image.width = image.height / imageScale;
+    } else if (image.width < image.height) {
+      image.width = this.width;
+      image.height = image.width * imageScale;
+    } else {
+      image.width = this.width;
+      image.height = this.height;
+    }
+
+    // Make image position center
+    image.style.left = (-image.width / 2) + (this.width / 2) + 'px';
+    image.style.top = (-image.height / 2) + (this.height / 2) + 'px';
+    this.renderCanvas();
+  }
+
+  // Drag start
   onDrag(e: any) {
     console.log(e)
     e.preventDefault();
@@ -65,17 +109,43 @@ export class ImageEditorComponent implements OnInit {
     this.dragEnabled = true;
   }
 
-  async cropImage(): Promise<File> {
-    const canvas = this.canvasRef.nativeElement;
-    const ctx = canvas.getContext('2d');
-    // ctx.clearRect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
-    // ctx.rect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
-    ctx.arc(this.width / 2, this.height / 2, 100, 0, Math.PI * 2, true);
+  dragging(e: any) {
+    const image = this.imageRef.nativeElement;
+    this.imageDragPos.newPosX = this.imageDragPos.posX - e.clientX;
+    this.imageDragPos.newPosY = this.imageDragPos.posY - e.clientY;
+    this.imageDragPos.posX = e.clientX;
+    this.imageDragPos.posY = e.clientY;
+    image.style.left = (image.offsetLeft - this.imageDragPos.newPosX) + 'px';
+    image.style.top = (image.offsetTop - this.imageDragPos.newPosY) + 'px';
+
+    // this.calculatePos(image.offsetLeft - this.imageDragPos.newPosX, image.offsetTop - this.imageDragPos.newPosY);
+  }
+
+  calculatePos(x: number, y: number) {
+    if (this.imageDeg === 0 || this.imageDeg === 180) {
+      this.imagePosX = x;
+      this.imagePosY = y;
+    } else {
+      const image = this.imageRef.nativeElement;
+      this.imagePosX = (image.width - image.height) / 2 * this.magnification + x;
+      this.imagePosY = (image.height - image.width) / 2 * this.magnification + y;
+    }
+  }
+
+  private renderCanvas() {
+    // console.log('renderCanvas')
+    const image = this.imageRef.nativeElement;
+    const ctx = this.canvasRef.nativeElement.getContext('2d');
+    ctx.clearRect(0, 0, this.width, this.height);
+    ctx.arc(this.width / 2, this.height / 2, this.width / 2, 0, Math.PI * 2, true);
     ctx.clip();
     ctx.fillStyle = '#ffffff';
     ctx.fill();
-    ctx.drawImage(this.imageRef.nativeElement, 0, 0, 250, 250);
+    ctx.drawImage(image, image.offsetLeft, image.offsetTop, image.width, image.height);
+  }
 
+  async cropImage(): Promise<File> {
+    this.renderCanvas();
     const dataURL = this.canvasRef.nativeElement.toDataURL();
     let file: File;
     await this.url2File(dataURL).then((image) => {
@@ -85,11 +155,13 @@ export class ImageEditorComponent implements OnInit {
     return file;
   }
 
-  private url2File(url: string) {
-    return (fetch(url).then((res) => {
-      return res.arrayBuffer();
-    }).then((buffer) => {
-      return new File([buffer], this.originalFile.name, { type: this.originalFile.type });
-    }));
+  private async url2File(url: string) {
+    return (fetch(url)
+      .then((res) => {
+        return res.arrayBuffer();
+      })
+      .then((buffer) => {
+        return new File([buffer], this.originalFile.name, { type: this.originalFile.type });
+      }));
   }
 }

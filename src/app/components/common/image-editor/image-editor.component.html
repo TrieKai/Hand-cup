@@ -1,7 +1,8 @@
 <div>
   <div #imageEditor class="image-editor" (mousedown)="onDrag($event)" (touchstart)="onDragMobile($event)">
     <img #image class="image" alt="" (load)="imageOnload()" />
-    <div class="image-filter"></div>
+    <div class="image-mask"></div>
+    <div class="reset" (click)="resetImage()">重設</div>
   </div>
   <div class="output-image-box">
     <canvas #canvas></canvas>
