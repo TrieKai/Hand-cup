@@ -1,15 +1,18 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter, HostListener, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { SharedService } from 'src/app/shared/shared.service';
+import { ConstantsService } from 'src/app/util/constants/constants.service';
 
 @Component({
   selector: 'app-image-editor',
   templateUrl: './image-editor.component.html',
   styleUrls: ['./image-editor.component.scss']
 })
-export class ImageEditorComponent implements OnInit {
+export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
   @ViewChild('canvas', { static: true }) canvasRef: ElementRef<HTMLCanvasElement>;
   @Output() output = new EventEmitter();
-  imageLoaded: boolean = false;
   originalFile: File = null;
   width: number = 300;
   height: number = 300;
@@ -17,8 +20,10 @@ export class ImageEditorComponent implements OnInit {
   imagePosX = 0;
   imagePosY = 0;
   magnification = 1;
-  imageDragPos = { originPosX: 0, originPosY: 0, newPosX: 0, newPosY: 0, posX: 0, posY: 0 };
+  imageDragPos = { newPosX: 0, newPosY: 0, posX: 0, posY: 0 };
   dragEnabled = false;
+  subscribe: Subscription;
+  // outputCanvas: boolean;
 
   @HostListener('document:mousemove', ['$event'])
   onMove(e: any) {
@@ -27,27 +32,39 @@ export class ImageEditorComponent implements OnInit {
   }
 
   @HostListener('document:mouseup')
-  async onDrop() {
-    this.dragEnabled = false;
-    if (this.imageLoaded) {
-      this.renderCanvas();
-      const outputImage = await this.cropImage();
-      this.output.emit(outputImage);
-    }
-  }
+  async onDrop() { this.dragEnabled = false; }
 
-  constructor() { }
+  constructor(
+    private sharedService: SharedService,
+    private cons: ConstantsService,
+  ) { }
 
   ngOnInit() {
+    this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
+      const outputCanvas = this.sharedService.getSharedData(this.cons.SHAREDDATA.outputCanvas);
+      if (outputCanvas) {
+        this.renderCanvas();
+        const outputImage = this.cropImage();
+        this.output.emit(outputImage);
+      }
+    });
   }
 
   ngAfterViewInit() {
     this.initUI();
   }
 
+  ngOnDestroy() {
+    if (this.subscribe) {
+      this.subscribe.unsubscribe();
+    }
+  }
+
   private initUI() {
     this.canvasRef.nativeElement.width = this.width;
     this.canvasRef.nativeElement.height = this.height;
+    // this.imageRef.nativeElement.width = 0;
+    // this.imageRef.nativeElement.height = 0;
   }
 
   async selectImage(event: any) {
@@ -66,14 +83,13 @@ export class ImageEditorComponent implements OnInit {
 
   async imageOnload() {
     this.resetImage(); // Initial image
-    const outputImage = await this.cropImage();
-    this.output.emit(outputImage);
-    this.imageLoaded = true;
   }
 
+  // TODO: Fix reset image
   resetImage() {
     const image = this.imageRef.nativeElement;
     const imageScale = image.height / image.width;
+    // console.log('ooooooo', image.width, image.height)
     if (image.width > image.height) {
       image.height = this.height;
       image.width = image.height / imageScale;
@@ -88,12 +104,10 @@ export class ImageEditorComponent implements OnInit {
     // Make image position center
     image.style.left = (-image.width / 2) + (this.width / 2) + 'px';
     image.style.top = (-image.height / 2) + (this.height / 2) + 'px';
-    this.renderCanvas();
   }
 
   // Drag start
   onDrag(e: any) {
-    console.log(e)
     e.preventDefault();
     this.dragElement(e);
   }
@@ -121,19 +135,18 @@ export class ImageEditorComponent implements OnInit {
     // this.calculatePos(image.offsetLeft - this.imageDragPos.newPosX, image.offsetTop - this.imageDragPos.newPosY);
   }
 
-  calculatePos(x: number, y: number) {
-    if (this.imageDeg === 0 || this.imageDeg === 180) {
-      this.imagePosX = x;
-      this.imagePosY = y;
-    } else {
-      const image = this.imageRef.nativeElement;
-      this.imagePosX = (image.width - image.height) / 2 * this.magnification + x;
-      this.imagePosY = (image.height - image.width) / 2 * this.magnification + y;
-    }
-  }
+  // calculatePos(x: number, y: number) {
+  //   if (this.imageDeg === 0 || this.imageDeg === 180) {
+  //     this.imagePosX = x;
+  //     this.imagePosY = y;
+  //   } else {
+  //     const image = this.imageRef.nativeElement;
+  //     this.imagePosX = (image.width - image.height) / 2 * this.magnification + x;
+  //     this.imagePosY = (image.height - image.width) / 2 * this.magnification + y;
+  //   }
+  // }
 
   private renderCanvas() {
-    // console.log('renderCanvas')
     const image = this.imageRef.nativeElement;
     const ctx = this.canvasRef.nativeElement.getContext('2d');
     ctx.clearRect(0, 0, this.width, this.height);
@@ -142,10 +155,11 @@ export class ImageEditorComponent implements OnInit {
     ctx.fillStyle = '#ffffff';
     ctx.fill();
     ctx.drawImage(image, image.offsetLeft, image.offsetTop, image.width, image.height);
+    // ctx.save();
+    // ctx.translate(image.offsetLeft - this.imageDragPos.newPosX, image.offsetTop - this.imageDragPos.newPosY);
   }
 
   async cropImage(): Promise<File> {
-    this.renderCanvas();
     const dataURL = this.canvasRef.nativeElement.toDataURL();
     let file: File;
     await this.url2File(dataURL).then((image) => {

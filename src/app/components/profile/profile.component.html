@@ -2,7 +2,7 @@
   <div class="overlay-background" (click)="closeDialog()"></div>
   <div class="settings-wrapper">
     <div class="settings-box">
-      <app-image-editor (image)="loadImage($event)"></app-image-editor>
+      <app-image-editor (output)="loadImage($event)"></app-image-editor>
       <input type="submit" value="確認上傳" (click)="upload()" />
       <div>暱稱</div>
       <input type="text" [(ngModel)]="name" />
