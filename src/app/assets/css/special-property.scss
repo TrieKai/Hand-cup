@@ -67,17 +67,18 @@
     @return 80;
   }
 
-  @else if $type==login {
+  @else if $type==loading {
     @return 70;
   }
 
-  @else if $type==dialogMask {
+  @else if $type==login {
     @return 60;
   }
 
-  @else if $type==loading {
+  @else if $type==dialogMask {
     @return 50;
   }
+
 
   @else if $type==header {
     @return 40;

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-image-editor',
@@ -39,14 +40,14 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
-      const outputCanvas = this.sharedService.getSharedData(this.cons.SHAREDDATA.outputCanvas);
-      if (outputCanvas) {
-        this.renderCanvas();
-        const outputImage = this.cropImage();
-        this.output.emit(outputImage);
-      }
-    });
+    // this.subscribe = this.sharedService.onInitEmitted.subscribe(async () => {
+    //   const outputCanvas = this.sharedService.getSharedData(this.cons.SHAREDDATA.outputCanvas);
+    //   if (outputCanvas) {
+    //     this.renderCanvas();
+    //     const outputImage = await this.cropImage();
+    //     this.output.emit(outputImage);
+    //   }
+    // });
   }
 
   ngAfterViewInit() {
@@ -57,6 +58,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.subscribe) {
       this.subscribe.unsubscribe();
     }
+    this.sharedService.setSharedData(this.cons.SHAREDDATA.imageOnload, false);
   }
 
   private initUI() {
@@ -79,6 +81,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   imageOnload() {
+    this.sharedService.setSharedData(this.cons.SHAREDDATA.imageOnload, true);
     this.resetImage(); // Initial image
   }
 
@@ -155,13 +158,11 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async cropImage(): Promise<File> {
+    this.renderCanvas();
     const dataURL = this.canvasRef.nativeElement.toDataURL();
-    let file: File;
-    await this.url2File(dataURL).then((image) => {
-      file = image;
-      this.output.emit(image);
+    return await this.url2File(dataURL).then((image) => {
+      return image;
     });
-    return file;
   }
 
   private async url2File(url: string) {

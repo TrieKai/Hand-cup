@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { DomService } from 'src/app/util/dom.service';
@@ -10,12 +10,15 @@ import { LoginService } from 'src/app/service/login.service';
 import { MessageService } from 'src/app/service/message.service';
 import { CheckService } from 'src/app/service/check.service';
 
+import { ImageEditorComponent } from 'src/app/components/common/image-editor/image-editor.component';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+  @ViewChild('imageEditor', { static: false }) imageEditor: ImageEditorComponent;
   isLogin: boolean;
   name: string;
   email: string;
@@ -50,15 +53,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.sharedService.setSharedData(this.cons.SHAREDDATA.outputCanvas, false);
   }
 
-  async loadImage(image: File) {
-    console.log('loadImage: ', image)
-    this.photo = image;
-  }
-
   async upload() {
     console.log('isLogin: ', this.isLogin)
     this.sharedService.setSharedData(this.cons.SHAREDDATA.outputCanvas, true);
     if (this.isLogin) {
+      this.photo = await this.imageEditor.cropImage();
       if (this.photo) {
         const resp = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
         if (!this.check.apiResult(resp)) {
@@ -77,14 +76,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   async confirm() {
     if (this.photoURL === '' || this.photoURL === null || this.photoURL === undefined) {
+      console.log('aaa')
+      console.log(this.photo)
       if (this.photo) {
+        console.log('bbb')
         this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先上傳照片' });
         return;
       }
       if (this.name === '' || this.name === null || this.name === undefined) {
+        console.log('ccc')
         return;
       }
     }
+    console.log('ddd')
     const userData: firebaseProfile = {
       displayName: this.name,
       photoURL: this.photoURL
