@@ -23,7 +23,6 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   imageDragPos = { newPosX: 0, newPosY: 0, posX: 0, posY: 0 };
   dragEnabled = false;
   subscribe: Subscription;
-  // outputCanvas: boolean;
 
   @HostListener('document:mousemove', ['$event'])
   onMove(e: any) {
@@ -63,8 +62,6 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private initUI() {
     this.canvasRef.nativeElement.width = this.width;
     this.canvasRef.nativeElement.height = this.height;
-    // this.imageRef.nativeElement.width = 0;
-    // this.imageRef.nativeElement.height = 0;
   }
 
   async selectImage(event: any) {
@@ -81,21 +78,19 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     event.target.value = null;
   }
 
-  async imageOnload() {
+  imageOnload() {
     this.resetImage(); // Initial image
   }
 
-  // TODO: Fix reset image
   resetImage() {
     const image = this.imageRef.nativeElement;
-    const imageScale = image.height / image.width;
-    // console.log('ooooooo', image.width, image.height)
-    if (image.width > image.height) {
+    const imageScale = image.naturalHeight / image.naturalWidth;
+    if (image.naturalWidth > image.naturalHeight) {
+      image.width = this.height / imageScale;
       image.height = this.height;
-      image.width = image.height / imageScale;
-    } else if (image.width < image.height) {
+    } else if (image.naturalWidth < image.naturalHeight) {
       image.width = this.width;
-      image.height = image.width * imageScale;
+      image.height = this.width * imageScale;
     } else {
       image.width = this.width;
       image.height = this.height;
