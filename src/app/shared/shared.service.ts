@@ -10,8 +10,6 @@ export class SharedService {
   commonSharedData: commonSharedData = {
     onloading: false,
     userData: null,
-    imageOnload: false,
-    outputCanvas: false,
     loginComponentRef: null,
     profileComponentRef: null
   };

@@ -44,8 +44,6 @@ interface Message {
 interface commonSharedData {
     onloading: boolean
     userData: any
-    imageOnload: boolean
-    outputCanvas: boolean
     loginComponentRef: any
     profileComponentRef: any
 }

@@ -50,12 +50,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (this.subscribe) {
       this.subscribe.unsubscribe();
     }
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.outputCanvas, false);
   }
 
   async upload() {
     console.log('isLogin: ', this.isLogin)
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.outputCanvas, true);
     if (this.isLogin) {
       this.photo = await this.imageEditor.cropImage();
       if (this.photo) {
