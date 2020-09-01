@@ -18,6 +18,7 @@ export class ConstantsService {
     onloading: 'onloading',
     userData: 'userData',
     showMap: 'showMap',
+    outputCanvas: 'outputCanvas',
     drinkShopResults: 'drinkShopResults',
     loginComponentRef: 'loginComponentRef',
     profileComponentRef: 'profileComponentRef',
