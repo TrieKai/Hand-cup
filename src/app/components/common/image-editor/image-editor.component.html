@@ -7,6 +7,14 @@
   <div class="output-image-box">
     <canvas #canvas id="canvas"></canvas>
   </div>
+  <div class="control-box">
+    <div class="slider-box">
+      <span class="title">縮放</span>
+      <input type="range" #zoomSlider (change)="zoom(zoomSlider.value)" max="100" min="-100" step="2" value="0" />
+      <!-- <span class="symbol">{{zoomSymbol}}</span> -->
+      <span class="value">{{zoomValue}} %</span>
+    </div>
+  </div>
   <div class="select-image">
     <label>
       <div class="button">

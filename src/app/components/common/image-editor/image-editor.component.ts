@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
-import { element } from 'protractor';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-image-editor',
@@ -13,6 +13,7 @@ import { element } from 'protractor';
 export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
   @ViewChild('canvas', { static: true }) canvasRef: ElementRef<HTMLCanvasElement>;
+  @ViewChild('zoomSlider', { static: true }) zoomSlider: ElementRef<HTMLInputElement>;
   @Output() output = new EventEmitter();
   originalFile: File = null;
   width: number = 300;
@@ -20,10 +21,11 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   imageDeg = 0;
   imagePosX = 0;
   imagePosY = 0;
-  magnification = 1;
+  magnification: number = 1;
   imageDragPos = { newPosX: 0, newPosY: 0, posX: 0, posY: 0 };
   dragEnabled = false;
   subscribe: Subscription;
+  zoomValue: string;
 
   @HostListener('document:mousemove', ['$event'])
   onMove(e: any) {
@@ -40,6 +42,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.zoomValue = this.zoomSlider.nativeElement.value;
   }
 
   ngAfterViewInit() {
@@ -76,22 +79,12 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   resetImage() {
-    const image = this.imageRef.nativeElement;
-    const imageScale = image.naturalHeight / image.naturalWidth;
-    if (image.naturalWidth > image.naturalHeight) {
-      image.width = this.height / imageScale;
-      image.height = this.height;
-    } else if (image.naturalWidth < image.naturalHeight) {
-      image.width = this.width;
-      image.height = this.width * imageScale;
-    } else {
-      image.width = this.width;
-      image.height = this.height;
-    }
+    this.initImage();
+    this.setImageCenter();
 
-    // Make image position center
-    image.style.left = (-image.width / 2) + (this.width / 2) + 'px';
-    image.style.top = (-image.height / 2) + (this.height / 2) + 'px';
+    this.zoomSlider.nativeElement.value = '0';
+    this.zoomValue = '0';
+    console.log(this.imageRef.nativeElement.offsetLeft, this.imageRef.nativeElement.offsetHeight, this.imageRef.nativeElement.style.left, this.imageRef.nativeElement.style.top)
   }
 
   // Drag start
@@ -133,6 +126,43 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   //     this.imagePosY = (image.height - image.width) / 2 * this.magnification + y;
   //   }
   // }
+
+  private initImage() {
+    const image = this.imageRef.nativeElement;
+    const imageScale = image.naturalHeight / image.naturalWidth;
+    if (image.naturalWidth > image.naturalHeight) {
+      image.width = this.height / imageScale;
+      image.height = this.height;
+    } else if (image.naturalWidth < image.naturalHeight) {
+      image.width = this.width;
+      image.height = this.width * imageScale;
+    } else {
+      image.width = this.width;
+      image.height = this.height;
+    }
+  }
+
+  private setImageCenter() {
+    const image = this.imageRef.nativeElement;
+    // Make image position center
+    image.style.left = (-image.width / 2) + (this.width / 2) + 'px';
+    image.style.top = (-image.height / 2) + (this.height / 2) + 'px';
+  }
+
+  zoom(value: number) {
+    this.zoomValue = value > 0 ? '+' + value : stringify(value);
+    this.magnification = 1 + (value / 100);
+    console.log('magnification: ', this.magnification)
+
+    this.initImage();
+    const image = this.imageRef.nativeElement;
+    image.width = image.width * this.magnification;
+    image.height = image.height * this.magnification;
+    console.log(image.offsetLeft, image.offsetHeight, image.style.left, image.style.top)
+
+    // image.style.left = Number(image.style.left.slice(0, -2)) + ((Number(image.style.left.slice(0, -2)) * -(this.magnification - 1)) / 2) + 'px';
+    // image.style.top = Number(image.style.top.slice(0, -2)) + ((Number(image.style.top.slice(0, -2)) * -(this.magnification - 1)) / 2) + 'px';
+  }
 
   private renderCanvas() {
     const image = this.imageRef.nativeElement;

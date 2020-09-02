@@ -75,3 +75,71 @@
     }
   }
 }
+
+$inputWidth: 180;
+
+@function getProgress($inputWidth, $color) {
+  $val: -10px 0 0 -6.5px $color;
+
+  @for $i from 6 through $inputWidth {
+    $val: #{$val},
+    -#{$i}px 0 0 -6.5px #{$color}
+  }
+
+  @return $val
+}
+
+.control-box {
+  text-align      : center;
+  color           : #ffffff;
+  background-color: #75818D;
+
+  .slider-box {
+    display    : flex;
+    align-items: center;
+
+    .title {
+      margin: 0 5px 0 5px;
+      width : 30px;
+    }
+
+    input {
+      margin: 0 10px 0 10px;
+    }
+
+    .value {
+      margin: 0 5px 0 0;
+      width : 55px;
+    }
+  }
+
+  input[type="range"] {
+    margin            : auto;
+    appearance        : none;
+    -webkit-appearance: none;
+    outline           : none;
+    overflow          : hidden;
+    height            : 40px;
+    width             : #{$inputWidth}px;
+    border-radius     : 0;
+    background-color  : #75818D;
+    cursor            : pointer;
+
+    &::-webkit-slider-runnable-track {
+      background: #ACB3BA;
+      height    : 2px;
+    }
+
+    &::-webkit-slider-thumb {
+      margin-top           : -6.5px;
+      appearance           : none;
+      -webkit-appearance   : none;
+      width                : 15px;
+      height               : 15px;
+      background           : #fff;
+      box-shadow           : 0 0 3px 0 #fff, getProgress($inputWidth, #fff);
+      // border            : 1px solid #999;
+      border-radius        : 50%;
+    }
+  }
+}
