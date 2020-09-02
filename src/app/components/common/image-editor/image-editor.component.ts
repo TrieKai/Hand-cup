@@ -1,9 +1,5 @@
-import { Component, AfterViewInit, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter, HostListener, Input } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
-
-import { SharedService } from 'src/app/shared/shared.service';
-import { ConstantsService } from 'src/app/util/constants/constants.service';
-import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-image-editor',
@@ -24,8 +20,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   magnification: number = 1;
   imageDragPos = { newPosX: 0, newPosY: 0, posX: 0, posY: 0 };
   dragEnabled = false;
-  subscribe: Subscription;
-  zoomValue: string;
+  zoomValue: string | number;
 
   @HostListener('document:mousemove', ['$event'])
   onMove(e: any) {
@@ -36,10 +31,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostListener('document:mouseup')
   async onDrop() { this.dragEnabled = false; }
 
-  constructor(
-    private sharedService: SharedService,
-    private cons: ConstantsService,
-  ) { }
+  constructor() { }
 
   ngOnInit() {
     this.zoomValue = this.zoomSlider.nativeElement.value;
@@ -50,9 +42,6 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.subscribe) {
-      this.subscribe.unsubscribe();
-    }
   }
 
   private initUI() {
@@ -84,7 +73,6 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.zoomSlider.nativeElement.value = '0';
     this.zoomValue = '0';
-    console.log(this.imageRef.nativeElement.offsetLeft, this.imageRef.nativeElement.offsetHeight, this.imageRef.nativeElement.style.left, this.imageRef.nativeElement.style.top)
   }
 
   // Drag start
@@ -150,18 +138,27 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   zoom(value: number) {
-    this.zoomValue = value > 0 ? '+' + value : stringify(value);
+    this.zoomValue = value > 0 ? '+' + value : value;
     this.magnification = 1 + (value / 100);
-    console.log('magnification: ', this.magnification)
+    const image = this.imageRef.nativeElement;
+    const originimageWidth = image.width;
+    const originimageHeight = image.height;
 
     this.initImage();
-    const image = this.imageRef.nativeElement;
+
+    // Set image width & height
     image.width = image.width * this.magnification;
     image.height = image.height * this.magnification;
-    console.log(image.offsetLeft, image.offsetHeight, image.style.left, image.style.top)
 
-    // image.style.left = Number(image.style.left.slice(0, -2)) + ((Number(image.style.left.slice(0, -2)) * -(this.magnification - 1)) / 2) + 'px';
-    // image.style.top = Number(image.style.top.slice(0, -2)) + ((Number(image.style.top.slice(0, -2)) * -(this.magnification - 1)) / 2) + 'px';
+    // Set image position
+    const ratio = image.width / originimageWidth;
+    if (ratio > 1) {
+      image.style.left = Number(image.style.left.slice(0, -2)) - (image.width - originimageWidth) / 2 + 'px';
+      image.style.top = Number(image.style.top.slice(0, -2)) - (image.height - originimageHeight) / 2 + 'px';
+    } else {
+      image.style.left = Number(image.style.left.slice(0, -2)) + (originimageWidth - image.width) / 2 + 'px';
+      image.style.top = Number(image.style.top.slice(0, -2)) + (originimageHeight - image.height) / 2 + 'px';
+    }
   }
 
   private renderCanvas() {
