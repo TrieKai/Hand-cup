@@ -1,5 +1,4 @@
 import { Component, AfterViewInit, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-image-editor',
@@ -10,17 +9,17 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
   @ViewChild('canvas', { static: true }) canvasRef: ElementRef<HTMLCanvasElement>;
   @ViewChild('zoomSlider', { static: true }) zoomSlider: ElementRef<HTMLInputElement>;
+  @ViewChild('rotateSlider', { static: true }) rotateSlider: ElementRef<HTMLInputElement>;
   @Output() output = new EventEmitter();
   originalFile: File = null;
   width: number = 300;
   height: number = 300;
-  imageDeg = 0;
-  imagePosX = 0;
-  imagePosY = 0;
+  imageAng: number = 0;
   magnification: number = 1;
   imageDragPos = { newPosX: 0, newPosY: 0, posX: 0, posY: 0 };
   dragEnabled = false;
   zoomValue: string | number;
+  rotateValue: string | number;
 
   @HostListener('document:mousemove', ['$event'])
   onMove(e: any) {
@@ -73,6 +72,9 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.zoomSlider.nativeElement.value = '0';
     this.zoomValue = '0';
+    this.rotateSlider.nativeElement.value = '0';
+    this.rotateValue = '0';
+    this.imageAng = 0;
   }
 
   // Drag start
@@ -100,20 +102,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.imageDragPos.posY = e.clientY;
     image.style.left = (image.offsetLeft - this.imageDragPos.newPosX) + 'px';
     image.style.top = (image.offsetTop - this.imageDragPos.newPosY) + 'px';
-
-    // this.calculatePos(image.offsetLeft - this.imageDragPos.newPosX, image.offsetTop - this.imageDragPos.newPosY);
   }
-
-  // calculatePos(x: number, y: number) {
-  //   if (this.imageDeg === 0 || this.imageDeg === 180) {
-  //     this.imagePosX = x;
-  //     this.imagePosY = y;
-  //   } else {
-  //     const image = this.imageRef.nativeElement;
-  //     this.imagePosX = (image.width - image.height) / 2 * this.magnification + x;
-  //     this.imagePosY = (image.height - image.width) / 2 * this.magnification + y;
-  //   }
-  // }
 
   private initImage() {
     const image = this.imageRef.nativeElement;
@@ -135,6 +124,8 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     // Make image position center
     image.style.left = (-image.width / 2) + (this.width / 2) + 'px';
     image.style.top = (-image.height / 2) + (this.height / 2) + 'px';
+    // Make image angle initial
+    image.style.transform = 'rotate(0deg)';
   }
 
   zoom(value: number) {
@@ -161,17 +152,47 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  rotate(value: number) {
+    this.imageAng = value;
+    this.rotateValue = value > 0 ? '+' + value : value;
+    this.imageRef.nativeElement.style.transform = 'rotate(' + value + 'deg)';
+    console.log('offsetLeft:', this.imageRef.nativeElement.offsetLeft, 'offsetTop:', this.imageRef.nativeElement.offsetTop)
+    console.log('left:', this.imageRef.nativeElement.style.left, 'top:', this.imageRef.nativeElement.style.top)
+    console.log('right:', this.imageRef.nativeElement.style.right, 'bottom:', this.imageRef.nativeElement.style.bottom)
+  }
+
   private renderCanvas() {
     const image = this.imageRef.nativeElement;
     const ctx = this.canvasRef.nativeElement.getContext('2d');
+    ctx.save();
     ctx.clearRect(0, 0, this.width, this.height);
     ctx.arc(this.width / 2, this.height / 2, this.width / 2, 0, Math.PI * 2, true);
     ctx.clip();
     ctx.fillStyle = '#ffffff';
     ctx.fill();
-    ctx.drawImage(image, image.offsetLeft, image.offsetTop, image.width, image.height);
-    // ctx.save();
-    // ctx.translate(image.offsetLeft - this.imageDragPos.newPosX, image.offsetTop - this.imageDragPos.newPosY);
+    console.log('imageAng: ', this.imageAng)
+    ctx.translate(this.width / 2, this.height / 2);
+    ctx.rotate(this.imageAng * Math.PI / 180);
+    ctx.translate(-this.width / 2, -this.height / 2);
+    console.log('offsetLeft: ', image.offsetLeft, 'offsetTop: ', image.offsetTop)
+    if (this.imageAng >= 0 && this.imageAng < 90) {
+      console.log('1')
+      ctx.drawImage(image, image.offsetLeft, image.offsetTop, image.width, image.height);
+    } else if (this.imageAng >= 90 && this.imageAng < 180) {
+      console.log('2')
+      ctx.drawImage(image, image.offsetTop, image.offsetLeft, image.width, image.height);
+    } else if (this.imageAng < 0 && this.imageAng >= -90) {
+      console.log('3')
+      ctx.drawImage(image, image.offsetTop, image.offsetLeft, image.width, image.height);
+    } else if (this.imageAng < -90 && this.imageAng >= -180) {
+      console.log('4')
+      ctx.drawImage(image, -image.offsetLeft, image.offsetTop * 2, image.width, image.height);
+    } else {
+      console.log('WTF')
+      ctx.drawImage(image, image.offsetLeft * 2, image.offsetTop, image.width, image.height);
+    }
+    // ctx.drawImage(image, -50, 50, image.width, image.height);
+    ctx.restore();
   }
 
   async cropImage(): Promise<File> {

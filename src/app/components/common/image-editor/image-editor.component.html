@@ -14,6 +14,12 @@
       <!-- <span class="symbol">{{zoomSymbol}}</span> -->
       <span class="value">{{zoomValue}} %</span>
     </div>
+    <div class="slider-box">
+      <span class="title">旋轉</span>
+      <input type="range" #rotateSlider (change)="rotate(rotateSlider.value)" max="180" min="-180" step="1" value="0" />
+      <!-- <span class="symbol">{{zoomSymbol}}</span> -->
+      <span class="value">{{rotateValue}} %</span>
+    </div>
   </div>
   <div class="select-image">
     <label>
