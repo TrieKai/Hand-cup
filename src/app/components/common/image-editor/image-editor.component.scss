@@ -97,6 +97,7 @@ $inputWidth: 180;
   .slider-box {
     display    : flex;
     align-items: center;
+    border     : #59626b 0.5px solid;
 
     .title {
       margin: 0 5px 0 5px;
@@ -107,9 +108,21 @@ $inputWidth: 180;
       margin: 0 10px 0 10px;
     }
 
-    .value {
-      margin: 0 5px 0 0;
-      width : 55px;
+    .value-box {
+      display: inline-flex;
+      margin : 0 5px 0 0;
+      width  : 55px;
+      cursor : default;
+
+      .value {
+        width     : 37px;
+        text-align: right;
+        cursor    : pointer;
+      }
+
+      .symbol {
+        width: 17px;
+      }
     }
   }
 

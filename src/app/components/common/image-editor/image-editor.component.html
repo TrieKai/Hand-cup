@@ -10,15 +10,19 @@
   <div class="control-box">
     <div class="slider-box">
       <span class="title">縮放</span>
-      <input type="range" #zoomSlider (change)="zoom(zoomSlider.value)" max="100" min="-100" step="10" value="0" />
-      <!-- <span class="symbol">{{zoomSymbol}}</span> -->
-      <span class="value">{{zoomValue}} %</span>
+      <input type="range" #zoomSlider (change)="zoom(zoomSlider.value)" max="100" min="-100" step="1" value="0" />
+      <div class="value-box">
+        <span class="value" (click)="resetValue('zoom')">{{zoomValue}}</span>
+        <span class="symbol">%</span>
+      </div>
     </div>
     <div class="slider-box">
       <span class="title">旋轉</span>
-      <input type="range" #rotateSlider (change)="rotate(rotateSlider.value)" max="180" min="-180" step="10" value="0" />
-      <!-- <span class="symbol">{{zoomSymbol}}</span> -->
-      <span class="value">{{rotateValue}} %</span>
+      <input type="range" #rotateSlider (change)="rotate(rotateSlider.value)" max="180" min="-180" step="1" value="0" />
+      <div class="value-box">
+        <span class="value" (click)="resetValue('rotate')">{{rotateValue}}</span>
+        <span class="symbol">&deg;</span>
+      </div>
     </div>
   </div>
   <div class="select-image">

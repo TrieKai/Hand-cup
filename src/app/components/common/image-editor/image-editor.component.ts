@@ -34,6 +34,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.zoomValue = this.zoomSlider.nativeElement.value;
+    this.rotateValue = this.rotateSlider.nativeElement.value;
   }
 
   ngAfterViewInit() {
@@ -67,7 +68,8 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   resetImage() {
-    this.initImage();
+    this.initZoom();
+    this.initRotate();
     this.setImageCenter();
 
     this.zoomSlider.nativeElement.value = '0';
@@ -75,6 +77,41 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.rotateSlider.nativeElement.value = '0';
     this.rotateValue = '0';
     this.imageAng = 0;
+  }
+
+  resetValue(type: string) {
+    switch (type) {
+      case 'zoom':
+        this.initZoom();
+        this.setImageCenter();
+        this.zoomSlider.nativeElement.value = '0';
+        this.zoomValue = '0';
+        break;
+      case 'rotate':
+        this.initRotate();
+        this.rotateSlider.nativeElement.value = '0';
+        this.rotateValue = '0';
+        break;
+    }
+  }
+
+  private initRotate() {
+    this.imageRef.nativeElement.style.transform = 'rotate(0deg)';
+  }
+
+  private initZoom() {
+    const image = this.imageRef.nativeElement;
+    const imageScale = image.naturalHeight / image.naturalWidth;
+    if (image.naturalWidth > image.naturalHeight) {
+      image.width = this.height / imageScale;
+      image.height = this.height;
+    } else if (image.naturalWidth < image.naturalHeight) {
+      image.width = this.width;
+      image.height = this.width * imageScale;
+    } else {
+      image.width = this.width;
+      image.height = this.height;
+    }
   }
 
   // Drag start
@@ -104,28 +141,11 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     image.style.top = (image.offsetTop - this.imageDragPos.newPosY) + 'px';
   }
 
-  private initImage() {
-    const image = this.imageRef.nativeElement;
-    const imageScale = image.naturalHeight / image.naturalWidth;
-    if (image.naturalWidth > image.naturalHeight) {
-      image.width = this.height / imageScale;
-      image.height = this.height;
-    } else if (image.naturalWidth < image.naturalHeight) {
-      image.width = this.width;
-      image.height = this.width * imageScale;
-    } else {
-      image.width = this.width;
-      image.height = this.height;
-    }
-  }
-
   private setImageCenter() {
     const image = this.imageRef.nativeElement;
     // Make image position center
     image.style.left = (-image.width / 2) + (this.width / 2) + 'px';
     image.style.top = (-image.height / 2) + (this.height / 2) + 'px';
-    // Make image angle initial
-    image.style.transform = 'rotate(0deg)';
   }
 
   zoom(value: number) {
@@ -135,7 +155,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     const originimageWidth = image.width;
     const originimageHeight = image.height;
 
-    this.initImage();
+    this.initZoom();
 
     // Set image width & height
     image.width = image.width * this.magnification;
