@@ -155,10 +155,8 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   rotate(value: number) {
     this.imageAng = value;
     this.rotateValue = value > 0 ? '+' + value : value;
-    this.imageRef.nativeElement.style.transform = 'rotate(' + value + 'deg)';
-    console.log('offsetLeft:', this.imageRef.nativeElement.offsetLeft, 'offsetTop:', this.imageRef.nativeElement.offsetTop)
-    console.log('left:', this.imageRef.nativeElement.style.left, 'top:', this.imageRef.nativeElement.style.top)
-    console.log('right:', this.imageRef.nativeElement.style.right, 'bottom:', this.imageRef.nativeElement.style.bottom)
+    const image = this.imageRef.nativeElement;
+    image.style.transform = 'rotate(' + value + 'deg)';
   }
 
   private renderCanvas() {
@@ -170,28 +168,11 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     ctx.clip();
     ctx.fillStyle = '#ffffff';
     ctx.fill();
-    console.log('imageAng: ', this.imageAng)
-    ctx.translate(this.width / 2, this.height / 2);
-    ctx.rotate(this.imageAng * Math.PI / 180);
-    ctx.translate(-this.width / 2, -this.height / 2);
-    console.log('offsetLeft: ', image.offsetLeft, 'offsetTop: ', image.offsetTop)
-    if (this.imageAng >= 0 && this.imageAng < 90) {
-      console.log('1')
-      ctx.drawImage(image, image.offsetLeft, image.offsetTop, image.width, image.height);
-    } else if (this.imageAng >= 90 && this.imageAng < 180) {
-      console.log('2')
-      ctx.drawImage(image, image.offsetTop, image.offsetLeft, image.width, image.height);
-    } else if (this.imageAng < 0 && this.imageAng >= -90) {
-      console.log('3')
-      ctx.drawImage(image, image.offsetTop, image.offsetLeft, image.width, image.height);
-    } else if (this.imageAng < -90 && this.imageAng >= -180) {
-      console.log('4')
-      ctx.drawImage(image, -image.offsetLeft, image.offsetTop * 2, image.width, image.height);
-    } else {
-      console.log('WTF')
-      ctx.drawImage(image, image.offsetLeft * 2, image.offsetTop, image.width, image.height);
-    }
-    // ctx.drawImage(image, -50, 50, image.width, image.height);
+    ctx.translate(image.offsetLeft, image.offsetTop); // Translate to position how far we move it
+    ctx.translate(image.width / 2, image.height / 2); // Translate to image center for rotate at center
+    ctx.rotate(this.imageAng * Math.PI / 180); // Rotate
+    ctx.translate(-image.width / 2, -image.height / 2); // Back to original position
+    ctx.drawImage(image, 0, 0, image.width, image.height); // Draw image
     ctx.restore();
   }
 

@@ -54,22 +54,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   async upload() {
     console.log('isLogin: ', this.isLogin)
-    // if (this.isLogin) {
+    if (this.isLogin) {
       this.photo = await this.imageEditor.cropImage();
-      // if (this.photo) {
-      //   const resp = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
-      //   if (!this.check.apiResult(resp)) {
-      //     this.message.add({ 'type': this.cons.MESSAGE_TYPE.error, 'title': '錯誤', 'content': '上傳照片發生錯誤' });
-      //     return;
-      //   }
-      //   this.photoURL = resp;
-      //   this.message.add({ 'type': this.cons.MESSAGE_TYPE.success, 'title': '成功', 'content': '上傳照片成功' });
-      // } else {
-      //   this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先選擇照片' });
-      // }
-    // } else {
-    //   this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先登入' });
-    // }
+      if (this.photo) {
+        const resp = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
+        if (!this.check.apiResult(resp)) {
+          this.message.add({ 'type': this.cons.MESSAGE_TYPE.error, 'title': '錯誤', 'content': '上傳照片發生錯誤' });
+          return;
+        }
+        this.photoURL = resp;
+        this.message.add({ 'type': this.cons.MESSAGE_TYPE.success, 'title': '成功', 'content': '上傳照片成功' });
+      } else {
+        this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先選擇照片' });
+      }
+    } else {
+      this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先登入' });
+    }
   }
 
   async confirm() {
