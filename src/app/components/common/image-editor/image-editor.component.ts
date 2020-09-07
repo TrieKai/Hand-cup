@@ -10,6 +10,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvasRef: ElementRef<HTMLCanvasElement>;
   @ViewChild('zoomSlider', { static: true }) zoomSlider: ElementRef<HTMLInputElement>;
   @ViewChild('rotateSlider', { static: true }) rotateSlider: ElementRef<HTMLInputElement>;
+  @ViewChild('opacitySlider', { static: true }) opacitySlider: ElementRef<HTMLInputElement>;
   @Output() output = new EventEmitter();
   originalFile: File = null;
   width: number = 300;
@@ -20,6 +21,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   dragEnabled = false;
   zoomValue: string | number;
   rotateValue: string | number;
+  opacityValue: string | number;
 
   @HostListener('document:mousemove', ['$event'])
   onMove(e: any) {
@@ -35,6 +37,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.zoomValue = this.zoomSlider.nativeElement.value;
     this.rotateValue = this.rotateSlider.nativeElement.value;
+    this.opacityValue = this.opacitySlider.nativeElement.value;
   }
 
   ngAfterViewInit() {
@@ -68,38 +71,32 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   resetImage() {
+    this.initImage();
     this.initZoom();
     this.initRotate();
+    this.initOpacity();
     this.setImageCenter();
 
-    this.zoomSlider.nativeElement.value = '0';
-    this.zoomValue = '0';
-    this.rotateSlider.nativeElement.value = '0';
-    this.rotateValue = '0';
     this.imageAng = 0;
   }
 
   resetValue(type: string) {
     switch (type) {
       case 'zoom':
+        this.initImage();
         this.initZoom();
         this.setImageCenter();
-        this.zoomSlider.nativeElement.value = '0';
-        this.zoomValue = '0';
         break;
       case 'rotate':
         this.initRotate();
-        this.rotateSlider.nativeElement.value = '0';
-        this.rotateValue = '0';
+        break;
+      case 'opacity':
+        this.initOpacity();
         break;
     }
   }
 
-  private initRotate() {
-    this.imageRef.nativeElement.style.transform = 'rotate(0deg)';
-  }
-
-  private initZoom() {
+  private initImage() {
     const image = this.imageRef.nativeElement;
     const imageScale = image.naturalHeight / image.naturalWidth;
     if (image.naturalWidth > image.naturalHeight) {
@@ -112,6 +109,25 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
       image.width = this.width;
       image.height = this.height;
     }
+  }
+
+  private initZoom() {
+    this.zoomSlider.nativeElement.value = '0';
+    this.zoomValue = '0';
+  }
+
+  private initRotate() {
+    this.imageRef.nativeElement.style.transform = 'rotate(0deg)';
+
+    this.rotateSlider.nativeElement.value = '0';
+    this.rotateValue = '0';
+  }
+
+  private initOpacity() {
+    this.imageRef.nativeElement.style.opacity = '1';
+
+    this.opacitySlider.nativeElement.value = '1';
+    this.opacityValue = '1';
   }
 
   // Drag start
@@ -155,7 +171,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     const originimageWidth = image.width;
     const originimageHeight = image.height;
 
-    this.initZoom();
+    this.initImage();
 
     // Set image width & height
     image.width = image.width * this.magnification;
@@ -172,11 +188,16 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  rotate(value: number) {
-    this.imageAng = value;
-    this.rotateValue = value > 0 ? '+' + value : value;
+  rotate(value: string) {
+    this.imageAng = Number(value);
+    this.rotateValue = Number(value) > 0 ? '+' + value : value;
     const image = this.imageRef.nativeElement;
     image.style.transform = 'rotate(' + value + 'deg)';
+  }
+
+  opacity(value: string) {
+    this.opacityValue = value;
+    this.imageRef.nativeElement.style.opacity = value;
   }
 
   private renderCanvas() {
@@ -192,6 +213,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     ctx.translate(image.width / 2, image.height / 2); // Translate to image center for rotate at center
     ctx.rotate(this.imageAng * Math.PI / 180); // Rotate
     ctx.translate(-image.width / 2, -image.height / 2); // Back to original position
+    ctx.globalAlpha = Number(this.opacityValue); // Set opacity
     ctx.drawImage(image, 0, 0, image.width, image.height); // Draw image
     ctx.restore();
   }
