@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter, HostListener, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-image-editor',
@@ -6,16 +6,16 @@ import { Component, AfterViewInit, OnInit, OnDestroy, ViewChild, ElementRef, Out
   styleUrls: ['./image-editor.component.scss']
 })
 export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
+  @ViewChild('imageEditor', { static: true }) imageEditor: ElementRef<HTMLCanvasElement>;
+  @ViewChild('image', { static: true }) imageRef: ElementRef<HTMLImageElement>;
   @ViewChild('canvas', { static: true }) canvasRef: ElementRef<HTMLCanvasElement>;
   @ViewChild('zoomSlider', { static: true }) zoomSlider: ElementRef<HTMLInputElement>;
   @ViewChild('rotateSlider', { static: true }) rotateSlider: ElementRef<HTMLInputElement>;
   @ViewChild('opacitySlider', { static: true }) opacitySlider: ElementRef<HTMLInputElement>;
-  @Output() output = new EventEmitter();
+  @Output() imageOnloaded = new EventEmitter();
   originalFile: File = null;
   width: number = 300;
   height: number = 300;
-  imageAng: number = 0;
   magnification: number = 1;
   imageDragPos = { newPosX: 0, newPosY: 0, posX: 0, posY: 0 };
   dragEnabled = false;
@@ -32,7 +32,9 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostListener('document:mouseup')
   async onDrop() { this.dragEnabled = false; }
 
-  constructor() { }
+  constructor(
+    private renderer: Renderer2,
+  ) { }
 
   ngOnInit() {
     this.zoomValue = this.zoomSlider.nativeElement.value;
@@ -61,13 +63,14 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     //   this.imageRef.nativeElement.width = '100%';
     //   this.imageRef.nativeElement.height = 'auto';
     // }
-    // this.output.emit(this.originalFile);
     this.imageRef.nativeElement.src = URL.createObjectURL(this.originalFile);
     event.target.value = null;
   }
 
   imageOnload() {
     this.resetImage(); // Initial image
+    this.imageOnloaded.emit(true);
+    this.renderer.addClass(this.imageEditor.nativeElement, 'grab');
   }
 
   resetImage() {
@@ -76,8 +79,6 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initRotate();
     this.initOpacity();
     this.setImageCenter();
-
-    this.imageAng = 0;
   }
 
   resetValue(type: string) {
@@ -142,6 +143,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private dragElement(e: any) {
+    if (!this.originalFile) { return; }
     this.imageDragPos.posX = e.clientX;
     this.imageDragPos.posY = e.clientY;
     this.dragEnabled = true;
@@ -166,6 +168,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   zoom(value: number) {
     this.zoomValue = value > 0 ? '+' + value : value;
+    if (!this.originalFile) { return; }
     this.magnification = 1 + (value / 100);
     const image = this.imageRef.nativeElement;
     const originimageWidth = image.width;
@@ -189,14 +192,15 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   rotate(value: string) {
-    this.imageAng = Number(value);
     this.rotateValue = Number(value) > 0 ? '+' + value : value;
+    if (!this.originalFile) { return; }
     const image = this.imageRef.nativeElement;
     image.style.transform = 'rotate(' + value + 'deg)';
   }
 
   opacity(value: string) {
     this.opacityValue = value;
+    if (!this.originalFile) { return; }
     this.imageRef.nativeElement.style.opacity = value;
   }
 
@@ -211,7 +215,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     ctx.fill();
     ctx.translate(image.offsetLeft, image.offsetTop); // Translate to position how far we move it
     ctx.translate(image.width / 2, image.height / 2); // Translate to image center for rotate at center
-    ctx.rotate(this.imageAng * Math.PI / 180); // Rotate
+    ctx.rotate(Number(this.rotateValue) * Math.PI / 180); // Rotate
     ctx.translate(-image.width / 2, -image.height / 2); // Back to original position
     ctx.globalAlpha = Number(this.opacityValue); // Set opacity
     ctx.drawImage(image, 0, 0, image.width, image.height); // Draw image

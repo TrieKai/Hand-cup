@@ -2,8 +2,8 @@
   <div class="overlay-background" (click)="closeDialog()"></div>
   <div class="settings-wrapper">
     <div class="settings-box">
-      <app-image-editor #imageEditor></app-image-editor>
-      <input type="submit" value="確認上傳" (click)="upload()" />
+      <app-image-editor #imageEditor (imageOnloaded)="imageOnload($event)"></app-image-editor>
+      <input #upload class="not-allowed" type="submit" value="確認上傳" (click)="upload()" disabled />
       <div>暱稱</div>
       <input type="text" [(ngModel)]="name" />
       <input type="submit" value="確認" (click)="confirm()" />

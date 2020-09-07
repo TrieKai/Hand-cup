@@ -5,8 +5,6 @@
   width   : 300px;
   height  : 300px;
   overflow: hidden;
-  cursor  : grab;
-  cursor  : -webkit-grab;
 
   .image {
     position: absolute;
@@ -34,7 +32,6 @@
     right           : 0;
     bottom          : 0;
     background-color: white;
-    cursor          : pointer;
   }
 }
 
@@ -59,7 +56,6 @@
       padding   : 5px 0px;
       text-align: center;
       color     : #eeeeee;
-      cursor    : pointer;
 
       &:active {
         background-color: #b5def3;
@@ -97,6 +93,7 @@ $inputWidth: 180;
   .slider-box {
     display    : flex;
     align-items: center;
+    height     : 40px;
     border     : #59626b 0.5px solid;
 
     .title {
@@ -127,14 +124,12 @@ $inputWidth: 180;
   }
 
   input[type="range"] {
-    margin            : auto;
     appearance        : none;
     -webkit-appearance: none;
     outline           : none;
     overflow          : hidden;
     height            : 40px;
     width             : #{$inputWidth}px;
-    border-radius     : 0;
     background-color  : #75818D;
     cursor            : pointer;
 
@@ -144,15 +139,27 @@ $inputWidth: 180;
     }
 
     &::-webkit-slider-thumb {
-      margin-top           : -6.5px;
-      appearance           : none;
-      -webkit-appearance   : none;
-      width                : 15px;
-      height               : 15px;
-      background           : #fff;
-      box-shadow           : 0 0 3px 0 #fff, getProgress($inputWidth, #fff);
-      // border            : 1px solid #999;
-      border-radius        : 50%;
+      margin-top        : -6.5px;
+      appearance        : none;
+      -webkit-appearance: none;
+      width             : 15px;
+      height            : 15px;
+      background        : #fff;
+      box-shadow        : 0 0 2.5px 0 #fff, getProgress($inputWidth, #fff);
+      border-radius     : 50%;
     }
   }
+}
+
+.default {
+  cursor: default;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.grab {
+  cursor: grab;
+  cursor: -webkit-grab;
 }

@@ -1,8 +1,8 @@
 <div>
-  <div #imageEditor class="image-editor" (mousedown)="onDrag($event)" (touchstart)="onDragMobile($event)">
+  <div #imageEditor class="image-editor default" (mousedown)="onDrag($event)" (touchstart)="onDragMobile($event)">
     <img #image id="image" class="image" alt="" (load)="imageOnload()" />
     <div class="image-mask"></div>
-    <div class="reset" (click)="resetImage()">重設</div>
+    <div class="reset pointer" (click)="resetImage()">重設</div>
   </div>
   <div class="output-image-box">
     <canvas #canvas id="canvas"></canvas>
@@ -34,7 +34,7 @@
   </div>
   <div class="select-image">
     <label>
-      <div class="button">
+      <div class="button pointer">
         <span aria-hidden="true"></span> 選取圖片
       </div>
       <input type="file" accept=".jpg,.png" (change)="selectImage($event)" />

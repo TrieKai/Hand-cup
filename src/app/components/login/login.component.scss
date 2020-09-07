@@ -18,8 +18,8 @@
     pointer-events             : auto;
     background                 : rgba(0, 0, 0, 0.32);
     -webkit-tap-highlight-color: transparent;
-    -webkit-transition         : opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
     transition                 : opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    -webkit-transition         : opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
     opacity                    : 1;
   }
 
@@ -42,7 +42,8 @@
   border-radius    : 2px;
   box-shadow       : 0px 2px 3px rgba(0, 0, 0, 0.2);
   overflow         : hidden;
-  animation        : hi 0.5s;
+  animation        : popupWindow 0.5s;
+  transform        : translateZ(0px);
   -webkit-transform: translateZ(0px);
   z-index          : zIndex(login);
 
@@ -192,13 +193,6 @@ input[type=radio] {
         }
       }
     }
-  }
-}
-
-@keyframes hi {
-  from {
-    transform: translateY(50%) scale(0, 0);
-    opacity  : 0;
   }
 }
 

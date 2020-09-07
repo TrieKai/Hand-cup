@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { DomService } from 'src/app/util/dom.service';
@@ -19,6 +19,7 @@ import { ImageEditorComponent } from 'src/app/components/common/image-editor/ima
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   @ViewChild('imageEditor', { static: false }) imageEditor: ImageEditorComponent;
+  @ViewChild('upload', { static: false }) uploadInput: ElementRef<HTMLInputElement>;
   isLogin: boolean;
   name: string;
   email: string;
@@ -36,6 +37,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private message: MessageService,
     private check: CheckService,
+    private renderer: Renderer2,
   ) { }
 
   ngOnInit() {
@@ -49,6 +51,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscribe) {
       this.subscribe.unsubscribe();
+    }
+  }
+
+  imageOnload(event: boolean) {
+    if (event) {
+      this.renderer.removeClass(this.uploadInput.nativeElement, 'not-allowed');
+      this.renderer.addClass(this.uploadInput.nativeElement, 'pointer');
+      this.renderer.removeAttribute(this.uploadInput.nativeElement, 'disabled');
     }
   }
 
@@ -74,19 +84,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   async confirm() {
     if (this.photoURL === '' || this.photoURL === null || this.photoURL === undefined) {
-      console.log('aaa')
       console.log(this.photo)
       if (this.photo) {
-        console.log('bbb')
         this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先上傳照片' });
         return;
       }
       if (this.name === '' || this.name === null || this.name === undefined) {
-        console.log('ccc')
         return;
       }
     }
-    console.log('ddd')
     const userData: firebaseProfile = {
       displayName: this.name,
       photoURL: this.photoURL
