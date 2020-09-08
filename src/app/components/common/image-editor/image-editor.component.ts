@@ -29,8 +29,20 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dragging(e);
   }
 
+  @HostListener('document:touchmove', ['$event'])
+  onMoveMobile(e: any) {
+    if (!this.dragEnabled) { return; }
+    this.dragging(e.targetTouches[0]);
+  }
+
   @HostListener('document:mouseup')
-  async onDrop() { this.dragEnabled = false; }
+  onDrop() { this.dragEnabled = false; }
+
+  @HostListener('document:touchend')
+  onDropMobile() {
+    document.body.style.overflow = 'auto';
+    this.dragEnabled = false;
+  }
 
   constructor(
     private renderer: Renderer2,
