@@ -91,10 +91,11 @@ $inputWidth: 180;
   background-color: #75818D;
 
   .slider-box {
-    display    : flex;
-    align-items: center;
-    height     : 40px;
-    border     : #59626b 0.5px solid;
+    display      : flex;
+    align-items  : center;
+    height       : 40px;
+    border-top   : #59626b 0.5px solid;
+    border-bottom: #59626b 0.5px solid;
 
     .title {
       margin: 0 5px 0 5px;
@@ -102,7 +103,9 @@ $inputWidth: 180;
     }
 
     input {
-      margin: 0 10px 0 10px;
+      margin       : 0 10px 0 10px;
+      border-top   : #59626b 0.5px solid;
+      border-bottom: #59626b 0.5px solid;
     }
 
     .value-box {
@@ -145,7 +148,7 @@ $inputWidth: 180;
       width             : 15px;
       height            : 15px;
       background        : #fff;
-      box-shadow        : 0 0 2.5px 0 #fff, getProgress($inputWidth, #fff);
+      box-shadow        : 2px 1px 2.5px 0 rgb(130, 130, 130), getProgress($inputWidth, #fff);
       border-radius     : 50%;
     }
   }
