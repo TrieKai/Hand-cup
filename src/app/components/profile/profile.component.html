@@ -2,7 +2,7 @@
   <div class="overlay-background" (click)="closeDialog()"></div>
   <div class="settings-wrapper">
     <div class="settings-box">
-      <app-image-editor #imageEditor (imageOnloaded)="imageOnload($event)"></app-image-editor>
+      <app-image-editor #imageEditor [photoURL]="photoURL" (imageOnloaded)="imageOnload($event)"></app-image-editor>
       <span #uploadInput class="upload-btn not-allowed" (click)="upload()">確認上傳</span>
       <div class="text-box">
         <div class="title"><i class="material-icons">account_box</i> 暱稱</div>

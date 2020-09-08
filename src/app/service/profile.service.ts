@@ -15,9 +15,13 @@ export class ProfileService {
     private cons: ConstantsService,
   ) { }
 
+  getUserData(): firebase.User {
+    return this.firebaseService.getUserData();
+  }
+
   async updateProfile(userData: firebaseProfile) {
     await this.firebaseService.checkTokenExpired()
-      .then(async(tokenExpired) => {
+      .then(async (tokenExpired) => {
         console.log('tokenExpired: ', tokenExpired)
         if (!tokenExpired) {
           if (this.firebaseService.checkAuthStatus()) {

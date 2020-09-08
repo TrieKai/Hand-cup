@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter, HostListener, Renderer2 } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy, ViewChild, ElementRef, Output, EventEmitter, HostListener, Renderer2, Input } from '@angular/core';
 
 @Component({
   selector: 'app-image-editor',
@@ -12,6 +12,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('zoomSlider', { static: true }) zoomSlider: ElementRef<HTMLInputElement>;
   @ViewChild('rotateSlider', { static: true }) rotateSlider: ElementRef<HTMLInputElement>;
   @ViewChild('opacitySlider', { static: true }) opacitySlider: ElementRef<HTMLInputElement>;
+  @Input() photoURL: string;
   @Output() imageOnloaded = new EventEmitter();
   originalFile: File = null;
   width: number = 300;
@@ -62,6 +63,11 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initUI() {
+    // If this user has photo
+    if (this.photoURL !== '' && this.photoURL !== null && this.photoURL !== undefined) {
+      this.imageRef.nativeElement.src = this.photoURL;
+      this.renderer.addClass(this.imageEditor.nativeElement, 'grab');
+    }
     this.canvasRef.nativeElement.width = this.width;
     this.canvasRef.nativeElement.height = this.height;
   }
@@ -155,7 +161,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private dragElement(e: any) {
-    if (!this.originalFile) { return; }
+    if (!this.imageRef.nativeElement.src) { return; }
     this.imageDragPos.posX = e.clientX;
     this.imageDragPos.posY = e.clientY;
     this.dragEnabled = true;
@@ -180,7 +186,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   zoom(value: number) {
     this.zoomValue = value > 0 ? '+' + value : value;
-    if (!this.originalFile) { return; }
+    if (!this.imageRef.nativeElement.src) { return; }
     this.magnification = 1 + (value / 100);
     const image = this.imageRef.nativeElement;
     const originimageWidth = image.width;
@@ -205,14 +211,14 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   rotate(value: string) {
     this.rotateValue = Number(value) > 0 ? '+' + value : value;
-    if (!this.originalFile) { return; }
+    if (!this.imageRef.nativeElement.src) { return; }
     const image = this.imageRef.nativeElement;
     image.style.transform = 'rotate(' + value + 'deg)';
   }
 
   opacity(value: string) {
     this.opacityValue = value;
-    if (!this.originalFile) { return; }
+    if (!this.imageRef.nativeElement.src) { return; }
     this.imageRef.nativeElement.style.opacity = value;
   }
 
@@ -248,7 +254,11 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
         return res.arrayBuffer();
       })
       .then((buffer) => {
-        return new File([buffer], this.originalFile.name, { type: this.originalFile.type });
+        return new File(
+          [buffer],
+          this.originalFile.name,
+          { type: this.originalFile.type ? this.originalFile.type : 'image/png' }
+        );
       }));
   }
 }

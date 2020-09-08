@@ -46,7 +46,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       console.log('profile service status: ', status)
       this.isLogin = status;
     });
-    this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
+    // this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
+    const userData = this.profileService.getUserData();
+    this.name = userData.displayName;
+    this.photoURL = userData.photoURL;
   }
 
   ngOnDestroy(): void {
@@ -84,6 +87,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   async confirm() {
+    if (!this.isLogin) {
+      this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先登入' });
+      return;
+    }
     if (this.photoURL === '' || this.photoURL === null || this.photoURL === undefined) {
       console.log(this.photo)
       if (this.photo) {
