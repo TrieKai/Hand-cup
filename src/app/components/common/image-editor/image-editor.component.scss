@@ -6,6 +6,13 @@
   height  : 300px;
   overflow: hidden;
 
+  .background {
+    position  : absolute;
+    width     : 100%;
+    height    : 100%;
+    background: #ffffff;
+  }
+
   .image {
     position: absolute;
   }
@@ -45,7 +52,7 @@
 
 .select-image {
   margin-bottom   : 1px;
-  background-color: #23d5ea;
+  background-color: #5ac1cc;
   user-select     : none;
 
   label {

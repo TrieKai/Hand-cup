@@ -10,14 +10,14 @@
   z-index       : zIndex(dialogMask);
 
   .overlay-background {
-    position                   : absolute;
-    top                        : 0;
-    bottom                     : 0;
-    left                       : 0;
-    right                      : 0;
-    pointer-events             : auto;
-    background                 : rgba(0, 0, 0, 0.32);
-    opacity                    : 1;
+    position      : absolute;
+    top           : 0;
+    bottom        : 0;
+    left          : 0;
+    right         : 0;
+    pointer-events: auto;
+    background    : rgba(0, 0, 0, 0.32);
+    opacity       : 1;
   }
 }
 
@@ -30,19 +30,83 @@
 }
 
 .settings-box {
-  display          : flex;
-  flex-direction   : column;
-  min-height       : 300px;
-  max-width        : 310px;
-  max-height       : 95%;
-  pointer-events   : initial;
-  background       : #FFF;
-  border-radius    : 2px;
-  box-shadow       : 0px 2px 3px rgba(0, 0, 0, 0.2);
-  overflow-x       : hidden;
-  overflow-y       : auto;
-  animation        : popupWindow 0.5s;
-  z-index          : zIndex(login);
+  display       : flex;
+  flex-direction: column;
+  min-height    : 300px;
+  max-width     : 310px;
+  max-height    : 95%;
+  pointer-events: initial;
+  background    : linear-gradient(to left, #9cc5ff, #92eefa);
+  border-radius : 2px;
+  box-shadow    : 0px 2px 3px rgba(0, 0, 0, 0.2);
+  overflow-x    : hidden;
+  overflow-y    : auto;
+  animation     : popupWindow 0.5s;
+  z-index       : zIndex(login);
+
+  .text-box {
+    margin: 5px 10px;
+
+    .title {
+      margin     : 5px 0;
+      position   : relative;
+      line-height: 14px;
+
+      i {
+        vertical-align: text-bottom;
+        font-size     : 19px;
+      }
+    }
+
+    .input {
+      background   : #F6F7F9;
+      border       : none;
+      border-radius: 4px;
+      width        : calc(100% - 20px);
+      height       : 40px;
+      line-height  : 40px;
+      padding      : 0px 10px;
+      color        : rgba(0, 0, 0, 0.5);
+      outline      : none;
+    }
+  }
+
+  .upload-btn {
+    background: #3b9cf6;
+
+    &:hover {
+      background: #65b3fc;
+    }
+  }
+
+  .confirm-btn {
+    background: #3A3B3C;
+
+    &:hover {
+      background: #6b6d6e;
+    }
+  }
+
+  span {
+    margin            : 5px 0;
+    padding           : 10px 0;
+    align-self        : center;
+    text-align        : center;
+    width             : 100px;
+    color             : #ffffff;
+    border-radius     : 5px;
+    transition        : all 0.5s ease 0s;
+    -webkit-transition: all 0.5s ease 0s;
+    -moz-transition   : all 0.5s ease 0s;
+    -o-transition     : all 0.5s ease 0s;
+
+    &:hover {
+      transition        : all 0.5s ease 0s;
+      -webkit-transition: all 0.5s ease 0s;
+      -moz-transition   : all 0.5s ease 0s;
+      -o-transition     : all 0.5s ease 0s;
+    }
+  }
 }
 
 .pointer {

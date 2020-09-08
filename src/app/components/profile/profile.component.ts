@@ -19,7 +19,7 @@ import { ImageEditorComponent } from 'src/app/components/common/image-editor/ima
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   @ViewChild('imageEditor', { static: false }) imageEditor: ImageEditorComponent;
-  @ViewChild('upload', { static: false }) uploadInput: ElementRef<HTMLInputElement>;
+  @ViewChild('uploadInput', { static: false }) uploadInput: ElementRef<HTMLInputElement>;
   isLogin: boolean;
   name: string;
   email: string;
@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   photoURL: string;
   subscribe: Subscription;
   onloading: boolean;
+  imageLoaded: boolean;
 
   constructor(
     private domService: DomService,
@@ -58,12 +59,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (event) {
       this.renderer.removeClass(this.uploadInput.nativeElement, 'not-allowed');
       this.renderer.addClass(this.uploadInput.nativeElement, 'pointer');
-      this.renderer.removeAttribute(this.uploadInput.nativeElement, 'disabled');
+      this.imageLoaded = event;
     }
   }
 
   async upload() {
-    console.log('isLogin: ', this.isLogin)
+    if (!this.imageLoaded) { return; }
     if (this.isLogin) {
       this.photo = await this.imageEditor.cropImage();
       if (this.photo) {
@@ -90,6 +91,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         return;
       }
       if (this.name === '' || this.name === null || this.name === undefined) {
+        this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請填入資訊' });
         return;
       }
     }
