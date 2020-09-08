@@ -1,7 +1,7 @@
 <div>
   <div #imageEditor class="image-editor default" (mousedown)="onDrag($event)" (touchstart)="onDragMobile($event)">
     <div class="background"></div>
-    <img #image id="image" class="image" alt="" (load)="imageOnload()" />
+    <img #image id="image" class="image" alt="" (load)="imageOnload()" crossorigin="anonymous" />
     <div class="image-mask"></div>
     <div class="reset pointer" (click)="resetImage()">重設</div>
   </div>
@@ -27,7 +27,8 @@
     </div>
     <div class="slider-box">
       <span class="title">透明</span>
-      <input type="range" #opacitySlider (change)="opacity(opacitySlider.value)" max="1" min="0.1" step="0.05" value="1" />
+      <input type="range" #opacitySlider (change)="opacity(opacitySlider.value)" max="1" min="0.1" step="0.05"
+        value="1" />
       <div class="value-box">
         <span class="value" (click)="resetValue('opacity')">{{opacityValue}}</span>
       </div>

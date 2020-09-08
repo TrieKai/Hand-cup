@@ -236,7 +236,11 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     ctx.rotate(Number(this.rotateValue) * Math.PI / 180); // Rotate
     ctx.translate(-image.width / 2, -image.height / 2); // Back to original position
     ctx.globalAlpha = Number(this.opacityValue); // Set opacity
-    ctx.drawImage(image, 0, 0, image.width, image.height); // Draw image
+    try {
+      ctx.drawImage(image, 0, 0, image.width, image.height); // Draw image
+    } catch (e) {
+      Error(e);
+    }
     ctx.restore();
   }
 
