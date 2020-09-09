@@ -7,6 +7,8 @@ import { MessageComponent } from './message/message.component';
 import { MessageBlockComponent } from './message/message-block/message-block.component';
 import { LockLoadingComponent } from './lock-loading/lock-loading.component';
 import { RatingStarsComponent } from './rating-stars/rating-stars.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { ImageEditorComponent } from './image-editor/image-editor.component';
 // icon
 import { CloseComponent } from './icons/close/close.component';
 import { DoneComponent } from './icons/done/done.component';
@@ -15,8 +17,7 @@ import { WarningComponent } from './icons/warning/warning.component';
 import { StarFullComponent } from './icons/star-full/star-full.component';
 import { StarHalfComponent } from './icons/star-half/star-half.component';
 import { StarEmptyComponent } from './icons/star-empty/star-empty.component';
-import { DialogComponent } from './dialog/dialog.component';
-import { ImageEditorComponent } from './image-editor/image-editor.component';
+import { PriceComponent } from './icons/price/price.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { ImageEditorComponent } from './image-editor/image-editor.component';
     MessageBlockComponent,
     LockLoadingComponent,
     RatingStarsComponent,
+    DialogComponent,
+    ImageEditorComponent,
     CloseComponent,
     DoneComponent,
     InfoComponent,
@@ -31,8 +34,7 @@ import { ImageEditorComponent } from './image-editor/image-editor.component';
     StarFullComponent,
     StarHalfComponent,
     StarEmptyComponent,
-    DialogComponent,
-    ImageEditorComponent,
+    PriceComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,8 @@ import { ImageEditorComponent } from './image-editor/image-editor.component';
     MessageComponent,
     LockLoadingComponent,
     RatingStarsComponent,
+    DialogComponent,
+    ImageEditorComponent,
     // icons
     CloseComponent,
     DoneComponent,
@@ -53,8 +57,7 @@ import { ImageEditorComponent } from './image-editor/image-editor.component';
     StarFullComponent,
     StarHalfComponent,
     StarEmptyComponent,
-    DialogComponent,
-    ImageEditorComponent,
+    PriceComponent,
   ]
 })
 export class CommonComponentModule { }

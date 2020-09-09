@@ -60,7 +60,11 @@
           網站: <a title="{{chosenShopDetail.website}}" href="{{chosenShopDetail.website}}"
             target="_blank">{{chosenShopDetail.website}}</a>
         </li>
-        <li *ngIf="chosenShopDetail.price_level">價位: {{chosenShopDetail.price_level}}</li>
+        <li *ngIf="chosenShopDetail.price_level">價位:
+          <ng-container *ngFor="let i of [].constructor(chosenShopDetail.price_level)" class="price">
+            <i-price [width]="22" [color]="'#aaaaaa'" [opacity]="0.8"></i-price>
+          </ng-container>
+        </li>
         <li *ngIf="chosenShopDetail.reviews">
           評論:
           <div *ngFor="let review of chosenShopDetail.reviews; let i = index;" class="review-container">
