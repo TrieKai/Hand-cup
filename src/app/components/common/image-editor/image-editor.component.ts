@@ -12,7 +12,6 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('zoomSlider', { static: true }) zoomSlider: ElementRef<HTMLInputElement>;
   @ViewChild('rotateSlider', { static: true }) rotateSlider: ElementRef<HTMLInputElement>;
   @ViewChild('opacitySlider', { static: true }) opacitySlider: ElementRef<HTMLInputElement>;
-  @Input() photoURL: string;
   @Output() imageOnloaded = new EventEmitter();
   originalFile: File = null;
   width: number = 300;
@@ -63,11 +62,6 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initUI() {
-    // If this user has photo
-    if (this.photoURL !== '' && this.photoURL !== null && this.photoURL !== undefined) {
-      this.imageRef.nativeElement.src = this.photoURL;
-      this.renderer.addClass(this.imageEditor.nativeElement, 'grab');
-    }
     this.canvasRef.nativeElement.width = this.width;
     this.canvasRef.nativeElement.height = this.height;
   }
@@ -258,11 +252,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
         return res.arrayBuffer();
       })
       .then((buffer) => {
-        return new File(
-          [buffer],
-          this.originalFile.name,
-          { type: this.originalFile.type ? this.originalFile.type : 'image/png' }
-        );
+        return new File([buffer], this.originalFile.name, { type: this.originalFile.type });
       }));
   }
 }
