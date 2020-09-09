@@ -44,9 +44,9 @@ export class DrinkShopCardComponent implements OnInit {
   }
 
   async previewCard(index: number) {
-    this.showPreviewCard = true;
-    this.showChosenCard = false;
     this.chosenShop = this.resultArray[index];
     this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
+    this.showPreviewCard = true;
+    this.showChosenCard = false;
   }
 }

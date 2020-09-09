@@ -24,7 +24,7 @@
             </div>
             <div class="rating-box">
               <span class="author-rating">{{chosenShopDetail.reviews[0].rating}}</span>
-              <app-rating-stars *ngIf="rating" class="rating-stars" [rating]="rating"></app-rating-stars>
+              <app-rating-stars class="rating-stars" [rating]="chosenShopDetail.reviews[0].rating"></app-rating-stars>
             </div>
             <span class="review-time"
               title="{{chosenShopDetail.reviews[0].time * 1000 | date:'long'}}">{{chosenShopDetail.reviews[0].time * 1000 | date:'yyyy/MM/dd'}}</span>
