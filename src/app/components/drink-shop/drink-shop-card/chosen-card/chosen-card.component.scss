@@ -1,0 +1,271 @@
+@import '../../../../assets/css/special-property.scss';
+
+.chosen-card {
+  display              : grid;
+  align-items          : center;
+  justify-content      : center;
+  grid-template-columns: 300px 450px;
+  grid-template-rows   : 40px calc(70vh - 40px);
+  grid-template-areas  :
+    "title title"
+    "image content";
+  margin-top: 60px;
+  height    : 70vh;
+  width     : 100%;
+  cursor    : default;
+
+  @media screen and (max-width: rwdBoundary(middle)) {
+    grid-template-columns: 200px 350px;
+  }
+
+  @media screen and (max-width: rwdBoundary(small)) {
+    grid-template-columns: 300px;
+    grid-template-rows   : 40px 250px calc(80vh - 40px - 250px);
+    grid-template-areas  :
+      "title"
+      "image"
+      "content";
+  }
+
+  .chosen-card-title {
+    grid-area              : title;
+    display                : flex;
+    justify-content        : center;
+    align-items            : center;
+    justify-content        : center;
+    height                 : 100%;
+    background-color       : color(themeOfBlue);
+    color                  : black;
+    font-size              : 24px;
+    font-weight            : 600;
+    border-top-left-radius : 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .chosen-card-image {
+    grid-area                : image;
+    display                  : inline-block;
+    background-position      : center;
+    background-repeat        : no-repeat;
+    background-size          : cover;
+    height                   : 100%;
+    border-bottom-left-radius: 5px;
+
+    @media screen and (max-width: rwdBoundary(small)) {
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  .chosen-card-content {
+    grid-area                 : content;
+    height                    : 100%;
+    background-color          : white;
+    text-align                : left;
+    color                     : color(themeOfPink);
+    font-size                 : 20px;
+    border-bottom-right-radius: 5px;
+
+    ul {
+      list-style-position: inside;
+      padding            : 0 20px;
+
+      li {
+        margin       : 5px 0;
+        overflow     : hidden;
+        text-overflow: ellipsis;
+        white-space  : nowrap;
+      }
+    }
+
+    .website {
+      overflow-wrap: break-word;
+
+      a {
+        color: color(themeOfPink);
+      }
+    }
+
+    .price {
+      vertical-align: middle;
+    }
+
+    .review-container {
+      margin     : 0 0 5px 28px;
+      white-space: initial;
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        position: relative;
+      }
+
+      .review-title {
+        display    : flex;
+        align-items: center;
+        margin     : 5px 0;
+        flex-wrap  : wrap;
+
+        .author-box {
+          display    : flex;
+          align-items: center;
+          width      : calc(100% - 95px - 90px); // Minus rating-box & time-box
+          cursor     : pointer;
+
+          @media screen and (max-width: rwdBoundary(middle)) {
+            width: calc(100% - 100px); // Minus rating-box
+          }
+
+          @media screen and (max-width: rwdBoundary(small)) {
+            width: 100%;
+          }
+
+          .author-img {
+            width : 40px;
+            height: 40px;
+          }
+
+          .author-name {
+            margin-left  : 10px;
+            width        : 7rem;
+            overflow     : hidden;
+            white-space  : nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+
+        .rating-box {
+          display    : flex;
+          align-items: center;
+          margin-left: 5px;
+          width      : 90px;
+
+          @media screen and (max-width: rwdBoundary(small)) {
+            margin: 5px 0 0 0;
+            width : auto;
+            height: 25px;
+          }
+
+          .author-rating {
+            width    : 10px;
+            font-size: 1.25rem;
+
+            @media screen and (max-width: rwdBoundary(small)) {
+              font-size: 1rem;
+            }
+          }
+
+          .rating-stars {
+            margin-left: 5px;
+            width      : 75px;
+          }
+        }
+
+
+        .review-time {
+          margin   : 5px 0 0 5px;
+          width    : 85px;
+          height   : 25px;
+          color    : darkgray;
+          font-size: 1rem;
+
+          @media screen and (max-width: rwdBoundary(middle)) {
+            margin: 5px 0 0 0;
+          }
+
+          @media screen and (max-width: rwdBoundary(small)) {
+            position: absolute;
+            right   : 0;
+            top     : 42.5px;
+          }
+        }
+      }
+
+      .text-box {
+        display           : -webkit-box;
+        display           : -moz-box;
+        margin            : 5px 0;
+        -webkit-box-orient: vertical;
+        -moz-box-orient   : vertical;
+        line-clamp        : 3;
+        -webkit-line-clamp: 3;
+        white-space       : pre-line;
+        text-overflow     : ellipsis;
+        overflow          : hidden;
+        cursor            : pointer;
+      }
+    }
+
+    .info-box {
+      display        : flex;
+      justify-content: flex-end;
+      color          : red;
+
+      .favorite:hover {
+        color : darkred;
+        cursor: pointer;
+      }
+
+      .unfavorite:hover {
+        cursor: pointer;
+      }
+
+      .have-been-box {
+        color : #d62e1f;
+        cursor: pointer;
+
+        .not_listed_location {
+          display: none;
+        }
+
+        .add_location_alt {
+          display: none;
+        }
+
+        .wrong_location {
+          display: inline-block;
+        }
+      }
+
+      .never-been-box {
+        color : #d62e1f;
+        cursor: pointer;
+
+        .not_listed_location {
+          display: inline-block;
+          color  : gray;
+        }
+
+        .add_location_alt {
+          display: none;
+        }
+
+        .wrong_location {
+          display: none;
+        }
+      }
+
+      .never-been-box:hover>.add_location_alt {
+        display: inline-block;
+      }
+
+      .never-been-box:hover>.not_listed_location {
+        display: none;
+      }
+
+      .never-been-box:hover>.wrong_location {
+        display: none;
+      }
+
+      .have-been-box:hover>.add_location_alt {
+        display: none;
+      }
+
+      .have-been-box:hover>.not_listed_location {
+        display: none;
+      }
+
+      .have-been-box:hover>.wrong_location {
+        color  : darkred;
+        display: inline-block;
+      }
+    }
+  }
+}

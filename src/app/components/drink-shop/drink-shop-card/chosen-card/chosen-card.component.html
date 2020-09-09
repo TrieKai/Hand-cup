@@ -1,0 +1,69 @@
+<div class="chosen-card">
+  <div class="chosen-card-title">
+    <span>恭喜! 今天飲料喝這家~</span>
+  </div>
+  <div class="chosen-card-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
+  <div class="chosen-card-content">
+    <ul>
+      <li title="{{chosenShop.name}}">店名: {{chosenShop.name}}</li>
+      <li>評分: {{chosenShop.rating}}</li>
+      <li>評價數: {{chosenShop.ratings_total}}</li>
+      <li>觀看次數: {{chosenShop.views}}</li>
+      <li *ngIf="chosenShopDetail.formatted_address" title="{{chosenShopDetail.formatted_address}}">
+        地址: {{chosenShopDetail.formatted_address}}
+      </li>
+      <li *ngIf="chosenShopDetail.formatted_phone_number">
+        電話: {{chosenShopDetail.formatted_phone_number}}
+      </li>
+      <li *ngIf="chosenShopDetail.website" class="website">
+        網站: <a title="{{chosenShopDetail.website}}" href="{{chosenShopDetail.website}}"
+          target="_blank">{{chosenShopDetail.website}}</a>
+      </li>
+      <li *ngIf="chosenShopDetail.price_level">價位:
+        <ng-container *ngFor="let i of [].constructor(chosenShopDetail.price_level)" class="price">
+          <i-price [size]="22" [color]="'#aaaaaa'" [opacity]="0.8"></i-price>
+        </ng-container>
+      </li>
+      <li *ngIf="chosenShopDetail.reviews">
+        評論:
+        <div *ngFor="let review of chosenShopDetail.reviews; let i = index;" class="review-container">
+          <div class="review-title">
+            <div class="author-box" (click)="openUrl(review.author_url)">
+              <img class="author-img" src="{{review.profile_photo_url}}" alt="author_img" />
+              <span class="author-name" title="{{review.author_name}}">{{review.author_name}}</span>
+            </div>
+            <div class="rating-box">
+              <span class="author-rating">{{review.rating}}</span>
+              <app-rating-stars class="rating-stars" [rating]="review.rating"></app-rating-stars>
+            </div>
+            <span class="review-time"
+              title="{{review.time * 1000 | date:'long'}}">{{review.time * 1000 | date:'yyyy/MM/dd'}}</span>
+          </div>
+          <div class="text-box" (click)="openDialog(i)">{{review.text}}</div>
+        </div>
+      </li>
+      <div *ngIf="chosenShopDetail.place_id" class="info-box">
+        <span *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons unfavorite"
+          title="收藏這家!" (click)="favoritetShop(chosenShopDetail.place_id)">
+          favorite_border
+        </span>
+        <span *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons favorite"
+          title="取消收藏" (click)="unFavoriteShop(chosenShopDetail.place_id)">
+          favorite
+        </span>
+        <div
+          [ngClass]="{'have-been-box': checkLocalStorage(chosenShopDetail.place_id, 'haveBeen'), 'never-been-box': !checkLocalStorage(chosenShopDetail.place_id, 'haveBeen')}">
+          <span class="material-icons not_listed_location">
+            not_listed_location
+          </span>
+          <span class="material-icons add_location_alt" (click)="haveBeen(chosenShopDetail.place_id)">
+            add_location_alt
+          </span>
+          <span class="material-icons wrong_location" (click)="neverBeen(chosenShopDetail.place_id)">
+            wrong_location
+          </span>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>
