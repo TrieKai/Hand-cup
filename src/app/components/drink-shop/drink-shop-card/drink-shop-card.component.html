@@ -62,7 +62,7 @@
         </li>
         <li *ngIf="chosenShopDetail.price_level">價位:
           <ng-container *ngFor="let i of [].constructor(chosenShopDetail.price_level)" class="price">
-            <i-price [width]="22" [color]="'#aaaaaa'" [opacity]="0.8"></i-price>
+            <i-price [size]="22" [color]="'#aaaaaa'" [opacity]="0.8"></i-price>
           </ng-container>
         </li>
         <li *ngIf="chosenShopDetail.reviews">

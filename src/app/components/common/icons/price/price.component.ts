@@ -6,14 +6,14 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['../icon.scss']
 })
 export class PriceComponent {
-  @Input() width: number = 15;
+  @Input() size: number = 15;
   @Input() color: string = '#000000';
   @Input() opacity: number = 1;
 
   setStyle() {
     console.log(this.color)
     return {
-      'font-size': this.width + 'px',
+      'font-size': this.size + 'px',
       'color': this.color,
       'opacity': this.opacity
     };
