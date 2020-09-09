@@ -1,1 +1,37 @@
-<p>preview-card works!</p>
+<div class="chosen-card">
+  <div class="chosen-card-title">
+    <span>來偷偷看這家~</span>
+  </div>
+  <div class="chosen-card-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
+  <div class="chosen-card-content">
+    <ul>
+      <li title="{{chosenShop.name}}">店名: {{chosenShop.name}}</li>
+      <li>評分: {{chosenShop.rating}}</li>
+      <li>評價數: {{chosenShop.ratings_total}}</li>
+      <li *ngIf="chosenShopDetail.formatted_address" title="{{chosenShopDetail.formatted_address}}">
+        地址: {{chosenShopDetail.formatted_address}}
+      </li>
+      <li *ngIf="chosenShopDetail.formatted_phone_number">
+        電話: {{chosenShopDetail.formatted_phone_number}}
+      </li>
+      <li>
+        評論:
+        <div class="review-container">
+          <div class="review-title">
+            <div class="author-box">
+              <img class="author-img" src="{{chosenShopDetail.reviews[0].profile_photo_url}}" alt="author_img" />
+              <span class="author-name" title="{{chosenShopDetail.reviews[0].author_name}}">{{chosenShopDetail.reviews[0].author_name}}</span>
+            </div>
+            <div class="rating-box">
+              <span class="author-rating">{{chosenShopDetail.reviews[0].rating}}</span>
+              <app-rating-stars *ngIf="rating" class="rating-stars" [rating]="rating"></app-rating-stars>
+            </div>
+            <span class="review-time"
+              title="{{chosenShopDetail.reviews[0].time * 1000 | date:'long'}}">{{chosenShopDetail.reviews[0].time * 1000 | date:'yyyy/MM/dd'}}</span>
+          </div>
+          <div class="text-box">{{chosenShopDetail.reviews[0].text}}</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

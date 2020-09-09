@@ -1,11 +1,11 @@
-<div #cardContainer class="card-container" *ngIf="!showChosenCard">
+<div #cardContainer class="card-container" *ngIf="!showChosenCard&&!showPreviewCard">
   <div class="button-box">
     <button mat-raised-button (click)="handleTransformScenes('map')">返回</button>
     <button mat-raised-button class="draw-button" (click)="handleDraw()">抽卡</button>
   </div>
   <div class="space-box"></div>
-  <ng-container *ngFor="let result of resultArray">
-    <div class="card">
+  <ng-container *ngFor="let result of resultArray; let i = index;">
+    <div class="card" (click)="previewCard(i)">
       <div class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}"></div>
       <div class="card-text">
         <h2>{{result.name}}</h2>
@@ -32,6 +32,13 @@
       </div>
     </div>
   </ng-container>
+</div>
+
+<div class="card-container" *ngIf="showPreviewCard">
+  <div class="button-box">
+    <button mat-raised-button color="white" (click)="handleTransformScenes('cards')">返回</button>
+  </div>
+  <app-preview-card [chosenShop]="chosenShop" [chosenShopDetail]="chosenShopDetail"></app-preview-card>
 </div>
 
 <div class="card-container" *ngIf="showChosenCard">

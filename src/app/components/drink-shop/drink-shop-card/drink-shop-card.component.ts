@@ -14,6 +14,7 @@ export class DrinkShopCardComponent implements OnInit {
   chosenShop: drinkShopResults;
   chosenShopDetail: drinkShopDetail;
   showChosenCard: boolean = false;
+  showPreviewCard: boolean = false;
 
   constructor(
     private drinkShopService: DrinkShopService,
@@ -29,6 +30,7 @@ export class DrinkShopCardComponent implements OnInit {
     if (status === 'map') {
       this.drinkShopService.setSharedData(this.cons.SHAREDDATA.showMap, true);
     } else if (status === 'cards') {
+      this.showPreviewCard = false;
       this.showChosenCard = false;
     } else { return; }
   }
@@ -38,5 +40,13 @@ export class DrinkShopCardComponent implements OnInit {
     this.chosenShop = this.resultArray[randomIndex];
     this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
     this.showChosenCard = true;
+    this.showPreviewCard = false;
+  }
+
+  async previewCard(index: number) {
+    this.showPreviewCard = true;
+    this.showChosenCard = false;
+    this.chosenShop = this.resultArray[index];
+    this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
   }
 }

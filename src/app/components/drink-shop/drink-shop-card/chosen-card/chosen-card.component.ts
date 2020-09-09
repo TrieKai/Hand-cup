@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener, 
 import { MatDialog } from '@angular/material/dialog';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
-// import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { DialogComponent } from 'src/app/components/common/dialog/dialog.component';
 import { LocalstorageService } from 'src/app/util/localstorage.service';
 
@@ -22,7 +21,6 @@ export class ChosenCardComponent implements OnInit {
   beenThere: boolean;
 
   constructor(
-    // private drinkShopService: DrinkShopService,
     private cons: ConstantsService,
     private dialog: MatDialog,
     private localStorageService: LocalstorageService,

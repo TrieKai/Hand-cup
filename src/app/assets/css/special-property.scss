@@ -57,6 +57,10 @@
     @return rgb(67, 142, 185);
   }
 
+  @if $type==themeOfYellow {
+    @return rgb(255, 228, 196);
+  }
+
   @if $type==themeOfPink {
     @return rgb(204, 151, 160);
   }
