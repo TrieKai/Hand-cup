@@ -1,1 +1,14 @@
-<p>image-slider works!</p>
+<div class="image-container" [ngStyle]="containerStyles()">
+  <div class="left-arrow">
+    <img src="../../../../assets/img/leftBtn.png" />
+  </div>
+  <div *ngFor="let image of images" class="image" [ngStyle]="{'background-image':'url(' + image + ')'}"></div>
+  <div class="right-arrow">
+    <img src="../../../../assets/img/rightBtn.png" />
+  </div>
+  <div class="dot-box">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot active"></div>
+  </div>
+</div>
