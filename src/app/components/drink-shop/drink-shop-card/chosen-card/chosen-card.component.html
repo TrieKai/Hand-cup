@@ -1,6 +1,28 @@
 <div class="chosen-card">
   <div class="chosen-card-title">
     <span>恭喜! 今天飲料喝這家~</span>
+    <div *ngIf="chosenShopDetail.place_id" class="info-box">
+      <span *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons unfavorite"
+        title="收藏這家!" (click)="favoritetShop(chosenShopDetail.place_id)">
+        favorite_border
+      </span>
+      <span *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons favorite"
+        title="取消收藏" (click)="unFavoriteShop(chosenShopDetail.place_id)">
+        favorite
+      </span>
+      <div
+        [ngClass]="{'have-been-box': checkLocalStorage(chosenShopDetail.place_id, 'haveBeen'), 'never-been-box': !checkLocalStorage(chosenShopDetail.place_id, 'haveBeen')}">
+        <span class="material-icons not_listed_location">
+          not_listed_location
+        </span>
+        <span class="material-icons add_location_alt" (click)="haveBeen(chosenShopDetail.place_id)">
+          add_location_alt
+        </span>
+        <span class="material-icons wrong_location" (click)="neverBeen(chosenShopDetail.place_id)">
+          wrong_location
+        </span>
+      </div>
+    </div>
   </div>
   <div class="chosen-card-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
   <div class="chosen-card-content">
