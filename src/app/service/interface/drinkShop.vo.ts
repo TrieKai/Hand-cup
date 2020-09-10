@@ -21,6 +21,7 @@ interface drinkShopDetail {
         author_name: string
         rating: number
         text: string
+        time: number
     }[]
 }
 

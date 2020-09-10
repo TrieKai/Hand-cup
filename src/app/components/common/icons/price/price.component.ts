@@ -11,7 +11,6 @@ export class PriceComponent {
   @Input() opacity: number = 1;
 
   setStyle() {
-    console.log(this.color)
     return {
       'font-size': this.size + 'px',
       'color': this.color,
