@@ -9,6 +9,7 @@ import { LockLoadingComponent } from './lock-loading/lock-loading.component';
 import { RatingStarsComponent } from './rating-stars/rating-stars.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { ImageEditorComponent } from './image-editor/image-editor.component';
+import { ImageSliderComponent } from './image-slider/image-slider.component';
 // icon
 import { CloseComponent } from './icons/close/close.component';
 import { DoneComponent } from './icons/done/done.component';
@@ -27,6 +28,7 @@ import { PriceComponent } from './icons/price/price.component';
     RatingStarsComponent,
     DialogComponent,
     ImageEditorComponent,
+    ImageSliderComponent,
     CloseComponent,
     DoneComponent,
     InfoComponent,
@@ -49,6 +51,7 @@ import { PriceComponent } from './icons/price/price.component';
     RatingStarsComponent,
     DialogComponent,
     ImageEditorComponent,
+    ImageSliderComponent,
     // icons
     CloseComponent,
     DoneComponent,
