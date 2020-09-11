@@ -1,16 +1,14 @@
 <div class="image-container" [ngStyle]="containerStyles()">
-  <div class="left-arrow" (click)="changePreImage()">
+  <div class="left-arrow" (click)="changeImage(nowImageIndex - 1)">
     <img src="../../../../assets/img/leftBtn.png" />
   </div>
-  <div #preImage *ngIf="showPreImg" class="image"></div>
-  <div #nowImage *ngIf="showNowImg" class="image"></div>
-  <div #subImage *ngIf="showSubImg" class="image"></div>
-  <div class="right-arrow" (click)="changeSubImage()">
+  <div #image class="image animation"></div>
+  <div class="right-arrow" (click)="changeImage(nowImageIndex + 1)">
     <img src="../../../../assets/img/rightBtn.png" />
   </div>
-  <div class="dot-box">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot active"></div>
+  <div #dotBox class="dot-box">
+    <div *ngFor="let image of images; let i = index;">
+      <div class="dot" (click)="changeImage(i)"></div>
+    </div>
   </div>
 </div>

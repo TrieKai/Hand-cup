@@ -6,15 +6,11 @@ import { Component, OnInit, Input, ViewChild, Renderer2, ElementRef } from '@ang
   styleUrls: ['./image-slider.component.scss']
 })
 export class ImageSliderComponent implements OnInit {
-  @ViewChild('preImage', { static: false }) preImage: ElementRef<HTMLDivElement>;
-  @ViewChild('nowImage', { static: false }) nowImage: ElementRef<HTMLDivElement>;
-  @ViewChild('subImage', { static: false }) subImage: ElementRef<HTMLDivElement>;
+  @ViewChild('image', { static: false }) image: ElementRef<HTMLDivElement>;
+  @ViewChild('dotBox', { static: false }) dotBox: ElementRef<HTMLDivElement>;
   @Input() width: number = 300;
   @Input() height: number = 300;
   @Input() images: string[];
-  showPreImg: boolean = false;
-  showNowImg: boolean = false;
-  showSubImg: boolean = false;
   nowImageIndex: number = 0;
 
   constructor(
@@ -22,11 +18,10 @@ export class ImageSliderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.showNowImg = true;
   }
 
   ngAfterViewInit(): void {
-    this.renderer.setStyle(this.nowImage.nativeElement, 'background-image', 'url(' + this.images[this.nowImageIndex] + ')');
+    this.changeImage(0);
   }
 
   containerStyles(): object {
@@ -36,13 +31,20 @@ export class ImageSliderComponent implements OnInit {
     };
   }
 
-  changePreImage() {
-    this.nowImageIndex -= 1;
-    this.renderer.setStyle(this.nowImage.nativeElement, 'background-image', 'url(' + this.images[this.nowImageIndex] + ')');
-  }
-
-  changeSubImage() {
-    this.nowImageIndex += 1;
-    this.renderer.setStyle(this.nowImage.nativeElement, 'background-image', 'url(' + this.images[this.nowImageIndex] + ')');
+  changeImage(index: any) {
+    const imagesLength = this.images.length;
+    index === -1
+      ? index = imagesLength - 1 : index === imagesLength
+        ? index = 0 : null;
+    this.nowImageIndex = index;
+    this.renderer.setStyle(this.image.nativeElement, 'background-image', 'url(' + this.images[index] + ')');
+    this.dotBox.nativeElement.childNodes.forEach((dot, i) => {
+      if (i === 0) { return; } // index 0 is ng-binding
+      if (i - 1 === this.nowImageIndex) {
+        this.renderer.addClass(dot.firstChild, 'active');
+      } else {
+        this.renderer.removeClass(dot.firstChild, 'active');
+      }
+    });
   }
 }

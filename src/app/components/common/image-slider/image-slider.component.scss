@@ -8,11 +8,14 @@
     top        : 0;
     bottom     : 0;
     left       : 0;
+    width      : 30%;
     height     : 100%;
     cursor     : pointer;
 
     img {
-      margin: auto;
+      position: absolute;
+      top     : calc(50% - 23px);
+      left    : 0;
     }
   }
 
@@ -31,35 +34,69 @@
     top         : 0;
     right       : 0;
     bottom      : 0;
+    width       : 30%;
     height      : 100%;
     cursor      : pointer;
 
+    // &:hover {
+    //   background: linear-gradient(90deg, rgba(163, 163, 163, 0.3) 50%, rgba(102, 102, 102, 0.3) 80%);
+    // }
+
     img {
-      margin: auto;
+      position: absolute;
+      top     : calc(50% - 23px);
+      right   : 0;
     }
   }
 
   .dot-box {
     display        : inline-flex;
-    justify-content: center;
     position       : absolute;
-    right          : 0;
-    bottom         : 0;
-    left           : 0;
-    padding-bottom : 15px;
+    bottom         : 10px;
+    left           : 50%;
+    transform      : translateX(-50%);
+    list-style-type: none;
 
     .dot {
-      margin       : 5px;
-      width        : 12px;
-      height       : 12px;
-      background   : white;
+      position     : relative;
+      display      : inline-block;
+      margin       : 3px;
+      width        : 15px;
+      height       : 15px;
       border-radius: 50%;
-      opacity      : 0.5;
+      border       : 2px solid #fff;
       cursor       : pointer;
+
+      &:hover::after {
+        transform: translate(-50%, -50%) scale(1, 1);
+        opacity  : 1;
+      }
+
+      &::after {
+        content         : '';
+        position        : absolute;
+        top             : 50%;
+        left            : 50%;
+        transform       : translate(-50%, -50%) scale(0, 0);
+        width           : 75%;
+        height          : 75%;
+        border-radius   : 50%;
+        background-color: #fff;
+        opacity         : 0;
+        transition      : 0.3s;
+      }
     }
 
     .active {
-      opacity: 1;
+      &::after {
+        transform: translate(-50%, -50%) scale(1, 1);
+        opacity  : 1;
+      }
     }
   }
+}
+
+.animation {
+  opacity   : 1;
+  transition: all 0.8s 0.5s ease-out;
 }
