@@ -1,17 +1,19 @@
-import { Component, OnInit, Input, ViewChild, Renderer2, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Input, ViewChild, Renderer2, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-image-slider',
   templateUrl: './image-slider.component.html',
   styleUrls: ['./image-slider.component.scss']
 })
-export class ImageSliderComponent implements OnInit {
+export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('imageContainer', { static: false }) imageContainer: ElementRef<HTMLDivElement>;
   @ViewChild('image', { static: false }) image: ElementRef<HTMLDivElement>;
   @ViewChild('dotBox', { static: false }) dotBox: ElementRef<HTMLDivElement>;
   @Input() width: number = 300;
   @Input() height: number = 300;
   @Input() images: string[];
   nowImageIndex: number = 0;
+  listen: any;
 
   constructor(
     private renderer: Renderer2,
@@ -22,6 +24,19 @@ export class ImageSliderComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.changeImage(0);
+    this.listen = this.renderer.listen(this.imageContainer.nativeElement, 'mousewheel', (e: WheelEvent) => {
+      e.deltaY > 0 ?
+        this.changeImage(this.nowImageIndex + 1) : e.deltaY < 0 ?
+          this.changeImage(this.nowImageIndex - 1) : null
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.listen();
+  }
+
+  getYPosition(e: Event): number {
+    return (e.target as Element).scrollTop;
   }
 
   containerStyles(): object {
