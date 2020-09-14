@@ -27,7 +27,7 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.listen = this.renderer.listen(this.imageContainer.nativeElement, 'mousewheel', (e: WheelEvent) => {
       e.deltaY > 0 ?
         this.changeImage(this.nowImageIndex + 1) : e.deltaY < 0 ?
-          this.changeImage(this.nowImageIndex - 1) : null
+          this.changeImage(this.nowImageIndex - 1) : null;
     });
   }
 

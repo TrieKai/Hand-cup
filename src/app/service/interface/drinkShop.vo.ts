@@ -16,6 +16,12 @@ interface drinkShopDetail {
     formatted_phone_number: string
     website: string
     price_level: number
+    photos: {
+        width: number
+        height: number
+        photo_reference: string
+        html_attributions: string[]
+    }[]
     reviews: {
         profile_photo_url: string
         author_name: string
