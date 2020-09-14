@@ -1,10 +1,10 @@
 <div #imageContainer class="image-container" [ngStyle]="containerStyles()">
-  <div class="left-arrow" (click)="changeImage(nowImageIndex - 1)">
-    <img src="../../../../assets/img/leftBtn.png" />
+  <div class="left-arrow-box" (click)="changeImage(nowImageIndex - 1)">
+    <div class="left-arrow"></div>
   </div>
   <div #image class="image animation"></div>
-  <div class="right-arrow" (click)="changeImage(nowImageIndex + 1)">
-    <img src="../../../../assets/img/rightBtn.png" />
+  <div class="right-arrow-box" (click)="changeImage(nowImageIndex + 1)">
+    <div class="right-arrow"></div>
   </div>
   <div #dotBox class="dot-box">
     <div *ngFor="let image of images; let i = index;">
