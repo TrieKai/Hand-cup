@@ -20,6 +20,7 @@ export class ChosenCardComponent implements OnInit {
   ratingStarHeight: number;
   beenThere: boolean;
   images: string[] = [];
+  links: string[] = [];
   imageSliderStyles: object[] = [];
 
   constructor(
@@ -58,6 +59,7 @@ export class ChosenCardComponent implements OnInit {
       const key = 'AIzaSyAx_vyZzJm_jPd8opBeiOlQqslgJQ3fKus';
       const photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=' + photo.width + '&photoreference=' + photo.photo_reference + '&key=' + key + '';
       this.images.push(photoUrl);
+      this.links.push(photo.html_attributions[0]);
     });
     this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
   }

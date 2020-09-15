@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Input, ViewChild, Renderer2, ElementRef } from '@angular/core';
+import { link } from 'fs';
 
 @Component({
   selector: 'app-image-slider',
@@ -6,10 +7,11 @@ import { Component, OnInit, AfterViewInit, OnDestroy, Input, ViewChild, Renderer
   styleUrls: ['./image-slider.component.scss']
 })
 export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('imageContainer', { static: false }) imageContainer: ElementRef<HTMLDivElement>;
-  @ViewChild('image', { static: false }) image: ElementRef<HTMLDivElement>;
-  @ViewChild('dotBox', { static: false }) dotBox: ElementRef<HTMLDivElement>;
-  @Input() images: string[];
+  @ViewChild('imageContainer', { static: false }) imageContainerRef: ElementRef<HTMLDivElement>;
+  @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLDivElement>;
+  @ViewChild('dotBox', { static: false }) dotBoxRef: ElementRef<HTMLDivElement>;
+  @Input() images: string[] = [];
+  @Input() links: string[] = [];
   @Input() customizeStyles: object[] = [];
   nowImageIndex: number = 0;
   listen: any;
@@ -24,9 +26,9 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.changeImage(0);
     this.customizeStyles.forEach((style) => {
-      this.renderer.setStyle(this.image.nativeElement, Object.keys(style)[0], Object.values(style)[0]);
+      this.renderer.setStyle(this.imageRef.nativeElement, Object.keys(style)[0], Object.values(style)[0]);
     });
-    this.listen = this.renderer.listen(this.imageContainer.nativeElement, 'mousewheel', (e: WheelEvent) => {
+    this.listen = this.renderer.listen(this.imageContainerRef.nativeElement, 'mousewheel', (e: WheelEvent) => {
       e.deltaY > 0 ?
         this.changeImage(this.nowImageIndex + 1) : e.deltaY < 0 ?
           this.changeImage(this.nowImageIndex - 1) : null;
@@ -37,8 +39,9 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.listen();
   }
 
-  getYPosition(e: Event): number {
-    return (e.target as Element).scrollTop;
+  openLink() {
+    const url = this.links[this.nowImageIndex].split('"')[1];
+    window.open(url, '_blank');
   }
 
   changeImage(index: any) {
@@ -47,8 +50,8 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
       ? index = imagesLength - 1 : index === imagesLength
         ? index = 0 : null;
     this.nowImageIndex = index;
-    this.renderer.setStyle(this.image.nativeElement, 'background-image', 'url(' + this.images[index] + ')');
-    this.dotBox.nativeElement.childNodes.forEach((dot, i) => {
+    this.renderer.setStyle(this.imageRef.nativeElement, 'background-image', 'url(' + this.images[index] + ')');
+    this.dotBoxRef.nativeElement.childNodes.forEach((dot, i) => {
       if (i === 0) { return; } // index 0 is ng-binding
       if (i - 1 === this.nowImageIndex) {
         this.renderer.addClass(dot.firstChild, 'active');

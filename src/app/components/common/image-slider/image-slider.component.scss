@@ -5,6 +5,10 @@
   overflow: hidden;
 
   &:hover {
+    .link {
+      opacity: 1;
+    }
+
     .left-arrow-box>.left-arrow {
       opacity  : 1;
       animation: left-arrow-in 0.7s ease-in-out;
@@ -21,6 +25,16 @@
     }
   }
 
+  .link {
+    position: absolute;
+    top     : 5px;
+    right   : 5px;
+    color   : #fff;
+    opacity : 0;
+    z-index : 2;
+    cursor  : pointer;
+  }
+
   .left-arrow-box {
     display : flex;
     position: absolute;
@@ -29,6 +43,7 @@
     left    : 0;
     width   : 20%;
     height  : 100%;
+    z-index : 1;
     cursor  : pointer;
 
     .left-arrow {
@@ -61,6 +76,7 @@
     bottom  : 0;
     width   : 20%;
     height  : 100%;
+    z-index : 1;
     cursor  : pointer;
 
     .right-arrow {
