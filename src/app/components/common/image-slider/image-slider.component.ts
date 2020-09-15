@@ -9,9 +9,8 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('imageContainer', { static: false }) imageContainer: ElementRef<HTMLDivElement>;
   @ViewChild('image', { static: false }) image: ElementRef<HTMLDivElement>;
   @ViewChild('dotBox', { static: false }) dotBox: ElementRef<HTMLDivElement>;
-  @Input() width: number = 300;
-  @Input() height: number = 300;
   @Input() images: string[];
+  @Input() customizeStyles: object[] = [];
   nowImageIndex: number = 0;
   listen: any;
 
@@ -24,6 +23,9 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.changeImage(0);
+    this.customizeStyles.forEach((style) => {
+      this.renderer.setStyle(this.image.nativeElement, Object.keys(style)[0], Object.values(style)[0]);
+    });
     this.listen = this.renderer.listen(this.imageContainer.nativeElement, 'mousewheel', (e: WheelEvent) => {
       e.deltaY > 0 ?
         this.changeImage(this.nowImageIndex + 1) : e.deltaY < 0 ?
@@ -37,13 +39,6 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getYPosition(e: Event): number {
     return (e.target as Element).scrollTop;
-  }
-
-  containerStyles(): object {
-    return {
-      'width': this.width + 'px',
-      'height': this.height + 'px'
-    };
   }
 
   changeImage(index: any) {

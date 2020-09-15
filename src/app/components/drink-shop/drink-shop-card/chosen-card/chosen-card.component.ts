@@ -20,6 +20,7 @@ export class ChosenCardComponent implements OnInit {
   ratingStarHeight: number;
   beenThere: boolean;
   images: string[] = [];
+  imageSliderStyles: object[] = [];
 
   constructor(
     private cons: ConstantsService,
@@ -54,9 +55,11 @@ export class ChosenCardComponent implements OnInit {
 
   ngOnInit() {
     this.chosenShopDetail.photos.map((photo) => {
-      const photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=' + photo.width + '&photoreference=' + photo.photo_reference + '&key=AIzaSyAx_vyZzJm_jPd8opBeiOlQqslgJQ3fKus';
+      const key = 'AIzaSyAx_vyZzJm_jPd8opBeiOlQqslgJQ3fKus';
+      const photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=' + photo.width + '&photoreference=' + photo.photo_reference + '&key=' + key + '';
       this.images.push(photoUrl);
     });
+    this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
   }
 
   ngAfterViewInit() {
