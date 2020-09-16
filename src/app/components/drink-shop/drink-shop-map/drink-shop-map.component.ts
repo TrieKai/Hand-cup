@@ -42,7 +42,6 @@ export class DrinkShopMapComponent implements OnInit {
 
     ngOnInit() {
         this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
-        console.log('init', this.onloading)
         this.geolocationService.getPosition().then(pos => {
             console.log(`Positon: ${pos.lng} ${pos.lat}`);
             this.coordinate.longitude = pos.lng;
@@ -153,7 +152,6 @@ export class DrinkShopMapComponent implements OnInit {
         this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
         const respData: any[] = await this.mapService.getNearByLocations(this.coordinate, this.distance);
         this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
-        console.log(respData)
         if (this.resultArray.length > 0) {
             this.resultArray = []; // Reset array
         }
@@ -237,8 +235,6 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     handleTransformScenes() {
-        console.log('transform')
-        // TODO: Call parent component transform scenes
         this.drinkShopService.setSharedData(this.cons.SHAREDDATA.showMap, false);
         this.drinkShopService.setSharedData(this.cons.SHAREDDATA.drinkShopResults, this.resultArray);
     }

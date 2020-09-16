@@ -75,7 +75,7 @@ export class DrinkShopService {
         const emptyStars: number = 5 - fullStars - halfStars; // 空星的數量
         let starContent: string = '';
 
-        console.log(fullStars, halfStars, emptyStars)
+        // console.log(fullStars, halfStars, emptyStars)
         for (let i: number = 0; i < fullStars; i++) {
             starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_14.png);"></li>';
         }

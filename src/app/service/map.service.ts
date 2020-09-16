@@ -28,7 +28,6 @@ export class MapService {
             longitude: coordinate.longitude,
             distance: distance
         }
-        console.log(body)
         const resp: RespData = await this.http.post(this.apiCons.GET_NEARBY_SEARCH, body, header);
         if (isDevMode() || global.showLog) {
             console.log(resp);

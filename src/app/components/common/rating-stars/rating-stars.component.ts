@@ -28,7 +28,5 @@ export class RatingStarsComponent implements OnInit {
     this.fullStars = Math.floor(ratingStars); // 滿星的數量
     this.halfStars = (ratingStars - this.fullStars) * 2; // 半星的數量
     this.emptyStars = 5 - this.fullStars - this.halfStars; // 空星的數量
-
-    console.log(this.fullStars, this.halfStars, this.emptyStars)
   }
 }
