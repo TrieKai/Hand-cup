@@ -1,5 +1,5 @@
 <div #imageContainer class="image-container">
-  <div class="material-icons link" title="開啟外部連結" (click)="openLink()">link</div>
+  <div class="material-icons link" title="導向至作者" (click)="openLink()">link</div>
   <div class="left-arrow-box" (click)="changeImage(nowImageIndex - 1)">
     <div class="left-arrow"></div>
   </div>
@@ -9,7 +9,7 @@
   </div>
   <div #dotBox class="dot-box">
     <div *ngFor="let image of images; let i = index;">
-      <div class="dot" (click)="changeImage(i)"></div>
+      <div class="dot" [ngClass]="{'active': i === 0}" (click)="changeImage(i)"></div>
     </div>
   </div>
 </div>

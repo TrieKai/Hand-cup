@@ -1,12 +1,11 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, Input, ViewChild, Renderer2, ElementRef } from '@angular/core';
-import { link } from 'fs';
+import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, ViewChild, Renderer2, ElementRef, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-image-slider',
   templateUrl: './image-slider.component.html',
   styleUrls: ['./image-slider.component.scss']
 })
-export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('imageContainer', { static: false }) imageContainerRef: ElementRef<HTMLDivElement>;
   @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLDivElement>;
   @ViewChild('dotBox', { static: false }) dotBoxRef: ElementRef<HTMLDivElement>;
@@ -19,6 +18,12 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private renderer: Renderer2,
   ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.images.isFirstChange()) {
+      this.changeImage(0);
+    }
+  }
 
   ngOnInit() {
   }

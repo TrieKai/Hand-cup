@@ -12,7 +12,6 @@ import { LocalstorageService } from 'src/app/util/localstorage.service';
 })
 export class ChosenCardComponent implements OnInit {
   @Input() chosenShop: drinkShopResults;
-  @Input() chosenShopDetail: drinkShopDetail;
   dialogMaxWidth: number;
   dialogMinWidth: number;
   dialogMaxHeight: number;
@@ -22,6 +21,24 @@ export class ChosenCardComponent implements OnInit {
   images: string[] = [];
   links: string[] = [];
   imageSliderStyles: object[] = [];
+
+  private _chosenShopDetail: drinkShopDetail;
+
+  get chosenShopDetail(): drinkShopDetail {
+    return this._chosenShopDetail;
+  }
+
+  @Input() set chosenShopDetail(data: drinkShopDetail) {
+    this._chosenShopDetail = data;
+    this.images = []; // Clear
+    this.links = []; // Clear
+    data.photos.map((photo) => {
+      const key = 'AIzaSyAx_vyZzJm_jPd8opBeiOlQqslgJQ3fKus';
+      const photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=' + photo.width + '&photoreference=' + photo.photo_reference + '&key=' + key + '';
+      this.images.push(photoUrl);
+      this.links.push(photo.html_attributions[0]);
+    });
+  }
 
   constructor(
     private cons: ConstantsService,
@@ -55,12 +72,6 @@ export class ChosenCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.chosenShopDetail.photos.map((photo) => {
-      const key = 'AIzaSyAx_vyZzJm_jPd8opBeiOlQqslgJQ3fKus';
-      const photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=' + photo.width + '&photoreference=' + photo.photo_reference + '&key=' + key + '';
-      this.images.push(photoUrl);
-      this.links.push(photo.html_attributions[0]);
-    });
     this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
   }
 
