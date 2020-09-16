@@ -88,6 +88,28 @@
       cursor: pointer;
     }
 
+    .google-box {
+      display      : flex;
+      margin-top   : 10px;
+      align-items  : center;
+      width        : 100%;
+      border       : none;
+      border-radius: 5px;
+      background   : #FFF;
+      box-shadow   : 3px 3px 10px 0px rgba(65, 65, 65, 0.8);
+      cursor       : pointer;
+
+      img {
+        margin: 10px;
+        width : 20px;
+        height: 20px;
+      }
+
+      span {
+        margin: 10px;
+      }
+    }
+
     &.signup {
       background: linear-gradient(to left, #6FAAFF, #955DFF);
     }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { RouterConstantsService } from '../util/constants/router-constants.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
@@ -26,14 +26,17 @@ export class LoginService {
     return this.firebaseService.userLoggedIn;
   }
 
-  async signUp(email: string, password: string) {
+  async signUp(email: string, password: string): Promise<boolean> {
     return await this.firebaseService.signUp(email, password);
   }
 
-  async login(email: string, password: string) {
+  async signUpWithGoogle(): Promise<boolean> {
+    return await this.firebaseService.signUpWithGoogle();
+  }
+
+  async login(email: string, password: string): Promise<boolean> {
     return await this.firebaseService.login(email, password)
       .then((status) => {
-        console.log('讀取使用者資訊', status)
         const user = this.firebaseService.getUserData();
         if (user && !user.emailVerified) {
           this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '警告', content: '請去註冊信箱完成驗證!' });

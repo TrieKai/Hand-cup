@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Subject, Subscription, ReplaySubject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { AngularFireAuth } from "@angular/fire/auth";
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { MessageService } from 'src/app/service/message.service';
 import { SharedService } from 'src/app/shared/shared.service';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class FirebaseService {
     private sharedService: SharedService,
   ) { }
 
-  async signUp(email: string, password: string) {
+  async signUp(email: string, password: string): Promise<boolean> {
     return await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(() => {
         this.sendEmailVerification();
@@ -29,6 +30,19 @@ export class FirebaseService {
       })
       .catch((error) => {
         this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '註冊發生錯誤', content: error });
+        return false;
+      });
+  }
+
+  async signUpWithGoogle(): Promise<boolean> {
+    const provider = new firebase.auth.GoogleAuthProvider;
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((result) => {
+        console.log(result)
+        return true;
+      })
+      .catch((error) => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: 'Google驗證發生錯誤', content: error });
         return false;
       });
   }
@@ -43,7 +57,7 @@ export class FirebaseService {
       });
   }
 
-  async login(email: string, password: string) {
+  async login(email: string, password: string): Promise<boolean> {
     return await this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '通知', content: '登錄成功' });

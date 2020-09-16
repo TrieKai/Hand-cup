@@ -92,4 +92,13 @@ export class LoginComponent implements OnInit {
       });
     console.log('Sign up result: ', signUpResult)
   }
+
+  async signUpWithGoogle() {
+    await this.loginService.signUpWithGoogle()
+      .then((status) => {
+        if (status) {
+          this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+        }
+      });
+  }
 }
