@@ -86,6 +86,10 @@
 
     .enter-btn {
       cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.4);
+      }
     }
 
     .google-box {
@@ -98,6 +102,10 @@
       background   : #FFF;
       box-shadow   : 3px 3px 10px 0px rgba(65, 65, 65, 0.8);
       cursor       : pointer;
+
+      &:hover {
+        background: #e8ebee;
+      }
 
       img {
         margin: 10px;
@@ -205,7 +213,7 @@ input[type=radio] {
         .input {
           opacity   : 1;
           transform : translateX(0%);
-          transition: all 0.5s;
+          transition: opacity 0.5s, transform 0.5s;
 
           @for $i from 1 through 5 {
             &:nth-child(#{$i}) {

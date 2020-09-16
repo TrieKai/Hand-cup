@@ -67,38 +67,11 @@
     }
 
     img {
-        width : 30px;
-        height: 30px;
+        width        : 30px;
+        height       : 30px;
+        border-radius: 50%;
     }
 }
-
-// .example-container {
-//     position: absolute;
-//     left: 0;
-//     right: 0;
-// }
-
-// .example-sidenav {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     width: 300px;
-//     // background     : rgba(255, 0, 0, 0.5);
-
-//     mat-list-item {
-//         cursor: pointer;
-
-//         .menu-icon {
-//             width: 30px;
-//             height: 30px;
-//         }
-
-//         .menu-span {
-//             margin-left: 10px;
-//             font-size: 18px;
-//         }
-//     }
-// }
 
 html,
 body {
