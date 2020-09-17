@@ -34,6 +34,10 @@ export class LoginService {
     return await this.firebaseService.signUpWithGoogle();
   }
 
+  async signUpWithFacebook(): Promise<boolean> {
+    return await this.firebaseService.signUpWithFacebook();
+  }
+
   async login(email: string, password: string): Promise<boolean> {
     return await this.firebaseService.login(email, password)
       .then((status) => {

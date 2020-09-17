@@ -123,20 +123,15 @@
       }
     }
 
-    .google-box {
+    .third-login-box {
       display      : flex;
       margin-top   : 10px;
       align-items  : center;
       width        : 100%;
       border       : none;
       border-radius: 5px;
-      background   : #FFF;
       box-shadow   : 3px 3px 10px 0px rgba(65, 65, 65, 0.8);
       cursor       : pointer;
-
-      &:hover {
-        background: #e8ebee;
-      }
 
       img {
         margin: 10px;
@@ -146,6 +141,31 @@
 
       span {
         margin: 10px;
+      }
+    }
+
+    .google {
+      background: #FFF;
+      color     : #000;
+
+      &:hover {
+        background: #e8ebee;
+      }
+    }
+
+    .facebook {
+      background: #4167B2;
+      color     : #fff;
+
+      // &:hover {
+      //   background: #486299;
+      // }
+
+      .facebook-icon {
+        vertical-align: baseline;
+        margin-top    : -0.3em;
+        margin-bottom : -0.3em;
+        transition    : opacity 200ms cubic-bezier(.165, .84, .44, 1);
       }
     }
 
@@ -246,7 +266,7 @@ input[type=radio] {
           transform : translateX(0%);
           transition: opacity 0.5s, transform 0.5s;
 
-          @for $i from 1 through 5 {
+          @for $i from 1 through 6 {
             &:nth-child(#{$i}) {
               transition-delay: 0.2s*$i
             }

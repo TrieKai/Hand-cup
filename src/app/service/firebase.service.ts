@@ -47,6 +47,19 @@ export class FirebaseService {
       });
   }
 
+  async signUpWithFacebook(): Promise<boolean> {
+    const provider = new firebase.auth.FacebookAuthProvider;
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((result) => {
+        console.log(result)
+        return true;
+      })
+      .catch((error) => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: 'Facebook驗證發生錯誤', content: error });
+        return false;
+      });
+  }
+
   async sendEmailVerification() {
     await this.afAuth.auth.currentUser.sendEmailVerification()
       .then(() => {

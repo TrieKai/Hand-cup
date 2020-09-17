@@ -101,4 +101,13 @@ export class LoginComponent implements OnInit {
         }
       });
   }
+
+  async signUpWithFacebook() {
+    await this.loginService.signUpWithFacebook()
+      .then((status) => {
+        if (status) {
+          this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+        }
+      });
+  }
 }
