@@ -92,6 +92,37 @@
       }
     }
 
+    .divid-line {
+      overflow  : hidden;
+      text-align: center;
+      color     : #fff;
+      opacity   : 0;
+
+      &::before {
+        content         : "";
+        display         : inline-block;
+        position        : relative;
+        right           : 0.5em;
+        margin-left     : -50%;
+        vertical-align  : middle;
+        width           : 50%;
+        height          : 1px;
+        background-color: rgba(225, 225, 225, 0.85);
+      }
+
+      &::after {
+        content         : "";
+        display         : inline-block;
+        position        : relative;
+        left            : 0.5em;
+        margin-right    : -50%;
+        vertical-align  : middle;
+        width           : 50%;
+        height          : 1px;
+        background-color: rgba(225, 225, 225, 0.85);
+      }
+    }
+
     .google-box {
       display      : flex;
       margin-top   : 10px;
@@ -221,8 +252,44 @@ input[type=radio] {
             }
           }
         }
+
+        .divid-line {
+          opacity  : 1;
+          animation: show 1s 0s;
+
+          &::before,
+          &::after {
+            content  : "";
+            width    : 50%;
+            animation: expand 2s 0.8s;
+          }
+        }
       }
     }
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes expand {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 50%;
   }
 }
 
