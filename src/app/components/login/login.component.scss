@@ -157,15 +157,12 @@
       background: #4167B2;
       color     : #fff;
 
-      // &:hover {
-      //   background: #486299;
-      // }
+      &:hover {
+        background: #4e71b8;
+      }
 
       .facebook-icon {
-        vertical-align: baseline;
-        margin-top    : -0.3em;
-        margin-bottom : -0.3em;
-        transition    : opacity 200ms cubic-bezier(.165, .84, .44, 1);
+        margin: 10px;
       }
     }
 
