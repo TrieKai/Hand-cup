@@ -23,6 +23,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ChosenCardComponent } from './components/drink-shop/drink-shop-card/chosen-card/chosen-card.component';
 import { PreviewCardComponent } from './components/drink-shop/drink-shop-card/preview-card/preview-card.component';
+import { ReAuthComponent } from './components/profile/re-auth/re-auth.component';
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import { PreviewCardComponent } from './components/drink-shop/drink-shop-card/pr
         ProfileComponent,
         ChosenCardComponent,
         PreviewCardComponent,
+        ReAuthComponent,
     ],
     imports: [
         BrowserModule,
