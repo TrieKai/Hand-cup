@@ -11,7 +11,8 @@ export class SharedService {
     onloading: false,
     userData: null,
     loginComponentRef: null,
-    profileComponentRef: null
+    profileComponentRef: null,
+    reAuthComponentRef: null,
   };
 
   constructor() { }

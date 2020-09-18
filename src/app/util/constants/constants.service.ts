@@ -21,6 +21,7 @@ export class ConstantsService {
     drinkShopResults: 'drinkShopResults',
     loginComponentRef: 'loginComponentRef',
     profileComponentRef: 'profileComponentRef',
+    reAuthComponentRef: 'reAuthComponentRef',
   };
 
   // Message type

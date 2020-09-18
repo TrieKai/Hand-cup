@@ -1,1 +1,20 @@
-<p>re-auth works!</p>
+<div class="overlay-container">
+    <div class="overlay-background"></div>
+    <div class="re-auth-wrap">
+        <div class="re-auth-box">
+            <div class="close-btn" (click)="closeDialog()">
+                <i-close [color]="'#808080'"></i-close>
+            </div>
+            <div class="space"></div>
+            <div class="text-box">
+                <div class="title"><i class="material-icons">email</i> EMAIL</div>
+                <input class="input" type="email" placeholder="email" [(ngModel)]="email" disabled />
+            </div>
+            <div class="text-box">
+                <div class="title"><i class="material-icons">lock</i> PASSWORD</div>
+                <input #password class="input" type="password" placeholder="password" />
+            </div>
+            <span class="confirm-btn" (click)="confirm()">確認</span>
+        </div>
+    </div>
+</div>

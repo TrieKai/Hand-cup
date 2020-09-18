@@ -58,6 +58,7 @@ import { ReAuthComponent } from './components/profile/re-auth/re-auth.component'
         DialogComponent,
         LoginComponent,
         ProfileComponent,
+        ReAuthComponent,
     ],
 })
 export class AppModule { }

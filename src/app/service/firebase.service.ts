@@ -92,6 +92,19 @@ export class FirebaseService {
       });
   }
 
+  async reAuth(email: string, password: string): Promise<boolean> {
+    const credential = firebase.auth.EmailAuthProvider.credential(email, password)
+    return await this.afAuth.auth.currentUser.reauthenticateWithCredential(credential)
+      .then(() => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '通知', content: '驗證成功' });
+        return true;
+      })
+      .catch((error) => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '驗證發生錯誤', content: error });
+        return false;
+      });
+  }
+
   checkAuthStatus(): boolean {
     this.afAuth.auth.onAuthStateChanged((user) => {
       console.log('===Firebase checkAuthStatus===')
