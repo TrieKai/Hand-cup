@@ -90,6 +90,11 @@
                 outline      : none;
             }
 
+            .disabled {
+                background: rgb(169, 169, 169, 0.5);
+                cursor    : not-allowed;
+            }
+
             .red {
                 outline: 1px solid red;
             }

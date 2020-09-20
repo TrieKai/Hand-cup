@@ -4,6 +4,7 @@ import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { LoginService } from 'src/app/service/login.service';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-re-auth',
@@ -24,6 +25,7 @@ export class ReAuthComponent implements OnInit {
     private cons: ConstantsService,
     private loginService: LoginService,
     private renderer: Renderer2,
+    private message: MessageService,
   ) { }
 
   ngOnInit() {
@@ -43,6 +45,19 @@ export class ReAuthComponent implements OnInit {
     if (status) {
       this.renderer.addClass(this.firstPageRef.nativeElement, 'moveToLeft');
       this.renderer.addClass(this.secondPageRef.nativeElement, 'moveToLeft');
+    }
+  }
+
+  async update() {
+    if (this.newPasswordRef.nativeElement.value === this.confirmPasswordRef.nativeElement.value) {
+      this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
+      await this.loginService.updatePassword(this.confirmPasswordRef.nativeElement.value);
+      this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
+      this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.reAuthComponentRef));
+    } else {
+      this.renderer.addClass(this.newPasswordRef.nativeElement, 'red');
+      this.renderer.addClass(this.confirmPasswordRef.nativeElement, 'red');
+      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '密碼不相符', content: '' });
     }
   }
 }

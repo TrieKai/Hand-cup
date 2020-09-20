@@ -9,7 +9,7 @@
                 <div class="space"></div>
                 <div class="text-box">
                     <div class="title"><i class="material-icons">email</i> EMAIL</div>
-                    <input class="input" type="email" placeholder="email" [(ngModel)]="email" disabled />
+                    <input class="input disabled" type="email" placeholder="email" [(ngModel)]="email" disabled />
                 </div>
                 <div class="text-box">
                     <div class="title"><i class="material-icons">lock</i> PASSWORD</div>
@@ -27,7 +27,7 @@
                     <div class="title"><i class="material-icons">lock</i> CONFIRM PASSWORD</div>
                     <input #confirmPassword class="input" type="password" placeholder="password" />
                 </div>
-                <span class="confirm-btn" (click)="confirm()">確認</span>
+                <span class="confirm-btn" (click)="update()">確認</span>
             </div>
         </div>
     </div>

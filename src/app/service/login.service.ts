@@ -61,4 +61,8 @@ export class LoginService {
     this.firebaseService.logOut();
     this.router.navigateByUrl('/' + RouterConstantsService.ROUTER_HOME);
   }
+
+  async updatePassword(password: string): Promise<boolean> {
+    return await this.firebaseService.updatePassword(password);
+  }
 }
