@@ -11,7 +11,11 @@ import { LoginService } from 'src/app/service/login.service';
   styleUrls: ['./re-auth.component.scss']
 })
 export class ReAuthComponent implements OnInit {
+  @ViewChild('firstPage', { static: false }) firstPageRef: ElementRef<HTMLInputElement>;
+  @ViewChild('secondPage', { static: false }) secondPageRef: ElementRef<HTMLInputElement>;
   @ViewChild('password', { static: false }) passwordRef: ElementRef<HTMLInputElement>;
+  @ViewChild('newPassword', { static: false }) newPasswordRef: ElementRef<HTMLInputElement>;
+  @ViewChild('confirmPassword', { static: false }) confirmPasswordRef: ElementRef<HTMLInputElement>;
   email: string;
 
   constructor(
@@ -37,7 +41,8 @@ export class ReAuthComponent implements OnInit {
     }
     const status = await this.loginService.reAuth(this.email, this.passwordRef.nativeElement.value);
     if (status) {
-      this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.reAuthComponentRef));
+      this.renderer.addClass(this.firstPageRef.nativeElement, 'moveToLeft');
+      this.renderer.addClass(this.secondPageRef.nativeElement, 'moveToLeft');
     }
   }
 }
