@@ -1,43 +1,47 @@
 @import '../../assets/css/special-property.scss';
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    height: height(layout);
+    display         : flex;
+    flex-wrap       : wrap;
+    justify-content : center;
+    align-items     : center;
+    height          : height(layout);
     background-color: #c0cebd;
-}
 
-.box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    height: 60%;
-    background-color: whitesmoke;
-    border-radius: 5px;
-}
-
-.pressBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #424242;
-    cursor: pointer;
-
-    span {
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-weight: 600;
+    @media screen and (max-width: rwdBoundary(small)) {
+        height: height(layout_small);
     }
 }
 
-.ratingStar{
-  background-size: 15px;
-  width: 15px;
+.box {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    width           : 50%;
+    height          : 60%;
+    background-color: whitesmoke;
+    border-radius   : 5px;
+}
+
+.pressBtn {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    width           : 100px;
+    height          : 100px;
+    border-radius   : 50%;
+    background-color: #424242;
+    cursor          : pointer;
+
+    span {
+        justify-content: center;
+        align-items    : center;
+        color          : white;
+        font-weight    : 600;
+    }
+}
+
+.ratingStar {
+    background-size: 15px;
+    width          : 15px;
 }

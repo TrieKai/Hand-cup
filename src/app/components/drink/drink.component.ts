@@ -17,6 +17,7 @@ export class DrinkComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.infoMessage = '今天飲料喝什麼?';
   }
 
   recommendDrinks() {

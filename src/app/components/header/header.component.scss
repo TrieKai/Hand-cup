@@ -7,6 +7,7 @@
 .toolBar-title {
     display    : flex;
     margin-left: 10px;
+    width      : 155px;
     height     : 32px;
     font-size  : 28px;
     cursor     : pointer;
@@ -19,6 +20,10 @@
 
 .example-spacer {
     width: calc(100% - 560px);
+
+    @media screen and (max-width: rwdBoundary(small)) {
+        width: calc(100% - 310px);
+    }
 }
 
 .search-container {
@@ -121,6 +126,7 @@ body {
     position  : fixed;
     left      : 0;
     width     : 250px;
+    height    : height(layoutBasic);
     margin-top: height(header);
     transform : translateX(-250px);
     transition: transform 250ms ease-in-out;
@@ -129,12 +135,15 @@ body {
 
     @media screen and (max-width: rwdBoundary(small)) {
         margin-top: height(header_small);
+        height    : height(layoutBasic_small);
     }
 }
 
 .sidebar-menu-inner {
     margin    : 0;
     padding   : 0;
+    max-height: 100%;
+    overflow-y: auto;
     border-top: 1px solid rgba(255, 255, 255, 0.10);
     cursor    : pointer;
 
