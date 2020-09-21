@@ -46,6 +46,7 @@ interface commonSharedData {
     userData: any
     loginComponentRef: any
     profileComponentRef: any
+    reAuthComponentRef: any
 }
 
 interface firebaseProfile {

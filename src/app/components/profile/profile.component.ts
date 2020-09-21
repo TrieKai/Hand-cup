@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { DomService } from 'src/app/util/dom.service';
@@ -11,6 +12,8 @@ import { MessageService } from 'src/app/service/message.service';
 import { CheckService } from 'src/app/service/check.service';
 
 import { ImageEditorComponent } from 'src/app/components/common/image-editor/image-editor.component';
+import { ReAuthComponent } from 'src/app/components/profile/re-auth/re-auth.component';
+
 
 @Component({
   selector: 'app-profile',
@@ -30,6 +33,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   imageLoaded: boolean;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private domService: DomService,
     private sharedService: SharedService,
     private cons: ConstantsService,
@@ -116,5 +120,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   closeDialog() {
     this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.profileComponentRef));
+  }
+
+  reAuth() {
+    if (!this.isLogin) {
+      this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先登入' });
+      return;
+    }
+    const componentRef = this.domService.createComponent(ReAuthComponent, this.cons.SHAREDDATA.reAuthComponentRef);
+    this.domService.attachComponent(componentRef, this.document.body);
   }
 }

@@ -11,10 +11,10 @@ import { LoginService } from 'src/app/service/login.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('loginEmail', { static: false }) loginEmail: ElementRef;
-  @ViewChild('loginPassword', { static: false }) loginPassword: ElementRef;
-  @ViewChild('signUpEmail', { static: false }) signUpEmail: ElementRef;
-  @ViewChild('signUpPassword', { static: false }) signUpPassword: ElementRef;
+  @ViewChild('loginEmail', { static: false }) loginEmailRef: ElementRef<HTMLInputElement>;
+  @ViewChild('loginPassword', { static: false }) loginPasswordRef: ElementRef<HTMLInputElement>;
+  @ViewChild('signUpEmail', { static: false }) signUpEmailRef: ElementRef<HTMLInputElement>;
+  @ViewChild('signUpPassword', { static: false }) signUpPasswordRef: ElementRef<HTMLInputElement>;
 
   constructor(
     private domService: DomService,
@@ -32,20 +32,20 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    const email = this.loginEmail.nativeElement.value;
-    const password = this.loginPassword.nativeElement.value;
+    const email = this.loginEmailRef.nativeElement.value;
+    const password = this.loginPasswordRef.nativeElement.value;
     console.log('Login: ', email, password)
 
-    this.renderer.removeClass(this.loginEmail.nativeElement, 'error');
-    this.renderer.removeClass(this.loginPassword.nativeElement, 'error');
+    this.renderer.removeClass(this.loginEmailRef.nativeElement, 'error');
+    this.renderer.removeClass(this.loginPasswordRef.nativeElement, 'error');
     await new Promise(resolve => {
       setTimeout(() => {
         if (email === '' || email === null || email === undefined) {
-          this.renderer.addClass(this.loginEmail.nativeElement, 'error');
+          this.renderer.addClass(this.loginEmailRef.nativeElement, 'error');
           return;
         }
         if (password === '' || password === null || password === undefined) {
-          this.renderer.addClass(this.loginPassword.nativeElement, 'error');
+          this.renderer.addClass(this.loginPasswordRef.nativeElement, 'error');
           return;
         }
         resolve();
@@ -62,20 +62,20 @@ export class LoginComponent implements OnInit {
   }
 
   async signUp() {
-    const email = this.signUpEmail.nativeElement.value;
-    const password = this.signUpPassword.nativeElement.value;
+    const email = this.signUpEmailRef.nativeElement.value;
+    const password = this.signUpPasswordRef.nativeElement.value;
     console.log('SignUp: ', email, password)
 
-    this.renderer.removeClass(this.signUpEmail.nativeElement, 'error');
-    this.renderer.removeClass(this.signUpPassword.nativeElement, 'error');
+    this.renderer.removeClass(this.signUpEmailRef.nativeElement, 'error');
+    this.renderer.removeClass(this.signUpPasswordRef.nativeElement, 'error');
     await new Promise(resolve => {
       setTimeout(() => {
         if (email === '' || email === null || email === undefined) {
-          this.renderer.addClass(this.signUpEmail.nativeElement, 'error');
+          this.renderer.addClass(this.signUpEmailRef.nativeElement, 'error');
           return;
         }
         if (password === '' || password === null || password === undefined) {
-          this.renderer.addClass(this.signUpPassword.nativeElement, 'error');
+          this.renderer.addClass(this.signUpPasswordRef.nativeElement, 'error');
           return;
         }
         resolve();
@@ -86,8 +86,8 @@ export class LoginComponent implements OnInit {
     const signUpResult = await this.loginService.signUp(email, password)
       .then((status) => {
         if (status) {
-          this.signUpEmail.nativeElement.value = '';
-          this.signUpPassword.nativeElement.value = '';
+          this.signUpEmailRef.nativeElement.value = '';
+          this.signUpPasswordRef.nativeElement.value = '';
         }
       });
     console.log('Sign up result: ', signUpResult)

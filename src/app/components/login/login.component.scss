@@ -265,7 +265,7 @@ input[type=radio] {
 
           @for $i from 1 through 6 {
             &:nth-child(#{$i}) {
-              transition-delay: 0.2s*$i
+              transition-delay: 0.2s*$i;
             }
           }
         }

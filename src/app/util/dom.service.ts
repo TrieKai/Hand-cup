@@ -1,7 +1,6 @@
 import { Injectable, Injector, ComponentFactoryResolver, EmbeddedViewRef, ApplicationRef, ComponentRef } from '@angular/core';
 
 import { SharedService } from 'src/app/shared/shared.service';
-import { ConstantsService } from 'src/app/util/constants/constants.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,6 @@ export class DomService {
     private appRef: ApplicationRef,
     private injector: Injector,
     private sharedService: SharedService,
-    private cons: ConstantsService,
   ) { }
 
   createComponent(component: any, name: string, componentProps?: object) {

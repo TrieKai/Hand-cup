@@ -26,6 +26,17 @@ export class LoginService {
     return this.firebaseService.userLoggedIn;
   }
 
+  async login(email: string, password: string): Promise<boolean> {
+    return await this.firebaseService.login(email, password)
+      .then((status) => {
+        const user = this.firebaseService.getUserData();
+        if (user && !user.emailVerified) {
+          this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '警告', content: '請去註冊信箱完成驗證!' });
+        }
+        return status;
+      });
+  }
+
   async signUp(email: string, password: string): Promise<boolean> {
     return await this.firebaseService.signUp(email, password);
   }
@@ -38,15 +49,8 @@ export class LoginService {
     return await this.firebaseService.signUpWithFacebook();
   }
 
-  async login(email: string, password: string): Promise<boolean> {
-    return await this.firebaseService.login(email, password)
-      .then((status) => {
-        const user = this.firebaseService.getUserData();
-        if (user && !user.emailVerified) {
-          this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '警告', content: '請去註冊信箱完成驗證!' });
-        }
-        return status;
-      });
+  async reAuth(email: string, password: string): Promise<boolean> {
+    return await this.firebaseService.reAuth(email, password);
   }
 
   getUserData() {
@@ -56,5 +60,9 @@ export class LoginService {
   logOut() {
     this.firebaseService.logOut();
     this.router.navigateByUrl('/' + RouterConstantsService.ROUTER_HOME);
+  }
+
+  async updatePassword(password: string): Promise<boolean> {
+    return await this.firebaseService.updatePassword(password);
   }
 }
