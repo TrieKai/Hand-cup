@@ -10,6 +10,7 @@ import { MessageService } from 'src/app/service/message.service';
 })
 export class DrinkComponent implements OnInit {
   infoMessage: string;
+  show: boolean;
 
   constructor(
     private cons: ConstantsService,
@@ -22,5 +23,9 @@ export class DrinkComponent implements OnInit {
 
   recommendDrinks() {
     this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '注意!', content: '還沒做啦QQ' });
+  }
+
+  open() {
+    this.show = true;
   }
 }

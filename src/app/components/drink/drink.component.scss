@@ -45,3 +45,19 @@
     background-size: 15px;
     width          : 15px;
 }
+
+.aa {
+    position: relative;
+}
+
+.gg {
+    position     : absolute;
+    right        : 0;
+    padding      : 5px;
+    background   : #424242;
+    border-radius: 5px;
+
+    div {
+        padding: 5px 0;
+    }
+}
