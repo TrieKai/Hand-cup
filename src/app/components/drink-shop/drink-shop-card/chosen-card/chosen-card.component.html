@@ -22,6 +22,8 @@
           wrong_location
         </span>
       </div>
+      <img class="google-maps-icon" src="https://developers.google.com/maps/images/maps-icon.svg"
+        (click)="openUrl(chosenShopDetail.url)" title="開啟Google maps" alt="maps-icon" />
     </div>
   </div>
   <app-image-slider class="chosen-card-image" [images]="images" [links]="links" [customizeStyles]="imageSliderStyles">
