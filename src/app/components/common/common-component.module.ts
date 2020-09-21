@@ -19,6 +19,8 @@ import { StarFullComponent } from './icons/star-full/star-full.component';
 import { StarHalfComponent } from './icons/star-half/star-half.component';
 import { StarEmptyComponent } from './icons/star-empty/star-empty.component';
 import { PriceComponent } from './icons/price/price.component';
+import { GoogleComponent } from './icons/google/google.component';
+import { FacebookComponent } from './icons/facebook/facebook.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { PriceComponent } from './icons/price/price.component';
     StarHalfComponent,
     StarEmptyComponent,
     PriceComponent,
+    GoogleComponent,
+    FacebookComponent,
   ],
   imports: [
     CommonModule,
@@ -61,6 +65,8 @@ import { PriceComponent } from './icons/price/price.component';
     StarHalfComponent,
     StarEmptyComponent,
     PriceComponent,
+    GoogleComponent,
+    FacebookComponent,
   ]
 })
 export class CommonComponentModule { }
