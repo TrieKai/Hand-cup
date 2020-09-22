@@ -48,83 +48,95 @@
       position   : absolute;
       right      : 5px;
       color      : tomato;
+    }
 
-      .favorite:hover {
-        color : darkred;
-        cursor: pointer;
+    .info-box-mobile {
+      position: relative;
+
+      .drop-down {
+        position     : absolute;
+        right        : 0;
+        padding      : 5px;
+        background   : #ffffff;
+        border-radius: 5px;
+      }
+    }
+
+    .favorite:hover {
+      color : darkred;
+      cursor: pointer;
+    }
+
+    .unfavorite:hover {
+      cursor: pointer;
+    }
+
+    .have-been-box {
+      display: flex;
+      color  : #d62e1f;
+      cursor : pointer;
+
+      .not_listed_location {
+        display: none;
       }
 
-      .unfavorite:hover {
-        cursor: pointer;
+      .add_location_alt {
+        display: none;
       }
 
-      .have-been-box {
-        display: flex;
-        color  : #d62e1f;
-        cursor : pointer;
-
-        .not_listed_location {
-          display: none;
-        }
-
-        .add_location_alt {
-          display: none;
-        }
-
-        .wrong_location {
-          display: inline-block;
-        }
-      }
-
-      .never-been-box {
-        display: flex;
-        color  : #d62e1f;
-        cursor : pointer;
-
-        .not_listed_location {
-          display: inline-block;
-          color  : wheat;
-        }
-
-        .add_location_alt {
-          display: none;
-        }
-
-        .wrong_location {
-          display: none;
-        }
-      }
-
-      .never-been-box:hover>.add_location_alt {
+      .wrong_location {
         display: inline-block;
       }
+    }
 
-      .never-been-box:hover>.not_listed_location {
-        display: none;
-      }
+    .never-been-box {
+      display: flex;
+      color  : #d62e1f;
+      cursor : pointer;
 
-      .never-been-box:hover>.wrong_location {
-        display: none;
-      }
-
-      .have-been-box:hover>.add_location_alt {
-        display: none;
-      }
-
-      .have-been-box:hover>.not_listed_location {
-        display: none;
-      }
-
-      .have-been-box:hover>.wrong_location {
-        color  : darkred;
+      .not_listed_location {
         display: inline-block;
+        color  : wheat;
       }
 
-      .google-maps-icon {
-        width : 25px;
-        height: 25px;
-        cursor: pointer;
+      .add_location_alt {
+        display: none;
       }
+
+      .wrong_location {
+        display: none;
+      }
+    }
+
+    .never-been-box:hover>.add_location_alt {
+      display: inline-block;
+    }
+
+    .never-been-box:hover>.not_listed_location {
+      display: none;
+    }
+
+    .never-been-box:hover>.wrong_location {
+      display: none;
+    }
+
+    .have-been-box:hover>.add_location_alt {
+      display: none;
+    }
+
+    .have-been-box:hover>.not_listed_location {
+      display: none;
+    }
+
+    .have-been-box:hover>.wrong_location {
+      color  : darkred;
+      display: inline-block;
+    }
+
+    .google-maps-icon {
+      width : 25px;
+      height: 25px;
+      cursor: pointer;
     }
   }
 
