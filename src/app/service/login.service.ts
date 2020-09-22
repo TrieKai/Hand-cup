@@ -65,4 +65,8 @@ export class LoginService {
   async updatePassword(password: string): Promise<boolean> {
     return await this.firebaseService.updatePassword(password);
   }
+
+  async sendPasswordResetEmail(email: string): Promise<boolean> {
+    return await this.firebaseService.sendPasswordResetEmail(email);
+  }
 }

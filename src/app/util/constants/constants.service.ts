@@ -22,6 +22,7 @@ export class ConstantsService {
     loginComponentRef: 'loginComponentRef',
     profileComponentRef: 'profileComponentRef',
     reAuthComponentRef: 'reAuthComponentRef',
+    forgotPasswordComponentRef: 'forgotPasswordComponentRef',
   };
 
   // Message type

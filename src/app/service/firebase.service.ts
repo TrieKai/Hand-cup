@@ -158,4 +158,16 @@ export class FirebaseService {
         return false;
       });
   }
+
+  async sendPasswordResetEmail(email: string): Promise<boolean> {
+    return await this.afAuth.auth.sendPasswordResetEmail(email)
+      .then(() => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '通知', content: '重設密碼信件已發送!' });
+        return true;
+      })
+      .catch((error) => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '重設密碼信件發送失敗', content: error });
+        return false;
+      });
+  }
 }

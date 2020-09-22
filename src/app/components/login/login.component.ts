@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { LoginService } from 'src/app/service/login.service';
+
+import { ForgotPasswordComponent } from 'src/app/components/login/forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +20,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('signUpPassword', { static: false }) signUpPasswordRef: ElementRef<HTMLInputElement>;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private domService: DomService,
     private sharedService: SharedService,
     private cons: ConstantsService,
@@ -109,5 +113,10 @@ export class LoginComponent implements OnInit {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
         }
       });
+  }
+
+  async forgotPassword() {
+    const componentRef = this.domService.createComponent(ForgotPasswordComponent, this.cons.SHAREDDATA.forgotPasswordComponentRef);
+    this.domService.attachComponent(componentRef, this.document.body);
   }
 }

@@ -13,6 +13,7 @@ export class SharedService {
     loginComponentRef: null,
     profileComponentRef: null,
     reAuthComponentRef: null,
+    forgotPasswordComponentRef: null,
   };
 
   constructor() { }

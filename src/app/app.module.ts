@@ -61,6 +61,7 @@ import { ForgotPasswordComponent } from './components/login/forgot-password/forg
         LoginComponent,
         ProfileComponent,
         ReAuthComponent,
+        ForgotPasswordComponent,
     ],
 })
 export class AppModule { }

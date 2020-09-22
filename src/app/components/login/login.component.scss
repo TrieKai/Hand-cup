@@ -78,10 +78,17 @@
     }
 
     .input {
-      margin-top      : 20px;
+      margin-top      : 15px;
       transition      : all 1s;
       opacity         : 0;
       transition-delay: 0s;
+    }
+
+    .forgot {
+      margin    : 5px 0;
+      text-align: right;
+      color     : #fff;
+      cursor    : pointer;
     }
 
     .enter-btn {
