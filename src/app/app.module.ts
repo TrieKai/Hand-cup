@@ -24,6 +24,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ChosenCardComponent } from './components/drink-shop/drink-shop-card/chosen-card/chosen-card.component';
 import { PreviewCardComponent } from './components/drink-shop/drink-shop-card/preview-card/preview-card.component';
 import { ReAuthComponent } from './components/profile/re-auth/re-auth.component';
+import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import { ReAuthComponent } from './components/profile/re-auth/re-auth.component'
         ChosenCardComponent,
         PreviewCardComponent,
         ReAuthComponent,
+        ForgotPasswordComponent,
     ],
     imports: [
         BrowserModule,
