@@ -2,6 +2,7 @@
 
 .card-container {
   display           : flex;
+  display           : -webkit-flex;
   flex-wrap         : wrap;
   justify-content   : center;
   margin            : auto;
@@ -98,6 +99,7 @@
 
 .card-stats .stat {
   display        : flex;
+  display        : -webkit-flex;
   align-items    : center;
   justify-content: center;
   flex-direction : column;
@@ -106,6 +108,7 @@
 
   .stat-box {
     display         : flex;
+    display         : -webkit-flex;
     flex-direction  : column;
     justify-content : center;
     width           : 60px;

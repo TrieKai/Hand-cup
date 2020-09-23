@@ -2,6 +2,7 @@
 
 .review-title {
   display    : flex;
+  display    : -webkit-flex;
   flex-wrap  : wrap;
   align-items: center;
   margin     : 5px 0;
@@ -9,6 +10,7 @@
 
   .author-box {
     display    : flex;
+    display    : -webkit-flex;
     align-items: center;
     width      : calc(100% - 160px); // Minus rating-box
     cursor     : pointer;
@@ -43,6 +45,7 @@
 
   .rating-box {
     display    : flex;
+    display    : -webkit-flex;
     align-items: center;
     margin-left: 5px;
 

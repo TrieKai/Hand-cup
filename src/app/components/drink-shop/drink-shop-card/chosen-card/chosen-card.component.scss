@@ -30,6 +30,7 @@
   .chosen-card-title {
     grid-area              : title;
     display                : flex;
+    display                : -webkit-flex;
     justify-content        : center;
     align-items            : center;
     justify-content        : center;
@@ -44,6 +45,7 @@
 
     .info-box {
       display    : flex;
+      display    : -webkit-flex;
       align-items: center;
       position   : absolute;
       right      : 5px;
@@ -73,6 +75,7 @@
 
     .have-been-box {
       display: flex;
+      display: -webkit-flex;
       color  : #d62e1f;
       cursor : pointer;
 
@@ -91,6 +94,7 @@
 
     .never-been-box {
       display: flex;
+      display: -webkit-flex;
       color  : #d62e1f;
       cursor : pointer;
 
@@ -165,6 +169,7 @@
 
     .content-box {
       display       : flex;
+      display       : -webkit-flex;
       flex-direction: column;
       margin-left   : 20px;
       height        : 100%;
@@ -215,12 +220,14 @@
 
           .review-title {
             display    : flex;
+            display    : -webkit-flex;
             align-items: center;
             margin     : 5px 0;
             flex-wrap  : wrap;
 
             .author-box {
               display    : flex;
+              display    : -webkit-flex;
               align-items: center;
               width      : calc(100% - 95px - 90px); // Minus rating-box & time-box
               cursor     : pointer;
@@ -249,6 +256,7 @@
 
             .rating-box {
               display    : flex;
+              display    : -webkit-flex;
               align-items: center;
               margin-left: 5px;
               width      : 90px;

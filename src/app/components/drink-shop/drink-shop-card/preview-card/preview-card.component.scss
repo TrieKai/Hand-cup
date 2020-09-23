@@ -32,6 +32,7 @@
   .chosen-card-title {
     grid-area              : title;
     display                : flex;
+    display                : -webkit-flex;
     justify-content        : center;
     align-items            : center;
     justify-content        : center;
@@ -90,12 +91,14 @@
 
       .review-title {
         display    : flex;
+        display    : -webkit-flex;
         align-items: center;
         margin     : 5px 0;
         flex-wrap  : wrap;
 
         .author-box {
           display    : flex;
+          display    : -webkit-flex;
           align-items: center;
           width      : calc(100% - 95px - 90px); // Minus rating-box & time-box
 
@@ -123,6 +126,7 @@
 
         .rating-box {
           display    : flex;
+          display    : -webkit-flex;
           align-items: center;
           margin-left: 5px;
           width      : 90px;

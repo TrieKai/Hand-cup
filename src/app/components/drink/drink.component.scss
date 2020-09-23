@@ -2,6 +2,7 @@
 
 .container {
     display         : flex;
+    display         : -webkit-flex;
     flex-wrap       : wrap;
     justify-content : center;
     align-items     : center;
@@ -15,6 +16,7 @@
 
 .box {
     display         : flex;
+    display         : -webkit-flex;
     justify-content : center;
     align-items     : center;
     width           : 50%;
@@ -25,6 +27,7 @@
 
 .pressBtn {
     display         : flex;
+    display         : -webkit-flex;
     justify-content : center;
     align-items     : center;
     width           : 100px;

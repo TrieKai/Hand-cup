@@ -25,6 +25,7 @@
 
   .login-wrapper {
     display        : flex;
+    display        : -webkit-flex;
     justify-content: center;
     align-items    : center;
     width          : 100%;
@@ -34,6 +35,7 @@
 
 .login-box {
   display          : flex;
+  display          : -webkit-flex;
   flex-direction   : column;
   min-height       : 300px;
   max-width        : 250px;
@@ -58,6 +60,7 @@
   position   : relative;
   transition : all 0.4s;
   display    : flex;
+  display    : -webkit-flex;
 
   .page {
     min-width  : 100%;
@@ -132,6 +135,7 @@
 
     .third-login-box {
       display      : flex;
+      display      : -webkit-flex;
       margin-top   : 10px;
       align-items  : center;
       width        : 100%;
@@ -230,6 +234,7 @@
   max-height: 50px;
   height    : 50px;
   display   : flex;
+  display   : -webkit-flex;
   background: #FFF;
 
   .tab {
