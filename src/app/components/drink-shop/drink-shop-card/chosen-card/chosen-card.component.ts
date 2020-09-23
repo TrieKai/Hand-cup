@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DialogComponent } from 'src/app/components/common/dialog/dialog.component';
 import { LocalstorageService } from 'src/app/util/localstorage.service';
-// import { CommonService } from 'src/app/service/common.service';
+import { CommonService } from 'src/app/service/common.service';
 
 @Component({
   selector: 'app-chosen-card',
@@ -13,7 +13,7 @@ import { LocalstorageService } from 'src/app/util/localstorage.service';
 })
 export class ChosenCardComponent implements OnInit {
   @Input() chosenShop: drinkShopResults;
-  // isMobile: boolean;
+  isMobile: boolean;
   // showDropDown: boolean;
   dialogMaxWidth: number;
   dialogMinWidth: number;
@@ -47,7 +47,7 @@ export class ChosenCardComponent implements OnInit {
     private cons: ConstantsService,
     private dialog: MatDialog,
     private localStorageService: LocalstorageService,
-    // private common: CommonService,
+    private common: CommonService,
   ) { }
 
   @HostListener('window:resize', [])
@@ -76,7 +76,7 @@ export class ChosenCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.isMobile = this.common.detectMobile();
+    this.isMobile = this.common.detectMobile();
     this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
   }
 
