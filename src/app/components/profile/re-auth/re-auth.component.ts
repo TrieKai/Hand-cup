@@ -38,7 +38,7 @@ export class ReAuthComponent implements OnInit {
 
   async confirm() {
     if (this.passwordRef.nativeElement.value === '' || this.passwordRef.nativeElement.value === null || this.passwordRef.nativeElement.value === undefined) {
-      this.renderer.addClass(this.passwordRef.nativeElement, 'red');
+      this.renderer.addClass(this.passwordRef.nativeElement, 'error');
       return;
     }
     const status = await this.loginService.reAuth(this.email, this.passwordRef.nativeElement.value);
@@ -55,8 +55,8 @@ export class ReAuthComponent implements OnInit {
       this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
       this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.reAuthComponentRef));
     } else {
-      this.renderer.addClass(this.newPasswordRef.nativeElement, 'red');
-      this.renderer.addClass(this.confirmPasswordRef.nativeElement, 'red');
+      this.renderer.addClass(this.newPasswordRef.nativeElement, 'error');
+      this.renderer.addClass(this.confirmPasswordRef.nativeElement, 'error');
       this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '密碼不相符', content: '' });
     }
   }

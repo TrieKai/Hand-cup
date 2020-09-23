@@ -249,7 +249,6 @@
 }
 
 .error {
-  // outline-color    : red;
   animation        : shake .5s linear;
   -webkit-animation: shake .5s linear;
 }
@@ -278,7 +277,7 @@ input[type=radio] {
           transform : translateX(0%);
           transition: opacity 0.5s, transform 0.5s;
 
-          @for $i from 1 through 6 {
+          @for $i from 1 through 7 {
             &:nth-child(#{$i}) {
               transition-delay: 0.2s*$i;
             }
