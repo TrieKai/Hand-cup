@@ -9,7 +9,7 @@
     display    : -webkit-flex;
     margin-left: 10px;
     width      : auto;
-    height     : 32px;
+    height     : auto;
     font-size  : 28px;
     cursor     : pointer;
 }
@@ -39,15 +39,13 @@
 }
 
 .search-container input {
-    width : 100%;
-    height: 80%;
-
+    width        : 100%;
+    height       : 80%;
     background   : #fcfcfc;
     border       : 1px solid #aaa;
     border-radius: 5px;
     box-shadow   : 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
-
-    text-indent: 15px;
+    text-indent  : 15px;
 }
 
 .search-button {
@@ -227,11 +225,11 @@ body {
 .open>.diagonal.part-1 {
     transition: all 0.3s;
     transform : rotate(135deg);
-    margin-top: 4px;
+    margin-top: 3.5px;
 }
 
 .open>.diagonal.part-2 {
     transition: all 0.3s;
     transform : rotate(-135deg);
-    margin-top: -20px;
+    margin-top: -22px;
 }
