@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   async login() {
     const email = this.loginEmailRef.nativeElement.value;
     const password = this.loginPasswordRef.nativeElement.value;
-    console.log('Login: ', email, password)
+    // console.log('Login: ', email, password)
 
     this.renderer.removeClass(this.loginEmailRef.nativeElement, 'error');
     this.renderer.removeClass(this.loginPasswordRef.nativeElement, 'error');
