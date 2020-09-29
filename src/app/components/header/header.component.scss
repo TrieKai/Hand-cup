@@ -8,8 +8,8 @@
     display    : flex;
     display    : -webkit-flex;
     margin-left: 10px;
-    width      : 155px;
-    height     : 32px;
+    width      : auto;
+    height     : auto;
     font-size  : 28px;
     cursor     : pointer;
 }
@@ -19,41 +19,33 @@
     height: 48px;
 }
 
-.example-spacer {
-    width: calc(100% - 560px);
-
-    @media screen and (max-width: rwdBoundary(small)) {
-        width: calc(100% - 310px);
-    }
-}
-
 .search-container {
+    position       : fixed;
+    right          : 40px;
     display        : flex;
     display        : -webkit-flex;
     justify-content: center;
     align-items    : center;
-    position       : relative;
     margin-right   : 15px;
     width          : 250px;
     height         : 40px;
     order          : 1;
 
     @media screen and (max-width: rwdBoundary(small)) {
-        width: calc(100% - 70px);
-        order: 2;
+        position: unset;
+        width   : calc(100% - 70px);
+        order   : 2;
     }
 }
 
 .search-container input {
-    width : 100%;
-    height: 80%;
-
+    width        : 100%;
+    height       : 80%;
     background   : #fcfcfc;
     border       : 1px solid #aaa;
     border-radius: 5px;
     box-shadow   : 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
-
-    text-indent: 15px;
+    text-indent  : 15px;
 }
 
 .search-button {
@@ -64,6 +56,8 @@
 }
 
 .account-button {
+    position : fixed;
+    right    : 10px;
     display  : flex;
     display  : -webkit-flex;
     font-size: 30px;
@@ -71,6 +65,7 @@
     order    : 2;
 
     @media screen and (max-width: rwdBoundary(small)) {
+        top  : 10px;
         order: 1;
     }
 
@@ -178,18 +173,21 @@ body {
     transform: translateX(0);
 }
 
-.sidebarIconToggle {
-    transition: all 0.3s;
-    box-sizing: border-box;
-    position  : fixed;
-    width     : 100%;
-    height    : 100%;
-    top       : 22px;
-    left      : 15px;
-    width     : 22px;
-    height    : 22px;
-    cursor    : pointer;
-    z-index   : zIndex(header);
+.sidebar-icon-toggle {
+    position       : fixed;
+    display        : flex;
+    display        : -webkit-flex;
+    flex-direction : column;
+    justify-content: space-evenly;
+    transition     : all 0.3s;
+    width          : 100%;
+    height         : 100%;
+    top            : 22px;
+    left           : 15px;
+    width          : 22px;
+    height         : 22px;
+    cursor         : pointer;
+    z-index        : zIndex(header);
 
     @media screen and (max-width: rwdBoundary(small)) {
         top: 34px;
@@ -198,7 +196,6 @@ body {
 
 .hamburger {
     transition      : all 0.3s;
-    box-sizing      : border-box;
     position        : absolute;
     width           : 100%;
     height          : 3px;
@@ -207,43 +204,32 @@ body {
 
 .horizontal {
     transition: all 0.3s;
-    box-sizing: border-box;
     position  : relative;
-    float     : left;
-    margin-top: 3px;
 }
 
 .diagonal.part-1 {
     position  : relative;
     transition: all 0.3s;
-    box-sizing: border-box;
-    float     : left;
 }
 
 .diagonal.part-2 {
     transition: all 0.3s;
-    box-sizing: border-box;
     position  : relative;
-    float     : left;
-    margin-top: 3px;
 }
 
 .open>.horizontal {
     transition: all 0.3s;
-    box-sizing: border-box;
     opacity   : 0;
 }
 
 .open>.diagonal.part-1 {
     transition: all 0.3s;
-    box-sizing: border-box;
     transform : rotate(135deg);
-    margin-top: 8px;
+    margin-top: 3.5px;
 }
 
 .open>.diagonal.part-2 {
     transition: all 0.3s;
-    box-sizing: border-box;
     transform : rotate(-135deg);
-    margin-top: -9px;
+    margin-top: -22px;
 }
