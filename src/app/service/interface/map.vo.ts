@@ -1,9 +1,9 @@
-interface NearbySearchQueryParam {
+interface NearbySearchReq {
     latitude: number
     longitude: number
     distance: number
 }
 
-interface PlaceDetailQueryParm {
+interface PlaceDetailReq {
     placeId: string
 }

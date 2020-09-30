@@ -23,7 +23,7 @@ export class MapService {
 
     async getNearByLocations(coordinate: Coordinate, distance: number): Promise<any> {
         const header: HttpHeaders = this.http.getHeader();
-        const body: NearbySearchQueryParam = {
+        const body: NearbySearchReq = {
             latitude: coordinate.latitude,
             longitude: coordinate.longitude,
             distance: distance

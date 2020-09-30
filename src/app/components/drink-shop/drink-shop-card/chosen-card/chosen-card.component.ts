@@ -5,6 +5,7 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DialogComponent } from 'src/app/components/common/dialog/dialog.component';
 import { LocalstorageService } from 'src/app/util/localstorage.service';
 import { CommonService } from 'src/app/service/common.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chosen-card',
@@ -36,8 +37,7 @@ export class ChosenCardComponent implements OnInit {
     this.images = []; // Clear
     this.links = []; // Clear
     data.photos.map((photo) => {
-      const key = 'AIzaSyAx_vyZzJm_jPd8opBeiOlQqslgJQ3fKus';
-      const photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=' + photo.width + '&photoreference=' + photo.photo_reference + '&key=' + key + '';
+      const photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=' + photo.width + '&photoreference=' + photo.photo_reference + '&key=' + environment.photoAPIKey + '';
       this.images.push(photoUrl);
       this.links.push(photo.html_attributions[0]);
     });

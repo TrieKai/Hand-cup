@@ -1,3 +1,10 @@
+interface env {
+    production: boolean
+    firebase: object
+    url: string
+    photoAPIKey: string
+}
+
 interface Coordinate {
     latitude: number | null
     longitude: number | null
