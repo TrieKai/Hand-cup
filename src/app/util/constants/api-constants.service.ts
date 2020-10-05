@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 export class ApiConstantsService {
   // common
   public readonly LOGIN = environment.url + '/login';
+  public readonly SIGNUP = environment.url + '/signup';
   public readonly UPLOAD_FILE = environment.url + '/upload';
 
   // map

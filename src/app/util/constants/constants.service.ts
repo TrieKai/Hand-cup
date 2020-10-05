@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ConstantsService {
-
+  // Google icon preUrl
   public readonly GOOGLE_ICON_BASE_URL = 'http://maps.gstatic.com/consumer/images/icons/';
 
   // Status
@@ -38,6 +38,9 @@ export class ConstantsService {
     drinks: '今天飲料喝甚麼?',
     drinkShops: '今天飲料喝哪家?'
   }
+
+  // Token
+  public readonly TOKEN = 'token';
 
   // Local storage
   public readonly LOCAL_STORAGE_TYPE = {

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
@@ -6,6 +7,10 @@ import { RouterConstantsService } from '../util/constants/router-constants.servi
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { MessageService } from 'src/app/service/message.service';
+import { ApiConstantsService } from 'src/app/util/constants/api-constants.service';
+import { ApiService } from 'src/app/util/api.service';
+import { GlobalService as global } from 'src/app/service/global.service';
+import { CookieService } from 'src/app/util/cookie.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +23,9 @@ export class LoginService {
     private firebaseService: FirebaseService,
     private cons: ConstantsService,
     private message: MessageService,
+    private apiCons: ApiConstantsService,
+    private api: ApiService,
+    private cookie: CookieService,
   ) {
     firebaseService.checkAuthStatus();
   }
@@ -26,7 +34,7 @@ export class LoginService {
     return this.firebaseService.userLoggedIn;
   }
 
-  async login(email: string, password: string): Promise<boolean> {
+  async loginFireBase(email: string, password: string): Promise<boolean> {
     return await this.firebaseService.login(email, password)
       .then((status) => {
         const user = this.firebaseService.getUserData();
@@ -37,8 +45,33 @@ export class LoginService {
       });
   }
 
-  async signUp(email: string, password: string): Promise<boolean> {
+  async login(password: string) {
+    const user = this.firebaseService.getUserData();
+    const header: HttpHeaders = this.api.getHeader();
+    const body: LoginReq = {
+      userId: user.uid,
+      email: user.email,
+      password: password
+    };
+    const resp = await this.api.post(this.apiCons.LOGIN, body, header);
+    if (isDevMode() || global.showLog) { console.log('login:', resp); }
+    this.cookie.setCookie(this.cons.TOKEN, resp);
+  }
+
+  async signUpFireBase(email: string, password: string): Promise<boolean> {
     return await this.firebaseService.signUp(email, password);
+  }
+
+  async signUp(password: string) {
+    const user = this.firebaseService.getUserData();
+    const header: HttpHeaders = this.api.getHeader();
+    const body: SignUpReq = {
+      userId: user.uid,
+      email: user.email,
+      password: password
+    };
+    const resp = await this.api.post(this.apiCons.SIGNUP, body, header);
+    if (isDevMode() || global.showLog) { console.log('signUp:', resp); }
   }
 
   async signUpWithGoogle(): Promise<boolean> {
@@ -59,6 +92,7 @@ export class LoginService {
 
   logOut() {
     this.firebaseService.logOut();
+    this.cookie.deleteCookie(this.cons.TOKEN);
     this.router.navigateByUrl('/' + RouterConstantsService.ROUTER_HOME);
   }
 

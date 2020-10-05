@@ -57,10 +57,11 @@ export class LoginComponent implements OnInit {
     });
     // TODO: Better way to replace setTimeout
 
-    await this.loginService.login(email, password)
-      .then((status) => {
+    await this.loginService.loginFireBase(email, password)
+      .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+          await this.loginService.login(password);
         }
       });
   }
@@ -87,30 +88,39 @@ export class LoginComponent implements OnInit {
     });
     // TODO: Better way to replace setTimeout
 
-    const signUpResult = await this.loginService.signUp(email, password)
-      .then((status) => {
+    await this.loginService.signUpFireBase(email, password)
+      .then(async (status) => {
         if (status) {
           this.signUpEmailRef.nativeElement.value = '';
           this.signUpPasswordRef.nativeElement.value = '';
+          await this.loginService.signUp(password);
+          await this.loginService.login(password);
         }
       });
-    console.log('Sign up result: ', signUpResult)
   }
 
   async signUpWithGoogle() {
+    const password = this.signUpPasswordRef.nativeElement.value;
+
     await this.loginService.signUpWithGoogle()
-      .then((status) => {
+      .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+          await this.loginService.signUp(password);
+          await this.loginService.login(password);
         }
       });
   }
 
   async signUpWithFacebook() {
+    const password = this.signUpPasswordRef.nativeElement.value;
+
     await this.loginService.signUpWithFacebook()
-      .then((status) => {
+      .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+          await this.loginService.signUp(password);
+          await this.loginService.login(password);
         }
       });
   }
