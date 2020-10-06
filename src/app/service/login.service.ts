@@ -97,8 +97,20 @@ export class LoginService {
     this.router.navigateByUrl('/' + RouterConstantsService.ROUTER_HOME);
   }
 
-  async updatePassword(password: string): Promise<boolean> {
+  async updatePasswordFireBase(password: string): Promise<boolean> {
     return await this.firebaseService.updatePassword(password);
+  }
+
+  async updatePassword(password: string) {
+    const user = this.firebaseService.getUserData();
+    const url = this.apiCons.UPDATE + '/' + user.uid;
+    const body: PasswordUpdateReq = {
+      password: password
+    };
+    const token = this.cookie.getCookie(this.cons.TOKEN);
+    const header: HttpHeaders = this.api.getHeader(token);
+    const resp = await this.api.put(url, body, header);
+    if (isDevMode() || global.showLog) { console.log('password update:', resp); }
   }
 
   async sendPasswordResetEmail(email: string): Promise<boolean> {

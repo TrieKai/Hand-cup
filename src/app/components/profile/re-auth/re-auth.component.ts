@@ -49,9 +49,14 @@ export class ReAuthComponent implements OnInit {
   }
 
   async update() {
-    if (this.newPasswordRef.nativeElement.value === this.confirmPasswordRef.nativeElement.value) {
+    const confirmPassword = this.confirmPasswordRef.nativeElement.value;
+    const newPassword = this.newPasswordRef.nativeElement.value;
+    if (newPassword === confirmPassword) {
       this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
-      await this.loginService.updatePassword(this.confirmPasswordRef.nativeElement.value);
+      await this.loginService.updatePasswordFireBase(confirmPassword)
+        .then(() => {
+          this.loginService.updatePassword(confirmPassword);
+        });
       this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
       this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.reAuthComponentRef));
     } else {

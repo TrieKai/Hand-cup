@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
       .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+          // await this.loginService.updatePassword(password); // TODO: Forgot password email by normal process
           await this.loginService.login(false, password);
         }
       });
