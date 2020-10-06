@@ -13,6 +13,9 @@ interface SignUpReq {
 
 interface UserUpdateReq {
   name: string
-  email: string
+  photoUrl?: string
+}
+
+interface PasswordUpdateReq {
   password: string
 }

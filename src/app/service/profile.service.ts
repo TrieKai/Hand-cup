@@ -1,8 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
+import { ApiConstantsService } from 'src/app/util/constants/api-constants.service';
+import { ApiService } from 'src/app/util/api.service';
+import { CookieService } from 'src/app/util/cookie.service';
+import { GlobalService as global } from 'src/app/service/global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +18,16 @@ export class ProfileService {
     private firebaseService: FirebaseService,
     private sharedService: SharedService,
     private cons: ConstantsService,
+    private apiCons: ApiConstantsService,
+    private api: ApiService,
+    private cookie: CookieService,
   ) { }
 
   getUserData(): firebase.User {
     return this.firebaseService.getUserData();
   }
 
-  async updateProfile(userData: firebaseProfile) {
+  async updateProfileFireBase(userData: firebaseProfile) {
     await this.firebaseService.checkTokenExpired()
       .then(async (tokenExpired) => {
         console.log('tokenExpired: ', tokenExpired)
@@ -32,5 +40,17 @@ export class ProfileService {
           }
         }
       });
+  }
+
+  async updateProfile(name: string) {
+    const user = this.firebaseService.getUserData();
+    const url = this.apiCons.UPDATE + '/' + user.uid;
+    const body: UserUpdateReq = {
+      name: name
+    };
+    const token = this.cookie.getCookie(this.cons.TOKEN);
+    const header: HttpHeaders = this.api.getHeader(token);
+    const resp = await this.api.put(url, body, header);
+    if (isDevMode() || global.showLog) { console.log('user update:', resp); }
   }
 }

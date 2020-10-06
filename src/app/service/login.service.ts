@@ -45,13 +45,13 @@ export class LoginService {
       });
   }
 
-  async login(password: string) {
+  async login(thirdParty: boolean, password?: string) {
     const user = this.firebaseService.getUserData();
     const header: HttpHeaders = this.api.getHeader();
     const body: LoginReq = {
       userId: user.uid,
       email: user.email,
-      password: password
+      password: thirdParty ? user.uid : password // 如果是第三方登入的話就沒有密碼, 以 uid 來代替密碼
     };
     const resp = await this.api.post(this.apiCons.LOGIN, body, header);
     if (isDevMode() || global.showLog) { console.log('login:', resp); }
@@ -62,13 +62,14 @@ export class LoginService {
     return await this.firebaseService.signUp(email, password);
   }
 
-  async signUp(password: string) {
+  async signUp(thirdParty: boolean, password?: string) {
     const user = this.firebaseService.getUserData();
     const header: HttpHeaders = this.api.getHeader();
     const body: SignUpReq = {
       userId: user.uid,
+      name: thirdParty ? user.displayName : null,
       email: user.email,
-      password: password
+      password: thirdParty ? user.uid : password // 如果是第三方登入的話就沒有密碼, 以 uid 來代替密碼
     };
     const resp = await this.api.post(this.apiCons.SIGNUP, body, header);
     if (isDevMode() || global.showLog) { console.log('signUp:', resp); }

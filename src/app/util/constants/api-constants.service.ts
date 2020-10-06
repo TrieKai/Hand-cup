@@ -9,6 +9,7 @@ export class ApiConstantsService {
   // common
   public readonly LOGIN = environment.url + '/login';
   public readonly SIGNUP = environment.url + '/signup';
+  public readonly UPDATE = environment.url + '/users';
   public readonly UPLOAD_FILE = environment.url + '/upload';
 
   // map

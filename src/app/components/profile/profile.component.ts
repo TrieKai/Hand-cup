@@ -111,8 +111,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
       photoURL: this.photoURL
     }
     this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
-    await this.profileService.updateProfile(userData)
-      .then(() => {
+    await this.profileService.updateProfileFireBase(userData)
+      .then(async () => {
+        await this.profileService.updateProfile(this.name);
         this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.profileComponentRef));
       });
     this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);

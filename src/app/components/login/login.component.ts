@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
       .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
-          await this.loginService.login(password);
+          await this.loginService.login(false, password);
         }
       });
   }
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
   async signUp() {
     const email = this.signUpEmailRef.nativeElement.value;
     const password = this.signUpPasswordRef.nativeElement.value;
-    console.log('SignUp: ', email, password)
+    // console.log('SignUp: ', email, password)
 
     this.renderer.removeClass(this.signUpEmailRef.nativeElement, 'error');
     this.renderer.removeClass(this.signUpPasswordRef.nativeElement, 'error');
@@ -93,34 +93,30 @@ export class LoginComponent implements OnInit {
         if (status) {
           this.signUpEmailRef.nativeElement.value = '';
           this.signUpPasswordRef.nativeElement.value = '';
-          await this.loginService.signUp(password);
-          await this.loginService.login(password);
+          await this.loginService.signUp(false, password);
+          await this.loginService.login(false, password);
         }
       });
   }
 
   async signUpWithGoogle() {
-    const password = this.signUpPasswordRef.nativeElement.value;
-
     await this.loginService.signUpWithGoogle()
       .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
-          await this.loginService.signUp(password);
-          await this.loginService.login(password);
+          await this.loginService.signUp(true);
+          await this.loginService.login(true);
         }
       });
   }
 
   async signUpWithFacebook() {
-    const password = this.signUpPasswordRef.nativeElement.value;
-
     await this.loginService.signUpWithFacebook()
       .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
-          await this.loginService.signUp(password);
-          await this.loginService.login(password);
+          await this.loginService.signUp(true);
+          await this.loginService.login(true);
         }
       });
   }
