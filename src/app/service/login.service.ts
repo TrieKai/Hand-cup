@@ -116,4 +116,15 @@ export class LoginService {
   async sendPasswordResetEmail(email: string): Promise<boolean> {
     return await this.firebaseService.sendPasswordResetEmail(email);
   }
+
+  async resetPassword(email: string, key: string) {
+    const url = this.apiCons.RESET;
+    const body = {
+      email: email,
+      key: key
+    };
+    const header: HttpHeaders = this.api.getHeader();
+    const resp = await this.api.post(url, body, header);
+    if (isDevMode() || global.showLog) { console.log('password reset:', resp); }
+  }
 }
