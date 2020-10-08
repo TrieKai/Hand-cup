@@ -38,6 +38,7 @@ export class ConstantsService {
     drinks: '今天飲料喝甚麼?',
     drinkShops: '今天飲料喝哪家?',
     emailVerify: '信箱驗證',
+    resetPassword: '重設密碼',
   }
 
   // Token

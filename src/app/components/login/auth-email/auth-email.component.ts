@@ -19,6 +19,8 @@ export class AuthEmailComponent implements OnInit {
   oobCode: string;
   APIKey: string;
   email: string;
+  verifyEmail: boolean;
+  resetPassword: boolean;
   error: boolean;
   errorMessage: string;
 
@@ -30,7 +32,6 @@ export class AuthEmailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.infoMessage = this.cons.INFO_MESSAGE.emailVerify;
     this.route.queryParams.subscribe(params => {
       console.log(params)
       this.mode = params.mode;
@@ -40,33 +41,44 @@ export class AuthEmailComponent implements OnInit {
 
     switch (this.mode) {
       case 'verifyEmail':
-        this.verifyEmail();
+        this.verifyEmail = true;
+        this.resetPassword = false;
+        this.handleVerifyEmail();
         break;
       case 'resetPassword':
-        this.resetPassword();
+        this.resetPassword = true;
+        this.verifyEmail = false;
+        this.handleResetPassword();
         break;
       case 'recoverEmail':
         break;
     }
   }
 
-  verifyEmail() {
-
-  }
-
-  async resetPassword() {
-    await firebase.auth().verifyPasswordResetCode(this.oobCode)
+  async handleVerifyEmail() {
+    this.infoMessage = this.cons.INFO_MESSAGE.emailVerify;
+    await firebase.auth().applyActionCode(this.oobCode)
+      .then(() => {
+        this.error = false;
+      })
       .catch((error) => {
-        console.log(error)
         this.error = true;
         this.errorMessage = error.message;
-      })
+      });
+  }
+
+  async handleResetPassword() {
+    this.infoMessage = this.cons.INFO_MESSAGE.resetPassword;
+    await firebase.auth().verifyPasswordResetCode(this.oobCode)
       .then((email) => {
         if (email) {
-          console.log(email)
           this.error = false;
           this.email = email ? email : '';
         }
+      })
+      .catch((error) => {
+        this.error = true;
+        this.errorMessage = error.message;
       });
   }
 

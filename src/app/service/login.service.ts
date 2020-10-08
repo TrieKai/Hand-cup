@@ -113,6 +113,10 @@ export class LoginService {
     if (isDevMode() || global.showLog) { console.log('password update:', resp); }
   }
 
+  async resendEmail() {
+    await this.firebaseService.sendEmailVerification();
+  }
+
   async sendPasswordResetEmail(email: string): Promise<boolean> {
     return await this.firebaseService.sendPasswordResetEmail(email);
   }

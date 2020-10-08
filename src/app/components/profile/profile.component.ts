@@ -131,4 +131,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const componentRef = this.domService.createComponent(ReAuthComponent, this.cons.SHAREDDATA.reAuthComponentRef);
     this.domService.attachComponent(componentRef, this.document.body);
   }
+
+  async resendEmail() {
+    await this.loginService.resendEmail();
+  }
 }
