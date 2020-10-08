@@ -36,7 +36,8 @@ export class ConstantsService {
   // Info message
   public readonly INFO_MESSAGE = {
     drinks: '今天飲料喝甚麼?',
-    drinkShops: '今天飲料喝哪家?'
+    drinkShops: '今天飲料喝哪家?',
+    emailVerify: '信箱驗證',
   }
 
   // Token

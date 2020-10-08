@@ -1,0 +1,37 @@
+@import '../../../assets/css/special-property.scss';
+
+main {
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  width          : 100%;
+  height         : height(layout);
+
+  article {
+    width        : 50%;
+    height       : 50%;
+    background   : rgba(128, 128, 128, 0.2);
+    border-radius: 5px;
+    box-shadow   : 0px 2px 3px rgba(0, 0, 0, 0.2);
+
+    section {
+      display        : flex;
+      justify-content: center;
+      align-items    : center;
+      flex-direction : column;
+      width          : 100%;
+      height         : 100%;
+
+      div {
+        margin: 10px;
+      }
+    }
+
+    .error-box {
+      margin-bottom: 50px;
+      background   : rgb(252, 78, 48);
+      color        : #FFF;
+      text-align   : center;
+    }
+  }
+}

@@ -19,3 +19,9 @@ interface UserUpdateReq {
 interface PasswordUpdateReq {
   password: string
 }
+
+interface ResetPasswordReq {
+  email: string
+  password: string
+  key: string
+}

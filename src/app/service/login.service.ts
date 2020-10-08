@@ -117,10 +117,11 @@ export class LoginService {
     return await this.firebaseService.sendPasswordResetEmail(email);
   }
 
-  async resetPassword(email: string, key: string) {
+  async resetPassword(email: string, password: string, key: string) {
     const url = this.apiCons.RESET;
-    const body = {
+    const body: ResetPasswordReq = {
       email: email,
+      password: password,
       key: key
     };
     const header: HttpHeaders = this.api.getHeader();
