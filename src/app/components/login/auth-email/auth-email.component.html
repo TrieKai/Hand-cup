@@ -2,16 +2,20 @@
 <main>
   <article>
     <section *ngIf="error" class="error-box">{{errorMessage}}</section>
-    <section *ngIf="!error&&verifyEmail"></section>
+    <section *ngIf="!error&&verifyEmail">
+      <!-- TODO: Success screen -->
+    </section>
     <section *ngIf="!error&&resetPassword">
-      <div>
+      <div class="box">
         您的信箱
         <span>{{email}}</span>
       </div>
-      <div>
-        <span>請輸入新密碼 </span>
-        <input #newPassword />
-        <button (click)="confirm()">確認</button>
+      <div class="box">
+        <div>
+          <div class="title"><i class="material-icons">lock</i> 請輸入新密碼</div>
+          <input #newPassword class="text" type="password" placeholder="password" (keydown.enter)="login()" />
+        </div>
+        <button class="button" (click)="confirm()">確 認</button>
       </div>
     </section>
   </article>

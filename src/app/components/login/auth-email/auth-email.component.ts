@@ -50,7 +50,8 @@ export class AuthEmailComponent implements OnInit {
         this.verifyEmail = false;
         this.handleResetPassword();
         break;
-      case 'recoverEmail':
+      default:
+        // TODO: Not found page
         break;
     }
   }
