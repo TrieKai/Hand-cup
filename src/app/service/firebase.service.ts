@@ -6,6 +6,7 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { MessageService } from 'src/app/service/message.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import * as firebase from 'firebase';
+import { resolve } from 'url';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,18 @@ export class FirebaseService {
       })
       .catch((error) => {
         this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '驗證信箱發生錯誤', content: error });
+      });
+  }
+
+  async verifyEmail(oobCode: string): Promise<(boolean | any)[]> {
+    return await this.afAuth.auth.applyActionCode(oobCode)
+      .then(() => {
+        this.afAuth.auth.currentUser.emailVerified = true;
+        return [true, null];
+      })
+      .catch((error) => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '驗證信箱發生錯誤', content: error });
+        return [false, error];
       });
   }
 
@@ -168,6 +181,17 @@ export class FirebaseService {
       .catch((error) => {
         this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '重設密碼信件發送失敗', content: error });
         return false;
+      });
+  }
+
+  async resetPassword(oobCode: string): Promise<(boolean | string | any)[]> {
+    return await this.afAuth.auth.verifyPasswordResetCode(oobCode)
+      .then((email) => {
+        return [true, email];
+      })
+      .catch((error) => {
+        this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '重設密碼發生錯誤', content: error });
+        return [false, error];
       });
   }
 }

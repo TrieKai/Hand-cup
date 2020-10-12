@@ -4,8 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { LoginService } from "src/app/service/login.service";
 import { MessageService } from 'src/app/service/message.service';
-
-import * as firebase from 'firebase';
+import { FirebaseService } from 'src/app/service/firebase.service';
 
 @Component({
   selector: 'app-auth-email',
@@ -29,6 +28,7 @@ export class AuthEmailComponent implements OnInit {
     private cons: ConstantsService,
     private loginService: LoginService,
     private message: MessageService,
+    private firebase: FirebaseService,
   ) { }
 
   ngOnInit() {
@@ -58,28 +58,41 @@ export class AuthEmailComponent implements OnInit {
 
   async handleVerifyEmail() {
     this.infoMessage = this.cons.INFO_MESSAGE.emailVerify;
-    await firebase.auth().applyActionCode(this.oobCode)
-      .then(() => {
-        this.error = false;
+    await this.firebase.verifyEmail(this.oobCode)
+      .then((resp) => {
+        const status = resp[0];
+        if (status) {
+          this.error = false;
+        } else {
+          this.error = true;
+          const error = resp[1];
+          this.errorMessage = error.message;
+        }
       })
       .catch((error) => {
         this.error = true;
-        this.errorMessage = error.message;
+        console.log(error)
       });
   }
 
   async handleResetPassword() {
     this.infoMessage = this.cons.INFO_MESSAGE.resetPassword;
-    await firebase.auth().verifyPasswordResetCode(this.oobCode)
-      .then((email) => {
-        if (email) {
+    await this.firebase.resetPassword(this.oobCode)
+      .then((resp) => {
+        const status = resp[0];
+        if (status) {
+          const email = resp[1];
           this.error = false;
           this.email = email ? email : '';
+        } else {
+          this.error = true;
+          const error = resp[1];
+          this.errorMessage = error.message;
         }
       })
       .catch((error) => {
         this.error = true;
-        this.errorMessage = error.message;
+        console.log(error)
       });
   }
 
