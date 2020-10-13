@@ -33,6 +33,7 @@ export class ConstantsService {
     error: 'error'
   };
 
+  // Third party type
   public readonly THIRD_PARTY_TYPE = {
     google: 'google',
     facebook: 'facebook'

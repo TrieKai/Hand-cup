@@ -10,10 +10,10 @@ import { UploadService } from 'src/app/util/upload.service';
 import { LoginService } from 'src/app/service/login.service';
 import { MessageService } from 'src/app/service/message.service';
 import { CheckService } from 'src/app/service/check.service';
+import { FirebaseService } from 'src/app/service/firebase.service';
 
 import { ImageEditorComponent } from 'src/app/components/common/image-editor/image-editor.component';
 import { ReAuthComponent } from 'src/app/components/profile/re-auth/re-auth.component';
-
 
 @Component({
   selector: 'app-profile',
@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscribe: Subscription;
   onloading: boolean;
   imageLoaded: boolean;
+  thirdParty: boolean;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private message: MessageService,
     private check: CheckService,
     private renderer: Renderer2,
+    private firebase: FirebaseService,
   ) { }
 
   ngOnInit() {
@@ -50,10 +52,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
       console.log('profile service status: ', status)
       this.isLogin = status;
     });
-    // this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
     const userData = this.profileService.getUserData();
     this.name = userData.displayName;
     this.photoURL = userData.photoURL;
+    const providerId = userData.providerData[0].providerId;
+    if (providerId.indexOf(this.cons.THIRD_PARTY_TYPE.google) === -1 && providerId.indexOf(this.cons.THIRD_PARTY_TYPE.google) === -1) {
+      this.thirdParty = false;
+    } else {
+      this.thirdParty = true;
+    }
   }
 
   ngOnDestroy(): void {
