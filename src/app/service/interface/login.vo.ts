@@ -9,6 +9,7 @@ interface SignUpReq {
   name?: string
   email: string
   password: string
+  type: string
 }
 
 interface UserUpdateReq {

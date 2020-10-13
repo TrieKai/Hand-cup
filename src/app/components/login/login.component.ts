@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
         if (status) {
           this.signUpEmailRef.nativeElement.value = '';
           this.signUpPasswordRef.nativeElement.value = '';
-          await this.loginService.signUp(false, password);
+          await this.loginService.signUp(null, password);
           await this.loginService.login(false, password);
         }
       });
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
       .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
-          await this.loginService.signUp(true);
+          await this.loginService.signUp(this.cons.THIRD_PARTY_TYPE.google);
           await this.loginService.login(true);
         }
       });
@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit {
       .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
-          await this.loginService.signUp(true);
+          await this.loginService.signUp(this.cons.THIRD_PARTY_TYPE.facebook);
           await this.loginService.login(true);
         }
       });

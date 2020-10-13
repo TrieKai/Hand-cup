@@ -33,6 +33,11 @@ export class ConstantsService {
     error: 'error'
   };
 
+  public readonly THIRD_PARTY_TYPE = {
+    google: 'google',
+    facebook: 'facebook'
+  };
+
   // Info message
   public readonly INFO_MESSAGE = {
     drinks: '今天飲料喝甚麼?',

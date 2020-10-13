@@ -62,14 +62,15 @@ export class LoginService {
     return await this.firebaseService.signUp(email, password);
   }
 
-  async signUp(thirdParty: boolean, password?: string) {
+  async signUp(thirdParty: string, password?: string) {
     const user = this.firebaseService.getUserData();
     const header: HttpHeaders = this.api.getHeader();
     const body: SignUpReq = {
       userId: user.uid,
       name: thirdParty ? user.displayName : null,
       email: user.email,
-      password: thirdParty ? user.uid : password // 如果是第三方登入的話就沒有密碼, 以 uid 來代替密碼
+      password: thirdParty ? user.uid : password, // 如果是第三方登入的話就沒有密碼, 以 uid 來代替密碼
+      type: thirdParty
     };
     const resp = await this.api.post(this.apiCons.SIGNUP, body, header);
     if (isDevMode() || global.showLog) { console.log('signUp:', resp); }
