@@ -6,6 +6,8 @@ import { DialogComponent } from 'src/app/components/common/dialog/dialog.compone
 import { LocalstorageService } from 'src/app/util/localstorage.service';
 import { CommonService } from 'src/app/service/common.service';
 import { environment } from 'src/environments/environment';
+import { DrinkShopService } from 'src/app/service/drink-shop.service';
+import { FirebaseService } from 'src/app/service/firebase.service';
 
 @Component({
   selector: 'app-chosen-card',
@@ -48,6 +50,8 @@ export class ChosenCardComponent implements OnInit {
     private dialog: MatDialog,
     private localStorageService: LocalstorageService,
     private common: CommonService,
+    private drinkShopService: DrinkShopService,
+    private firebase: FirebaseService,
   ) { }
 
   @HostListener('window:resize', [])
@@ -112,17 +116,20 @@ export class ChosenCardComponent implements OnInit {
     } else { return null; }
   }
 
-  favoritetShop(placeId: string) {
-    const value = this.localStorageService.getLocalStorage(placeId);
-    if (value && !this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite)) {
+  async favoritetShop(placeId: string) {
+    const status = this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite);
+    if (status === false) {
       const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.favorite + ';';
       this.localStorageService.setLocalStorage(placeId, valueStr);
-    } else if (!value) {
+    } else if (status === null) {
       this.localStorageService.setLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite + ';');
-    }
+    } else { return; }
+
+    const userData = this.firebase.getUserData();
+    await this.drinkShopService.favoriteShop(true, placeId, userData.uid);
   }
 
-  unFavoriteShop(placeId: string) {
+  async unFavoriteShop(placeId: string) {
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value) {
       const valAry = value.split(';');
@@ -134,8 +141,9 @@ export class ChosenCardComponent implements OnInit {
         } else {
           this.localStorageService.removeLocalStorage(placeId);
         }
-      } else {
-        this.localStorageService.removeLocalStorage(placeId);
+
+        const userData = this.firebase.getUserData();
+        await this.drinkShopService.favoriteShop(false, placeId, userData.uid);
       }
     }
   }

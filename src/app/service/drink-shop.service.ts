@@ -9,85 +9,124 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { GlobalService as global } from '../service/global.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class DrinkShopService {
-    sharedData: drinkShopSharedData = { onloading: false, showMap: true, drinkShopResults: null };
-    currentCoordinate: Coordinate = { latitude: null, longitude: null };
+  sharedData: drinkShopSharedData = { onloading: false, showMap: true, drinkShopResults: null };
+  currentCoordinate: Coordinate = { latitude: null, longitude: null };
 
-    constructor(
-        private http: ApiService,
-        private apiCons: ApiConstantsService,
-        private cons: ConstantsService,
-        private sharedService: SharedService,
-    ) { }
+  constructor(
+    private api: ApiService,
+    private apiCons: ApiConstantsService,
+    private cons: ConstantsService,
+    private sharedService: SharedService,
+  ) { }
 
-    async getPlaceDetail(placeId: string): Promise<any> {
-        const header: HttpHeaders = this.http.getHeader();
-        const resp: RespData = await this.http.get(this.apiCons.GET_PLACE_DETAIL + placeId, null, header);
-        if (isDevMode() || global.showLog) {
-            console.log(resp);
-        }
-
-        return resp;
+  async getPlaceDetail(placeId: string): Promise<any> {
+    const header: HttpHeaders = this.api.getHeader();
+    const resp: RespData = await this.api.get(this.apiCons.GET_PLACE_DETAIL + placeId, null, header);
+    if (isDevMode() || global.showLog) {
+      console.log(resp);
     }
 
-    setSharedData(key: string, value: any) {
-        console.log('setSharedData:', key, value)
-        if (this.hasKey(key)) {
-            this.sharedData[key] = value;
-            this.sharedService.onInitEmit();
-            return this.sharedData[key];
-        } else {
-            return null;
-        }
+    return resp;
+  }
+
+  setSharedData(key: string, value: any) {
+    console.log('setSharedData:', key, value)
+    if (this.hasKey(key)) {
+      this.sharedData[key] = value;
+      this.sharedService.onInitEmit();
+      return this.sharedData[key];
+    } else {
+      return null;
+    }
+  }
+
+  getSharedData(key: string) {
+    return this.sharedData[key];
+  }
+
+  hasKey(key: string) {
+    return this.sharedData.hasOwnProperty(key);
+  }
+
+  getTopLocation(locataion: Coordinate, dataList: drinkShopResults[], number: number): any[] {
+    if (dataList.length === 0) { return []; }
+    console.log('latitude:', locataion.latitude, 'longitude:', locataion.longitude, 'dataList:', dataList)
+    const resp = dataList.map((data) => {
+      const distanceGap = Math.abs(locataion.latitude - data.latitude) + Math.abs(locataion.longitude - data.longitude); // 距離差
+      return {
+        ...data,
+        distanceGap: distanceGap
+      }
+    }).sort((a, b) => {
+      return a.distanceGap - b.distanceGap; // 升冪
+    }).slice(0, number); // 取前幾名
+
+    return resp;
+  }
+
+  handleRatingStar(rating: number) {
+    const ratings: number = rating * 10 + 2; // 加二是因為好計算
+    const ratingStars: number = Math.floor(ratings / 5) / 2; // 標準化成得到的星星數
+    const fullStars: number = Math.floor(ratingStars); // 滿星的數量
+    const halfStars: number = (ratingStars - fullStars) * 2; // 半星的數量
+    const emptyStars: number = 5 - fullStars - halfStars; // 空星的數量
+    let starContent: string = '';
+
+    // console.log(fullStars, halfStars, emptyStars)
+    for (let i: number = 0; i < fullStars; i++) {
+      starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_14.png);"></li>';
+    }
+    if (halfStars) {
+      starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_half_14.png);"></li>';
+    }
+    if (emptyStars) {
+      for (let i: number = 0; i < emptyStars; i++) {
+        starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_empty_14.png);"></li>';
+      }
     }
 
-    getSharedData(key: string) {
-        return this.sharedData[key];
+    return starContent;
+  }
+
+  async getFavoriteShop(userId: string): Promise<RespData> {
+    const url = this.apiCons.FAVORITE_SHOP + '/' + userId;
+    const header: HttpHeaders = this.api.getHeader();
+    const resp: RespData = await this.api.get(url, null, header);
+    if (isDevMode() || global.showLog) {
+      console.log(resp);
     }
+    return resp;
+  }
 
-    hasKey(key: string) {
-        return this.sharedData.hasOwnProperty(key);
+  async favoriteShop(status: boolean, placeId: string, userId: string) {
+    if (status) {
+      const header: HttpHeaders = this.api.getHeader();
+      const body: favoriteReq = {
+        placeId: placeId,
+        userId: userId
+      };
+      const resp: RespData = await this.api.post(this.apiCons.FAVORITE_SHOP, body, header);
+      if (isDevMode() || global.showLog) {
+        console.log(resp);
+      }
+    } else {
+      const url = this.apiCons.FAVORITE_SHOP + '/' + userId + '/' + placeId;
+      const header: HttpHeaders = this.api.getHeader();
+      const resp: RespData = await this.api.delete(url, null, header);
+      if (isDevMode() || global.showLog) {
+        console.log(resp);
+      }
     }
+  }
 
-    getTopLocation(locataion: Coordinate, dataList: drinkShopResults[], number: number): any[] {
-        if (dataList.length === 0) { return []; }
-        console.log('latitude:', locataion.latitude, 'longitude:', locataion.longitude, 'dataList:', dataList)
-        const resp = dataList.map((data) => {
-            const distanceGap = Math.abs(locataion.latitude - data.latitude) + Math.abs(locataion.longitude - data.longitude); // 距離差
-            return {
-                ...data,
-                distanceGap: distanceGap
-            }
-        }).sort((a, b) => {
-            return a.distanceGap - b.distanceGap; // 升冪
-        }).slice(0, number); // 取前幾名
+  visitedShop(status: boolean) {
+    if (status) {
 
-        return resp;
+    } else {
+
     }
-
-    handleRatingStar(rating: number) {
-        const ratings: number = rating * 10 + 2; // 加二是因為好計算
-        const ratingStars: number = Math.floor(ratings / 5) / 2; // 標準化成得到的星星數
-        const fullStars: number = Math.floor(ratingStars); // 滿星的數量
-        const halfStars: number = (ratingStars - fullStars) * 2; // 半星的數量
-        const emptyStars: number = 5 - fullStars - halfStars; // 空星的數量
-        let starContent: string = '';
-
-        // console.log(fullStars, halfStars, emptyStars)
-        for (let i: number = 0; i < fullStars; i++) {
-            starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_14.png);"></li>';
-        }
-        if (halfStars) {
-            starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_half_14.png);"></li>';
-        }
-        if (emptyStars) {
-            for (let i: number = 0; i < emptyStars; i++) {
-                starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_empty_14.png);"></li>';
-            }
-        }
-
-        return starContent;
-    }
+  }
 }

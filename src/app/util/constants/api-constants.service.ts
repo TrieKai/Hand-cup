@@ -16,7 +16,10 @@ export class ApiConstantsService {
   // map
   public readonly GET_NEARBY_SEARCH = environment.url + '/map';
   public readonly GET_PLACE_DETAIL = environment.url + '/map/';
+  public readonly FAVORITE_SHOP = environment.url + '/favorites';
+  public readonly VISITED_SHOP = environment.url + '/visited';
 
+  // Result
   public readonly API_RESULT_SUCCESS: string = 'success';
   public readonly API_RESULT_ERROR: string = 'error';
 

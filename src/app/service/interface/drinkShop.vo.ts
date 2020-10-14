@@ -38,3 +38,13 @@ interface drinkShopSharedData {
     showMap: boolean
     drinkShopResults: drinkShopResults[]
 }
+
+interface favoriteReq {
+    placeId: string
+    userId: string
+}
+
+interface visitedReq {
+    placeId: string
+    userId: string
+}
