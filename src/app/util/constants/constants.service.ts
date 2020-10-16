@@ -53,7 +53,7 @@ export class ConstantsService {
   // Local storage
   public readonly LOCAL_STORAGE_TYPE = {
     favorite: 'favorite',
-    haveBeen: 'haveBeen'
+    visited: 'visited'
   }
 
   // Upload target

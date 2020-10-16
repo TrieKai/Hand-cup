@@ -11,14 +11,14 @@
         favorite
       </span>
       <div
-        [ngClass]="{'have-been-box': checkLocalStorage(chosenShopDetail.place_id, 'haveBeen'), 'never-been-box': !checkLocalStorage(chosenShopDetail.place_id, 'haveBeen')}">
+        [ngClass]="{'have-been-box': checkLocalStorage(chosenShopDetail.place_id, 'visited'), 'never-been-box': !checkLocalStorage(chosenShopDetail.place_id, 'visited')}">
         <span class="material-icons not_listed_location">
           not_listed_location
         </span>
-        <span class="material-icons add_location_alt" (click)="haveBeen(chosenShopDetail.place_id)">
+        <span class="material-icons add_location_alt" (click)="visited(chosenShopDetail.place_id)">
           add_location_alt
         </span>
-        <span class="material-icons wrong_location" (click)="neverBeen(chosenShopDetail.place_id)">
+        <span class="material-icons wrong_location" (click)="unVisited(chosenShopDetail.place_id)">
           wrong_location
         </span>
       </div>
@@ -48,14 +48,14 @@
         </div>
         <div>
           <div
-            [ngClass]="{'have-been-box': checkLocalStorage(chosenShopDetail.place_id, 'haveBeen'), 'never-been-box': !checkLocalStorage(chosenShopDetail.place_id, 'haveBeen')}">
+            [ngClass]="{'have-been-box': checkLocalStorage(chosenShopDetail.place_id, 'visited'), 'never-been-box': !checkLocalStorage(chosenShopDetail.place_id, 'visited')}">
             <span class="material-icons not_listed_location">
               not_listed_location
             </span>
-            <span class="material-icons add_location_alt" (click)="haveBeen(chosenShopDetail.place_id)">
+            <span class="material-icons add_location_alt" (click)="visited(chosenShopDetail.place_id)">
               add_location_alt
             </span>
-            <span class="material-icons wrong_location" (click)="neverBeen(chosenShopDetail.place_id)">
+            <span class="material-icons wrong_location" (click)="unVisited(chosenShopDetail.place_id)">
               wrong_location
             </span>
           </div>

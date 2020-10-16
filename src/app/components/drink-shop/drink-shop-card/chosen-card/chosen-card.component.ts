@@ -110,8 +110,8 @@ export class ChosenCardComponent implements OnInit {
     if (value) {
       if (type === this.cons.LOCAL_STORAGE_TYPE.favorite) {
         return value.indexOf(this.cons.LOCAL_STORAGE_TYPE.favorite) > -1 ? true : false;
-      } else if (type === this.cons.LOCAL_STORAGE_TYPE.haveBeen) {
-        return value.indexOf(this.cons.LOCAL_STORAGE_TYPE.haveBeen) > -1 ? true : false;
+      } else if (type === this.cons.LOCAL_STORAGE_TYPE.visited) {
+        return value.indexOf(this.cons.LOCAL_STORAGE_TYPE.visited) > -1 ? true : false;
       }
     } else { return null; }
   }
@@ -148,22 +148,22 @@ export class ChosenCardComponent implements OnInit {
     }
   }
 
-  haveBeen(placeId: string) {
+  visited(placeId: string) {
     const value = this.localStorageService.getLocalStorage(placeId);
-    if (value && !this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.haveBeen)) {
-      const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.haveBeen + ';';
+    if (value && !this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.visited)) {
+      const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.visited + ';';
       this.localStorageService.setLocalStorage(placeId, valueStr);
     } else if (!value) {
-      this.localStorageService.setLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.haveBeen + ';');
+      this.localStorageService.setLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.visited + ';');
     }
     this.beenThere = true;
   }
 
-  neverBeen(placeId: string) {
+  unVisited(placeId: string) {
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value) {
       const valAry = value.split(';');
-      const index = valAry.indexOf(this.cons.LOCAL_STORAGE_TYPE.haveBeen);
+      const index = valAry.indexOf(this.cons.LOCAL_STORAGE_TYPE.visited);
       if (index > -1) {
         valAry.splice(index, 1);
         if (valAry[0] !== '') {

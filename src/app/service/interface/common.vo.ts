@@ -58,13 +58,21 @@ interface commonSharedData {
 }
 
 interface firebaseProfile {
-    displayName?: string;
-    photoURL?: string;
+    displayName?: string
+    photoURL?: string
+}
+
+interface userPreferData {
+    id: number
+    place_id: string
+    user_id: string
+    create_time: string
+    update_time: string
 }
 
 // normal
 interface ReturnStatus {
-    returnStatus?: string;
-    msg?: any;
-    error?: any;
+    returnStatus?: string
+    msg?: any
+    error?: any
 }

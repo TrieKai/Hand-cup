@@ -11,6 +11,7 @@ import { ApiConstantsService } from 'src/app/util/constants/api-constants.servic
 import { ApiService } from 'src/app/util/api.service';
 import { GlobalService as global } from 'src/app/service/global.service';
 import { CookieService } from 'src/app/util/cookie.service';
+import { LocalstorageService } from 'src/app/util/localstorage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class LoginService {
     private apiCons: ApiConstantsService,
     private api: ApiService,
     private cookie: CookieService,
+    private localStorage: LocalstorageService,
   ) {
     firebaseService.checkAuthStatus();
   }
@@ -56,6 +58,9 @@ export class LoginService {
     const resp = await this.api.post(this.apiCons.LOGIN, body, header);
     if (isDevMode() || global.showLog) { console.log('login:', resp); }
     this.cookie.setCookie(this.cons.TOKEN, resp);
+
+    const userPreferDate = await this.getUserPreferData();
+    this.localStorage.updateLocalStorage(userPreferDate);
   }
 
   async signUpFireBase(email: string, password: string): Promise<boolean> {
@@ -88,8 +93,20 @@ export class LoginService {
     return await this.firebaseService.reAuth(email, password);
   }
 
-  getUserData() {
+  getFirebaseUserData() {
     return this.firebaseService.getUserData();
+  }
+
+  async getUserPreferData() {
+    const user = this.firebaseService.getUserData();
+    const favUrl = this.apiCons.FAVORITE_SHOP + '/' + user.uid;
+    const visUrl = this.apiCons.VISITED_SHOP + '/' + user.uid;
+    const header: HttpHeaders = this.api.getHeader();
+    const favResp = await this.api.get(favUrl, null, header);
+    if (isDevMode() || global.showLog) { console.log('get favorites:', favResp); }
+    const visResp = await this.api.get(visUrl, null, header);
+    if (isDevMode() || global.showLog) { console.log('get visited:', visResp); }
+    return [favResp, visResp];
   }
 
   logOut() {

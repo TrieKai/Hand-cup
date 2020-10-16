@@ -29,7 +29,7 @@ export class ReAuthComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.email = this.loginService.getUserData().email;
+    this.email = this.loginService.getFirebaseUserData().email;
   }
 
   closeDialog() {
