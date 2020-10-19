@@ -10,8 +10,8 @@ import { DomService } from 'src/app/util/dom.service';
 import { LoginService } from 'src/app/service/login.service';
 import { SharedService } from 'src/app/shared/shared.service';
 
-import { LoginComponent } from 'src/app/components/login/login.component';
-import { ProfileComponent } from 'src/app/components/profile/profile.component';
+import { LoginComponent } from '../login/login.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'app-header',

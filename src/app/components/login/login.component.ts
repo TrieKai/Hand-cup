@@ -6,7 +6,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { LoginService } from 'src/app/service/login.service';
 
-import { ForgotPasswordComponent } from 'src/app/components/login/forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from '../login/forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-login',

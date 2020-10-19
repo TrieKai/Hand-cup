@@ -12,8 +12,8 @@ import { MessageService } from 'src/app/service/message.service';
 import { CheckService } from 'src/app/service/check.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
 
-import { ImageEditorComponent } from 'src/app/components/common/image-editor/image-editor.component';
-import { ReAuthComponent } from 'src/app/components/profile/re-auth/re-auth.component';
+import { ImageEditorComponent } from '../common/image-editor/image-editor.component';
+import { ReAuthComponent } from '../profile/re-auth/re-auth.component';
 
 @Component({
   selector: 'app-profile',

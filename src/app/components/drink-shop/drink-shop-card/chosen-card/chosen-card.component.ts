@@ -2,12 +2,13 @@ import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
-import { DialogComponent } from 'src/app/components/common/dialog/dialog.component';
 import { LocalstorageService } from 'src/app/util/localstorage.service';
 import { CommonService } from 'src/app/service/common.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
+
+import { DialogComponent } from '../../../common/dialog/dialog.component';
 
 @Component({
   selector: 'app-chosen-card',
