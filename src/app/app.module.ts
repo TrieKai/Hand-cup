@@ -45,7 +45,7 @@ import { AuthEmailComponent } from './components/login/auth-email/auth-email.com
         AuthEmailComponent,
     ],
     imports: [
-        BrowserModule,
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
         AppRoutingModule,
         HttpClientModule,
         MaterialModule,
