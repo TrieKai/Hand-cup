@@ -2,18 +2,19 @@
   "name": "hand-cup-project",
   "version": "1.0.0",
   "scripts": {
+    "start:heroku": "node dist/server",
+    "postinstall": "npm run build:ssr",
     "ng": "ng",
-    "start": "node dist/server",
+    "start": "ng serve",
     "dev": "ng serve --port 9527",
     "build": "ng build",
-    "build:client-and-server-bundles": "ng build --prod && ng run hand-cup-project:server:production",
-    "build:prerender": "npm run build:client-and-server-bundles && npm run webpack:server && npm run generate:prerender",
-    "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
-    "generate:prerender": "cd dist && node prerender",
-    "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
-    "serve:prerender": "cd dist/browser && http-server",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "compile:server": "webpack --config webpack.server.config.js --progress --color",
     "serve:ssr": "node dist/server",
-    "postinstall": "npm run build:ssr"
+    "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
+    "build:client-and-server-bundles": "ng build --prod && ng run handCup-project:server:production"
   },
   "private": true,
   "dependencies": {
@@ -47,9 +48,9 @@
     "@angular/language-service": "~8.2.14",
     "@nguniversal/builders": "^10.1.0",
     "@types/express": "^4.17.0",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -61,7 +62,8 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "webpack-cli": "^4.0.0"
   },
   "engines": {
     "node": "10.13.0",
