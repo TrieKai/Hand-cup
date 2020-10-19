@@ -11,6 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "heroku-postbuild": "ng build --configuration=production",
+    "start:heroku": "node dist/server",
+    "postinstall": "npm run build:ssr",
     "dev:ssr": "ng run handCup-project:serve-ssr",
     "serve:ssr": "node dist/handCup-project-server/main.js",
     "build:ssr": "ng build --prod && ng run handCup-project:server:production",
