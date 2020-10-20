@@ -1,7 +1,7 @@
 <div>
   <div #imageEditor class="image-editor default" (mousedown)="onDrag($event)" (touchstart)="onDragMobile($event)">
     <div class="background"></div>
-    <img #image id="image" class="image" alt="" (load)="imageOnload()" />
+    <img #image id="image" class="image" alt="photo_image" (load)="imageOnload()" />
     <div class="image-mask"></div>
     <div class="reset pointer" (click)="resetImage()">重設</div>
   </div>

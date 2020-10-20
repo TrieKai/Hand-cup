@@ -13,10 +13,10 @@
 
   <ng-container *ngIf="isLogin">
     <span *ngIf="userPhotoURL" class="account-button" [matMenuTriggerFor]="menu">
-      <img [src]="userPhotoURL" />
+      <img [src]="userPhotoURL" alt="user_photo" />
     </span>
     <span *ngIf="!userPhotoURL" class="material-icons account-button" [matMenuTriggerFor]="menu">
-      <img src="https://boba-maps.s3-ap-southeast-1.amazonaws.com/media/biblethump.png" />
+      <img src="https://boba-maps.s3-ap-southeast-1.amazonaws.com/media/biblethump.png" alt="default_user_photo" />
     </span>
   </ng-container>
   <ng-container *ngIf="!isLogin">
@@ -59,7 +59,7 @@
 <div class="sidebar-menu" #sidebarMenu>
   <ul class="sidebar-menu-inner">
     <li *ngFor="let menu of menuList">
-      <img class="menu-icon" [src]="menu.icon" alt="menu-icon" />
+      <img class="menu-icon" [src]="menu.icon" alt="menu_icon" />
       <span class="menu-span" [routerLink]="menu.router" (click)="handleSidebar()">{{menu.title}}</span>
     </li>
   </ul>
