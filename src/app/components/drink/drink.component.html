@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngIf="!gocha">
   <div class="info-bar">
     {{infoMessage}}
   </div>
@@ -9,4 +9,7 @@
       </div>
     </div>
   </div>
+</ng-container>
+<ng-container *ngIf="gocha">
+  <div *ngIf="drink">{{drink.name}}</div>
 </ng-container>
