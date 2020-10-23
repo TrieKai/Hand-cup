@@ -1,4 +1,4 @@
 interface drinksData {
   name: string
-  img: string
+  image: string
 }

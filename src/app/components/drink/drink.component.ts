@@ -10,12 +10,11 @@ import { MessageService } from 'src/app/service/message.service';
 })
 export class DrinkComponent implements OnInit {
   infoMessage: string;
-  show: boolean;
   listen: any;
   gocha: boolean;
   drinksData: drinksData[];
-  // shuffledDrinks: drinksData[];
   drink: drinksData;
+  isFinished: boolean;
 
   constructor(
     private cons: ConstantsService,
@@ -27,39 +26,40 @@ export class DrinkComponent implements OnInit {
 
     // TODO: Replace API with this
     this.drinksData = [
-      { name: '綠茶', img: 'assets/img/drinks/' },
-      { name: '紅茶', img: 'assets/img/drinks/' },
-      { name: '奶茶', img: 'assets/img/drinks/' },
-      { name: '珍珠鮮奶', img: 'assets/img/drinks/' },
-      { name: '果汁', img: 'assets/img/drinks/' },
-      { name: '冬瓜檸檬', img: 'assets/img/drinks/' },
-      { name: '多多綠', img: 'assets/img/drinks/' },
-      { name: '冰淇淋紅茶', img: 'assets/img/drinks/' },
-      { name: '蜂蜜檸檬', img: 'assets/img/drinks/' },
+      { name: '綠茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101143220000001.png&w=280&h=350&zc=2' },
+      { name: '紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1705151055490000001.png&w=280&h=350&zc=2' },
+      { name: '奶茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1904241008320000001.png&w=280&h=350&zc=2' },
+      { name: '珍珠鮮奶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1904240957570000001.png&w=280&h=350&zc=2' },
+      { name: '果汁', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1801251627300000001.png&w=280&h=350&zc=2' },
+      { name: '冬瓜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144190000001.png&w=280&h=350&zc=2' },
+      { name: '多多綠', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144260000001.png&w=280&h=350&zc=2' },
+      { name: '冰淇淋紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144340000001.png&w=280&h=350&zc=2' },
+      { name: '蜂蜜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/2002121650500000001.png&w=280&h=350&zc=2' },
     ];
   }
 
-  recommendDrinks() {
-    // this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '注意!', content: '還沒做啦QQ' });
-    let shuffledDrinks = this.shuffle(this.drinksData);
-    shuffledDrinks = shuffledDrinks.concat(shuffledDrinks).concat(shuffledDrinks);
-    console.log(shuffledDrinks)
-    this.gocha = true;
-    const drinksDataLength = this.drinksData.length;
-    const choesnIndex = Math.floor(Math.random() * drinksDataLength);
-    console.log(choesnIndex)
-    for (let i = 0; i < shuffledDrinks.length; i++) {
-      if (i === (drinksDataLength * 2) + choesnIndex) { break; }
-
-      setTimeout(() => {
-        console.log('JOJO:', i)
-        this.drink = shuffledDrinks[i];
-      }, 200 * i);
-    }
+  confirm() {
+    this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '什麼事都沒發生', content: '' });
   }
 
-  open() {
-    this.show = true;
+  recommendDrinks() {
+    this.gocha = true;
+    this.isFinished = false;
+    const shuffledDrinks = this.shuffle(this.drinksData);
+    const concatedData = shuffledDrinks
+      .concat(shuffledDrinks)
+      .concat(shuffledDrinks)
+      .concat(shuffledDrinks); // Concat data triple times
+    const drinksDataLength = this.drinksData.length;
+    const choesnIndex = Math.floor(Math.random() * drinksDataLength);
+    for (let i = 0; i < concatedData.length; i++) {
+      const flag = (i === drinksDataLength * 3 + choesnIndex) ? true : false;
+      setTimeout(() => {
+        if (flag) { this.isFinished = true; }
+        this.drink = concatedData[i];
+      }, 100 * Math.pow(i / 2, 1.5)); // 參數隨便調的啦
+      if (flag) { break; } // Break point
+    }
   }
 
   // Fisher-Yates Shuffling

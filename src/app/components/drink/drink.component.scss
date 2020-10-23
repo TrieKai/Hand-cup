@@ -25,6 +25,60 @@
     border-radius   : 5px;
 }
 
+.card-box {
+    display         : flex;
+    display         : -webkit-flex;
+    flex-direction  : column;
+    width           : 20%;
+    height          : 400px;
+    text-align      : center;
+    background-color: whitesmoke;
+    border-radius   : 5px;
+    box-shadow      : 5px 5px 10px rgba(0, 0, 0, 0.5);
+
+    .image {
+        width : 100%;
+        height: 70%;
+    }
+
+    .text {
+        display        : flex;
+        align-items    : center;
+        justify-content: center;
+        width          : 100%;
+        height         : 10%;
+        font-size      : 24px;
+        font-weight    : 600;
+    }
+
+    .button-box {
+        display    : flex;
+        align-items: center;
+        width      : 100%;
+        height     : 20%;
+
+        .check {
+            width: 50%;
+
+            span {
+                cursor: pointer;
+            }
+        }
+
+        .restart {
+            width: 50%;
+
+            span {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.active {
+    animation: card-animation 0.7s ease-in-out;
+}
+
 .pressBtn {
     display         : flex;
     display         : -webkit-flex;
@@ -47,4 +101,18 @@
 .ratingStar {
     background-size: 15px;
     width          : 15px;
+}
+
+@keyframes card-animation {
+    0% {
+        transform: scale(0.9);
+    }
+
+    80% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

@@ -1,15 +1,20 @@
-<ng-container *ngIf="!gocha">
-  <div class="info-bar">
-    {{infoMessage}}
-  </div>
-  <div class="container">
-    <div class="box">
-      <div class="pressBtn" (click)="recommendDrinks()">
-        <span>PRESS</span>
+<nav class="info-bar">{{infoMessage}}</nav>
+<main class="container">
+  <section *ngIf="!gocha" class="box">
+    <div class="pressBtn" (click)="recommendDrinks()">
+      <span>PRESS</span>
+    </div>
+  </section>
+  <section *ngIf="gocha && drink" class="card-box" [ngClass]="{'active': isFinished}">
+    <img src="{{drink.image}}" class="image" />
+    <span class="text">{{drink.name}}</span>
+    <div *ngIf="isFinished" class="button-box">
+      <div class="check">
+        <span class="material-icons" (click)="confirm()">check_circle_outline</span>
+      </div>
+      <div class="restart">
+        <span class="material-icons" (click)="recommendDrinks()">replay</span>
       </div>
     </div>
-  </div>
-</ng-container>
-<ng-container *ngIf="gocha">
-  <div *ngIf="drink">{{drink.name}}</div>
-</ng-container>
+  </section>
+</main>
