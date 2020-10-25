@@ -1,6 +1,6 @@
 {
   "name": "hand-cup-project",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "scripts": {
     "start:heroku": "node dist/handCup-project-server/main.js",
     "postinstall": "npm run build:ssr",
