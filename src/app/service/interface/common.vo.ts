@@ -76,3 +76,15 @@ interface ReturnStatus {
     msg?: any
     error?: any
 }
+
+interface DeviceType {
+    mobile: boolean
+    ios: boolean
+    android: boolean
+    chrome: boolean
+    safari: boolean
+    firefox: boolean
+    ie: boolean
+    edge: boolean
+    webView: boolean
+}

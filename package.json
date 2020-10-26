@@ -4,6 +4,7 @@
   "scripts": {
     "start:heroku": "node dist/handCup-project-server/main.js",
     "postinstall": "npm run build:ssr",
+    "heroku-postbuild": "ng build --configuration=production",
     "ng": "ng",
     "start": "ng serve",
     "dev": "ng serve --port 9527",

@@ -7,17 +7,20 @@ export class CommonService {
 
   constructor() { }
 
-  detectMobile(): boolean {
-    if (!window.navigator.userAgent) { return false; }
-    if (
-      window.navigator.userAgent.indexOf('Mobile') > -1 ||
-      window.navigator.userAgent.indexOf('Android') > -1 ||
-      window.navigator.userAgent.indexOf('iPhone') > -1 ||
-      window.navigator.userAgent.indexOf('iPad') > -1 ||
-      window.navigator.userAgent.indexOf('Windows Phone') > -1
-    ) {
-      return true;
-    }
-    return false;
+  detectDeviceType(): DeviceType {
+    if (!window.navigator.userAgent) { return null; }
+
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    return {
+      mobile: /(ipod|ipad|iphone|android|mobile)/.test(userAgent) ? true : false,
+      ios: /(ipod|ipad|iphone)/.test(userAgent) ? true : false,
+      android: /(android)/.test(userAgent) ? true : false,
+      chrome: /(chrome)/.test(userAgent) ? true : false,
+      safari: /(safari)/.test(userAgent) && !/(chrome)/.test(userAgent) ? true : false,
+      firefox: /(firefox)/.test(userAgent) ? true : false,
+      ie: /(msie)/.test(userAgent) ? true : false,
+      edge: /(edge|trident)/.test(userAgent) ? true : false,
+      webView: /(fbav|line|wv|iab|webview)/.test(userAgent) ? true : false,
+    };
   }
 }

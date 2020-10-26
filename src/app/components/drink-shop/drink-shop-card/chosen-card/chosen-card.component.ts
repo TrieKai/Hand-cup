@@ -81,7 +81,7 @@ export class ChosenCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isMobile = this.common.detectMobile();
+    this.isMobile = this.common.detectDeviceType().mobile;
     this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
   }
 
