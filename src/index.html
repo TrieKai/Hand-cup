@@ -11,13 +11,14 @@
   <meta name="google-site-verification" content="udtd5UhBxrZqM_xX5ODsd1hxNlU9bWq7lsekzVROqgY" />
   <link rel="icon" type="image/x-icon" href="./assets/img/Logo.png">
   <link href="https://fonts.googleapis.com/earlyaccess/cwtexyen.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx_vyZzJm_jPd8opBeiOlQqslgJQ3fKus&libraries=places"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap" rel="stylesheet">
+  <script async="" defer=""
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx_vyZzJm_jPd8opBeiOlQqslgJQ3fKus&amp;libraries=places">
+  </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJZKCWG5W4"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-KJZKCWG5W4"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
 
@@ -31,6 +32,27 @@
     });
 
   </script>
+  <!-- Global site tag -->
+
+  <!-- PWA -->
+  <script>
+    let supportPWA = true;
+    const userAgent = window.navigator.userAgent;
+    if (userAgent && /iP(hone|od|ad)/.test(userAgent)) {
+      const version = (userAgent).match(/OS (\d+)_(\d+)_?(\d+)?/);
+      supportPWA = Number(`${version[1]}.${version[2]}`) >= 12.2;
+    }
+    if (supportPWA) {
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = 'manifest.webmanifest';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    }
+
+  </script>
+  <!-- <link rel="manifest" href="manifest.webmanifest"> -->
+  <meta name="theme-color" content="#1976d2">
+  <!-- PWA -->
 </head>
 
 <body>

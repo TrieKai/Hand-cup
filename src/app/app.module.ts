@@ -26,6 +26,7 @@ import { PreviewCardComponent } from './components/drink-shop/drink-shop-card/pr
 import { ReAuthComponent } from './components/profile/re-auth/re-auth.component';
 import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component';
 import { AuthEmailComponent } from './components/login/auth-email/auth-email.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ import { AuthEmailComponent } from './components/login/auth-email/auth-email.com
         BrowserAnimationsModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ],
     providers: [],
     bootstrap: [AppComponent],
