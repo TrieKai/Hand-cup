@@ -25,6 +25,11 @@ export class ConstantsService {
     forgotPasswordComponentRef: 'forgotPasswordComponentRef',
   };
 
+  // HTML Shared data
+  public readonly HTMLSHAREDDATA = {
+    searchInputRef: 'searchInputRef',
+  };
+
   // Message type
   public readonly MESSAGE_TYPE = {
     success: 'success',

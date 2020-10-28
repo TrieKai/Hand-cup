@@ -10,6 +10,7 @@ import { RatingStarsComponent } from './rating-stars/rating-stars.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { ImageEditorComponent } from './image-editor/image-editor.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 // icon
 import { CloseComponent } from './icons/close/close.component';
 import { DoneComponent } from './icons/done/done.component';
@@ -41,6 +42,7 @@ import { FacebookComponent } from './icons/facebook/facebook.component';
     PriceComponent,
     GoogleComponent,
     FacebookComponent,
+    SearchBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { FacebookComponent } from './icons/facebook/facebook.component';
     DialogComponent,
     ImageEditorComponent,
     ImageSliderComponent,
+    SearchBoxComponent,
     // icons
     CloseComponent,
     DoneComponent,

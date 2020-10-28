@@ -1,0 +1,66 @@
+$height       : 40px;
+$background   :#bcebf9;
+$border-radius: 5px;
+
+.search-box {
+  position     : relative;
+  display      : flex;
+  align-items  : center;
+  width        : 100%;
+  height       : $height;
+  background   : $background;
+  border-radius: $border-radius;
+}
+
+.search-input,
+.button {
+  height    : 100%;
+  box-sizing: inherit;
+  border    : 0;
+  color     : #2f2f2f;
+}
+
+.search-input {
+  position           : relative;
+  padding            : 0 20px;
+  outline            : 0;
+  width              : 100%;
+  background         : linear-gradient(45deg, #e0e8ee, #fdf4f4);
+  border-radius      : $border-radius;
+  font-size          : 18px;
+  appearance         : none; // for iOS input[type="search"] roundedness issue. border-radius alone doesn't work
+  transition         : all 0.5s cubic-bezier(0, 0, 0.43, 1.49);
+  transition-property: width, border-radius;
+  z-index            : 1;
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.button {
+  display      : none;
+  padding      : 0 5px;
+  position     : absolute;
+  top          : 0;
+  right        : 0;
+  width        : 40px;
+  height       : $height;
+  font-weight  : bold;
+  background   : $background;
+  border-radius: 0 $border-radius $border-radius 0;
+}
+
+.search-input:not(:placeholder-shown) {
+  padding      : 0 20px 0 20px;
+  width        : calc(100% - 90px);
+  border-radius: $border-radius 0 0 $border-radius;
+
+  +.button {
+    display: block;
+  }
+}
+
+.disable {
+  cursor: not-allowed;
+}

@@ -120,7 +120,7 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     setAutoComplete() {
-        this.sInput = this.htmlElementService.get('searchInput');
+        this.sInput = this.htmlElementService.get(this.cons.HTMLSHAREDDATA.searchInputRef);
         const autocomplete = new google.maps.places.Autocomplete(this.sInput.value);
         autocomplete.addListener('place_changed', () => {
             const place = autocomplete.getPlace();

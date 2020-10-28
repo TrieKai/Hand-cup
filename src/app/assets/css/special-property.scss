@@ -38,12 +38,12 @@
   // ========== Small area =========== //
 
   @if $type==header_small {
-    @return 90px;
+    @return 100px;
   }
 
   @if $type==layoutBasic_small {
     // Use 99.9vh becuz 100vh will show scroll bar
-    @return calc(99.9vh - 90px); // Minus header[90px]
+    @return calc(99.9vh - 100px); // Minus header[90px]
   }
 
   @if $type==layout_small {

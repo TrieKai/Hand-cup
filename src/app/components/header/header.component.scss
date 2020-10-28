@@ -17,42 +17,27 @@
 .home-icon {
     width : 48px;
     height: 48px;
-}
-
-.search-container {
-    position       : fixed;
-    right          : 40px;
-    display        : flex;
-    display        : -webkit-flex;
-    justify-content: center;
-    align-items    : center;
-    margin-right   : 15px;
-    width          : 250px;
-    height         : 40px;
-    order          : 1;
 
     @media screen and (max-width: rwdBoundary(small)) {
-        position: unset;
-        width   : calc(100% - 70px);
-        order   : 2;
+        width : 40px;
+        height: 40px;
+        margin: 5px 0;
     }
 }
 
-.search-container input {
-    width        : 100%;
-    height       : 80%;
-    background   : #fcfcfc;
-    border       : 1px solid #aaa;
-    border-radius: 5px;
-    box-shadow   : 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
-    text-indent  : 15px;
-}
+.search-container {
+    position    : fixed;
+    right       : 40px;
+    margin-right: 15px;
+    width       : 250px;
+    order       : 1;
 
-.search-button {
-    position: absolute;
-    right   : 10px;
-    color   : gray;
-    cursor  : pointer;
+    @media screen and (max-width: rwdBoundary(small)) {
+        position: unset;
+        margin  : 5px 0;
+        width   : calc(100% - 70px);
+        order   : 2;
+    }
 }
 
 .account-button {

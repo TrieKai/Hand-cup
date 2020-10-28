@@ -57,6 +57,10 @@ interface commonSharedData {
     forgotPasswordComponentRef: any
 }
 
+interface htmlSharedData {
+    searchInputRef: any
+}
+
 interface firebaseProfile {
     displayName?: string
     photoURL?: string

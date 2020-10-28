@@ -5,10 +5,12 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class HtmlElementService {
-  protected elements: any;
+  protected elements: htmlSharedData;
 
   constructor() {
-    this.elements = {};
+    this.elements = {
+      searchInputRef: null,
+    };
   }
 
   public set(key: string, value: HTMLElement): BehaviorSubject<HTMLElement> {
@@ -42,7 +44,7 @@ export class HtmlElementService {
         delete this.elements[key];
       }
     }
-    this.elements = {};
+    this.elements = null;
   }
 
   public has(key: string) {

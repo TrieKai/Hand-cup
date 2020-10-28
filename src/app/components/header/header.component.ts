@@ -19,7 +19,7 @@ import { ProfileComponent } from '../profile/profile.component';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
+  @ViewChild('searchComponent', { static: false }) searchComponent: any;
   @ViewChild('sidebarIconToggle', { static: false }) sidebarToggle: ElementRef;
   @ViewChild('sidebarMenu', { static: false }) sidebarMenu: ElementRef;
   home: Menu;
@@ -58,12 +58,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.searchInput)
-    this.htmlElementService.set('searchInput', this.searchInput.nativeElement);
+    console.log(this.searchComponent)
+    this.htmlElementService.set(this.cons.HTMLSHAREDDATA.searchInputRef, this.searchComponent.searchInputRef.nativeElement);
   }
 
   ngOnDestroy(): void {
-    this.htmlElementService.delete('searchInput');
+    this.htmlElementService.delete(this.cons.HTMLSHAREDDATA.searchInputRef);
     if (this.loginSubscribe) {
       this.loginSubscribe.unsubscribe();
     }
@@ -92,6 +92,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
       }
     }
+  }
+
+  doSearch(searchInput: any) {
+    console.log(searchInput)
+    // searchInput.onchange();
+    // TODO: Fix Search input
   }
 
   login() {
