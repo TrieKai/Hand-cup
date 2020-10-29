@@ -44,24 +44,38 @@
     border-top-right-radius: 5px;
 
     .info-box {
-      display    : flex;
-      display    : -webkit-flex;
-      align-items: center;
-      position   : absolute;
-      right      : 5px;
-      color      : tomato;
+      position: absolute;
+      right   : 5px;
+      color   : tomato;
     }
 
     .info-box-mobile {
-      position: relative;
+      position : relative;
+      font-size: 18px;
 
       .drop-down {
         position     : absolute;
         right        : 0;
         padding      : 5px;
+        width        : 180px;
         background   : #ffffff;
         border-radius: 5px;
+        z-index      : 2;
+
+        section {
+          margin: 5px 0;
+        }
       }
+    }
+
+    .center {
+      display    : flex;
+      display    : -webkit-flex;
+      align-items: center;
+    }
+
+    .info-text {
+      margin-left: 3px;
     }
 
     .favorite:hover {
@@ -138,8 +152,8 @@
     }
 
     .google-maps-icon {
-      width : 25px;
-      height: 25px;
+      width : 24px;
+      height: 24px;
       cursor: pointer;
     }
   }

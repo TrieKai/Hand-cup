@@ -1,4 +1,5 @@
-import { Component, OnInit, HostListener, Input } from '@angular/core';
+import { Component, OnInit, HostListener, Input, Renderer2, Inject, ViewChild, ElementRef } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -17,8 +18,10 @@ import { DialogComponent } from '../../../common/dialog/dialog.component';
 })
 export class ChosenCardComponent implements OnInit {
   @Input() chosenShop: drinkShopResults;
+  @ViewChild('dots', { static: false }) dotsRef: ElementRef<HTMLDivElement>;
+  @ViewChild('dropdown', { static: false }) dropdownRef: ElementRef<HTMLDivElement>;
   isMobile: boolean;
-  // showDropDown: boolean;
+  showDropDown: boolean;
   dialogMaxWidth: number;
   dialogMinWidth: number;
   dialogMaxHeight: number;
@@ -28,6 +31,7 @@ export class ChosenCardComponent implements OnInit {
   images: string[] = [];
   links: string[] = [];
   imageSliderStyles: object[] = [];
+  listen: any;
 
   private _chosenShopDetail: drinkShopDetail;
 
@@ -47,17 +51,19 @@ export class ChosenCardComponent implements OnInit {
   }
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private cons: ConstantsService,
     private dialog: MatDialog,
     private localStorageService: LocalstorageService,
     private common: CommonService,
     private drinkShopService: DrinkShopService,
     private firebase: FirebaseService,
+    private renderer: Renderer2,
   ) { }
 
   @HostListener('window:resize', [])
   onResize() {
-    console.log('window_width:', window.innerWidth, 'window_height:', window.innerHeight)
+    // console.log('window_width:', window.innerWidth, 'window_height:', window.innerHeight)
     this.dialogMaxHeight = window.innerHeight * 0.8;
     this.ratingStarWidth = 15;
     this.ratingStarHeight = 15;
@@ -89,9 +95,19 @@ export class ChosenCardComponent implements OnInit {
     this.onResize();
   }
 
-  // openDropDown() {
-  //   this.showDropDown = true;
-  // }
+  ngOnDestroy(): void {
+    this.listen();
+  }
+
+  openDropDown(e: any) {
+    e.preventDefault();
+    this.showDropDown = true;
+    this.listen = this.renderer.listen(this.document, 'click', (e: any) => {
+      if (this.dotsRef.nativeElement.contains(e.target) || this.dropdownRef.nativeElement.contains(e.target)) { return; }
+      this.showDropDown = false;
+      this.listen();
+    });
+  }
 
   openUrl(url: string): void {
     window.open(url, '_blank');
@@ -118,6 +134,9 @@ export class ChosenCardComponent implements OnInit {
   }
 
   async favoritetShop(placeId: string) {
+    if (this.firebase.checkAuthStatus) {
+      console.log('Not login la')
+    }
     const status = this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite);
     if (status === false) {
       const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.favorite + ';';
