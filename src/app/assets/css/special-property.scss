@@ -43,12 +43,12 @@
 
   @if $type==layoutBasic_small {
     // Use 99.9vh becuz 100vh will show scroll bar
-    @return calc(99.9vh - 100px); // Minus header[90px]
+    @return calc(99.9vh - 100px); // Minus header[100px]
   }
 
   @if $type==layout_small {
     // Use 99.9vh becuz 100vh will show scroll bar
-    @return calc(99.9vh - 90px - 45px); // Minus header[90px] & infoBar[45px]
+    @return calc(99.9vh - 100px - 45px); // Minus header[100px] & infoBar[45px]
   }
 }
 
