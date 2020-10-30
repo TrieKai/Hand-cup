@@ -1,8 +1,16 @@
 @import '../../assets/css/special-property.scss';
 
-// mat-toolbar {
-//     height: height(header);
-// }
+html,
+body {
+    overflow-x: hidden;
+    height    : 100%;
+}
+
+body {
+    background: #fff;
+    padding   : 0;
+    margin    : 0;
+}
 
 .toolBar-title {
     display    : flex;
@@ -61,18 +69,6 @@
     }
 }
 
-html,
-body {
-    overflow-x: hidden;
-    height    : 100%;
-}
-
-body {
-    background: #fff;
-    padding   : 0;
-    margin    : 0;
-}
-
 .header {
     display         : flex;
     display         : -webkit-flex;
@@ -121,37 +117,37 @@ body {
         margin-top: height(header_small);
         height    : height(layoutBasic_small);
     }
-}
 
-.sidebar-menu-inner {
-    margin    : 0;
-    padding   : 0;
-    max-height: 100%;
-    overflow-y: auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.10);
-    cursor    : pointer;
+    .sidebar-menu-inner {
+        margin    : 0;
+        padding   : 0;
+        max-height: 100%;
+        overflow-y: auto;
+        border-top: 1px solid rgba(255, 255, 255, 0.10);
+        cursor    : pointer;
 
-    .menu-icon {
-        width : 30px;
-        height: 30px;
+        .menu-icon {
+            width : 30px;
+            height: 30px;
+        }
+
+        .menu-span {
+            margin-left: 10px;
+            font-size  : 18px;
+        }
     }
 
-    .menu-span {
-        margin-left: 10px;
-        font-size  : 18px;
+    .sidebar-menu-inner li {
+        display       : flex;
+        display       : -webkit-flex;
+        align-items   : center;
+        list-style    : none;
+        padding       : 20px;
+        color         : #fff;
+        border-bottom : 1px solid rgba(255, 255, 255, 0.10);
+        text-transform: uppercase;
+        font-weight   : bold;
     }
-}
-
-.sidebar-menu-inner li {
-    display       : flex;
-    display       : -webkit-flex;
-    align-items   : center;
-    list-style    : none;
-    padding       : 20px;
-    color         : #fff;
-    border-bottom : 1px solid rgba(255, 255, 255, 0.10);
-    text-transform: uppercase;
-    font-weight   : bold;
 }
 
 .open~.sidebar-menu {

@@ -9,6 +9,7 @@ import { HtmlElementService } from 'src/app/shared/html-element.service';
 import { DomService } from 'src/app/util/dom.service';
 import { LoginService } from 'src/app/service/login.service';
 import { SharedService } from 'src/app/shared/shared.service';
+import { MessageService } from 'src/app/service/message.service';
 
 import { LoginComponent } from '../login/login.component';
 import { ProfileComponent } from '../profile/profile.component';
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     private domService: DomService,
     private loginService: LoginService,
     private sharedService: SharedService,
+    private message: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -112,7 +114,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   profile() {
-    const componentRef = this.domService.createComponent(ProfileComponent, this.cons.SHAREDDATA.profileComponentRef);
-    this.domService.attachComponent(componentRef, this.document.body);
+    const userData = this.loginService.getFirebaseUserData();
+    if (userData) {
+      const componentRef = this.domService.createComponent(ProfileComponent, this.cons.SHAREDDATA.profileComponentRef);
+      this.domService.attachComponent(componentRef, this.document.body);
+    } else {
+      this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '請先登入唷', content: '' });
+    }
   }
 }

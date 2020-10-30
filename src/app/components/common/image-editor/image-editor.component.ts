@@ -14,6 +14,7 @@ export class ImageEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('opacitySlider', { static: true }) opacitySlider: ElementRef<HTMLInputElement>;
   @Output() imageOnloaded = new EventEmitter();
   originalFile: File = null;
+  imageShow: boolean;
   width: number = 300;
   height: number = 300;
   magnification: number = 1;

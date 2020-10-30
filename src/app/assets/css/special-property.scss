@@ -17,6 +17,7 @@
 }
 
 @function height($type) {
+  // ========== Normal area =========== //
   @if $type==header {
     @return 65px;
   }
@@ -36,7 +37,6 @@
   }
 
   // ========== Small area =========== //
-
   @if $type==header_small {
     @return 100px;
   }
