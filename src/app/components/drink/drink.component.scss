@@ -12,6 +12,18 @@
     @media screen and (max-width: rwdBoundary(small)) {
         height: height(layout_small);
     }
+
+    .firework-left {
+        position: absolute;
+        left    : 20%;
+        top     : 40%;
+    }
+
+    .firework-right {
+        position: absolute;
+        right   : 20%;
+        top     : 40%;
+    }
 }
 
 .box {

@@ -15,6 +15,8 @@ export class DrinkComponent implements OnInit {
   drinksData: drinksData[];
   drink: drinksData;
   isFinished: boolean;
+  showLeftFirework: boolean;
+  showRightFirework: boolean
 
   constructor(
     private cons: ConstantsService,
@@ -44,7 +46,7 @@ export class DrinkComponent implements OnInit {
 
   recommendDrinks() {
     this.gocha = true;
-    this.isFinished = false;
+    this.isFinished = this.showLeftFirework = this.showRightFirework = false;
     const shuffledDrinks = this.shuffle(this.drinksData);
     const concatedData = shuffledDrinks
       .concat(shuffledDrinks)
@@ -55,7 +57,10 @@ export class DrinkComponent implements OnInit {
     for (let i = 0; i < concatedData.length; i++) {
       const flag = (i === drinksDataLength * 3 + choesnIndex) ? true : false;
       setTimeout(() => {
-        if (flag) { this.isFinished = true; }
+        if (flag) {
+          this.isFinished = this.showLeftFirework = true;
+          setTimeout(() => { this.showRightFirework = true; }, 500); // Right firework delay 500ms
+        }
         this.drink = concatedData[i];
       }, 100 * Math.pow(i / 2, 1.5)); // 參數隨便調的啦
       if (flag) { break; } // Break point

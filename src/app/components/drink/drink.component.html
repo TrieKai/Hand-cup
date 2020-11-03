@@ -1,5 +1,7 @@
 <nav class="info-bar">{{infoMessage}}</nav>
 <main class="container">
+  <app-firework *ngIf="showLeftFirework" class="firework-left"></app-firework>
+  <app-firework *ngIf="showRightFirework" class="firework-right"></app-firework>
   <section *ngIf="!gocha" class="box">
     <div class="pressBtn" (click)="recommendDrinks()">
       <span>PRESS</span>

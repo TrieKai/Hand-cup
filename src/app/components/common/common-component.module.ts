@@ -22,6 +22,8 @@ import { StarEmptyComponent } from './icons/star-empty/star-empty.component';
 import { PriceComponent } from './icons/price/price.component';
 import { GoogleComponent } from './icons/google/google.component';
 import { FacebookComponent } from './icons/facebook/facebook.component';
+// animations
+import { FireworkComponent } from './animations/firework/firework.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { FacebookComponent } from './icons/facebook/facebook.component';
     DialogComponent,
     ImageEditorComponent,
     ImageSliderComponent,
+    SearchBoxComponent,
     CloseComponent,
     DoneComponent,
     InfoComponent,
@@ -42,7 +45,7 @@ import { FacebookComponent } from './icons/facebook/facebook.component';
     PriceComponent,
     GoogleComponent,
     FacebookComponent,
-    SearchBoxComponent,
+    FireworkComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +73,8 @@ import { FacebookComponent } from './icons/facebook/facebook.component';
     PriceComponent,
     GoogleComponent,
     FacebookComponent,
+    // animations
+    FireworkComponent,
   ]
 })
 export class CommonComponentModule { }

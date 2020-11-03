@@ -1,15 +1,19 @@
 @import '../../../assets/css/special-property.scss';
 
 .card-container {
-  display           : flex;
-  display           : -webkit-flex;
-  flex-wrap         : wrap;
-  justify-content   : center;
-  margin            : auto;
-  width             : 100%;
-  height            : height(layout);
-  background        : linear-gradient(180deg, #a3e6e9 0%, #FFFFFF 100%);
-  // overflow       : hidden;
+  display        : flex;
+  display        : -webkit-flex;
+  flex-wrap      : wrap;
+  justify-content: center;
+  margin         : auto;
+  width          : 100%;
+  height         : height(layout);
+  background     : linear-gradient(180deg, #a3e6e9 0%, #FFFFFF 100%);
+  overflow-y     : auto;
+
+  @media screen and (max-width: rwdBoundary(small)) {
+    height: height(layout_small);
+  }
 }
 
 .button-box {
