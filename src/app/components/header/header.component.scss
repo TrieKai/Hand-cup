@@ -1,3 +1,4 @@
+@import '../../assets/css/common.scss';
 @import '../../assets/css/special-property.scss';
 
 html,
@@ -13,8 +14,7 @@ body {
 }
 
 .toolBar-title {
-    display    : flex;
-    display    : -webkit-flex;
+    @include display-flex();
     margin-left: 10px;
     width      : auto;
     height     : auto;
@@ -49,10 +49,9 @@ body {
 }
 
 .account-button {
+    @include display-flex();
     position : fixed;
     right    : 10px;
-    display  : flex;
-    display  : -webkit-flex;
     font-size: 30px;
     cursor   : pointer;
     order    : 2;
@@ -70,8 +69,7 @@ body {
 }
 
 .header {
-    display         : flex;
-    display         : -webkit-flex;
+    @include display-flex();
     align-items     : center;
     margin          : 0 auto;
     padding-left    : 45px;
@@ -85,8 +83,8 @@ body {
     z-index         : zIndex(header);
 
     @media screen and (max-width: rwdBoundary(small)) {
-        flex-wrap: wrap;
-        height   : height(header_small) !important;
+        @include flex-wrap(wrap);
+        height: height(header_small) !important;
     }
 }
 
@@ -108,10 +106,10 @@ body {
     width     : 250px;
     height    : height(layoutBasic);
     margin-top: height(header);
-    transform : translateX(-250px);
-    transition: transform 250ms ease-in-out;
     background: linear-gradient(180deg, #FC466B 0%, #3F5EFB 100%);
-    z-index   : zIndex(header);
+    @include transform(translateX(-250px));
+    @include transition(transform 250ms ease-in-out);
+    z-index: zIndex(header);
 
     @media screen and (max-width: rwdBoundary(small)) {
         margin-top: height(header_small);
@@ -138,8 +136,7 @@ body {
     }
 
     .sidebar-menu-inner li {
-        display       : flex;
-        display       : -webkit-flex;
+        @include display-flex();
         align-items   : center;
         list-style    : none;
         padding       : 20px;
@@ -151,24 +148,23 @@ body {
 }
 
 .open~.sidebar-menu {
-    transform: translateX(0);
+    @include transform(translateX(0));
 }
 
 .sidebar-icon-toggle {
+    @include display-flex();
+    @include flex-direction(column);
     position       : fixed;
-    display        : flex;
-    display        : -webkit-flex;
-    flex-direction : column;
     justify-content: space-evenly;
-    transition     : all 0.3s;
     width          : 100%;
     height         : 100%;
     top            : 22px;
     left           : 15px;
     width          : 22px;
     height         : 22px;
-    cursor         : pointer;
-    z-index        : zIndex(header);
+    @include transition(all 0.3s);
+    cursor : pointer;
+    z-index: zIndex(header);
 
     @media screen and (max-width: rwdBoundary(small)) {
         top: 34px;
@@ -176,41 +172,41 @@ body {
 }
 
 .hamburger {
-    transition      : all 0.3s;
     position        : absolute;
     width           : 100%;
     height          : 3px;
     background-color: gray;
+    @include transition(all 0.3s);
 }
 
 .horizontal {
-    transition: all 0.3s;
-    position  : relative;
+    position: relative;
+    @include transition(all 0.3s);
 }
 
 .diagonal.part-1 {
-    position  : relative;
-    transition: all 0.3s;
+    position: relative;
+    @include transition(all 0.3s);
 }
 
 .diagonal.part-2 {
-    transition: all 0.3s;
-    position  : relative;
+    position: relative;
+    @include transition(all 0.3s);
 }
 
 .open>.horizontal {
-    transition: all 0.3s;
-    opacity   : 0;
+    opacity: 0;
+    @include transition(all 0.3s);
 }
 
 .open>.diagonal.part-1 {
-    transition: all 0.3s;
-    transform : rotate(135deg);
     margin-top: 3.5px;
+    @include transform(rotate(135deg));
+    @include transition(all 0.3s);
 }
 
 .open>.diagonal.part-2 {
-    transition: all 0.3s;
-    transform : rotate(-135deg);
     margin-top: -22px;
+    @include transform(rotate(-135deg));
+    @include transition(all 0.3s);
 }

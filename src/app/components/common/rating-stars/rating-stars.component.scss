@@ -1,3 +1,5 @@
+@import "../../../assets/css/common.scss";
+
 .rating-stars-box {
-  display: inline-flex;
+  @include display-flex();
 }

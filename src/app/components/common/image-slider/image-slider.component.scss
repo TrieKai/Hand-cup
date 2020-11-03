@@ -1,3 +1,5 @@
+@import '../../../assets/css/common.scss';
+
 .image-container {
   position: relative;
   width   : 100%;
@@ -36,8 +38,7 @@
   }
 
   .left-arrow-box {
-    display : flex;
-    display : -webkit-flex;
+    @include display-flex();
     position: absolute;
     top     : 0;
     bottom  : 0;
@@ -55,9 +56,9 @@
       height     : 25px;
       border-top : 3px solid #fff;
       border-left: 3px solid #fff;
-      transform  : translateX(-30px) rotate(-45deg);
       opacity    : 0;
       animation  : left-arrow-out 0.5s ease-in-out;
+      @include transform(translateX(-30px) rotate(-45deg));
     }
   }
 
@@ -70,8 +71,7 @@
   }
 
   .right-arrow-box {
-    display : flex;
-    display : -webkit-flex;
+    @include display-flex();
     position: absolute;
     top     : 0;
     right   : 0;
@@ -89,20 +89,20 @@
       height      : 25px;
       border-top  : 3px solid #fff;
       border-right: 3px solid #fff;
-      transform   : translateX(30px) rotate(45deg);
       opacity     : 0;
       animation   : right-arrow-out 0.5s ease-in-out;
+      @include transform(translateX(30px) rotate(45deg));
     }
   }
 
   .dot-box {
-    display        : inline-flex;
+    @include display-inline-flex();
     position       : absolute;
     left           : 50%;
-    transform      : translate(-50%, -30px);
     list-style-type: none;
     opacity        : 0;
     animation      : dot-box-out 0.5s ease-in-out;
+    @include transform(translate(-50%, -30px));
 
     .dot {
       position     : relative;
@@ -115,8 +115,8 @@
       cursor       : pointer;
 
       &:hover::after {
-        transform: translate(-50%, -50%) scale(1, 1);
-        opacity  : 1;
+        opacity: 1;
+        @include transform(translate(-50%, -50%) scale(1, 1));
       }
 
       &::after {
@@ -124,314 +124,97 @@
         position        : absolute;
         top             : calc(50% - 0.05px);
         left            : calc(50% - 0.05px);
-        transform       : translate(-50%, -50%) scale(0, 0);
         width           : 75%;
         height          : 75%;
         border-radius   : 50%;
         background-color: #fff;
         opacity         : 0;
-        transition      : 0.3s;
+        @include transform(translate(-50%, -50%) scale(0, 0));
+        @include transition(0.3s);
       }
     }
 
     .active {
       &::after {
-        transform: translate(-50%, -50%) scale(1, 1);
-        opacity  : 1;
+        opacity: 1;
+        @include transform(translate(-50%, -50%) scale(1, 1));
       }
     }
   }
 }
 
 .animation {
-  opacity      : 1;
-  // transition: all 0.8s 0.5s ease-out;
+  opacity: 1;
 }
 
-@keyframes left-arrow-in {
+@include keyframes(left-arrow-in) {
   from {
-    transform: translateX(0) rotate(-45deg);
-    opacity  : 0;
+    opacity: 0;
+    @include transform(translateX(0) rotate(-45deg));
   }
 
   to {
-    transform: translateX(-30px) rotate(-45deg);
-    opacity  : 1;
+    opacity: 1;
+    @include transform(translateX(-30px) rotate(-45deg));
   }
 }
 
-@-webkit-keyframes left-arrow-in {
+@include keyframes(left-arrow-out) {
   from {
-    -webkit-transform: translateX(0) rotate(-45deg);
-    opacity          : 1;
+    opacity: 1;
+    @include transform(translateX(-30px) rotate(-45deg));
   }
 
   to {
-    -webkit-transform: translateX(-30px) rotate(-45deg);
-    opacity          : 0;
+    opacity: 0;
+    @include transform(translateX(-15px) rotate(-45deg));
   }
 }
 
-@-moz-keyframes left-arrow-in {
+@include keyframes(right-arrow-in) {
   from {
-    -moz-transform: translateX(0) rotate(-45deg);
-    opacity       : 1;
+    opacity: 0;
+    @include transform(translateX(0) rotate(45deg));
   }
 
   to {
-    -moz-transform: translateX(-30px) rotate(-45deg);
-    opacity       : 0;
+    opacity: 1;
+    @include transform(translateX(30px) rotate(45deg));
   }
 }
 
-@-o-keyframes left-arrow-in {
+@include keyframes(right-arrow-out) {
   from {
-    -o-transform: translateX(0) rotate(-45deg);
-    opacity     : 1;
+    opacity: 1;
+    @include transform(translateX(30px) rotate(45deg));
   }
 
   to {
-    -o-transform: translateX(-30px) rotate(-45deg);
-    opacity     : 0;
+    opacity: 0;
+    @include transform(translateX(15px) rotate(45deg));
   }
 }
 
-@keyframes left-arrow-out {
+@include keyframes(dot-box-in) {
   from {
-    transform: translateX(-30px) rotate(-45deg);
-    opacity  : 1;
+    opacity: 0;
+    @include transform(translate(-50%, 0));
   }
 
   to {
-    transform: translateX(-15px) rotate(-45deg);
-    opacity  : 0;
+    opacity: 1;
+    @include transform(translate(-50%, -30px));
   }
 }
 
-@-webkit-keyframes left-arrow-out {
+@include keyframes(dot-box-out) {
   from {
-    -webkit-transform: translateX(-30px) rotate(-45deg);
-    opacity          : 1;
+    opacity: 1;
+    @include transform(translate(-50%, -30px));
   }
 
   to {
-    -webkit-transform: translateX(-15px) rotate(-45deg);
-    opacity          : 0;
-  }
-}
-
-@-moz-keyframes left-arrow-out {
-  from {
-    -moz-transform: translateX(-30px) rotate(-45deg);
-    opacity       : 1;
-  }
-
-  to {
-    -moz-transform: translateX(-15px) rotate(-45deg);
-    opacity       : 0;
-  }
-}
-
-@-o-keyframes left-arrow-out {
-  from {
-    -o-transform: translateX(-30px) rotate(-45deg);
-    opacity     : 1;
-  }
-
-  to {
-    -o-transform: translateX(-15px) rotate(-45deg);
-    opacity     : 0;
-  }
-}
-
-@keyframes right-arrow-in {
-  from {
-    transform: translateX(0) rotate(45deg);
-    opacity  : 0;
-  }
-
-  to {
-    transform: translateX(30px) rotate(45deg);
-    opacity  : 1;
-  }
-}
-
-@-webkit-keyframes right-arrow-in {
-  from {
-    -webkit-transform: translateX(0) rotate(45deg);
-    opacity          : 0;
-  }
-
-  to {
-    -webkit-transform: translateX(30px) rotate(45deg);
-    opacity          : 1;
-  }
-}
-
-@-moz-keyframes right-arrow-in {
-  from {
-    -moz-transform: translateX(0) rotate(45deg);
-    opacity       : 0;
-  }
-
-  to {
-    -moz-transform: translateX(30px) rotate(45deg);
-    opacity       : 1;
-  }
-}
-
-@-o-keyframes right-arrow-in {
-  from {
-    -o-transform: translateX(0) rotate(45deg);
-    opacity     : 0;
-  }
-
-  to {
-    -o-transform: translateX(30px) rotate(45deg);
-    opacity     : 1;
-  }
-}
-
-@keyframes right-arrow-out {
-  from {
-    transform: translateX(30px) rotate(45deg);
-    opacity  : 1;
-  }
-
-  to {
-    transform: translateX(15px) rotate(45deg);
-    opacity  : 0;
-  }
-}
-
-@-webkit-keyframes right-arrow-out {
-  from {
-    -webkit-transform: translateX(30px) rotate(45deg);
-    opacity          : 1;
-  }
-
-  to {
-    -webkit-transform: translateX(15px) rotate(45deg);
-    opacity          : 0;
-  }
-}
-
-@-moz-keyframes right-arrow-out {
-  from {
-    -moz-transform: translateX(30px) rotate(45deg);
-    opacity       : 1;
-  }
-
-  to {
-    -moz-transform: translateX(15px) rotate(45deg);
-    opacity       : 0;
-  }
-}
-
-@-o-keyframes right-arrow-out {
-  from {
-    -o-transform: translateX(30px) rotate(45deg);
-    opacity     : 1;
-  }
-
-  to {
-    -o-transform: translateX(15px) rotate(45deg);
-    opacity     : 0;
-  }
-}
-
-@keyframes dot-box-in {
-  from {
-    transform: translate(-50%, 0);
-    opacity  : 0;
-  }
-
-  to {
-    transform: translate(-50%, -30px);
-    opacity  : 1;
-  }
-}
-
-@-webkit-keyframes dot-box-in {
-  from {
-    -webkit-transform: translate(-50%, 0);
-    opacity          : 0;
-  }
-
-  to {
-    -webkit-transform: translate(-50%, -30px);
-    opacity          : 1;
-  }
-}
-
-@-moz-keyframes dot-box-in {
-  from {
-    -moz-transform: translate(-50%, 0);
-    opacity       : 0;
-  }
-
-  to {
-    -moz-transform: translate(-50%, -30px);
-    opacity       : 1;
-  }
-}
-
-@-o-keyframes dot-box-in {
-  from {
-    -o-transform: translate(-50%, 0);
-    opacity     : 0;
-  }
-
-  to {
-    -o-transform: translate(-50%, -30px);
-    opacity     : 1;
-  }
-}
-
-@keyframes dot-box-out {
-  from {
-    transform: translate(-50%, -30px);
-    opacity  : 1;
-  }
-
-  to {
-    transform: translate(-50%, -20px);
-    opacity  : 0;
-  }
-}
-
-@-webkit-keyframes dot-box-out {
-  from {
-    -webkit-transform: translate(-50%, -30px);
-    opacity          : 1;
-  }
-
-  to {
-    -webkit-transform: translate(-50%, -20px);
-    opacity          : 0;
-  }
-}
-
-@-moz-keyframes dot-box-out {
-  from {
-    -moz-transform: translate(-50%, -30px);
-    opacity       : 1;
-  }
-
-  to {
-    -moz-transform: translate(-50%, -20px);
-    opacity       : 0;
-  }
-}
-
-@-o-keyframes dot-box-out {
-  from {
-    -o-transform: translate(-50%, -30px);
-    opacity     : 1;
-  }
-
-  to {
-    -o-transform: translate(-50%, -20px);
-    opacity     : 0;
+    opacity: 0;
+    @include transform(translate(-50%, -20px));
   }
 }

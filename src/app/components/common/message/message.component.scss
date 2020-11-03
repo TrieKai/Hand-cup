@@ -1,9 +1,10 @@
+@import '../../../assets/css/common.scss';
 @import '../../../assets/css/special-property.scss';
 
 .messageContainer {
   position: fixed;
-  right: 5px;
-  bottom: 5px;
+  right   : 5px;
+  bottom  : 5px;
+  @include transition(bottom 0.3s);
   z-index: zIndex(message);
-  transition: bottom 0.3s;
 }

@@ -1,3 +1,4 @@
+@import '../../assets/css/common.scss';
 @import '../../assets/css/special-property.scss';
 
 .overlay-container {
@@ -18,14 +19,12 @@
     pointer-events             : auto;
     background                 : rgba(0, 0, 0, 0.32);
     -webkit-tap-highlight-color: transparent;
-    transition                 : opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
-    -webkit-transition         : opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
     opacity                    : 1;
+    @include transition(opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1));
   }
 
   .login-wrapper {
-    display        : flex;
-    display        : -webkit-flex;
+    @include display-flex();
     justify-content: center;
     align-items    : center;
     width          : 100%;
@@ -34,20 +33,18 @@
 }
 
 .login-box {
-  display          : flex;
-  display          : -webkit-flex;
-  flex-direction   : column;
-  min-height       : 300px;
-  max-width        : 250px;
-  pointer-events   : initial;
-  background       : #FFF;
-  border-radius    : 2px;
-  box-shadow       : 0px 2px 3px rgba(0, 0, 0, 0.2);
-  overflow         : hidden;
-  animation        : popupWindow 0.5s;
-  transform        : translateZ(0px);
-  -webkit-transform: translateZ(0px);
-  z-index          : zIndex(login);
+  @include display-flex();
+  @include flex-direction(column);
+  min-height    : 300px;
+  max-width     : 250px;
+  pointer-events: initial;
+  background    : #FFF;
+  border-radius : 2px;
+  box-shadow    : 0px 2px 3px rgba(0, 0, 0, 0.2);
+  overflow      : hidden;
+  animation     : popupWindow 0.5s;
+  @include transform(translateZ(0px));
+  z-index: zIndex(login);
 
   * {
     box-sizing: border-box;
@@ -55,12 +52,11 @@
 }
 
 .pages {
-  flex       : 1;
+  @include display-flex();
+  @include flex(1);
   white-space: nowrap;
   position   : relative;
-  transition : all 0.4s;
-  display    : flex;
-  display    : -webkit-flex;
+  @include transition(all 0.4s);
 
   .page {
     min-width  : 100%;
@@ -70,21 +66,21 @@
 
     &:nth-of-type(1) {
       .input {
-        transform: translateX(-100%) scale(0.5);
+        @include transform(translateX(-100%) scale(0.5));
       }
     }
 
     &:nth-of-type(2) {
       .input {
-        transform: translateX(100%) scale(0.5);
+        @include transform(translateX(100%) scale(0.5));
       }
     }
 
     .input {
-      margin-top      : 15px;
-      transition      : all 1s;
-      opacity         : 0;
-      transition-delay: 0s;
+      margin-top: 15px;
+      opacity   : 0;
+      @include transition(all 1s);
+      @include transition-delay(0s);
     }
 
     .forgot {
@@ -134,8 +130,7 @@
     }
 
     .third-login-box {
-      display      : flex;
-      display      : -webkit-flex;
+      @include display-flex();
       margin-top   : 10px;
       align-items  : center;
       width        : 100%;
@@ -231,24 +226,23 @@
 }
 
 .tabs {
+  @include display-flex();
   max-height: 50px;
   height    : 50px;
-  display   : flex;
-  display   : -webkit-flex;
   background: #FFF;
 
   .tab {
-    flex       : 1;
+    @include flex(1);
     color      : #5D708A;
     text-align : center;
     line-height: 50px;
-    transition : all 0.2s;
-    cursor     : pointer;
+    @include transition(all 0.2s);
+    cursor: pointer;
 
     .text {
-      font-size : 14px;
-      transform : scale(1);
-      transition: all 0.2s;
+      font-size: 14px;
+      @include transform(scale(1));
+      @include transition(all 0.2s);
     }
   }
 }
@@ -269,22 +263,22 @@ input[type=radio] {
       color     : #3F4C7F;
 
       .text {
-        transform: scale(0.9);
+        @include transform(scale(0.9));
       }
     }
 
     ~.pages {
-      transform: translateX(-100% * $i);
+      @include transform(translateX(-100% * $i));
 
       .page:nth-of-type(#{$i + 1}) {
         .input {
-          opacity   : 1;
-          transform : translateX(0%);
-          transition: opacity 0.5s, transform 0.5s;
+          opacity: 1;
+          @include transform(translateX(0%));
+          @include transition(opacity 0.5s transform 0.5s);
 
           @for $i from 1 through 7 {
             &:nth-child(#{$i}) {
-              transition-delay: 0.2s*$i;
+              @include transition-delay(0.2s*$i);
             }
           }
         }
@@ -305,7 +299,7 @@ input[type=radio] {
   }
 }
 
-@keyframes show {
+@include keyframes(show) {
   0% {
     opacity: 0;
   }
@@ -319,7 +313,7 @@ input[type=radio] {
   }
 }
 
-@keyframes expand {
+@include keyframes(expand) {
   from {
     width: 0%;
   }
@@ -329,28 +323,28 @@ input[type=radio] {
   }
 }
 
-@keyframes shake {
+@include keyframes(shake) {
 
   8%,
   41% {
-    -webkit-transform: translateX(-10px);
+    @include transform(translateX(-10px));
   }
 
   25%,
   58% {
-    -webkit-transform: translateX(10px);
+    @include transform(translateX(10px));
   }
 
   75% {
-    -webkit-transform: translateX(-5px);
+    @include transform(translateX(-5px));
   }
 
   92% {
-    -webkit-transform: translateX(5px);
+    @include transform(translateX(5px));
   }
 
   0%,
   100% {
-    -webkit-transform: translateX(0);
+    @include transform(translateX(0));
   }
 }

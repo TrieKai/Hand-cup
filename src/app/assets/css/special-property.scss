@@ -1,3 +1,5 @@
+@import './common.scss';
+
 @function rwdBoundary($type) {
   @if $type==minimum {
     @return 320px;
@@ -17,6 +19,7 @@
 }
 
 @function height($type) {
+
   // ========== Normal area =========== //
   @if $type==header {
     @return 65px;
@@ -93,9 +96,9 @@
   }
 }
 
-@keyframes popupWindow {
+@include keyframes(popupWindow) {
   from {
-    transform: translateY(50%) scale(0, 0);
-    opacity  : 0;
+    opacity: 0;
+    @include transform(translateY(50%) scale(0, 0));
   }
 }

@@ -1,8 +1,8 @@
+@import "../../../assets/css/common.scss";
 @import "../../../assets/css/special-property.scss";
 
 .lock-loading-container {
-  display         : flex;
-  display         : -webkit-flex;
+  @include display-flex();
   align-items     : center;
   justify-content : center;
   position        : fixed;
@@ -16,8 +16,7 @@
 }
 
 .lock-loading-mask {
-  display         : flex;
-  display         : -webkit-flex;
+  @include display-flex();
   align-items     : center;
   justify-content : center;
   background-color: #fdecff;

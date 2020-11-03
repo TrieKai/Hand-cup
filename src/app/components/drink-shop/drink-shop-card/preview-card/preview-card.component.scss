@@ -1,7 +1,8 @@
+@import '../../../../assets/css/common.scss';
 @import '../../../../assets/css/special-property.scss';
 
 .chosen-card {
-  display              : grid;
+  @include display-grid();
   align-items          : center;
   justify-content      : center;
   grid-template-columns: 300px 450px;
@@ -30,9 +31,8 @@
   }
 
   .chosen-card-title {
+    @include display-flex();
     grid-area              : title;
-    display                : flex;
-    display                : -webkit-flex;
     justify-content        : center;
     align-items            : center;
     justify-content        : center;
@@ -90,15 +90,13 @@
       }
 
       .review-title {
-        display    : flex;
-        display    : -webkit-flex;
+        @include display-flex();
+        @include flex-wrap(wrap);
         align-items: center;
         margin     : 5px 0;
-        flex-wrap  : wrap;
 
         .author-box {
-          display    : flex;
-          display    : -webkit-flex;
+          @include display-flex();
           align-items: center;
           width      : calc(100% - 95px - 90px); // Minus rating-box & time-box
 
@@ -125,8 +123,7 @@
         }
 
         .rating-box {
-          display    : flex;
-          display    : -webkit-flex;
+          @include display-flex();
           align-items: center;
           margin-left: 5px;
           width      : 90px;

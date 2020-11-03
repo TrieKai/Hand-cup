@@ -1,24 +1,26 @@
+@import '../../../../assets/css/common.scss';
+
 .message-block-container {
   position: relative;
-  width: 284px;
-  height: 74px;
+  width   : 284px;
+  height  : 74px;
   overflow: hidden;
 
   .message-block {
-    position: absolute;
-    top: 1px;
-    right: 2px;
-    left: 2px;
-    padding: 5px 10px;
-    height: 60px;
+    position  : absolute;
+    top       : 1px;
+    right     : 2px;
+    left      : 2px;
+    padding   : 5px 10px;
+    height    : 60px;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
-    transition: top 0.5s;
-    overflow: hidden;
-    animation: floatUp 0.5s;
+    overflow  : hidden;
+    animation : floatUp 0.5s;
+    @include transition(top 0.5s);
 
     .icon,
     .text {
-      display: inline-block;
+      display       : inline-block;
       vertical-align: middle;
     }
 
@@ -34,7 +36,7 @@
       width: 200px;
 
       .title {
-        font-size: 18px;
+        font-size  : 18px;
         font-weight: bold;
       }
     }
@@ -42,9 +44,9 @@
 
   .close {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
+    top     : 5px;
+    right   : 5px;
+    cursor  : pointer;
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.2);
@@ -80,7 +82,7 @@
   background-color: #f8b7bd;
 }
 
-@keyframes floatUp {
+@include keyframes(floatUp) {
   from {
     top: 74px;
   }

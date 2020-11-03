@@ -1,3 +1,4 @@
+@import '../../../assets/css/common.scss';
 @import '../../../assets/css/special-property.scss';
 
 .image-editor {
@@ -102,8 +103,7 @@ $inputWidth: 180;
   background-color: #75818D;
 
   .slider-box {
-    display      : flex;
-    display      : -webkit-flex;
+    @include display-flex();
     align-items  : center;
     height       : 40px;
     border-top   : #59626b 0.5px solid;
@@ -121,7 +121,7 @@ $inputWidth: 180;
     }
 
     .value-box {
-      display: inline-flex;
+      @include display-inline-flex();
       margin : 0 5px 0 0;
       width  : 55px;
       cursor : default;

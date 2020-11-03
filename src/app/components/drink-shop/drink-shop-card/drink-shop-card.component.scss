@@ -1,9 +1,9 @@
+@import '../../../assets/css/common.scss';
 @import '../../../assets/css/special-property.scss';
 
 .card-container {
-  display        : flex;
-  display        : -webkit-flex;
-  flex-wrap      : wrap;
+  @include display-flex();
+  @include flex-wrap(wrap);
   justify-content: center;
   margin         : auto;
   width          : 100%;
@@ -36,25 +36,24 @@
 }
 
 .card {
-  margin                     : 30px;
-  display                    : grid;
+  @include display-grid();
   // grid-template-columns: calc(33vw - 60px);
-  grid-template-columns      : 300px;
-  grid-template-rows         : 80px 210px 80px;
-  grid-template-areas        : "text""image""stats";
-  height                     : fit-content;
-  border-radius              : 10px;
-  background                 : white;
-  box-shadow                 : 5px 5px 15px rgba(0, 0, 0, 0.9);
-  // font-family             : roboto;
-  text-align                 : center;
-  transition                 : 0.5s ease;
-  cursor                     : pointer;
+  grid-template-columns: 300px;
+  grid-template-rows   : 80px 210px 80px;
+  grid-template-areas  : "text""image""stats";
+  margin               : 30px;
+  height               : fit-content;
+  border-radius        : 10px;
+  background           : white;
+  box-shadow           : 5px 5px 15px rgba(0, 0, 0, 0.9);
+  text-align           : center;
+  @include transition(0.5s ease);
+  cursor: pointer;
 }
 
 .card:hover {
-  transform : scale(1.15);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+  @include transform(scale(1.15));
 }
 
 .card-image {
@@ -93,8 +92,8 @@
 }
 
 .card-stats {
+  @include display-grid();
   grid-area                 : stats;
-  display                   : grid;
   grid-template-columns     : 1fr 1fr 1fr;
   grid-template-rows        : 1fr;
   border-bottom-left-radius : 10px;
@@ -102,18 +101,16 @@
 }
 
 .card-stats .stat {
-  display        : flex;
-  display        : -webkit-flex;
+  @include display-flex();
+  @include flex-direction(column);
   align-items    : center;
   justify-content: center;
-  flex-direction : column;
   color          : white;
   padding        : 10px;
 
   .stat-box {
-    display         : flex;
-    display         : -webkit-flex;
-    flex-direction  : column;
+    @include display-flex();
+    @include flex-direction(column);
     justify-content : center;
     width           : 60px;
     height          : 60px;

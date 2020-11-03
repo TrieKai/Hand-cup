@@ -1,3 +1,4 @@
+@import '../../assets/css/common.scss';
 @import '../../assets/css/special-property.scss';
 
 .overlay-container {
@@ -22,8 +23,7 @@
 }
 
 .settings-wrapper {
-  display        : flex;
-  display        : -webkit-flex;
+  @include display-flex();
   justify-content: center;
   align-items    : center;
   width          : 100%;
@@ -31,9 +31,8 @@
 }
 
 .settings-box {
-  display       : flex;
-  display       : -webkit-flex;
-  flex-direction: column;
+  @include display-flex();
+  @include flex-direction(column);
   min-height    : 300px;
   max-width     : 310px;
   max-height    : 95%;
@@ -100,23 +99,17 @@
   }
 
   span {
-    margin            : 5px 0;
-    padding           : 10px 0;
-    align-self        : center;
-    text-align        : center;
-    width             : 100px;
-    color             : #ffffff;
-    border-radius     : 5px;
-    transition        : all 0.5s ease 0s;
-    -webkit-transition: all 0.5s ease 0s;
-    -moz-transition   : all 0.5s ease 0s;
-    -o-transition     : all 0.5s ease 0s;
+    margin       : 5px 0;
+    padding      : 10px 0;
+    align-self   : center;
+    text-align   : center;
+    width        : 100px;
+    color        : #ffffff;
+    border-radius: 5px;
+    @include transition(all 0.5s ease 0s);
 
     &:hover {
-      transition        : all 0.5s ease 0s;
-      -webkit-transition: all 0.5s ease 0s;
-      -moz-transition   : all 0.5s ease 0s;
-      -o-transition     : all 0.5s ease 0s;
+      @include transition(all 0.5s ease 0s);
     }
   }
 }

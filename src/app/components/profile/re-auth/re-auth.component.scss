@@ -1,3 +1,4 @@
+@import '../../../assets/css/common.scss';
 @import '../../../assets/css/special-property.scss';
 
 .overlay-container {
@@ -22,8 +23,7 @@
 }
 
 .re-auth-wrap {
-    display        : flex;
-    display        : -webkit-flex;
+    @include display-flex();
     justify-content: center;
     align-items    : center;
     width          : 100%;
@@ -31,20 +31,18 @@
 }
 
 .re-auth-box {
-    display          : flex;
-    display          : -webkit-flex;
-    // flex-direction: column;
-    position         : relative;
-    min-height       : 300px;
-    max-width        : 310px;
-    max-height       : 95%;
-    pointer-events   : initial;
-    background       : linear-gradient(to left, #c5dfad, #e7e1c5);
-    border-radius    : 2px;
-    box-shadow       : 0px 2px 3px rgba(0, 0, 0, 0.2);
-    overflow         : hidden;
-    animation        : popupWindow 0.5s;
-    z-index          : zIndex(login);
+    @include display-flex();
+    position      : relative;
+    min-height    : 300px;
+    max-width     : 310px;
+    max-height    : 95%;
+    pointer-events: initial;
+    background    : linear-gradient(to left, #c5dfad, #e7e1c5);
+    border-radius : 2px;
+    box-shadow    : 0px 2px 3px rgba(0, 0, 0, 0.2);
+    overflow      : hidden;
+    animation     : popupWindow 0.5s;
+    z-index       : zIndex(login);
 
     .close-btn {
         position: absolute;
@@ -56,11 +54,10 @@
     }
 
     .page {
-        display       : flex;
-        display       : -webkit-flex;
-        flex-direction: column;
-        min-width     : 100%;
-        z-index       : 1;
+        @include display-flex();
+        @include flex-direction(column);
+        min-width: 100%;
+        z-index  : 1;
 
         .space {
             width : 100%;
@@ -104,32 +101,26 @@
         }
 
         .confirm-btn {
-            margin            : 5px 0;
-            padding           : 10px 0;
-            align-self        : center;
-            text-align        : center;
-            width             : 100px;
-            background        : #3A3B3C;
-            color             : #ffffff;
-            border-radius     : 5px;
-            transition        : all 0.5s ease 0s;
-            -webkit-transition: all 0.5s ease 0s;
-            -moz-transition   : all 0.5s ease 0s;
-            -o-transition     : all 0.5s ease 0s;
-            cursor            : pointer;
+            margin       : 5px 0;
+            padding      : 10px 0;
+            align-self   : center;
+            text-align   : center;
+            width        : 100px;
+            background   : #3A3B3C;
+            color        : #ffffff;
+            border-radius: 5px;
+            @include transition(all 0.5s ease 0s);
+            cursor: pointer;
 
             &:hover {
-                background        : #6b6d6e;
-                transition        : all 0.5s ease 0s;
-                -webkit-transition: all 0.5s ease 0s;
-                -moz-transition   : all 0.5s ease 0s;
-                -o-transition     : all 0.5s ease 0s;
+                background: #6b6d6e;
+                @include transition(all 0.5s ease 0s);
             }
         }
     }
 
     .moveToLeft {
-        transform : translateX(-100%);
-        transition: 0.5s;
+        @include transform(translateX(-100%));
+        @include transition(0.5s);
     }
 }

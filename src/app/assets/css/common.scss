@@ -1,0 +1,109 @@
+@mixin keyframes ($animationName) {
+  @keyframes #{$animationName} {
+    @content;
+  }
+
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-ms-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+}
+
+@mixin animation-delay ($settings) {
+  animation-delay        : $settings;
+  -webkit-animation-delay: $settings;
+  -moz-animation-delay   : $settings;
+  -ms-animation-delay    : $settings;
+  -o-animation-delay     : $settings;
+}
+
+@mixin animation-duration ($settings) {
+  animation-duration        : $settings;
+  -webkit-animation-duration: $settings;
+  -moz-animation-duration   : $settings;
+  -ms-animation-duration    : $settings;
+  -o-animation-duration     : $settings;
+}
+
+@mixin animation ($settings) {
+  animation        : $settings;
+  -webkit-animation: $settings;
+  -moz-animation   : $settings;
+  -ms-animation    : $settings;
+  -o-animation     : $settings;
+}
+
+@mixin transform ($settings) {
+  transform        : $settings;
+  -webkit-transform: $settings;
+  -moz-transform   : $settings;
+  -ms-transform    : $settings;
+  -o-transform     : $settings;
+}
+
+@mixin transition ($settings) {
+  transition        : $settings;
+  -webkit-transition: $settings;
+  -moz-transition   : $settings;
+  -o-transition     : $settings;
+}
+
+@mixin transition-property($settings) {
+  transition-property        : $settings;
+  -webkit-transition-property: $settings;
+  -moz-transition-property   : $settings;
+  -o-transition-property     : $settings;
+}
+
+@mixin transition-delay($settings) {
+  transition-delay        : $settings;
+  -webkit-transition-delay: $settings;
+  -moz-transition-delay   : $settings;
+  -o-transition-delay     : $settings;
+}
+
+@mixin display-flex () {
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+}
+
+@mixin display-inline-flex () {
+  display: inline-flex;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+}
+
+@mixin flex ($settings) {
+  flex            : $settings;
+  -webkit-box-flex: $settings;
+  -moz-box-flex   : $settings;
+  -ms-flex        : $settings;
+}
+
+@mixin flex-wrap ($settings) {
+  flex-wrap    : $settings;
+  -ms-flex-wrap: $settings;
+}
+
+@mixin flex-direction ($settings) {
+  flex-direction    : $settings;
+  -ms-flex-direction: $settings;
+}
+
+@mixin display-grid () {
+  display: grid;
+  display: -moz-grid;
+  display: -ms-grid;
+}

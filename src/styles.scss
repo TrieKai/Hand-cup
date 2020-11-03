@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'app/assets/css/common.scss';
 @import 'app/assets/css/special-property.scss';
 
 * {
@@ -32,8 +33,7 @@ body {
 }
 
 .info-bar {
-    display         : flex;
-    display         : -webkit-flex;
+    @include display-flex();
     justify-content : center;
     align-items     : center;
     width           : 100%;
