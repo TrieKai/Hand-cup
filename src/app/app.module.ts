@@ -26,6 +26,7 @@ import { PreviewCardComponent } from './components/drink-shop/drink-shop-card/pr
 import { ReAuthComponent } from './components/profile/re-auth/re-auth.component';
 import { ForgotPasswordComponent } from './components/login/forgot-password/forgot-password.component';
 import { AuthEmailComponent } from './components/login/auth-email/auth-email.component';
+import { LockScreenComponent } from './components/common/lock-screen/lock-screen.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -67,6 +68,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         ReAuthComponent,
         ForgotPasswordComponent,
         AuthEmailComponent,
+        LockScreenComponent,
     ],
 })
 export class AppModule { }

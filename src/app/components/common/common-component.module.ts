@@ -11,6 +11,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { ImageEditorComponent } from './image-editor/image-editor.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
+import { LockScreenComponent } from './lock-screen/lock-screen.component';
 // icon
 import { CloseComponent } from './icons/close/close.component';
 import { DoneComponent } from './icons/done/done.component';
@@ -35,6 +36,7 @@ import { FireworkComponent } from './animations/firework/firework.component';
     ImageEditorComponent,
     ImageSliderComponent,
     SearchBoxComponent,
+    LockScreenComponent,
     CloseComponent,
     DoneComponent,
     InfoComponent,
@@ -62,6 +64,7 @@ import { FireworkComponent } from './animations/firework/firework.component';
     ImageEditorComponent,
     ImageSliderComponent,
     SearchBoxComponent,
+    LockScreenComponent,
     // icons
     CloseComponent,
     DoneComponent,

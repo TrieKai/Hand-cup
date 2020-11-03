@@ -9,11 +9,13 @@ export class SharedService {
   onInitEmitted = this.onInit.asObservable();
   commonSharedData: commonSharedData = {
     onloading: false,
+    lockScreen: false,
     userData: null,
     loginComponentRef: null,
     profileComponentRef: null,
     reAuthComponentRef: null,
     forgotPasswordComponentRef: null,
+    lockScreenComponentRef: null,
   };
 
   constructor() { }

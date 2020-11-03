@@ -16,6 +16,7 @@ export class ConstantsService {
   // Shared data
   public readonly SHAREDDATA = {
     onloading: 'onloading',
+    lockScreen: 'lockScreen',
     userData: 'userData',
     showMap: 'showMap',
     drinkShopResults: 'drinkShopResults',
@@ -23,6 +24,7 @@ export class ConstantsService {
     profileComponentRef: 'profileComponentRef',
     reAuthComponentRef: 'reAuthComponentRef',
     forgotPasswordComponentRef: 'forgotPasswordComponentRef',
+    lockScreenComponentRef: 'lockScreenComponentRef',
   };
 
   // HTML Shared data

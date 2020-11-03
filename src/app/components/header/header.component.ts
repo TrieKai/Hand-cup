@@ -11,6 +11,7 @@ import { LoginService } from 'src/app/service/login.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { MessageService } from 'src/app/service/message.service';
 
+import { LockScreenComponent } from '../common/lock-screen/lock-screen.component';
 import { LoginComponent } from '../login/login.component';
 import { ProfileComponent } from '../profile/profile.component';
 
@@ -54,6 +55,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isLogin = status;
     });
     this.sharedSubscribe = this.sharedService.onInitEmitted.subscribe(() => {
+      const lockScreen = this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreen);
+      // TODO: Fix
+      // this.handleSidebar(!lockScreen);
       const userData: firebase.UserInfo = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
       if (userData) { this.userPhotoURL = userData.photoURL; }
     });
@@ -80,18 +84,32 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       if (status) {
         this.renderer.addClass(this.sidebarToggle.nativeElement, 'open'); // Open
         this.sidebarStatus = true;
+
+        const componentRef = this.domService.createComponent(
+          LockScreenComponent,
+          this.cons.SHAREDDATA.lockScreenComponentRef
+        );
+        this.domService.attachComponent(componentRef, this.document.body);
         return;
       } else if (!status) {
         this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
         this.sidebarStatus = false;
+        this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef));
         return;
       }
     } else {
       this.sidebarStatus = !this.sidebarStatus; // Change status
       if (this.sidebarStatus) {
         this.renderer.addClass(this.sidebarToggle.nativeElement, 'open'); // Open
+
+        const componentRef = this.domService.createComponent(
+          LockScreenComponent,
+          this.cons.SHAREDDATA.lockScreenComponentRef
+        );
+        this.domService.attachComponent(componentRef, this.document.body);
       } else {
         this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
+        this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef));
       }
     }
   }
