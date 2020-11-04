@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { RouterConfigService } from 'src/app/config/router-config.service';
 import { MenuConfigService } from 'src/app/config/menu-config.service';
@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   userPhotoURL: string;
   loginSubscribe: Subscription;
   sharedSubscribe: Subscription;
+  lockScreenBS: BehaviorSubject<boolean>;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -55,9 +56,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isLogin = status;
     });
     this.sharedSubscribe = this.sharedService.onInitEmitted.subscribe(() => {
-      const lockScreen = this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreen);
-      // TODO: Fix
-      // this.handleSidebar(!lockScreen);
       const userData: firebase.UserInfo = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
       if (userData) { this.userPhotoURL = userData.photoURL; }
     });
@@ -66,6 +64,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     console.log(this.searchComponent)
     this.htmlElementService.set(this.cons.HTMLSHAREDDATA.searchInputRef, this.searchComponent.searchInputRef.nativeElement);
+
+    this.lockScreenBS = this.sharedService.setStatus(this.cons.SHAREDDATA.lockScreen, false);
+    this.lockScreenBS.subscribe((status) => {
+      this.handleSidebar(status);
+    });
   }
 
   ngOnDestroy(): void {
@@ -75,6 +78,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if (this.sharedSubscribe) {
       this.sharedSubscribe.unsubscribe();
+    }
+    if (this.lockScreenBS) {
+      this.lockScreenBS.unsubscribe();
     }
   }
 
@@ -94,7 +100,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       } else if (!status) {
         this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
         this.sidebarStatus = false;
-        this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef));
+        const lockScreenComponentRef = this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef);
+        if (lockScreenComponentRef) { this.domService.destroyComponent(lockScreenComponentRef); }
+        // this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef));
         return;
       }
     } else {
