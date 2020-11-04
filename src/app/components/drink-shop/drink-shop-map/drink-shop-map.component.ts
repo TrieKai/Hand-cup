@@ -24,7 +24,6 @@ export class DrinkShopMapComponent implements OnInit {
     currentMarker: google.maps.Marker;
     markers: google.maps.Marker[] = [];
     infoWindows: google.maps.InfoWindow[] = [];
-    onloading: boolean;
     private sInput: any;
 
     constructor(
@@ -41,7 +40,6 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
         this.geolocationService.getPosition().then(pos => {
             console.log(`Positon: ${pos.lng} ${pos.lat}`);
             this.coordinate.longitude = pos.lng;
@@ -149,9 +147,7 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     async getNearByLocations() {
-        this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
         const respData: any[] = await this.mapService.getNearByLocations(this.coordinate, this.distance);
-        this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
         if (this.resultArray.length > 0) {
             this.resultArray = []; // Reset array
         }

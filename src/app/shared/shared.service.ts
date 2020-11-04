@@ -11,8 +11,6 @@ export class SharedService {
   private onInit = new Subject<any>();
   onInitEmitted = this.onInit.asObservable();
   commonSharedData: commonSharedData = {
-    onloading: false,
-    lockScreen: false,
     userData: null,
     loginComponentRef: null,
     profileComponentRef: null,

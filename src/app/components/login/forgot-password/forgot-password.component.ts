@@ -34,9 +34,9 @@ export class ForgotPasswordComponent implements OnInit {
       this.renderer.addClass(this.emailRef.nativeElement, 'error');
       return;
     }
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
+    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, true);
     const status = await this.loginService.sendPasswordResetEmail(this.emailRef.nativeElement.value);
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
+    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, false);
     if (status) {
       this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.forgotPasswordComponentRef));
     }

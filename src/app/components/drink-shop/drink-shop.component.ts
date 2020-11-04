@@ -11,7 +11,6 @@ import { DrinkShopService } from 'src/app/service/drink-shop.service';
     styleUrls: ['./drink-shop.component.scss']
 })
 export class DrinkShopComponent implements OnInit, OnDestroy {
-    onloading: boolean;
     showMap: boolean;
     subscribe: Subscription;
     infoMessage: string;
@@ -22,13 +21,11 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
         private drinkShopService: DrinkShopService,
     ) {
         this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
-            this.onloading = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.onloading);
             this.showMap = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.showMap);
         });
     }
 
     ngOnInit() {
-        this.onloading = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.onloading);
         this.showMap = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.showMap);
         this.infoMessage = this.cons.INFO_MESSAGE.drinkShops;
     }

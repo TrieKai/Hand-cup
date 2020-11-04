@@ -29,7 +29,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   photo: File = null;
   photoURL: string;
   subscribe: Subscription;
-  onloading: boolean;
   imageLoaded: boolean;
   thirdParty: boolean;
 
@@ -117,13 +116,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
       displayName: this.name,
       photoURL: this.photoURL
     }
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
+    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, true);
     await this.profileService.updateProfileFireBase(userData)
       .then(async () => {
         await this.profileService.updateProfile(this.name);
         this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.profileComponentRef));
       });
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
+    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, false);
   }
 
   closeDialog() {

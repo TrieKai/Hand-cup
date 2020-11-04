@@ -16,7 +16,6 @@ export class DrinkShopCardComponent implements OnInit {
   chosenShopDetail: drinkShopDetail;
   showChosenCard: boolean = false;
   showPreviewCard: boolean = false;
-  onloading: boolean;
 
   constructor(
     private cons: ConstantsService,
@@ -41,18 +40,18 @@ export class DrinkShopCardComponent implements OnInit {
   async handleDraw(): Promise<void> {
     const randomIndex = Math.floor(Math.random() * Math.floor(this.resultArray.length));
     this.chosenShop = this.resultArray[randomIndex];
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
+    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, true);
     this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
+    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, false);
     this.showChosenCard = true;
     this.showPreviewCard = false;
   }
 
   async previewCard(index: number) {
     this.chosenShop = this.resultArray[index];
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, true);
+    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, true);
     this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.onloading, false);
+    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, false);
     this.showPreviewCard = true;
     this.showChosenCard = false;
   }

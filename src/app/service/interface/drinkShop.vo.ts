@@ -34,7 +34,6 @@ interface drinkShopDetail {
 }
 
 interface drinkShopSharedData {
-    onloading: boolean
     showMap: boolean
     drinkShopResults: drinkShopResults[]
 }

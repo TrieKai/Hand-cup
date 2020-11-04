@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -11,18 +11,22 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 })
 export class AppComponent implements OnInit {
     onloading: boolean;
-    subscribe: Subscription;
+    onloadingSB: BehaviorSubject<boolean>;
 
     constructor(
         private sharedService: SharedService,
         private cons: ConstantsService
     ) {
-        this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
-            this.onloading = sharedService.getSharedData(cons.SHAREDDATA.onloading);
+        // this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
+        //     this.onloading = sharedService.getSharedData(cons.SHAREDDATA.onloading);
+        // });
+        this.onloadingSB = this.sharedService.getStatus(this.cons.SHAREDDATA.onloading);
+        this.onloadingSB.subscribe((status) => {
+            this.onloading = status;
         });
     }
 
     ngOnInit() {
-        this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
+        // this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
     }
 }

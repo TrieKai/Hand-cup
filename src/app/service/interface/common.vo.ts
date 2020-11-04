@@ -49,8 +49,6 @@ interface Message {
 }
 
 interface commonSharedData {
-    onloading: boolean
-    lockScreen: boolean
     userData: any
     loginComponentRef: any
     profileComponentRef: any
