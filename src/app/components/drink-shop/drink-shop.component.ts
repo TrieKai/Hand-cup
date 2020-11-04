@@ -21,12 +21,12 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
         private drinkShopService: DrinkShopService,
     ) {
         this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
-            this.showMap = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.showMap);
+            this.showMap = this.drinkShopService.getSharedData(this.cons.SHAREDSTATUS.showMap);
         });
     }
 
     ngOnInit() {
-        this.showMap = this.drinkShopService.getSharedData(this.cons.SHAREDDATA.showMap);
+        this.showMap = this.drinkShopService.getSharedData(this.cons.SHAREDSTATUS.showMap);
         this.infoMessage = this.cons.INFO_MESSAGE.drinkShops;
     }
 

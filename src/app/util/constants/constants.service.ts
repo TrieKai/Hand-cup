@@ -15,16 +15,19 @@ export class ConstantsService {
 
   // Shared data
   public readonly SHAREDDATA = {
-    onloading: 'onloading',
-    lockScreen: 'lockScreen',
     userData: 'userData',
-    showMap: 'showMap',
     drinkShopResults: 'drinkShopResults',
     loginComponentRef: 'loginComponentRef',
     profileComponentRef: 'profileComponentRef',
     reAuthComponentRef: 'reAuthComponentRef',
     forgotPasswordComponentRef: 'forgotPasswordComponentRef',
     lockScreenComponentRef: 'lockScreenComponentRef',
+  };
+
+  public readonly SHAREDSTATUS = {
+    onloading: 'onloading',
+    lockScreen: 'lockScreen',
+    showMap: 'showMap',
   };
 
   // HTML Shared data

@@ -12,7 +12,7 @@ import { GlobalService as global } from '../service/global.service';
   providedIn: 'root'
 })
 export class DrinkShopService {
-  sharedData: drinkShopSharedData = { onloading: false, showMap: true, drinkShopResults: null };
+  sharedData: drinkShopSharedData = { showMap: true, drinkShopResults: null };
   currentCoordinate: Coordinate = { latitude: null, longitude: null };
 
   constructor(

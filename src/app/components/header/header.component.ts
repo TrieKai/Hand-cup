@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.searchComponent)
     this.htmlElementService.set(this.cons.HTMLSHAREDDATA.searchInputRef, this.searchComponent.searchInputRef.nativeElement);
 
-    this.lockScreenBS = this.sharedService.setStatus(this.cons.SHAREDDATA.lockScreen, false);
+    this.lockScreenBS = this.sharedService.setStatus(this.cons.SHAREDSTATUS.lockScreen, false);
     this.lockScreenBS.subscribe((status) => {
       this.handleSidebar(status);
     });

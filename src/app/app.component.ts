@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
         // this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
         //     this.onloading = sharedService.getSharedData(cons.SHAREDDATA.onloading);
         // });
-        this.onloadingSB = this.sharedService.getStatus(this.cons.SHAREDDATA.onloading);
+        this.onloadingSB = this.sharedService.getStatus(this.cons.SHAREDSTATUS.onloading);
         this.onloadingSB.subscribe((status) => {
             this.onloading = status;
         });

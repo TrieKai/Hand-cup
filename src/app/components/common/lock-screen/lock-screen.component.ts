@@ -28,7 +28,7 @@ export class LockScreenComponent implements OnInit {
   }
 
   close() {
-    this.sharedService.setStatus(this.cons.SHAREDDATA.lockScreen, false);
+    this.sharedService.setStatus(this.cons.SHAREDSTATUS.lockScreen, false);
     this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef));
   }
 }

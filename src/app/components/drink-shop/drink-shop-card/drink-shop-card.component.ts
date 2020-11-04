@@ -30,7 +30,7 @@ export class DrinkShopCardComponent implements OnInit {
 
   handleTransformScenes(status: string): void {
     if (status === 'map') {
-      this.drinkShopService.setSharedData(this.cons.SHAREDDATA.showMap, true);
+      this.drinkShopService.setSharedData(this.cons.SHAREDSTATUS.showMap, true);
     } else if (status === 'cards') {
       this.showPreviewCard = false;
       this.showChosenCard = false;
@@ -40,18 +40,18 @@ export class DrinkShopCardComponent implements OnInit {
   async handleDraw(): Promise<void> {
     const randomIndex = Math.floor(Math.random() * Math.floor(this.resultArray.length));
     this.chosenShop = this.resultArray[randomIndex];
-    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, true);
+    this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
     this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
-    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, false);
+    this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
     this.showChosenCard = true;
     this.showPreviewCard = false;
   }
 
   async previewCard(index: number) {
     this.chosenShop = this.resultArray[index];
-    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, true);
+    this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
     this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
-    this.sharedService.setStatus(this.cons.SHAREDDATA.onloading, false);
+    this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
     this.showPreviewCard = true;
     this.showChosenCard = false;
   }

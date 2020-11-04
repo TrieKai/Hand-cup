@@ -60,6 +60,7 @@ interface commonSharedData {
 interface htmlSharedData {
     searchInputRef: any
 }
+
 interface SharedStatus {
     onloading: boolean
     lockScreen: boolean
