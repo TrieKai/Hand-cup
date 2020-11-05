@@ -188,7 +188,9 @@ export class DrinkShopMapComponent implements OnInit {
                 ratingNum: result.ratings_total,
                 // openNow: result.opening_hours.open_now,
             };
-            console.log(infoWindowData)
+            if (isDevMode() || global.showLog) {
+                console.log(infoWindowData)
+            }
             this.addMarkerWithTimeout(infoWindowData, index * 1000).then((value) => {
                 if (index + 1 === this.resultArray.length) {
                     // Switch scenes with a delay of 1500 ms

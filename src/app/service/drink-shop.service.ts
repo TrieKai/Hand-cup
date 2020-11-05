@@ -31,7 +31,9 @@ export class DrinkShopService {
 
   getTopLocation(locataion: Coordinate, dataList: drinkShopResults[], number: number): any[] {
     if (dataList.length === 0) { return []; }
-    console.log('latitude:', locataion.latitude, 'longitude:', locataion.longitude, 'dataList:', dataList)
+    if (isDevMode() || global.showLog) {
+      console.log('latitude:', locataion.latitude, 'longitude:', locataion.longitude, 'dataList:', dataList)
+    }
     const resp = dataList.map((data) => {
       const distanceGap = Math.abs(locataion.latitude - data.latitude) + Math.abs(locataion.longitude - data.longitude); // 距離差
       return {
