@@ -95,10 +95,6 @@ export class ChosenCardComponent implements OnInit {
     this.onResize();
   }
 
-  ngOnDestroy(): void {
-    this.listen();
-  }
-
   openDropDown(e: any) {
     e.preventDefault();
     this.showDropDown = true;

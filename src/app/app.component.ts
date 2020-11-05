@@ -17,16 +17,12 @@ export class AppComponent implements OnInit {
         private sharedService: SharedService,
         private cons: ConstantsService
     ) {
-        // this.subscribe = this.sharedService.onInitEmitted.subscribe(() => {
-        //     this.onloading = sharedService.getSharedData(cons.SHAREDDATA.onloading);
-        // });
-        this.onloadingSB = this.sharedService.getStatus(this.cons.SHAREDSTATUS.onloading);
+        this.onloadingSB = this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
         this.onloadingSB.subscribe((status) => {
             this.onloading = status;
         });
     }
 
     ngOnInit() {
-        // this.onloading = this.sharedService.getSharedData(this.cons.SHAREDDATA.onloading);
     }
 }

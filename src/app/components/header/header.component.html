@@ -4,7 +4,7 @@
     {{home.title}}
   </span>
 
-  <app-search-box #searchComponent class="search-container" [disable]="true" (doSearch)="doSearch($event)"></app-search-box>
+  <app-search-box #searchComponent class="search-container" [disable]="true"></app-search-box>
 
   <ng-container *ngIf="isLogin">
     <span *ngIf="userPhotoURL" class="account-button" [matMenuTriggerFor]="menu">

@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.searchComponent)
+    // console.log(this.searchComponent)
     this.htmlElementService.set(this.cons.HTMLSHAREDDATA.searchInputRef, this.searchComponent.searchInputRef.nativeElement);
 
     this.lockScreenBS = this.sharedService.setStatus(this.cons.SHAREDSTATUS.lockScreen, false);
@@ -120,12 +120,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef));
       }
     }
-  }
-
-  doSearch(searchInput: any) {
-    console.log(searchInput)
-    // searchInput.onchange();
-    // TODO: Fix Search input
   }
 
   login() {

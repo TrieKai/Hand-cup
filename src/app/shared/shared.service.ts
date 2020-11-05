@@ -10,8 +10,9 @@ import { GlobalService as global } from 'src/app/service/global.service';
 export class SharedService {
   private onInit = new Subject<any>();
   onInitEmitted = this.onInit.asObservable();
-  commonSharedData: commonSharedData = {
+  protected commonSharedData: commonSharedData = {
     userData: null,
+    drinkShopResults: [],
     loginComponentRef: null,
     profileComponentRef: null,
     reAuthComponentRef: null,
@@ -52,6 +53,7 @@ export class SharedService {
   protected statuses: SharedStatus = {
     onloading: false,
     lockScreen: false,
+    showMap: false,
   };
 
   public setStatus(key: string, value: boolean): BehaviorSubject<boolean> {

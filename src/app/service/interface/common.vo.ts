@@ -50,6 +50,7 @@ interface Message {
 
 interface commonSharedData {
     userData: any
+    drinkShopResults: drinkShopResults[]
     loginComponentRef: any
     profileComponentRef: any
     reAuthComponentRef: any
@@ -64,6 +65,7 @@ interface htmlSharedData {
 interface SharedStatus {
     onloading: boolean
     lockScreen: boolean
+    showMap: boolean
 }
 
 interface firebaseProfile {

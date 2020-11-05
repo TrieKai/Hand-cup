@@ -52,12 +52,12 @@ export class ReAuthComponent implements OnInit {
     const confirmPassword = this.confirmPasswordRef.nativeElement.value;
     const newPassword = this.newPasswordRef.nativeElement.value;
     if (newPassword === confirmPassword) {
-      this.sharedService.setSharedData(this.cons.SHAREDSTATUS.onloading, true);
+      this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
       await this.loginService.updatePasswordFireBase(confirmPassword)
         .then(() => {
           this.loginService.updatePassword(confirmPassword);
         });
-      this.sharedService.setSharedData(this.cons.SHAREDSTATUS.onloading, false);
+      this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
       this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.reAuthComponentRef));
     } else {
       this.renderer.addClass(this.newPasswordRef.nativeElement, 'error');

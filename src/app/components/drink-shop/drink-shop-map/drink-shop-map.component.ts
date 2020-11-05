@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, isDevMode } from '@angular/core';
 
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
@@ -7,6 +7,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
 import { MessageService } from 'src/app/service/message.service';
+import { GlobalService as global } from 'src/app/service/global.service';
 
 @Component({
     selector: 'app-drink-shop-map',
@@ -147,7 +148,9 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     async getNearByLocations() {
+        this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
         const respData: any[] = await this.mapService.getNearByLocations(this.coordinate, this.distance);
+        this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
         if (this.resultArray.length > 0) {
             this.resultArray = []; // Reset array
         }
@@ -156,7 +159,9 @@ export class DrinkShopMapComponent implements OnInit {
         } else {
             this.messageService.add({ type: this.cons.MESSAGE_TYPE.warn, title: '可憐哪', content: '附近沒飲料店!' });
         }
-        console.log('resultArray:', this.resultArray)
+        if (isDevMode() || global.showLog) {
+            console.log('resultArray:', this.resultArray);
+        }
         this.showAllLocation();
     }
 
@@ -231,8 +236,8 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     handleTransformScenes() {
-        this.drinkShopService.setSharedData(this.cons.SHAREDSTATUS.showMap, false);
-        this.drinkShopService.setSharedData(this.cons.SHAREDDATA.drinkShopResults, this.resultArray);
+        this.sharedService.setStatus(this.cons.SHAREDSTATUS.showMap, false);
+        this.sharedService.setSharedData(this.cons.SHAREDDATA.drinkShopResults, this.resultArray);
     }
 
     handleInfoWindow() {

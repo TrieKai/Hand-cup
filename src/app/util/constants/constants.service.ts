@@ -24,15 +24,16 @@ export class ConstantsService {
     lockScreenComponentRef: 'lockScreenComponentRef',
   };
 
+  // HTML Shared data
+  public readonly HTMLSHAREDDATA = {
+    searchInputRef: 'searchInputRef',
+  };
+
+  // Shared status
   public readonly SHAREDSTATUS = {
     onloading: 'onloading',
     lockScreen: 'lockScreen',
     showMap: 'showMap',
-  };
-
-  // HTML Shared data
-  public readonly HTMLSHAREDDATA = {
-    searchInputRef: 'searchInputRef',
   };
 
   // Message type

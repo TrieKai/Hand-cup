@@ -1,25 +1,22 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
-import { ApiService } from '../util/api.service';
-import { ApiConstantsService } from '../util/constants/api-constants.service';
+import { ApiService } from 'src/app/util/api.service';
+import { ApiConstantsService } from 'src/app/util/constants/api-constants.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
-import { SharedService } from 'src/app/shared/shared.service';
 
-import { GlobalService as global } from '../service/global.service';
+import { GlobalService as global } from 'src/app/service/global.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DrinkShopService {
-  sharedData: drinkShopSharedData = { showMap: true, drinkShopResults: null };
   currentCoordinate: Coordinate = { latitude: null, longitude: null };
 
   constructor(
     private api: ApiService,
     private apiCons: ApiConstantsService,
     private cons: ConstantsService,
-    private sharedService: SharedService,
   ) { }
 
   async getPlaceDetail(placeId: string): Promise<any> {
@@ -30,25 +27,6 @@ export class DrinkShopService {
     }
 
     return resp;
-  }
-
-  setSharedData(key: string, value: any) {
-    console.log('setSharedData:', key, value)
-    if (this.hasKey(key)) {
-      this.sharedData[key] = value;
-      this.sharedService.onInitEmit();
-      return this.sharedData[key];
-    } else {
-      return null;
-    }
-  }
-
-  getSharedData(key: string) {
-    return this.sharedData[key];
-  }
-
-  hasKey(key: string) {
-    return this.sharedData.hasOwnProperty(key);
   }
 
   getTopLocation(locataion: Coordinate, dataList: drinkShopResults[], number: number): any[] {
