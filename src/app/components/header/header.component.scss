@@ -106,7 +106,7 @@ body {
     width     : 250px;
     height    : height(layoutBasic);
     margin-top: height(header);
-    background: linear-gradient(180deg, #FC466B 0%, #3F5EFB 100%);
+    background: linear-gradient(45deg, #e0e8ee, #fdf4f4);
     @include transform(translateX(-250px));
     @include transition(transform 250ms ease-in-out);
     z-index: zIndex(header);
@@ -117,33 +117,48 @@ body {
     }
 
     .sidebar-menu-inner {
-        margin    : 0;
-        padding   : 0;
-        max-height: 100%;
-        overflow-y: auto;
-        border-top: 1px solid rgba(255, 255, 255, 0.10);
-        cursor    : pointer;
+        margin       : 0;
+        padding      : 0;
+        max-height   : 100%;
+        overflow-y   : auto;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        cursor       : pointer;
 
-        .menu-icon {
-            width : 30px;
-            height: 30px;
+        li {
+            @include display-flex();
+            align-items   : center;
+            list-style    : none;
+            padding       : 20px;
+            position      : relative;
+            color         : #222;
+            text-transform: uppercase;
+            font-weight   : bold;
+
+            .menu-icon {
+                width : 30px;
+                height: 30px;
+            }
+
+            .menu-span {
+                margin-left: 10px;
+                font-size  : 18px;
+            }
+
+            .divide-line {
+                position     : absolute;
+                border-bottom: #111 1px solid;
+            }
         }
 
-        .menu-span {
-            margin-left: 10px;
-            font-size  : 18px;
+        li:after {
+            content   : "";
+            background: #333;
+            width     : calc(100% - 40px);
+            height    : 1px;
+            position  : absolute;
+            bottom    : 0;
+            opacity   : 0.2;
         }
-    }
-
-    .sidebar-menu-inner li {
-        @include display-flex();
-        align-items   : center;
-        list-style    : none;
-        padding       : 20px;
-        color         : #fff;
-        border-bottom : 1px solid rgba(255, 255, 255, 0.10);
-        text-transform: uppercase;
-        font-weight   : bold;
     }
 }
 
