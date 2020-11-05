@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, isDevMode } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, isDevMode, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { MapService } from 'src/app/service/map.service';
@@ -28,6 +29,7 @@ export class DrinkShopMapComponent implements OnInit {
     private sInput: any;
 
     constructor(
+        @Inject(DOCUMENT) private document: Document,
         private geolocationService: GeolocationService,
         private mapService: MapService,
         private cons: ConstantsService,
@@ -84,7 +86,10 @@ export class DrinkShopMapComponent implements OnInit {
             });
             this.currentMarker.setMap(this.map);
             this.coordinate = { latitude: currentPosition.lat(), longitude: currentPosition.lng() };
-            document.getElementById("searchBtn").style.display = 'block';
+            const searchBtn = this.document.getElementById("searchBtn");
+            if (searchBtn) {
+                searchBtn.style.display = 'block';
+            }
         });
     }
 
@@ -241,15 +246,15 @@ export class DrinkShopMapComponent implements OnInit {
     }
 
     handleInfoWindow() {
-        const infoWindowWrapperElement = document.getElementsByClassName('gm-style-iw-c')[0] as HTMLElement; // google infoWindow 最外面
-        const infoWindowcontainerElement = document.getElementsByClassName('gm-style-iw-d')[0] as HTMLElement; // google infowindow 裡層
-        const infoWindowBoxElement = document.getElementById('infoWindowBox'); // 自己寫的 infowindow box
-        const infoWindowImgElement = document.getElementById('infoWindowImg'); // image in infowindow
-        const descriptionWrapperElement = document.getElementById('descriptionWrapper');
-        const titleNameElement = document.getElementById('titleName');
-        const ratingWrapperElement = document.getElementById('ratingWrapper');
-        const ratingStarsWrapperElement = document.getElementById('ratingStarsWrapper');
-        const ratingStarElementList = document.getElementsByClassName('ratingStar');
+        const infoWindowWrapperElement = this.document.getElementsByClassName('gm-style-iw-c')[0] as HTMLElement; // google infoWindow 最外面
+        const infoWindowcontainerElement = this.document.getElementsByClassName('gm-style-iw-d')[0] as HTMLElement; // google infowindow 裡層
+        const infoWindowBoxElement = this.document.getElementById('infoWindowBox'); // 自己寫的 infowindow box
+        const infoWindowImgElement = this.document.getElementById('infoWindowImg'); // image in infowindow
+        const descriptionWrapperElement = this.document.getElementById('descriptionWrapper');
+        const titleNameElement = this.document.getElementById('titleName');
+        const ratingWrapperElement = this.document.getElementById('ratingWrapper');
+        const ratingStarsWrapperElement = this.document.getElementById('ratingStarsWrapper');
+        const ratingStarElementList = this.document.getElementsByClassName('ratingStar');
 
         infoWindowWrapperElement.style.padding = '0px';
         infoWindowcontainerElement.style.overflow = 'hidden'; // 去掉 infoWidow scroll 效果

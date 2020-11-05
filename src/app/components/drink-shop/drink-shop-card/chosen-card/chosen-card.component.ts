@@ -8,6 +8,7 @@ import { CommonService } from 'src/app/service/common.service';
 import { environment } from '../../../../../environments/environment';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
+import { MessageService } from 'src/app/service/message.service';
 
 import { DialogComponent } from '../../../common/dialog/dialog.component';
 
@@ -59,6 +60,7 @@ export class ChosenCardComponent implements OnInit {
     private drinkShopService: DrinkShopService,
     private firebase: FirebaseService,
     private renderer: Renderer2,
+    private message: MessageService,
   ) { }
 
   @HostListener('window:resize', [])
@@ -130,9 +132,8 @@ export class ChosenCardComponent implements OnInit {
   }
 
   async favoritetShop(placeId: string) {
-    if (this.firebase.checkAuthStatus) {
-      console.log('Not login la')
-    }
+    if (!this.checkLogin()) { return; }
+
     const status = this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite);
     if (status === false) {
       const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.favorite + ';';
@@ -146,6 +147,8 @@ export class ChosenCardComponent implements OnInit {
   }
 
   async unFavoriteShop(placeId: string) {
+    if (!this.checkLogin()) { return; }
+
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value) {
       const valAry = value.split(';');
@@ -165,6 +168,8 @@ export class ChosenCardComponent implements OnInit {
   }
 
   visited(placeId: string) {
+    if (!this.checkLogin()) { return; }
+
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value && !this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.visited)) {
       const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.visited + ';';
@@ -176,6 +181,8 @@ export class ChosenCardComponent implements OnInit {
   }
 
   unVisited(placeId: string) {
+    if (!this.checkLogin()) { return; }
+
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value) {
       const valAry = value.split(';');
@@ -192,5 +199,14 @@ export class ChosenCardComponent implements OnInit {
       }
     }
     this.beenThere = false;
+  }
+
+  checkLogin(): boolean {
+    if (!this.firebase.checkAuthStatus()) {
+      this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '請先登入唷', content: '' });
+      return false;
+    } else {
+      return true;
+    }
   }
 }

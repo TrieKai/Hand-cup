@@ -33,7 +33,7 @@ export class ProfileService {
         console.log('tokenExpired: ', tokenExpired)
         if (!tokenExpired) {
           if (this.firebaseService.checkAuthStatus()) {
-            console.log('===updateProfile===')
+            console.log('=== updateProfile ===')
             await this.firebaseService.updateProfile(userData);
             const updatedUserData = this.firebaseService.getUserData();
             this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, updatedUserData);

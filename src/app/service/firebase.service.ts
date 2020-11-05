@@ -119,7 +119,7 @@ export class FirebaseService {
 
   checkAuthStatus(): boolean {
     this.afAuth.auth.onAuthStateChanged((user) => {
-      console.log('===Firebase checkAuthStatus===')
+      console.log('=== Firebase checkAuthStatus ===')
       this.authenticated = !!user;
       this.userLoggedIn.next(this.authenticated);
       this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, user); // For user photo
