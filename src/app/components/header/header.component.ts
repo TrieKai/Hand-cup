@@ -80,6 +80,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sharedSubscribe.unsubscribe();
     }
     if (this.lockScreenBS) {
+      this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.lockScreen);
       this.lockScreenBS.unsubscribe();
     }
   }

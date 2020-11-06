@@ -29,6 +29,7 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         if (this.showMapSB) {
+            this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.showMap);
             this.showMapSB.unsubscribe();
         }
     }
