@@ -102,11 +102,24 @@ export class DrinkShopService {
     }
   }
 
-  visitedShop(status: boolean) {
+  async visitedShop(status: boolean, placeId: string, userId: string) {
     if (status) {
-
+      const header: HttpHeaders = this.api.getHeader();
+      const body: visitedReq = {
+        placeId: placeId,
+        userId: userId
+      };
+      const resp: RespData = await this.api.post(this.apiCons.VISITED_SHOP, body, header);
+      if (isDevMode() || global.showLog) {
+        console.log(resp);
+      }
     } else {
-
+      const url = this.apiCons.VISITED_SHOP + '/' + userId + '/' + placeId;
+      const header: HttpHeaders = this.api.getHeader();
+      const resp: RespData = await this.api.delete(url, null, header);
+      if (isDevMode() || global.showLog) {
+        console.log(resp);
+      }
     }
   }
 }

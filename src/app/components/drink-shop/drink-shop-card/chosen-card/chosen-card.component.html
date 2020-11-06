@@ -1,7 +1,7 @@
 <div class="chosen-card">
   <div class="chosen-card-title">
     <span>恭喜! 今天飲料喝這家~</span>
-    <div *ngIf="chosenShopDetail.place_id && !isMobile" class="info-box center">
+    <div *ngIf="chosenShopDetail.place_id && (!isMobile && !smallScreen)" class="info-box center">
       <span *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons unfavorite"
         title="收藏這家!" (click)="favoritetShop(chosenShopDetail.place_id)">
         favorite_border
@@ -11,7 +11,7 @@
         favorite
       </span>
       <div
-        [ngClass]="{'have-been-box': checkLocalStorage(chosenShopDetail.place_id, 'visited'), 'never-been-box': !checkLocalStorage(chosenShopDetail.place_id, 'visited')}">
+        [ngClass]="{'visited-box': checkLocalStorage(chosenShopDetail.place_id, 'visited'), 'never-been-box': !checkLocalStorage(chosenShopDetail.place_id, 'visited')}">
         <span class="material-icons not_listed_location">
           not_listed_location
         </span>
@@ -25,45 +25,48 @@
       <img class="google-maps-icon" src="https://developers.google.com/maps/images/maps-icon.svg"
         (click)="openUrl(chosenShopDetail.url)" title="開啟Google maps" alt="maps_icon" />
     </div>
-    <div *ngIf="chosenShopDetail.place_id && isMobile" #dots (mousedown)="openDropDown($event)" class="info-box-mobile">
-      <svg width="25" height="25">
-        <path
-          d="M5 12.5c0 .55.2 1.02.59 1.41.39.4.86.59 1.41.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41A1.93 1.93 0 0 0 7 10.5c-.55 0-1.02.2-1.41.59-.4.39-.59.86-.59 1.41zm5.62 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41a1.93 1.93 0 0 0-1.41-.59c-.55 0-1.03.2-1.42.59-.39.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.43.59.56 0 1.03-.2 1.42-.59.39-.39.58-.86.58-1.41 0-.55-.2-1.02-.58-1.41a1.93 1.93 0 0 0-1.42-.59c-.56 0-1.04.2-1.43.59-.39.39-.58.86-.58 1.41z"
-          fill-rule="evenodd"></path>
-      </svg>
+    <div *ngIf="chosenShopDetail.place_id && (isMobile || smallScreen)" #dots (mousedown)="openDropDown($event)"
+      class="info-box-mobile">
+      <span class="material-icons dots">more_vert</span>
       <div *ngIf="showDropDown" #dropdown class="drop-down">
         <section class="center">
-          <ng-container *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'favorite')">
-            <span class="material-icons unfavorite" (click)="favoritetShop(chosenShopDetail.place_id)">
+          <div *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'favorite')"
+            (click)="favoritetShop(chosenShopDetail.place_id)">
+            <span class="material-icons unfavorite">
               favorite_border
             </span>
             <span class="info-text">收藏這家!</span>
-          </ng-container>
-          <ng-container *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'favorite')">
-            <span class="material-icons favorite" (click)="unFavoriteShop(chosenShopDetail.place_id)">
+          </div>
+          <div *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'favorite')"
+            (click)="unFavoriteShop(chosenShopDetail.place_id)">
+            <span class="material-icons favorite">
               favorite
             </span>
             <span class="info-text">取消收藏</span>
-          </ng-container>
+          </div>
         </section>
         <section class="center">
-          <ng-container *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'visited')">
-            <span class="material-icons add_location_alt" (click)="visited(chosenShopDetail.place_id)">
+          <div *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'visited')"
+            (click)="visited(chosenShopDetail.place_id)">
+            <span class="material-icons add_location_alt">
               add_location_alt
             </span>
             <span class="info-text">未造訪過</span>
-          </ng-container>
-          <ng-container *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'visited')">
-            <span class="material-icons wrong_location" (click)="unVisited(chosenShopDetail.place_id)">
+          </div>
+          <div *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'visited')"
+            (click)="unVisited(chosenShopDetail.place_id)">
+            <span class="material-icons wrong_location">
               wrong_location
             </span>
             <span class="info-text">曾造訪過</span>
-          </ng-container>
+          </div>
         </section>
         <section class="center">
-          <img class="google-maps-icon" src="https://developers.google.com/maps/images/maps-icon.svg"
-            (click)="openUrl(chosenShopDetail.url)" alt="maps-icon" />
-          <span class="info-text">開啟Google maps</span>
+          <div (click)="openUrl(chosenShopDetail.url)">
+            <img class="google-maps-icon" src="https://developers.google.com/maps/images/maps-icon.svg"
+              alt="maps-icon" />
+            <span class="info-text">開啟Google maps</span>
+          </div>
         </section>
       </div>
     </div>

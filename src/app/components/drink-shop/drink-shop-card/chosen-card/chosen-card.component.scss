@@ -50,17 +50,25 @@
     }
 
     .info-box-mobile {
-      position : relative;
+      position : absolute;
+      right    : 0;
+      width    : 24px;
+      height   : 24px;
       font-size: 18px;
+
+      .dots {
+        color : azure;
+        cursor: pointer;
+      }
 
       .drop-down {
         position     : absolute;
-        right        : 0;
+        right        : 5px;
         padding      : 5px;
         width        : 180px;
         background   : #ffffff;
         border-radius: 5px;
-        z-index      : 2;
+        z-index      : 5;
 
         section {
           margin: 5px 0;
@@ -71,6 +79,12 @@
     .center {
       @include display-flex();
       align-items: center;
+      cursor     : pointer;
+
+      div {
+        @include display-flex();
+        width: 100%;
+      }
     }
 
     .info-text {
@@ -86,7 +100,7 @@
       cursor: pointer;
     }
 
-    .have-been-box {
+    .visited-box {
       @include display-flex();
       color : #d62e1f;
       cursor: pointer;
@@ -135,15 +149,15 @@
       display: none;
     }
 
-    .have-been-box:hover>.add_location_alt {
+    .visited-box:hover>.add_location_alt {
       display: none;
     }
 
-    .have-been-box:hover>.not_listed_location {
+    .visited-box:hover>.not_listed_location {
       display: none;
     }
 
-    .have-been-box:hover>.wrong_location {
+    .visited-box:hover>.wrong_location {
       color  : darkred;
       display: inline-block;
     }

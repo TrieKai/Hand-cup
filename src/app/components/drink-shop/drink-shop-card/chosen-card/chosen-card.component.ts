@@ -22,13 +22,13 @@ export class ChosenCardComponent implements OnInit {
   @ViewChild('dots', { static: false }) dotsRef: ElementRef<HTMLDivElement>;
   @ViewChild('dropdown', { static: false }) dropdownRef: ElementRef<HTMLDivElement>;
   isMobile: boolean;
+  smallScreen: boolean;
   showDropDown: boolean;
   dialogMaxWidth: number;
   dialogMinWidth: number;
   dialogMaxHeight: number;
   ratingStarWidth: number;
   ratingStarHeight: number;
-  beenThere: boolean;
   images: string[] = [];
   links: string[] = [];
   imageSliderStyles: object[] = [];
@@ -69,6 +69,7 @@ export class ChosenCardComponent implements OnInit {
     this.dialogMaxHeight = window.innerHeight * 0.8;
     this.ratingStarWidth = 15;
     this.ratingStarHeight = 15;
+    this.smallScreen = false;
     if (window.innerWidth >= 1280) {
       this.dialogMaxWidth = 800;
       this.dialogMinWidth = 500;
@@ -80,17 +81,20 @@ export class ChosenCardComponent implements OnInit {
       this.dialogMinWidth = 250;
       this.ratingStarWidth = 10;
       this.ratingStarHeight = 10;
+      this.smallScreen = true;
     } else if (window.innerWidth < 320) {
       this.dialogMaxWidth = window.innerWidth * 0.9;
       this.dialogMinWidth = window.innerWidth * 0.8;
       this.ratingStarWidth = 10;
       this.ratingStarHeight = 10;
+      this.smallScreen = true;
     }
   }
 
   ngOnInit() {
     this.isMobile = this.common.detectDeviceType().mobile;
     this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
+    if (window.innerWidth < 600) { this.smallScreen = true; }
   }
 
   ngAfterViewInit() {
@@ -177,7 +181,6 @@ export class ChosenCardComponent implements OnInit {
     } else if (!value) {
       this.localStorageService.setLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.visited + ';');
     }
-    this.beenThere = true;
   }
 
   unVisited(placeId: string) {
@@ -198,7 +201,6 @@ export class ChosenCardComponent implements OnInit {
         this.localStorageService.removeLocalStorage(placeId);
       }
     }
-    this.beenThere = false;
   }
 
   checkLogin(): boolean {
