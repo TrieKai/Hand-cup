@@ -26,6 +26,8 @@ export class LocalstorageService {
   }
 
   updateLocalStorage(preferData: any[]) {
+    console.log(preferData)
+    if (preferData === null) { return; }
     const favorites: userPreferData[] = preferData[0];
     const visiteds: userPreferData[] = preferData[1];
 

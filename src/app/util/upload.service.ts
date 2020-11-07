@@ -16,7 +16,7 @@ export class UploadService {
     private api: ApiService,
   ) { }
 
-  async uploadFile(targetType: string, file: File, token?: string): Promise<any> {
+  async uploadFile(targetType: string, file: File, token?: string): Promise<RespData> {
     const param = {
       targetType: targetType
     };
@@ -26,8 +26,10 @@ export class UploadService {
     // const authorization = { key: 'Authorization', value: `Bearer ${token}` };
     // const header = this.api.getHeader([authorization]);
     // Do not use headers.append('Content-Type', 'multipart/form-data');
-    const resp = await this.api.postFile(this.apiCons.UPLOAD_FILE, formData, param, null);
-    if (isDevMode() || global.showLog) { console.log('uploadResource:', resp); }
-    return resp;
+    const resp: RespData = await this.api.postFile(this.apiCons.UPLOAD_FILE, formData, param, null);
+    if (isDevMode() || global.showLog) {
+      console.log('uploadResource:', resp);
+    }
+    return resp.body.data;
   }
 }

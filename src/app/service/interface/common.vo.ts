@@ -26,7 +26,9 @@ interface RespData {
     header: {
         status: string
     }
-    body: any
+    body: {
+        data: any
+    }
 }
 
 interface Menu {
@@ -82,12 +84,6 @@ interface userPreferData {
 }
 
 // normal
-interface ReturnStatus {
-    returnStatus?: string
-    msg?: any
-    error?: any
-}
-
 interface DeviceType {
     mobile: boolean
     ios: boolean

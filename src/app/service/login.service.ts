@@ -1,4 +1,4 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Component, Injectable, isDevMode } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -12,6 +12,7 @@ import { ApiService } from 'src/app/util/api.service';
 import { GlobalService as global } from 'src/app/service/global.service';
 import { CookieService } from 'src/app/util/cookie.service';
 import { LocalstorageService } from 'src/app/util/localstorage.service';
+import { CommonService } from 'src/app/service/common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class LoginService {
     private api: ApiService,
     private cookie: CookieService,
     private localStorage: LocalstorageService,
+    private common: CommonService,
   ) {
     firebaseService.checkAuthStatus();
   }
@@ -55,12 +57,17 @@ export class LoginService {
       email: user.email,
       password: thirdParty ? user.uid : password // 如果是第三方登入的話就沒有密碼, 以 uid 來代替密碼
     };
-    const resp = await this.api.post(this.apiCons.LOGIN, body, header);
-    if (isDevMode() || global.showLog) { console.log('login:', resp); }
-    this.cookie.setCookie(this.cons.TOKEN, resp);
+    const resp: RespData = await this.api.post(this.apiCons.LOGIN, body, header);
+    if (isDevMode() || global.showLog) {
+      console.log('login:', resp);
+    }
+    if (!this.common.checkAPIResp(resp)) {
+      return;
+    }
+    this.cookie.setCookie(this.cons.TOKEN, resp.body.data);
 
-    const userPreferDate = await this.getUserPreferData();
-    this.localStorage.updateLocalStorage(userPreferDate);
+    const userPreferData = await this.getUserPreferData();
+    this.localStorage.updateLocalStorage(userPreferData);
   }
 
   async signUpFireBase(email: string, password: string): Promise<boolean> {
@@ -77,8 +84,10 @@ export class LoginService {
       password: thirdParty ? user.uid : password, // 如果是第三方登入的話就沒有密碼, 以 uid 來代替密碼
       type: thirdParty
     };
-    const resp = await this.api.post(this.apiCons.SIGNUP, body, header);
-    if (isDevMode() || global.showLog) { console.log('signUp:', resp); }
+    const resp: RespData = await this.api.post(this.apiCons.SIGNUP, body, header);
+    if (isDevMode() || global.showLog) {
+      console.log('signUp:', resp);
+    }
   }
 
   async signUpWithGoogle(): Promise<boolean> {
@@ -97,16 +106,22 @@ export class LoginService {
     return this.firebaseService.getUserData();
   }
 
-  async getUserPreferData() {
+  async getUserPreferData(): Promise<any[]> {
     const user = this.firebaseService.getUserData();
     const favUrl = this.apiCons.FAVORITE_SHOP + '/' + user.uid;
     const visUrl = this.apiCons.VISITED_SHOP + '/' + user.uid;
     const header: HttpHeaders = this.api.getHeader();
-    const favResp = await this.api.get(favUrl, null, header);
-    if (isDevMode() || global.showLog) { console.log('get favorites:', favResp); }
-    const visResp = await this.api.get(visUrl, null, header);
-    if (isDevMode() || global.showLog) { console.log('get visited:', visResp); }
-    return [favResp, visResp];
+    const favResp: RespData = await this.api.get(favUrl, null, header);
+    if (isDevMode() || global.showLog) { console.log('get favorites:', favResp.body); }
+    if (!this.common.checkAPIResp(favResp)) {
+      return;
+    }
+    const visResp: RespData = await this.api.get(visUrl, null, header);
+    if (isDevMode() || global.showLog) { console.log('get visited:', visResp.body); }
+    if (!this.common.checkAPIResp(visResp)) {
+      return;
+    }
+    return [favResp.body.data, visResp.body.data];
   }
 
   logOut() {
@@ -127,8 +142,10 @@ export class LoginService {
     };
     const token = this.cookie.getCookie(this.cons.TOKEN);
     const header: HttpHeaders = this.api.getHeader(token);
-    const resp = await this.api.put(url, body, header);
-    if (isDevMode() || global.showLog) { console.log('password update:', resp); }
+    const resp: RespData = await this.api.put(url, body, header);
+    if (isDevMode() || global.showLog) {
+      console.log('password update:', resp);
+    }
   }
 
   async resendEmail() {
@@ -147,7 +164,9 @@ export class LoginService {
       key: key
     };
     const header: HttpHeaders = this.api.getHeader();
-    const resp = await this.api.post(url, body, header);
-    if (isDevMode() || global.showLog) { console.log('password reset:', resp); }
+    const resp: RespData = await this.api.post(url, body, header);
+    if (isDevMode() || global.showLog) {
+      console.log('password reset:', resp);
+    }
   }
 }

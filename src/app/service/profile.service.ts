@@ -50,7 +50,9 @@ export class ProfileService {
     };
     const token = this.cookie.getCookie(this.cons.TOKEN);
     const header: HttpHeaders = this.api.getHeader(token);
-    const resp = await this.api.put(url, body, header);
-    if (isDevMode() || global.showLog) { console.log('user update:', resp); }
+    const resp: RespData = await this.api.put(url, body, header);
+    if (isDevMode() || global.showLog) {
+      console.log('user update:', resp);
+    }
   }
 }

@@ -154,7 +154,7 @@ export class DrinkShopMapComponent implements OnInit {
 
     async getNearByLocations() {
         this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
-        const respData: any[] = await this.mapService.getNearByLocations(this.coordinate, this.distance);
+        const respData = await this.mapService.getNearByLocations(this.coordinate, this.distance);
         this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
         if (this.resultArray.length > 0) {
             this.resultArray = []; // Reset array

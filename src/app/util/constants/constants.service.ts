@@ -9,8 +9,8 @@ export class ConstantsService {
 
   // Status
   public readonly STATUS = {
-    ok: 'OK',
-    error: 'ERROR'
+    success: 'success',
+    error: 'error'
   };
 
   // Shared data
@@ -60,6 +60,10 @@ export class ConstantsService {
 
   // Token
   public readonly TOKEN = 'token';
+
+  // API response message
+  public readonly API_ERROR: string = '連線回應錯誤';
+  public readonly API_STATUS_FORMAT_ERROR: string = '連線狀態錯誤';
 
   // Local storage
   public readonly LOCAL_STORAGE_TYPE = {

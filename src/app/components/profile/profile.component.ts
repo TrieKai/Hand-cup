@@ -9,8 +9,7 @@ import { ProfileService } from 'src/app/service/profile.service';
 import { UploadService } from 'src/app/util/upload.service';
 import { LoginService } from 'src/app/service/login.service';
 import { MessageService } from 'src/app/service/message.service';
-import { CheckService } from 'src/app/service/check.service';
-import { FirebaseService } from 'src/app/service/firebase.service';
+import { CommonService } from 'src/app/service/common.service';
 
 import { ImageEditorComponent } from '../common/image-editor/image-editor.component';
 import { ReAuthComponent } from '../profile/re-auth/re-auth.component';
@@ -41,9 +40,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private uploadService: UploadService,
     private loginService: LoginService,
     private message: MessageService,
-    private check: CheckService,
     private renderer: Renderer2,
-    private firebase: FirebaseService,
+    private common: CommonService,
   ) { }
 
   ngOnInit() {
@@ -82,7 +80,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.photo = await this.imageEditor.cropImage();
       if (this.photo) {
         const resp = await this.uploadService.uploadFile(this.cons.UPLOAD_TARGET_TYPE.profile, this.photo);
-        if (!this.check.apiResult(resp)) {
+        if (!this.common.checkAPIResp(resp)) {
           this.message.add({ 'type': this.cons.MESSAGE_TYPE.error, 'title': '錯誤', 'content': '上傳照片發生錯誤' });
           return;
         }

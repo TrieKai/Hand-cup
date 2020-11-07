@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 
+import { MessageService } from 'src/app/service/message.service';
+import { ConstantsService } from 'src/app/util/constants/constants.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
 
-  constructor() { }
+  constructor(
+    private message: MessageService,
+    private cons: ConstantsService,
+  ) { }
 
   detectDeviceType(): DeviceType {
     if (!window.navigator.userAgent) { return null; }
@@ -22,5 +28,25 @@ export class CommonService {
       edge: /(edge|trident)/.test(userAgent) ? true : false,
       webView: /(fbav|line|wv|iab|webview)/.test(userAgent) ? true : false,
     };
+  }
+
+  checkAPIResp(resp: RespData): boolean {
+    if (!resp || !(resp instanceof Object) || !resp.header || !this.checkStatus(resp.header.status)) {
+      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.API_ERROR, content: '' });
+      return false;
+    }
+    return true;
+  }
+
+  checkStatus(status: string): boolean {
+    switch (status) {
+      case this.cons.STATUS.success:
+        return true;
+      case this.cons.STATUS.error:
+        return true;
+      default:
+        this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.API_STATUS_FORMAT_ERROR, content: '' });
+    }
+    return false;
   }
 }

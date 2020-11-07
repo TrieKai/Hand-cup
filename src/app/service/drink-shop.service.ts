@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { ApiService } from 'src/app/util/api.service';
 import { ApiConstantsService } from 'src/app/util/constants/api-constants.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
+import { CommonService } from 'src/app/service/common.service';
 
 import { GlobalService as global } from 'src/app/service/global.service';
 
@@ -17,16 +18,20 @@ export class DrinkShopService {
     private api: ApiService,
     private apiCons: ApiConstantsService,
     private cons: ConstantsService,
+    private common: CommonService,
   ) { }
 
-  async getPlaceDetail(placeId: string): Promise<any> {
+  async getPlaceDetail(placeId: string): Promise<drinkShopDetail> {
     const header: HttpHeaders = this.api.getHeader();
     const resp: RespData = await this.api.get(this.apiCons.GET_PLACE_DETAIL + placeId, null, header);
     if (isDevMode() || global.showLog) {
       console.log(resp);
     }
-
-    return resp;
+    if (this.common.checkAPIResp(resp)) {
+      return resp.body.data;
+    } else {
+      return null;
+    }
   }
 
   getTopLocation(locataion: Coordinate, dataList: drinkShopResults[], number: number): any[] {
@@ -71,14 +76,18 @@ export class DrinkShopService {
     return starContent;
   }
 
-  async getFavoriteShop(userId: string): Promise<RespData> {
+  async getFavoriteShop(userId: string): Promise<any[]> {
     const url = this.apiCons.FAVORITE_SHOP + '/' + userId;
     const header: HttpHeaders = this.api.getHeader();
     const resp: RespData = await this.api.get(url, null, header);
     if (isDevMode() || global.showLog) {
       console.log(resp);
     }
-    return resp;
+    if (this.common.checkAPIResp(resp)) {
+      return resp.body.data;
+    } else {
+      return null;
+    }
   }
 
   async favoriteShop(status: boolean, placeId: string, userId: string) {
