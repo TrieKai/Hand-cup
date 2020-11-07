@@ -44,6 +44,7 @@ export class ChosenCardComponent implements OnInit {
     this._chosenShopDetail = data;
     this.images = []; // Clear
     this.links = []; // Clear
+    if (!data.photos) { return; }
     data.photos.map((photo) => {
       const photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=' + photo.width + '&photoreference=' + photo.photo_reference + '&key=' + environment.photoAPIKey + '';
       this.images.push(photoUrl);

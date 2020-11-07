@@ -42,6 +42,9 @@ export class DrinkShopCardComponent implements OnInit {
 
   async handleDraw(): Promise<void> {
     const randomIndex = Math.floor(Math.random() * Math.floor(this.resultArray.length));
+    if (!this.resultArray[randomIndex].rating) {
+      this.resultArray[randomIndex].rating = '尚無評分';
+    }
     this.chosenShop = this.resultArray[randomIndex];
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
     this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
@@ -51,6 +54,9 @@ export class DrinkShopCardComponent implements OnInit {
   }
 
   async previewCard(index: number) {
+    if (!this.resultArray[index].rating) {
+      this.resultArray[index].rating = '尚無評分';
+    }
     this.chosenShop = this.resultArray[index];
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
     this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);

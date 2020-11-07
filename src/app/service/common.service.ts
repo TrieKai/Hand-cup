@@ -38,7 +38,7 @@ export class CommonService {
     return true;
   }
 
-  checkStatus(status: string): boolean {
+  private checkStatus(status: string): boolean {
     switch (status) {
       case this.cons.STATUS.success:
         return true;
