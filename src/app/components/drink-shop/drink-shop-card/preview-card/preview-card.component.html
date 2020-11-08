@@ -6,7 +6,7 @@
   <div class="chosen-card-content">
     <ul>
       <li title="{{chosenShop.name}}">店名: {{chosenShop.name}}</li>
-      <li>評分: {{chosenShop.rating}}</li>
+      <li>評分: {{ratingText}}</li>
       <li>評價數: {{chosenShop.ratings_total}}</li>
       <li *ngIf="chosenShopDetail.formatted_address" title="{{chosenShopDetail.formatted_address}}">
         地址: {{chosenShopDetail.formatted_address}}

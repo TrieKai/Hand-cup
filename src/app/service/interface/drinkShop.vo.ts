@@ -4,7 +4,7 @@ interface drinkShopResults {
     longitude: number
     name: string
     image_url: string
-    rating: number |string
+    rating: number
     ratings_total: number
     views: number
     distanceGap?: number

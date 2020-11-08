@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input, Renderer2, Inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, Input, Renderer2, Inject, ViewChild, ElementRef, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,12 +17,12 @@ import { DialogComponent } from '../../../common/dialog/dialog.component';
   templateUrl: './chosen-card.component.html',
   styleUrls: ['./chosen-card.component.scss']
 })
-export class ChosenCardComponent implements OnInit {
+export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() chosenShop: drinkShopResults;
   @ViewChild('dots', { static: false }) dotsRef: ElementRef<HTMLDivElement>;
   @ViewChild('dropdown', { static: false }) dropdownRef: ElementRef<HTMLDivElement>;
-  isMobile: boolean;
-  smallScreen: boolean;
+  isMobile: boolean = false;
+  smallScreen: boolean = false;
   showDropDown: boolean;
   dialogMaxWidth: number;
   dialogMinWidth: number;
@@ -33,6 +33,7 @@ export class ChosenCardComponent implements OnInit {
   links: string[] = [];
   imageSliderStyles: object[] = [];
   listen: any;
+  ratingText: number | string;
 
   private _chosenShopDetail: drinkShopDetail;
 
@@ -89,6 +90,14 @@ export class ChosenCardComponent implements OnInit {
       this.ratingStarWidth = 10;
       this.ratingStarHeight = 10;
       this.smallScreen = true;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.chosenShop.rating === 0) {
+      this.ratingText = '尚未有評分'
+    } else {
+      this.ratingText = this.chosenShop.rating;
     }
   }
 

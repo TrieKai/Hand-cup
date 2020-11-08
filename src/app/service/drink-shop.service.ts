@@ -60,20 +60,23 @@ export class DrinkShopService {
     const emptyStars: number = 5 - fullStars - halfStars; // 空星的數量
     let starContent: string = '';
 
-    // console.log(fullStars, halfStars, emptyStars)
-    for (let i: number = 0; i < fullStars; i++) {
-      starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_14.png);"></li>';
-    }
-    if (halfStars) {
-      starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_half_14.png);"></li>';
-    }
-    if (emptyStars) {
-      for (let i: number = 0; i < emptyStars; i++) {
-        starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_empty_14.png);"></li>';
+    if (rating === 0) {
+      starContent = '尚未有評分';
+      return starContent;
+    } else {
+      for (let i: number = 0; i < fullStars; i++) {
+        starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_14.png);"></li>';
       }
+      if (halfStars) {
+        starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_half_14.png);"></li>';
+      }
+      if (emptyStars) {
+        for (let i: number = 0; i < emptyStars; i++) {
+          starContent = starContent + '<li class="ratingStar" style="background-image: url(' + this.cons.GOOGLE_ICON_BASE_URL + '2x/ic_star_rate_empty_14.png);"></li>';
+        }
+      }
+      return starContent;
     }
-
-    return starContent;
   }
 
   async getFavoriteShop(userId: string): Promise<any[]> {

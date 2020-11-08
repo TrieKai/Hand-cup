@@ -16,7 +16,7 @@ export class UploadService {
     private api: ApiService,
   ) { }
 
-  async uploadFile(targetType: string, file: File, token?: string): Promise<RespData> {
+  async uploadFile(targetType: string, file: File, token?: string): Promise<any> {
     const param = {
       targetType: targetType
     };
