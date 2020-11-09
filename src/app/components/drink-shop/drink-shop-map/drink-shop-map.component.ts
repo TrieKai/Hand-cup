@@ -68,9 +68,14 @@ export class DrinkShopMapComponent implements OnInit {
         this.currentMarker.setMap(this.map);
         this.mapIdleEvent();
 
-        const randomControlDiv = this.renderer.createElement('div');
+        // Random button
+        const randomControlDiv: HTMLDivElement = this.renderer.createElement('div');
         this.randomControl(randomControlDiv);
         this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(randomControlDiv);
+        // Center button
+        const centerControlDiv: HTMLDivElement = this.renderer.createElement('div');
+        this.centerControl(centerControlDiv);
+        this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(centerControlDiv);
 
         this.setAutoComplete();
     }
@@ -93,9 +98,9 @@ export class DrinkShopMapComponent implements OnInit {
         });
     }
 
-    randomControl(controlDiv: HTMLElement) {
+    randomControl(controlDiv: HTMLDivElement) {
         // Set CSS for the control border
-        const controlUI = this.renderer.createElement('div');
+        const controlUI: HTMLDivElement = this.renderer.createElement('div');
         controlUI.id = 'searchBtn';
         controlUI.style.backgroundColor = '#fff';
         controlUI.style.border = '2px solid #fff';
@@ -108,7 +113,7 @@ export class DrinkShopMapComponent implements OnInit {
         this.renderer.appendChild(controlDiv, controlUI);
 
         // Set CSS for the control interior
-        const controlText = this.renderer.createElement('div');
+        const controlText: HTMLDivElement = this.renderer.createElement('div');
         controlText.style.color = 'rgb(25,25,25)';
         controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
         controlText.style.fontSize = '16px';
@@ -121,6 +126,27 @@ export class DrinkShopMapComponent implements OnInit {
         controlUI.addEventListener('click', () => {
             this.getNearByLocations(); // Get data from backend microService
         });
+    }
+
+    centerControl(controlDiv: HTMLDivElement) {
+        controlDiv.style.width = '50px';
+        controlDiv.style.height = '40px';
+        const centerUI: HTMLDivElement = this.renderer.createElement('div');
+        centerUI.style.width = '40px';
+        centerUI.style.height = '40px';
+        centerUI.style.position = 'absolute';
+        centerUI.style.bottom = '0';
+        centerUI.style.background = '#fff';
+        centerUI.style.cursor = 'pointer';
+        this.renderer.appendChild(controlDiv, centerUI);
+        const centerIcon: HTMLDivElement = this.renderer.createElement('div');
+        centerIcon.className = 'material-icons';
+        centerIcon.textContent = 'my_location';
+        centerIcon.style.position = 'absolute';
+        centerIcon.style.top = '8px';
+        centerIcon.style.left = '8px';
+        centerIcon.style.color = '#666666';
+        this.renderer.appendChild(centerUI, centerIcon);
     }
 
     setAutoComplete() {

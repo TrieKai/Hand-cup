@@ -31,14 +31,14 @@ export class CommonService {
   }
 
   checkAPIResp(resp: RespData): boolean {
-    if (!resp || !(resp instanceof Object) || !resp.header || !this.checkStatus(resp.header.status)) {
+    if (!resp || !(resp instanceof Object) || !resp.header || !this.checkStatusFormat(resp.header.status)) {
       this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.API_ERROR, content: '' });
       return false;
     }
     return true;
   }
 
-  private checkStatus(status: string): boolean {
+  private checkStatusFormat(status: string): boolean {
     switch (status) {
       case this.cons.STATUS.success:
         return true;
@@ -48,5 +48,13 @@ export class CommonService {
         this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.API_STATUS_FORMAT_ERROR, content: '' });
     }
     return false;
+  }
+
+  checkAPIStatus(resp: RespData): boolean {
+    if (resp.header.status === this.cons.STATUS.success) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

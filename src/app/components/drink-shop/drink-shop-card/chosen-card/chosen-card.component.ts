@@ -148,6 +148,11 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
   async favoritetShop(placeId: string) {
     if (!this.checkLogin()) { return; }
 
+    // Call API first
+    const userData = this.firebase.getUserData();
+    const respStatus = await this.drinkShopService.favoriteShop(true, placeId, userData.uid);
+    if (!respStatus) { return; }
+
     const status = this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite);
     if (status === false) {
       const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.favorite + ';';
@@ -155,13 +160,15 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
     } else if (status === null) {
       this.localStorageService.setLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite + ';');
     } else { return; }
-
-    const userData = this.firebase.getUserData();
-    await this.drinkShopService.favoriteShop(true, placeId, userData.uid);
   }
 
   async unFavoriteShop(placeId: string) {
     if (!this.checkLogin()) { return; }
+
+    // Call API first
+    const userData = this.firebase.getUserData();
+    const respStatus = await this.drinkShopService.favoriteShop(false, placeId, userData.uid);
+    if (!respStatus) { return; }
 
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value) {
@@ -174,15 +181,17 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
         } else {
           this.localStorageService.removeLocalStorage(placeId);
         }
-
-        const userData = this.firebase.getUserData();
-        await this.drinkShopService.favoriteShop(false, placeId, userData.uid);
       }
     }
   }
 
-  visited(placeId: string) {
+  async visited(placeId: string) {
     if (!this.checkLogin()) { return; }
+
+    // Call API first
+    const userData = this.firebase.getUserData();
+    const respStatus = await this.drinkShopService.visitedShop(true, placeId, userData.uid);
+    if (!respStatus) { return; }
 
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value && !this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.visited)) {
@@ -193,8 +202,13 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  unVisited(placeId: string) {
+  async unVisited(placeId: string) {
     if (!this.checkLogin()) { return; }
+
+    // Call API first
+    const userData = this.firebase.getUserData();
+    const respStatus = await this.drinkShopService.visitedShop(false, placeId, userData.uid);
+    if (!respStatus) { return; }
 
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value) {
@@ -207,8 +221,6 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
         } else {
           this.localStorageService.removeLocalStorage(placeId);
         }
-      } else {
-        this.localStorageService.removeLocalStorage(placeId);
       }
     }
   }

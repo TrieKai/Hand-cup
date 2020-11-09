@@ -93,7 +93,7 @@ export class DrinkShopService {
     }
   }
 
-  async favoriteShop(status: boolean, placeId: string, userId: string) {
+  async favoriteShop(status: boolean, placeId: string, userId: string): Promise<boolean> {
     if (status) {
       const header: HttpHeaders = this.api.getHeader();
       const body: favoriteReq = {
@@ -104,6 +104,7 @@ export class DrinkShopService {
       if (isDevMode() || global.showLog) {
         console.log(resp);
       }
+      return this.common.checkAPIStatus(resp);
     } else {
       const url = this.apiCons.FAVORITE_SHOP + '/' + userId + '/' + placeId;
       const header: HttpHeaders = this.api.getHeader();
@@ -111,10 +112,11 @@ export class DrinkShopService {
       if (isDevMode() || global.showLog) {
         console.log(resp);
       }
+      return this.common.checkAPIStatus(resp);
     }
   }
 
-  async visitedShop(status: boolean, placeId: string, userId: string) {
+  async visitedShop(status: boolean, placeId: string, userId: string): Promise<boolean> {
     if (status) {
       const header: HttpHeaders = this.api.getHeader();
       const body: visitedReq = {
@@ -125,6 +127,7 @@ export class DrinkShopService {
       if (isDevMode() || global.showLog) {
         console.log(resp);
       }
+      return this.common.checkAPIStatus(resp);
     } else {
       const url = this.apiCons.VISITED_SHOP + '/' + userId + '/' + placeId;
       const header: HttpHeaders = this.api.getHeader();
@@ -132,6 +135,7 @@ export class DrinkShopService {
       if (isDevMode() || global.showLog) {
         console.log(resp);
       }
+      return this.common.checkAPIStatus(resp);
     }
   }
 }
