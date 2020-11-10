@@ -9,3 +9,46 @@
     height: height(layout_small);
   }
 }
+
+.random-box {
+  margin-bottom: 22px;
+  text-align   : center;
+  background   : #fff;
+  border       : 2px solid #fff;
+  border-radius: 3px;
+  box-shadow   : 0 2px 6px rgba(0, 0, 0, .3);
+  cursor       : pointer;
+
+  .random-content {
+    color      : #000;
+    font-size  : 16px;
+    font-weight: bold;
+    line-height: 38px;
+    padding    : 0 5px;
+  }
+}
+
+.GPS-container {
+  width : 50px;
+  height: 40px;
+
+  .GPS-box {
+    position  : absolute;
+    bottom    : 0;
+    width     : 40px;
+    height    : 40px;
+    color     : #666;
+    background: #fff;
+    cursor    : pointer;
+
+    &:hover {
+      color: #333;
+    }
+
+    .GPS-icon {
+      position: absolute;
+      top     : 8px;
+      left    : 8px;
+    }
+  }
+}
