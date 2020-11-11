@@ -1,5 +1,5 @@
 <nav class="info-bar">{{infoMessage}}</nav>
-<main class="container">
+<!-- <main class="container">
   <app-firework *ngIf="showLeftFirework" class="firework-left"></app-firework>
   <app-firework *ngIf="showRightFirework" class="firework-right"></app-firework>
   <section *ngIf="!gocha" class="box">
@@ -17,6 +17,23 @@
       <div class="restart">
         <span class="material-icons" (click)="recommendDrinks()">replay</span>
       </div>
+    </div>
+  </section>
+</main> -->
+<main class="main">
+  <section class="card-section">
+    <div class="card-container">
+      <div class="card-info">{{drink.name}}</div>
+      <div class="card-image">
+        <div class="left-control" (mousedown)="choose('left')" (mouseup)="unChoose()" (touchstart)="choose('left')"
+          (touchend)="unChoose()">
+        </div>
+        <div class="right-control" (mousedown)="choose('right')" (mouseup)="unChoose()" (touchstart)="choose('right')"
+          (touchend)="unChoose()"></div>
+        <div class="image-background"></div>
+        <img src="{{drink.image}}" class="image" />
+      </div>
+      <div class="card-description">{{description}}</div>
     </div>
   </section>
 </main>

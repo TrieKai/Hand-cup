@@ -13,6 +13,13 @@ export class ConstantsService {
     error: 'error'
   };
 
+  public readonly DIRECTION = {
+    top: 'top',
+    right: 'right',
+    bottom: 'bottom',
+    left: 'left'
+  }
+
   // Shared data
   public readonly SHAREDDATA = {
     userData: 'userData',

@@ -16,7 +16,8 @@ export class DrinkComponent implements OnInit {
   drink: drinksData;
   isFinished: boolean;
   showLeftFirework: boolean;
-  showRightFirework: boolean
+  showRightFirework: boolean;
+  description: string;
 
   constructor(
     private cons: ConstantsService,
@@ -38,6 +39,8 @@ export class DrinkComponent implements OnInit {
       { name: '冰淇淋紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144340000001.png&w=280&h=350&zc=2' },
       { name: '蜂蜜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/2002121650500000001.png&w=280&h=350&zc=2' },
     ];
+    this.drink = this.drinksData[0];
+    this.description = '請點選圖片左右邊來選擇';
   }
 
   confirm() {
@@ -78,5 +81,17 @@ export class DrinkComponent implements OnInit {
     }
 
     return array;
+  }
+
+  choose(type: string) {
+    if (type === this.cons.DIRECTION.left) {
+      this.description = '就這個惹!';
+    } else if (type === this.cons.DIRECTION.right) {
+      this.description = '進入下一層?';
+    }
+  }
+
+  unChoose() {
+    this.description = '還是?';
   }
 }

@@ -52,6 +52,14 @@
   -o-transform     : $settings;
 }
 
+@mixin transform-origin ($settings) {
+  transform-origin        : $settings;
+  -webkit-transform-origin: $settings;
+  -moz-transform-origin   : $settings;
+  -ms-transform-origin    : $settings;
+  -o-transform-origin     : $settings;
+}
+
 @mixin transition ($settings) {
   transition        : $settings;
   -webkit-transition: $settings;
