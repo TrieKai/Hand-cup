@@ -33,22 +33,26 @@
   height: 40px;
 
   .GPS-box {
-    position  : absolute;
-    bottom    : 0;
-    width     : 40px;
-    height    : 40px;
-    color     : #666;
-    background: #fff;
-    cursor    : pointer;
+    position      : absolute;
+    bottom        : 0;
+    width         : 40px;
+    height        : 40px;
+    color         : #666;
+    background    : #fff;
+    border        : none;
+    overflow      : hidden;
+    outline       : none;
+    text-transform: none;
+    appearance    : none;
+    user-select   : none;
+    cursor        : pointer;
 
     &:hover {
       color: #333;
     }
 
     .GPS-icon {
-      position: absolute;
-      top     : 8px;
-      left    : 8px;
+      font-size: 25px;
     }
   }
 }

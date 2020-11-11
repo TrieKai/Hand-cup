@@ -125,10 +125,10 @@ export class DrinkShopMapComponent implements OnInit {
 
   GPSControl(GPScontrolDiv: HTMLDivElement) {
     this.renderer.addClass(GPScontrolDiv, 'GPS-container');
-    const GPSBox: HTMLDivElement = this.renderer.createElement('div');
+    const GPSBox: HTMLButtonElement = this.renderer.createElement('button');
     this.renderer.addClass(GPSBox, 'GPS-box');
     this.renderer.appendChild(GPScontrolDiv, GPSBox);
-    const GPSIcon: HTMLDivElement = this.renderer.createElement('div');
+    const GPSIcon: HTMLImageElement = this.renderer.createElement('image');
     this.renderer.addClass(GPSIcon, 'material-icons');
     this.renderer.addClass(GPSIcon, 'GPS-icon');
     GPSIcon.textContent = 'my_location';

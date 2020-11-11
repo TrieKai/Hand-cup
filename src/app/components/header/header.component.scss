@@ -19,6 +19,7 @@ body {
     width      : auto;
     height     : auto;
     font-size  : 28px;
+    outline    : none;
     cursor     : pointer;
 }
 
@@ -141,6 +142,7 @@ body {
             .menu-span {
                 margin-left: 10px;
                 font-size  : 18px;
+                outline    : none;
             }
 
             .divide-line {
