@@ -1,5 +1,5 @@
 <nav class="info-bar">{{infoMessage}}</nav>
-<!-- <main class="container">
+<main class="main">
   <app-firework *ngIf="showLeftFirework" class="firework-left"></app-firework>
   <app-firework *ngIf="showRightFirework" class="firework-right"></app-firework>
   <section *ngIf="!gocha" class="box">
@@ -7,21 +7,7 @@
       <span>PRESS</span>
     </div>
   </section>
-  <section *ngIf="gocha && drink" class="card-box" [ngClass]="{'active': isFinished}">
-    <img src="{{drink.image}}" class="image" />
-    <span class="text">{{drink.name}}</span>
-    <div *ngIf="isFinished" class="button-box">
-      <div class="check">
-        <span class="material-icons" (click)="confirm()">check_circle_outline</span>
-      </div>
-      <div class="restart">
-        <span class="material-icons" (click)="recommendDrinks()">replay</span>
-      </div>
-    </div>
-  </section>
-</main> -->
-<main class="main">
-  <section class="card-section">
+  <section *ngIf="gocha && drink" class="card-section" [ngClass]="{'active': isFinished}">
     <div class="card-container">
       <div class="card-info">{{drink.name}}</div>
       <div class="card-image">
@@ -33,7 +19,15 @@
         <div class="image-background"></div>
         <img src="{{drink.image}}" class="image" />
       </div>
-      <div class="card-description">{{description}}</div>
+      <div *ngIf="isFinished" class="card-description">{{description}}</div>
+      <!-- <div *ngIf="isFinished" class="button-box">
+        <div class="check">
+          <span class="material-icons" (click)="confirm()">check_circle_outline</span>
+        </div>
+        <div class="restart">
+          <span class="material-icons" (click)="recommendDrinks()">replay</span>
+        </div>
+      </div> -->
     </div>
   </section>
 </main>

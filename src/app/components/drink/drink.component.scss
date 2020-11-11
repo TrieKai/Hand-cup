@@ -1,32 +1,32 @@
 @import '../../assets/css/common.scss';
 @import '../../assets/css/special-property.scss';
 
-.container {
-    @include display-flex();
-    @include flex-wrap(wrap);
-    justify-content : center;
-    align-items     : center;
-    height          : height(layout);
-    background-color: #c0cebd;
+.main {
+  @include display-flex();
+  @include flex-wrap(wrap);
+  justify-content : center;
+  align-items     : center;
+  height          : height(layout);
+  background-color: #c0cebd;
+  overflow        : auto;
 
-    @media screen and (max-width: rwdBoundary(small)) {
-        height: height(layout_small);
-    }
+  @media screen and (max-width: rwdBoundary(small)) {
+    height: height(layout_small);
+  }
 
-    .firework-left {
-        position: absolute;
-        left    : 20%;
-        top     : 40%;
-    }
+  .firework-left {
+    position: absolute;
+    left    : 20%;
+    top     : 40%;
+  }
 
-    .firework-right {
-        position: absolute;
-        right   : 20%;
-        top     : 40%;
-    }
-}
+  .firework-right {
+    position: absolute;
+    right   : 20%;
+    top     : 40%;
+  }
 
-.box {
+  .box {
     @include display-flex();
     justify-content : center;
     align-items     : center;
@@ -34,215 +34,158 @@
     height          : 60%;
     background-color: whitesmoke;
     border-radius   : 5px;
-}
 
-.card-box {
+    .pressBtn {
+      @include display-flex();
+      justify-content : center;
+      align-items     : center;
+      width           : 100px;
+      height          : 100px;
+      border-radius   : 50%;
+      background-color: #424242;
+      cursor          : pointer;
+
+      span {
+        justify-content: center;
+        align-items    : center;
+        color          : white;
+        font-weight    : 600;
+      }
+    }
+  }
+
+  .card-section {
     @include display-flex();
     @include flex-direction(column);
     width           : 300px;
-    height          : 400px;
+    height          : 500px;
     text-align      : center;
     background-color: whitesmoke;
     border-radius   : 5px;
     box-shadow      : 5px 5px 10px rgba(0, 0, 0, 0.5);
 
-    .image {
-        width : 100%;
-        height: 70%;
-    }
+    .card-container {
+      width     : 100%;
+      height    : 100%;
+      background: #BDA867;
 
-    .text {
+      .card-info {
         @include display-flex();
         align-items    : center;
         justify-content: center;
         width          : 100%;
-        height         : 10%;
+        height         : 50px;
         font-size      : 24px;
         font-weight    : 600;
-    }
+      }
 
-    .button-box {
-        @include display-flex();
-        align-items: center;
-        width      : 100%;
-        height     : 20%;
+      .card-image {
+        position: relative;
+        margin  : 10px 30px;
+        width   : calc(100% - 60px);
+        height  : 350px;
+        cursor  : pointer;
 
-        .check {
-            width: 50%;
+        .left-control {
+          position: absolute;
+          left    : 0;
+          width   : 50%;
+          height  : 100%;
+          z-index : 1;
 
-            span {
-                cursor: pointer;
+          &:active,
+          &:focus {
+            &~.image {
+              transform: translate(-4rem, 3rem) rotate(-5deg);
             }
+          }
         }
 
-        .restart {
-            width: 50%;
+        .right-control {
+          position: absolute;
+          right   : 0;
+          width   : 50%;
+          height  : 100%;
+          z-index : 1;
 
-            span {
-                cursor: pointer;
+          &:active,
+          &:focus {
+            &~.image {
+              transform: translate(4rem, 3rem) rotate(5deg);
             }
+          }
         }
+
+        .image-background {
+          position     : absolute;
+          top          : 0;
+          left         : 0;
+          margin       : auto;
+          width        : 100%;
+          height       : 100%;
+          border-radius: 1.5rem;
+          background   : #424242;
+        }
+
+        .image {
+          position     : absolute;
+          top          : 0;
+          left         : 0;
+          margin       : auto;
+          width        : 100%;
+          height       : 100%;
+          background   : #fff;
+          border-radius: 1.5rem;
+          transition   : all .6s ease-in-out;
+        }
+      }
+
+      .card-description {
+        width    : 100%;
+        height   : 50px;
+        font-size: 24px;
+      }
+
+      // .button-box {
+      //   @include display-flex();
+      //   align-items: center;
+      //   width      : 100%;
+      //   height     : 20%;
+
+      //   .check {
+      //     width: 50%;
+
+      //     span {
+      //       cursor: pointer;
+      //     }
+      //   }
+
+      //   .restart {
+      //     width: 50%;
+
+      //     span {
+      //       cursor: pointer;
+      //     }
+      //   }
+      // }
     }
+  }
 }
 
 .active {
-    animation: card-animation 0.7s ease-in-out;
-}
-
-.pressBtn {
-    @include display-flex();
-    justify-content : center;
-    align-items     : center;
-    width           : 100px;
-    height          : 100px;
-    border-radius   : 50%;
-    background-color: #424242;
-    cursor          : pointer;
-
-    span {
-        justify-content: center;
-        align-items    : center;
-        color          : white;
-        font-weight    : 600;
-    }
-}
-
-.ratingStar {
-    background-size: 15px;
-    width          : 15px;
+  animation: card-animation 0.7s ease-in-out;
 }
 
 @include keyframes(card-animation) {
-    0% {
-        @include transform(scale(0.9));
-    }
+  0% {
+    @include transform(scale(0.9));
+  }
 
-    80% {
-        @include transform(scale(1.1));
-    }
+  80% {
+    @include transform(scale(1.1));
+  }
 
-    100% {
-        @include transform(scale(1));
-    }
-}
-
-.main {
-    @include display-flex();
-    @include flex-wrap(wrap);
-    justify-content : center;
-    align-items     : center;
-    height          : height(layout);
-    background-color: #c0cebd;
-    overflow        : auto;
-
-    @media screen and (max-width: rwdBoundary(small)) {
-        height: height(layout_small);
-    }
-
-    .firework-left {
-        position: absolute;
-        left    : 20%;
-        top     : 40%;
-    }
-
-    .firework-right {
-        position: absolute;
-        right   : 20%;
-        top     : 40%;
-    }
-
-    .card-section {
-        @include display-flex();
-        @include flex-direction(column);
-        width           : 300px;
-        height          : 400px;
-        text-align      : center;
-        background-color: whitesmoke;
-        border-radius   : 5px;
-        box-shadow      : 5px 5px 10px rgba(0, 0, 0, 0.5);
-
-        .card-container {
-            background: #BDA867;
-
-            .card-info {
-                width : 100%;
-                height: 40px;
-            }
-
-            .card-info {
-                @include display-flex();
-                align-items    : center;
-                justify-content: center;
-                width          : 100%;
-                height         : 10%;
-                font-size      : 24px;
-                font-weight    : 600;
-            }
-
-            .card-image {
-                position: relative;
-                margin  : 30px;
-                width   : calc(100% - 60px);
-                height  : 350px;
-
-                .left-control {
-                    position: absolute;
-                    left    : 0;
-                    width   : 50%;
-                    height  : 100%;
-                    z-index : 1;
-
-                    &:active,
-                    &:focus {
-                        &~.image {
-                            transform: translate(-4rem, 3rem) rotate(-5deg);
-                        }
-                    }
-                }
-
-                .right-control {
-                    position: absolute;
-                    right   : 0;
-                    width   : 50%;
-                    height  : 100%;
-                    z-index : 1;
-
-                    &:active,
-                    &:focus {
-                        &~.image {
-                            transform: translate(4rem, 3rem) rotate(5deg);
-                        }
-                    }
-                }
-
-                .image-background {
-                    position     : absolute;
-                    top          : 0;
-                    left         : 0;
-                    margin       : auto;
-                    width        : 100%;
-                    height       : 100%;
-                    border-radius: 1.5rem;
-                    background   : #424242;
-                }
-
-                .image {
-                    position     : absolute;
-                    top          : 0;
-                    left         : 0;
-                    margin       : auto;
-                    width        : 100%;
-                    height       : 100%;
-                    background   : #fff;
-                    border-radius: 1.5rem;
-                    transition   : all .6s ease-in-out;
-                }
-            }
-
-            .card-description {
-                width : 100%;
-                height: 50px;
-            }
-        }
-    }
+  100% {
+    @include transform(scale(1));
+  }
 }

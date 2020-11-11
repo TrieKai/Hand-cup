@@ -39,7 +39,6 @@ export class DrinkComponent implements OnInit {
       { name: '冰淇淋紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144340000001.png&w=280&h=350&zc=2' },
       { name: '蜂蜜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/2002121650500000001.png&w=280&h=350&zc=2' },
     ];
-    this.drink = this.drinksData[0];
     this.description = '請點選圖片左右邊來選擇';
   }
 
