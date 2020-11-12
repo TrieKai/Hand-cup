@@ -29,6 +29,7 @@ export class ConstantsService {
     reAuthComponentRef: 'reAuthComponentRef',
     forgotPasswordComponentRef: 'forgotPasswordComponentRef',
     lockScreenComponentRef: 'lockScreenComponentRef',
+    reviewComponentRef: 'reviewComponentRef',
   };
 
   // HTML Shared data

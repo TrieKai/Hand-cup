@@ -18,6 +18,7 @@ export class SharedService {
     reAuthComponentRef: null,
     forgotPasswordComponentRef: null,
     lockScreenComponentRef: null,
+    reviewComponentRef: null,
   };
 
   constructor() { }

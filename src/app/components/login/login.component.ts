@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginPassword', { static: false }) loginPasswordRef: ElementRef<HTMLInputElement>;
   @ViewChild('signUpEmail', { static: false }) signUpEmailRef: ElementRef<HTMLInputElement>;
   @ViewChild('signUpPassword', { static: false }) signUpPasswordRef: ElementRef<HTMLInputElement>;
+  componentKey: string;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -29,10 +30,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
-
-  closeDialog() {
-    this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+    this.componentKey = this.cons.SHAREDDATA.loginComponentRef;
   }
 
   async login() {

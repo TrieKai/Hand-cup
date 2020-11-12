@@ -1,0 +1,40 @@
+<!-- <div mat-dialog-title>
+  <div class="review-title">
+    <div class="author-box" (click)="openUrl(data.review.author_url)">
+      <img class="author-img" src="{{data.review.profile_photo_url}}" alt="author_img" />
+      <span class="author-name" title="{{data.review.author_name}}">{{data.review.author_name}}</span>
+    </div>
+    <div class="rating-box">
+      <span class="author-rating">{{data.review.rating}}</span>
+      <app-rating-stars [rating]="data.review.rating" [width]="25" [height]="25" class="rating-stars">
+      </app-rating-stars>
+    </div>
+  </div>
+  <div>
+    <span class="review-time"
+      title="{{data.review.time * 1000 | date:'long'}}">{{data.review.time * 1000 | date:'long'}}</span>
+  </div>
+</div>
+<div mat-dialog-content class="review-text">
+  {{data.review.text}}
+</div> -->
+<app-dialog [componentKey]="componentKey">
+  <div class="review-title">
+    <div class="author-box" (click)="openUrl(data.review.author_url)">
+      <img class="author-img" src="{{data.review.profile_photo_url}}" alt="author_img" />
+      <span class="author-name" title="{{data.review.author_name}}">{{data.review.author_name}}</span>
+    </div>
+    <div class="rating-box">
+      <span class="author-rating">{{data.review.rating}}</span>
+      <app-rating-stars [rating]="data.review.rating" [width]="25" [height]="25" class="rating-stars">
+      </app-rating-stars>
+    </div>
+  </div>
+  <div>
+    <span class="review-time"
+      title="{{data.review.time * 1000 | date:'long'}}">{{data.review.time * 1000 | date:'long'}}</span>
+  </div>
+  <div class="review-text">
+    {{data.review.text}}
+  </div>
+</app-dialog>

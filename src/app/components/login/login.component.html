@@ -1,60 +1,57 @@
-<div class="overlay-container">
-  <div class="overlay-background" (click)="closeDialog()"></div>
-  <div class="login-wrapper">
-    <div class="login-box">
-      <input id="signin" type="radio" name="tab" checked="checked" />
-      <input id="register" type="radio" name="tab" />
-      <div class="pages">
-        <div class="page">
-          <div class="input">
-            <div class="title"><i class="material-icons">email</i> EMAIL</div>
-            <input #loginEmail class="text" type="email" placeholder="email" />
-          </div>
-          <div class="input">
-            <div class="title"><i class="material-icons">lock</i> PASSWORD</div>
-            <input #loginPassword class="text" type="password" placeholder="password" (keydown.enter)="login()" />
-          </div>
-          <div class="forgot input" (click)="forgotPassword()">忘記密碼?</div>
-          <div class="input">
-            <input class="enter-btn" type="submit" value="ENTER" (click)="login()" />
-          </div>
-          <p class="divid-line">or</p>
-          <div class="third-login-box google input" (click)="signUpWithGoogle()">
-            <i-google class="google-icon"></i-google>
-            <span>Login with Google</span>
-          </div>
-          <div class="third-login-box facebook input" (click)="signUpWithFacebook()">
-            <i-facebook class="facebook-icon"></i-facebook>
-            <span>Login with Facebook</span>
-          </div>
+<app-dialog [componentKey]="componentKey">
+  <div class="login-box">
+    <input id="signin" type="radio" name="tab" checked="checked" />
+    <input id="register" type="radio" name="tab" />
+    <div class="pages">
+      <div class="page">
+        <div class="input">
+          <div class="title"><i class="material-icons">email</i> EMAIL</div>
+          <input #loginEmail class="text" type="email" placeholder="email" />
         </div>
-        <div class="page signup">
-          <div class="input">
-            <div class="title"><i class="material-icons">mail_outline</i> EMAIL</div>
-            <input #signUpEmail class="text" type="email" placeholder="email" />
-          </div>
-          <div class="input">
-            <div class="title"><i class="material-icons">lock_outline</i> PASSWORD</div>
-            <input #signUpPassword class="text" type="password" placeholder="password" />
-          </div>
-          <div class="input">
-            <input class="sign-up-btn" type="submit" value="SIGN ME UP!" (click)="signUp()" />
-          </div>
-          <p class="divid-line">or</p>
-          <div class="third-login-box google input" (click)="signUpWithGoogle()">
-            <i-google class="google-icon"></i-google>
-            <span>Login with Google</span>
-          </div>
-          <div class="third-login-box facebook input" (click)="signUpWithFacebook()">
-            <i-facebook class="facebook-icon"></i-facebook>
-            <span>Login with Facebook</span>
-          </div>
+        <div class="input">
+          <div class="title"><i class="material-icons">lock</i> PASSWORD</div>
+          <input #loginPassword class="text" type="password" placeholder="password" (keydown.enter)="login()" />
+        </div>
+        <div class="forgot input" (click)="forgotPassword()">忘記密碼?</div>
+        <div class="input">
+          <input class="enter-btn" type="submit" value="ENTER" (click)="login()" />
+        </div>
+        <p class="divid-line">or</p>
+        <div class="third-login-box google input" (click)="signUpWithGoogle()">
+          <i-google class="google-icon"></i-google>
+          <span>Login with Google</span>
+        </div>
+        <div class="third-login-box facebook input" (click)="signUpWithFacebook()">
+          <i-facebook class="facebook-icon"></i-facebook>
+          <span>Login with Facebook</span>
         </div>
       </div>
-      <div class="tabs">
-        <label class="tab text" for="signin">Sign In</label>
-        <label class="tab text" for="register">Register</label>
+      <div class="page signup">
+        <div class="input">
+          <div class="title"><i class="material-icons">mail_outline</i> EMAIL</div>
+          <input #signUpEmail class="text" type="email" placeholder="email" />
+        </div>
+        <div class="input">
+          <div class="title"><i class="material-icons">lock_outline</i> PASSWORD</div>
+          <input #signUpPassword class="text" type="password" placeholder="password" />
+        </div>
+        <div class="input">
+          <input class="sign-up-btn" type="submit" value="SIGN ME UP!" (click)="signUp()" />
+        </div>
+        <p class="divid-line">or</p>
+        <div class="third-login-box google input" (click)="signUpWithGoogle()">
+          <i-google class="google-icon"></i-google>
+          <span>Login with Google</span>
+        </div>
+        <div class="third-login-box facebook input" (click)="signUpWithFacebook()">
+          <i-facebook class="facebook-icon"></i-facebook>
+          <span>Login with Facebook</span>
+        </div>
       </div>
     </div>
+    <div class="tabs">
+      <label class="tab text" for="signin">Sign In</label>
+      <label class="tab text" for="register">Register</label>
+    </div>
   </div>
-</div>
+</app-dialog>

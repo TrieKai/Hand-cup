@@ -1,4 +1,4 @@
-<div mat-dialog-title>
+<!-- <div mat-dialog-title>
   <div class="review-title">
     <div class="author-box" (click)="openUrl(data.review.author_url)">
       <img class="author-img" src="{{data.review.profile_photo_url}}" alt="author_img" />
@@ -17,4 +17,11 @@
 </div>
 <div mat-dialog-content class="review-text">
   {{data.review.text}}
+</div> -->
+
+<div class="overlay-container">
+  <div class="overlay-background" (click)="closeDialog()"></div>
+  <div class="dialog-wrapper">
+    <ng-content></ng-content>
+  </div>
 </div>

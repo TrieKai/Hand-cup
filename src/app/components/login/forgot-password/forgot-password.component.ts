@@ -12,6 +12,7 @@ import { LoginService } from 'src/app/service/login.service';
 })
 export class ForgotPasswordComponent implements OnInit {
   @ViewChild('email', { static: false }) emailRef: ElementRef<HTMLInputElement>;
+  componentKey: string;
 
   constructor(
     private domService: DomService,
@@ -22,10 +23,7 @@ export class ForgotPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
-
-  closeDialog() {
-    this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.forgotPasswordComponentRef));
+    this.componentKey = this.cons.SHAREDDATA.forgotPasswordComponentRef;
   }
 
   async confirm() {

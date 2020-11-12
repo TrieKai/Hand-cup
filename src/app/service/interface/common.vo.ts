@@ -58,6 +58,7 @@ interface commonSharedData {
     reAuthComponentRef: any
     forgotPasswordComponentRef: any
     lockScreenComponentRef: any
+    reviewComponentRef: any
 }
 
 interface htmlSharedData {

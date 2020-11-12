@@ -9,8 +9,10 @@ import { environment } from '../../../../../environments/environment';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { MessageService } from 'src/app/service/message.service';
+import { DomService } from 'src/app/util/dom.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
-import { DialogComponent } from '../../../common/dialog/dialog.component';
+import { ReviewComponent } from '../review/review.component';
 
 @Component({
   selector: 'app-chosen-card',
@@ -34,6 +36,7 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
   imageSliderStyles: object[] = [];
   listen: any;
   ratingText: number | string;
+  componentKey: string;
 
   private _chosenShopDetail: drinkShopDetail;
 
@@ -63,6 +66,8 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
     private firebase: FirebaseService,
     private renderer: Renderer2,
     private message: MessageService,
+    private domService: DomService,
+    private sharedService: SharedService,
   ) { }
 
   @HostListener('window:resize', [])
@@ -105,6 +110,7 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
     this.isMobile = this.common.detectDeviceType().mobile;
     this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
     if (window.innerWidth < 600) { this.smallScreen = true; }
+    this.componentKey = this.cons.SHAREDDATA.reviewComponentRef;
   }
 
   ngAfterViewInit() {
@@ -126,12 +132,18 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   openDialog(index: number): void {
-    this.dialog.open(DialogComponent, {
-      maxWidth: this.dialogMaxWidth,
-      minWidth: this.dialogMinWidth,
-      maxHeight: this.dialogMaxHeight,
-      data: { review: this.chosenShopDetail.reviews[index] }
-    });
+    // this.dialog.open(DialogComponent, {
+    //   maxWidth: this.dialogMaxWidth,
+    //   minWidth: this.dialogMinWidth,
+    //   maxHeight: this.dialogMaxHeight,
+    //   data: { review: this.chosenShopDetail.reviews[index] }
+    // });
+    const componentRef = this.domService.createComponent(
+      ReviewComponent,
+      this.cons.SHAREDDATA.reviewComponentRef,
+      { data: this.chosenShopDetail.reviews[index] }
+    );
+    this.domService.attachComponent(componentRef, this.document.body);
   }
 
   checkLocalStorage(placeId: string, type: string) {
