@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { ConstantsService } from 'src/app/util/constants/constants.service';
+
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
@@ -7,10 +9,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ReviewComponent implements OnInit {
   @Input() data: any;
+  componentKey: string;
 
-  constructor() { }
+  constructor(
+    private cons: ConstantsService,
+  ) { }
 
   ngOnInit() {
-    console.log(this.data)
+    this.componentKey = this.cons.SHAREDDATA.reviewComponentRef;
   }
 }

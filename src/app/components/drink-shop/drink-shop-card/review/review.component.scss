@@ -1,83 +1,96 @@
 @import '../../../../assets/css/special-property.scss';
 @import '../../../../assets/css/common.scss';
 
-.review-title {
-  @include display-flex();
-  @include flex-wrap(wrap);
-  align-items: center;
-  margin     : 5px 0;
-  position   : relative;
+.review-box {
+  padding      : 20px;
+  max-width    : 70%;
+  color        : #fff;
+  background   : #333;
+  border-radius: 5px;
 
-  .author-box {
-    @include display-flex();
-    align-items: center;
-    width      : calc(100% - 160px); // Minus rating-box
-    cursor     : pointer;
-
-    @media screen and (max-width: rwdBoundary(small)) {
-      width: 100%;
-    }
-
-    .author-img {
-      width : 80px;
-      height: 80px;
-
-      @media screen and (max-width: rwdBoundary(small)) {
-        width : 40px;
-        height: 40px;
-      }
-    }
-
-    .author-name {
-      margin-left  : 10px;
-      width        : 100%;
-      overflow     : hidden;
-      white-space  : nowrap;
-      text-overflow: ellipsis;
-      font-size    : 2rem;
-
-      @media screen and (max-width: rwdBoundary(small)) {
-        font-size: 1.5rem;
-      }
-    }
+  @media screen and (max-width: rwdBoundary(middle)) {
+    max-width: 80%;
   }
 
-  .rating-box {
+  .review-title {
     @include display-flex();
+    @include flex-wrap(wrap);
     align-items: center;
-    margin-left: 5px;
+    margin     : 5px 0;
+    position   : relative;
 
-    @media screen and (max-width: rwdBoundary(small)) {
-      margin: 5px 0 0 0;
-    }
-
-    .author-rating {
-      margin-left: 10px;
-      width      : 15px;
-      font-size  : 1.5rem;
+    .author-box {
+      @include display-flex();
+      align-items: center;
+      width      : calc(100% - 160px); // Minus rating-box
+      cursor     : pointer;
 
       @media screen and (max-width: rwdBoundary(small)) {
-        margin   : 0;
-        font-size: 1.25rem;
+        width: 100%;
+      }
+
+      .author-img {
+        width : 80px;
+        height: 80px;
+
+        @media screen and (max-width: rwdBoundary(small)) {
+          width : 40px;
+          height: 40px;
+        }
+      }
+
+      .author-name {
+        margin-left  : 10px;
+        width        : 100%;
+        overflow     : hidden;
+        white-space  : nowrap;
+        text-overflow: ellipsis;
+        font-size    : 2rem;
+
+        @media screen and (max-width: rwdBoundary(small)) {
+          font-size: 1.5rem;
+        }
       }
     }
 
-    .rating-stars {
+    .rating-box {
+      @include display-flex();
+      align-items: center;
       margin-left: 5px;
-      width      : 125px;
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        margin: 5px 0 0 0;
+      }
+
+      .author-rating {
+        margin-left: 10px;
+        width      : 15px;
+        font-size  : 1.5rem;
+
+        @media screen and (max-width: rwdBoundary(small)) {
+          margin   : 0;
+          font-size: 1.25rem;
+        }
+      }
+
+      .rating-stars {
+        margin-left: 5px;
+        width      : 125px;
+      }
     }
   }
-}
 
-.review-time {
-  right    : 0px;
-  color    : darkgray;
-  font-size: 1rem;
-}
+  .review-time {
+    right    : 0px;
+    color    : darkgray;
+    font-size: 1rem;
+  }
 
-.review-text {
-  margin     : 5px 0;
-  white-space: pre-line;
-  font-size  : 1.5rem;
-  cursor     : default;
+  .review-text {
+    margin     : 5px 0;
+    white-space: pre-line;
+    font-size  : 1.5rem;
+    overflow-y : auto;
+    cursor     : default;
+  }
 }

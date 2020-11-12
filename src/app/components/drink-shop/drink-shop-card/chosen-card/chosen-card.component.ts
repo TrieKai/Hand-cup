@@ -1,6 +1,5 @@
 import { Component, OnInit, HostListener, Input, Renderer2, Inject, ViewChild, ElementRef, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { LocalstorageService } from 'src/app/util/localstorage.service';
@@ -10,7 +9,6 @@ import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { MessageService } from 'src/app/service/message.service';
 import { DomService } from 'src/app/util/dom.service';
-import { SharedService } from 'src/app/shared/shared.service';
 
 import { ReviewComponent } from '../review/review.component';
 
@@ -26,9 +24,6 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
   isMobile: boolean = false;
   smallScreen: boolean = false;
   showDropDown: boolean;
-  dialogMaxWidth: number;
-  dialogMinWidth: number;
-  dialogMaxHeight: number;
   ratingStarWidth: number;
   ratingStarHeight: number;
   images: string[] = [];
@@ -59,7 +54,6 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private cons: ConstantsService,
-    private dialog: MatDialog,
     private localStorageService: LocalstorageService,
     private common: CommonService,
     private drinkShopService: DrinkShopService,
@@ -67,31 +61,19 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
     private renderer: Renderer2,
     private message: MessageService,
     private domService: DomService,
-    private sharedService: SharedService,
   ) { }
 
   @HostListener('window:resize', [])
   onResize() {
     // console.log('window_width:', window.innerWidth, 'window_height:', window.innerHeight)
-    this.dialogMaxHeight = window.innerHeight * 0.8;
     this.ratingStarWidth = 15;
     this.ratingStarHeight = 15;
     this.smallScreen = false;
-    if (window.innerWidth >= 1280) {
-      this.dialogMaxWidth = 800;
-      this.dialogMinWidth = 500;
-    } else if (window.innerWidth >= 800 && window.innerWidth < 1280) {
-      this.dialogMaxWidth = 500;
-      this.dialogMinWidth = 350;
-    } else if (window.innerWidth >= 320 && window.innerWidth < 600) {
-      this.dialogMaxWidth = 300;
-      this.dialogMinWidth = 250;
+    if (window.innerWidth >= 320 && window.innerWidth < 600) {
       this.ratingStarWidth = 10;
       this.ratingStarHeight = 10;
       this.smallScreen = true;
     } else if (window.innerWidth < 320) {
-      this.dialogMaxWidth = window.innerWidth * 0.9;
-      this.dialogMinWidth = window.innerWidth * 0.8;
       this.ratingStarWidth = 10;
       this.ratingStarHeight = 10;
       this.smallScreen = true;
@@ -132,12 +114,6 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   openDialog(index: number): void {
-    // this.dialog.open(DialogComponent, {
-    //   maxWidth: this.dialogMaxWidth,
-    //   minWidth: this.dialogMinWidth,
-    //   maxHeight: this.dialogMaxHeight,
-    //   data: { review: this.chosenShopDetail.reviews[index] }
-    // });
     const componentRef = this.domService.createComponent(
       ReviewComponent,
       this.cons.SHAREDDATA.reviewComponentRef,
