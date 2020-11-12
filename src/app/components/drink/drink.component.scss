@@ -8,7 +8,8 @@
   align-items     : center;
   height          : height(layout);
   background-color: #c0cebd;
-  overflow        : auto;
+  overflow-x      : hidden;
+  overflow-y      : auto;
 
   @media screen and (max-width: rwdBoundary(small)) {
     height: height(layout_small);
@@ -96,7 +97,7 @@
           &:active,
           &:focus {
             &~.image {
-              transform: translate(-4rem, 3rem) rotate(-5deg);
+              @include transform(translate(-4rem, 3rem) rotate(-5deg));
             }
           }
         }
@@ -111,7 +112,7 @@
           &:active,
           &:focus {
             &~.image {
-              transform: translate(4rem, 3rem) rotate(5deg);
+              @include transform(translate(4rem, 3rem) rotate(5deg));
             }
           }
         }
@@ -178,6 +179,16 @@
 
 .active {
   animation: card-animation 0.7s ease-in-out;
+}
+
+.fadeLeft {
+  opacity: 0;
+  @include transform(translate(-5rem, 4rem) rotate(-10deg));
+}
+
+.fadeRight {
+  opacity: 0;
+  @include transform(translate(5rem, 4rem) rotate(10deg));
 }
 
 .pointer {

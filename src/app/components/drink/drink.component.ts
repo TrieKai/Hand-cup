@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { MessageService } from 'src/app/service/message.service';
@@ -11,6 +11,7 @@ import { CommonService } from 'src/app/service/common.service';
 })
 export class DrinkComponent implements OnInit {
   @ViewChild('cardImage', { static: false }) cardImageRef: ElementRef<HTMLDivElement>;
+  @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
   infoMessage: string;
   listen: any;
   gocha: boolean;
@@ -20,6 +21,28 @@ export class DrinkComponent implements OnInit {
   showLeftFirework: boolean;
   showRightFirework: boolean;
   description: string;
+  chooseType: string;
+  dragEnabled: boolean;
+  originPos: { x: number, y: number } = { x: 0, y: 0 };
+  newPos: { x: number, y: number } = { x: 0, y: 0 };
+
+  @HostListener('document:mouseup', ['$event'])
+  onDrop(e: any) {
+    if (this.dragEnabled) {
+      this.handleChoosenCard(e);
+    } else { return; }
+    this.dragEnabled = false;
+    this.description = '還是?';
+  }
+
+  @HostListener('document:touchend', ['$event'])
+  onDropMobile(e: any) {
+    if (this.dragEnabled) {
+      this.handleChoosenCard(e.changedTouches[0]);
+    } else { return; }
+    this.dragEnabled = false;
+    this.description = '還是?';
+  }
 
   constructor(
     private cons: ConstantsService,
@@ -63,7 +86,7 @@ export class DrinkComponent implements OnInit {
         if (flag) {
           this.isFinished = this.showLeftFirework = true;
           setTimeout(() => { this.showRightFirework = true; }, 500); // Right firework delay 500ms
-          // Add cursor pointer to cardImage
+          // Add cursor pointer to cardImage when not on mobile
           const isMobile = this.common.detectDeviceType().mobile;
           if (!isMobile) {
             this.renderer.addClass(this.cardImageRef.nativeElement, 'pointer');
@@ -88,15 +111,36 @@ export class DrinkComponent implements OnInit {
     return array;
   }
 
-  choose(type: string) {
+  choose(e: any, type: string, isMobile: boolean) {
+    if (!this.isFinished) { return; }
+
     if (type === this.cons.DIRECTION.left) {
+      this.chooseType = this.cons.DIRECTION.left;
       this.description = '我不想喝啦! (往左滑動)';
     } else if (type === this.cons.DIRECTION.right) {
+      this.chooseType = this.cons.DIRECTION.right;
       this.description = '進入下一層? (往右滑動)';
     }
+
+    if (!isMobile) {
+      e.preventDefault();
+      this.originPos = { x: e.clientX, y: e.clientY };
+    } else {
+      this.originPos = { x: e.targetTouches[0].clientX, y: e.targetTouches[0].clientY };
+    }
+    this.dragEnabled = true;
   }
 
-  unChoose() {
-    this.description = '還是?';
+  handleChoosenCard(e: any) {
+    const distanceX = e.clientX - this.originPos.x;
+    if (this.chooseType === this.cons.DIRECTION.left) {
+      if (distanceX < 0) {
+        this.renderer.addClass(this.imageRef.nativeElement, 'fadeLeft');
+      } else { return; }
+    } else if (this.chooseType === this.cons.DIRECTION.right) {
+      if (distanceX > 0) {
+        this.renderer.addClass(this.imageRef.nativeElement, 'fadeRight');
+      } else { return; }
+    }
   }
 }
