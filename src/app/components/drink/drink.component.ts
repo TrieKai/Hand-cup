@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { MessageService } from 'src/app/service/message.service';
+import { CommonService } from 'src/app/service/common.service';
 
 @Component({
   selector: 'app-drink',
@@ -9,6 +10,7 @@ import { MessageService } from 'src/app/service/message.service';
   styleUrls: ['./drink.component.scss']
 })
 export class DrinkComponent implements OnInit {
+  @ViewChild('cardImage', { static: false }) cardImageRef: ElementRef<HTMLDivElement>;
   infoMessage: string;
   listen: any;
   gocha: boolean;
@@ -22,6 +24,8 @@ export class DrinkComponent implements OnInit {
   constructor(
     private cons: ConstantsService,
     private message: MessageService,
+    private renderer: Renderer2,
+    private common: CommonService,
   ) { }
 
   ngOnInit() {
@@ -42,13 +46,10 @@ export class DrinkComponent implements OnInit {
     this.description = '請點選圖片左右邊來選擇';
   }
 
-  confirm() {
-    this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '什麼事都沒發生', content: '' });
-  }
-
   recommendDrinks() {
     this.gocha = true;
     this.isFinished = this.showLeftFirework = this.showRightFirework = false;
+
     const shuffledDrinks = this.shuffle(this.drinksData);
     const concatedData = shuffledDrinks
       .concat(shuffledDrinks)
@@ -62,6 +63,11 @@ export class DrinkComponent implements OnInit {
         if (flag) {
           this.isFinished = this.showLeftFirework = true;
           setTimeout(() => { this.showRightFirework = true; }, 500); // Right firework delay 500ms
+          // Add cursor pointer to cardImage
+          const isMobile = this.common.detectDeviceType().mobile;
+          if (!isMobile) {
+            this.renderer.addClass(this.cardImageRef.nativeElement, 'pointer');
+          }
         }
         this.drink = concatedData[i];
       }, 100 * Math.pow(i / 2, 1.5)); // 參數隨便調的啦
@@ -84,9 +90,9 @@ export class DrinkComponent implements OnInit {
 
   choose(type: string) {
     if (type === this.cons.DIRECTION.left) {
-      this.description = '就這個惹!';
+      this.description = '我不想喝啦! (往左滑動)';
     } else if (type === this.cons.DIRECTION.right) {
-      this.description = '進入下一層?';
+      this.description = '進入下一層? (往右滑動)';
     }
   }
 

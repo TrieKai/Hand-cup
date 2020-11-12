@@ -115,3 +115,9 @@
   display: -moz-grid;
   display: -ms-grid;
 }
+
+@mixin user-select ($settings) {
+  user-select        : $settings;
+  -webkit-user-select: $settings;
+  -moz-user-select   : $settings;
+}

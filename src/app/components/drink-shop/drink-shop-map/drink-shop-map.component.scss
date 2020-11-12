@@ -1,4 +1,5 @@
 @import '../../../assets/css/special-property.scss';
+@import '../../../assets/css//common.scss';
 
 #map {
   margin: auto;
@@ -44,8 +45,8 @@
     outline       : none;
     text-transform: none;
     appearance    : none;
-    user-select   : none;
-    cursor        : pointer;
+    @include user-select(none);
+    cursor: pointer;
 
     &:hover {
       color: #333;

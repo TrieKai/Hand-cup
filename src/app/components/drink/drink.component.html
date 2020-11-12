@@ -10,7 +10,7 @@
   <section *ngIf="gocha && drink" class="card-section" [ngClass]="{'active': isFinished}">
     <div class="card-container">
       <div class="card-info">{{drink.name}}</div>
-      <div class="card-image">
+      <div #cardImage class="card-image">
         <div class="left-control" (mousedown)="choose('left')" (mouseup)="unChoose()" (touchstart)="choose('left')"
           (touchend)="unChoose()">
         </div>
