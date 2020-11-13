@@ -84,8 +84,13 @@ export class DrinkComponent implements OnInit, OnDestroy {
   }
 
   recommendDrinks() {
+    if (this.isFinished) {
+      this.renderer.removeClass(this.imageRef.nativeElement, 'faderight');
+      this.renderer.removeClass(this.imageRef.nativeElement, 'fadeLeft');
+    }
     this.gocha = true;
     this.isFinished = this.showLeftFirework = this.showRightFirework = false;
+    this.description = '';
 
     const shuffledDrinks = this.shuffle(this.drinksData);
     const concatedData = shuffledDrinks
@@ -161,6 +166,9 @@ export class DrinkComponent implements OnInit, OnDestroy {
           if (status === null) { return; }
           if (status) {
             this.renderer.addClass(this.imageRef.nativeElement, 'fadeLeft');
+            setTimeout(() => {
+              this.recommendDrinks(); // Redo random drinks
+            }, 500);
           }
           // Unscribe
           this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.isConfirm);
