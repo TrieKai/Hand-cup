@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscribe: Subscription;
   imageLoaded: boolean;
   thirdParty: boolean;
+  componentKey: string;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -58,6 +59,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } else {
       this.thirdParty = true;
     }
+    this.componentKey = this.cons.SHAREDDATA.profileComponentRef;
   }
 
   ngOnDestroy(): void {

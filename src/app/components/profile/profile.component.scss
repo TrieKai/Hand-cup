@@ -1,49 +1,20 @@
 @import '../../assets/css/common.scss';
 @import '../../assets/css/special-property.scss';
 
-.overlay-container {
-  position      : fixed;
-  top           : 0;
-  left          : 0;
-  width         : 100%;
-  height        : 100%;
-  pointer-events: none;
-  z-index       : zIndex(dialogMask);
-
-  .overlay-background {
-    position      : absolute;
-    top           : 0;
-    bottom        : 0;
-    left          : 0;
-    right         : 0;
-    pointer-events: auto;
-    background    : rgba(0, 0, 0, 0.32);
-    opacity       : 1;
-  }
-}
-
-.settings-wrapper {
-  @include display-flex();
-  justify-content: center;
-  align-items    : center;
-  width          : 100%;
-  height         : 100%;
-}
-
 .settings-box {
   @include display-flex();
   @include flex-direction(column);
   min-height    : 300px;
   max-width     : 310px;
   max-height    : 95%;
-  pointer-events: initial;
   background    : linear-gradient(to left, #9cc5ff, #92eefa);
   border-radius : 2px;
   box-shadow    : 0px 2px 3px rgba(0, 0, 0, 0.2);
   overflow-x    : hidden;
   overflow-y    : auto;
+  pointer-events: initial;
   animation     : popupWindow 0.5s;
-  z-index       : zIndex(login);
+  z-index       : zIndex(dialogWindow);
 
   .text-box {
     margin: 5px 10px;
@@ -93,7 +64,7 @@
     text-align: right;
 
     p {
-      margin: 0;
+      margin: 5px 0;
       color : #fff;
     }
   }

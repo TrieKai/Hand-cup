@@ -78,7 +78,7 @@
     @return 70;
   }
 
-  @else if $type==login {
+  @else if $type==dialogWindow {
     @return 60;
   }
 

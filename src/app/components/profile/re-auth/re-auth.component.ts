@@ -18,6 +18,7 @@ export class ReAuthComponent implements OnInit {
   @ViewChild('newPassword', { static: false }) newPasswordRef: ElementRef<HTMLInputElement>;
   @ViewChild('confirmPassword', { static: false }) confirmPasswordRef: ElementRef<HTMLInputElement>;
   email: string;
+  componentKey: string;
 
   constructor(
     private domService: DomService,
@@ -30,6 +31,7 @@ export class ReAuthComponent implements OnInit {
 
   ngOnInit() {
     this.email = this.loginService.getFirebaseUserData().email;
+    this.componentKey = this.cons.SHAREDDATA.reAuthComponentRef;
   }
 
   closeDialog() {
