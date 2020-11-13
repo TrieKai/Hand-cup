@@ -1,0 +1,13 @@
+<app-dialog [componentKey]="componentKey">
+  <div class="confirm-box">
+    <div *ngIf="closeButton" class="close-btn pointer" (click)="cancel()">
+      <i-close [width]="25" [height]="25" [color]="'#808080'"></i-close>
+    </div>
+    <div class="title">{{title}}</div>
+    <div class="content-box">
+      {{message}}
+    </div>
+    <button class="cancel pointer" (click)="cancel()">{{cancelText}}</button>
+    <button class="confirm pointer" (click)="confirm()">{{confirmText}}</button>
+  </div>
+</app-dialog>

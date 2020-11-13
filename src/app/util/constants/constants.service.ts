@@ -18,7 +18,7 @@ export class ConstantsService {
     right: 'right',
     bottom: 'bottom',
     left: 'left'
-  }
+  };
 
   // Shared data
   public readonly SHAREDDATA = {
@@ -30,6 +30,7 @@ export class ConstantsService {
     forgotPasswordComponentRef: 'forgotPasswordComponentRef',
     lockScreenComponentRef: 'lockScreenComponentRef',
     reviewComponentRef: 'reviewComponentRef',
+    confirmComponentRef: 'confirmComponentRef',
   };
 
   // HTML Shared data
@@ -42,6 +43,7 @@ export class ConstantsService {
     onloading: 'onloading',
     lockScreen: 'lockScreen',
     showMap: 'showMap',
+    isConfirm: 'isConfirm',
   };
 
   // Message type
@@ -52,10 +54,16 @@ export class ConstantsService {
     error: 'error'
   };
 
+  // Confrim text
+  public readonly CONFIRM_TEXT = {
+    confirm: '確認',
+    cancel: '取消',
+  };
+
   // Third party type
   public readonly THIRD_PARTY_TYPE = {
     google: 'google',
-    facebook: 'facebook'
+    facebook: 'facebook',
   };
 
   // Info message
@@ -64,7 +72,7 @@ export class ConstantsService {
     drinkShops: '今天飲料喝哪家?',
     emailVerify: '信箱驗證',
     resetPassword: '重設密碼',
-  }
+  };
 
   // Token
   public readonly TOKEN = 'token';
@@ -77,12 +85,12 @@ export class ConstantsService {
   public readonly LOCAL_STORAGE_TYPE = {
     favorite: 'favorite',
     visited: 'visited'
-  }
+  };
 
   // Upload target
   public readonly UPLOAD_TARGET_TYPE = {
     profile: 'profile'
-  }
+  };
 
   // Upload resource key
   public readonly UPLOAD_RESOURCE_KEY = 'file';

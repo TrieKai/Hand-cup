@@ -28,6 +28,7 @@ import { ForgotPasswordComponent } from './components/login/forgot-password/forg
 import { AuthEmailComponent } from './components/login/auth-email/auth-email.component';
 import { LockScreenComponent } from './components/common/lock-screen/lock-screen.component';
 import { ReviewComponent } from './components/drink-shop/drink-shop-card/review/review.component';
+import { ConfirmComponent } from './components/common/confirm/confirm.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -47,6 +48,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         ForgotPasswordComponent,
         AuthEmailComponent,
         ReviewComponent,
+        ConfirmComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -72,6 +74,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         AuthEmailComponent,
         LockScreenComponent,
         ReviewComponent,
+        ConfirmComponent,
     ],
 })
 export class AppModule { }

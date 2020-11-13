@@ -59,6 +59,7 @@ interface commonSharedData {
     forgotPasswordComponentRef: any
     lockScreenComponentRef: any
     reviewComponentRef: any
+    confirmComponentRef: any
 }
 
 interface htmlSharedData {
@@ -69,6 +70,7 @@ interface SharedStatus {
     onloading: boolean
     lockScreen: boolean
     showMap: boolean
+    isConfirm: boolean
 }
 
 interface firebaseProfile {

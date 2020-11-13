@@ -19,6 +19,7 @@ export class SharedService {
     forgotPasswordComponentRef: null,
     lockScreenComponentRef: null,
     reviewComponentRef: null,
+    confirmComponentRef: null,
   };
 
   constructor() { }
@@ -55,6 +56,7 @@ export class SharedService {
     onloading: false,
     lockScreen: false,
     showMap: false,
+    isConfirm: false,
   };
 
   public setStatus(key: string, value: boolean): BehaviorSubject<boolean> {

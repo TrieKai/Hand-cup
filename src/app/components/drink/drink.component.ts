@@ -1,19 +1,24 @@
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, HostListener, Inject, OnDestroy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
-import { MessageService } from 'src/app/service/message.service';
 import { CommonService } from 'src/app/service/common.service';
+import { DomService } from 'src/app/util/dom.service';
+import { SharedService } from 'src/app/shared/shared.service';
+
+import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 
 @Component({
   selector: 'app-drink',
   templateUrl: './drink.component.html',
   styleUrls: ['./drink.component.scss']
 })
-export class DrinkComponent implements OnInit {
+export class DrinkComponent implements OnInit, OnDestroy {
   @ViewChild('cardImage', { static: false }) cardImageRef: ElementRef<HTMLDivElement>;
   @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
   infoMessage: string;
-  listen: any;
+  confirmBS: BehaviorSubject<boolean>; // Confirm callback trigger
   gocha: boolean;
   drinksData: drinksData[];
   drink: drinksData;
@@ -45,10 +50,12 @@ export class DrinkComponent implements OnInit {
   }
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private cons: ConstantsService,
-    private message: MessageService,
     private renderer: Renderer2,
     private common: CommonService,
+    private domService: DomService,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit() {
@@ -67,6 +74,13 @@ export class DrinkComponent implements OnInit {
       { name: '蜂蜜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/2002121650500000001.png&w=280&h=350&zc=2' },
     ];
     this.description = '請點選圖片左右邊來選擇';
+  }
+
+  ngOnDestroy(): void {
+    if (this.confirmBS) {
+      this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.isConfirm);
+      this.confirmBS.unsubscribe();
+    }
   }
 
   recommendDrinks() {
@@ -135,7 +149,23 @@ export class DrinkComponent implements OnInit {
     const distanceX = e.clientX - this.originPos.x;
     if (this.chooseType === this.cons.DIRECTION.left) {
       if (distanceX < 0) {
-        this.renderer.addClass(this.imageRef.nativeElement, 'fadeLeft');
+        const componentRef = this.domService.createComponent(
+          ConfirmComponent,
+          this.cons.SHAREDDATA.confirmComponentRef,
+          { closeButton: true, title: '', message: '確定要重新選飲料嗎?' }
+        );
+        this.domService.attachComponent(componentRef, this.document.body);
+
+        this.confirmBS = this.sharedService.getStatus(this.cons.SHAREDSTATUS.isConfirm);
+        this.confirmBS.subscribe((status) => {
+          if (status === null) { return; }
+          if (status) {
+            this.renderer.addClass(this.imageRef.nativeElement, 'fadeLeft');
+          }
+          // Unscribe
+          this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.isConfirm);
+          this.confirmBS.unsubscribe();
+        });
       } else { return; }
     } else if (this.chooseType === this.cons.DIRECTION.right) {
       if (distanceX > 0) {
