@@ -17,6 +17,7 @@ import { ConfirmComponent } from '../../components/common/confirm/confirm.compon
 export class DrinkComponent implements OnInit, OnDestroy {
   @ViewChild('cardImage', { static: false }) cardImageRef: ElementRef<HTMLDivElement>;
   @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
+  @ViewChild('hint', { static: false }) hintRef: ElementRef<HTMLParagraphElement>;
   infoMessage: string;
   confirmBS: BehaviorSubject<boolean>; // Confirm callback trigger
   gocha: boolean;
@@ -25,6 +26,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
   isFinished: boolean;
   showLeftFirework: boolean;
   showRightFirework: boolean;
+  hintText: string;
   description: string;
   chooseType: string;
   dragEnabled: boolean;
@@ -73,7 +75,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
       { name: '冰淇淋紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144340000001.png&w=280&h=350&zc=2' },
       { name: '蜂蜜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/2002121650500000001.png&w=280&h=350&zc=2' },
     ];
-    this.description = '請點選圖片左右邊來選擇';
+    this.hintText = '請點選圖片左右邊來選擇';
   }
 
   ngOnDestroy(): void {
@@ -90,7 +92,6 @@ export class DrinkComponent implements OnInit, OnDestroy {
     }
     this.gocha = true;
     this.isFinished = this.showLeftFirework = this.showRightFirework = false;
-    this.description = '';
 
     const shuffledDrinks = this.shuffle(this.drinksData);
     const concatedData = shuffledDrinks
@@ -104,6 +105,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         if (flag) {
           this.isFinished = this.showLeftFirework = true;
+          this.renderer.addClass(this.hintRef.nativeElement, 'glint'); // Add glint animation
           setTimeout(() => { this.showRightFirework = true; }, 500); // Right firework delay 500ms
           // Add cursor pointer to cardImage when not on mobile
           const isMobile = this.common.detectDeviceType().mobile;
@@ -140,6 +142,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
       this.chooseType = this.cons.DIRECTION.right;
       this.description = '進入下一層? (往右滑動)';
     }
+    this.renderer.removeClass(this.hintRef.nativeElement, 'glint'); // Remove glint animation
 
     if (!isMobile) {
       e.preventDefault();
@@ -151,6 +154,10 @@ export class DrinkComponent implements OnInit, OnDestroy {
   }
 
   handleChoosenCard(e: any) {
+    setTimeout(() => {
+      this.renderer.addClass(this.hintRef.nativeElement, 'glint'); // Add glint animation
+    }, 3000);
+
     const distanceX = e.clientX - this.originPos.x;
     if (this.chooseType === this.cons.DIRECTION.left) {
       if (distanceX < 0) {
@@ -161,16 +168,17 @@ export class DrinkComponent implements OnInit, OnDestroy {
         );
         this.domService.attachComponent(componentRef, this.document.body);
 
-        this.confirmBS = this.sharedService.getStatus(this.cons.SHAREDSTATUS.isConfirm);
+        this.confirmBS = this.sharedService.getStatus(this.cons.SHAREDSTATUS.isConfirm); // Confirm listener
         this.confirmBS.subscribe((status) => {
           if (status === null) { return; }
           if (status) {
             this.renderer.addClass(this.imageRef.nativeElement, 'fadeLeft');
             setTimeout(() => {
               this.recommendDrinks(); // Redo random drinks
+              this.description = '';
             }, 500);
           }
-          // Unscribe
+          // Unscribe confirm listener
           this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.isConfirm);
           this.confirmBS.unsubscribe();
         });

@@ -9,7 +9,7 @@
   </section>
   <section *ngIf="gocha && drink" class="card-section" [ngClass]="{'active': isFinished}">
     <div class="card-container">
-      <div class="card-info">{{drink.name}}</div>
+      <div class="card-title">{{drink.name}}</div>
       <div #cardImage class="card-image">
         <div class="left-control" (mousedown)="choose($event, 'left', false)"
           (touchstart)="choose($event, 'left', true)">
@@ -19,7 +19,10 @@
         <div class="image-background"></div>
         <img #image src="{{drink.image}}" class="image" />
       </div>
-      <div *ngIf="isFinished" class="card-description">{{description}}</div>
+      <div *ngIf="isFinished" class="card-info">
+        <p #hint class="hint glint">{{hintText}}</p>
+        <p>{{description}}</p>
+      </div>
       <!-- <div *ngIf="isFinished" class="button-box">
         <div class="check">
           <span class="material-icons" (click)="confirm()">check_circle_outline</span>

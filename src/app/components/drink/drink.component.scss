@@ -70,7 +70,7 @@
       height    : 100%;
       background: #BDA867;
 
-      .card-info {
+      .card-title {
         @include display-flex();
         align-items    : center;
         justify-content: center;
@@ -141,14 +141,25 @@
         }
       }
 
-      .card-description {
-        margin-bottom: 10px;
-        @include display-flex();
+      .card-info {
+        margin-bottom  : 10px;
+        // @include display-flex();
         align-items    : flex-end;
         justify-content: center;
         width          : 100%;
         height         : 70px;
         font-size      : 24px;
+
+        p {
+          margin: 5px 0;
+        }
+
+        .hint {
+          margin-bottom: 15px;
+          color        : antiquewhite;
+          font-size    : 20px;
+          opacity      : 0;
+        }
       }
 
       // .button-box {
@@ -191,6 +202,10 @@
   @include transform(translate(5rem, 4rem) rotate(10deg));
 }
 
+.glint {
+  animation: glint 2s ease-in-out infinite;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -206,5 +221,19 @@
 
   100% {
     @include transform(scale(1));
+  }
+}
+
+@include keyframes(glint) {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
