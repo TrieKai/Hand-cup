@@ -3,34 +3,42 @@
   <app-firework *ngIf="showLeftFirework" class="firework-left"></app-firework>
   <app-firework *ngIf="showRightFirework" class="firework-right"></app-firework>
   <section *ngIf="!gocha" class="box">
-    <div class="pressBtn" (click)="recommendDrinks()">
+    <div class="pressBtn" (click)="recommendDrinks(1)">
       <span>PRESS</span>
     </div>
   </section>
   <section *ngIf="gocha && drink" class="card-section" [ngClass]="{'active': isFinished}">
     <div class="card-container">
-      <div class="card-title">{{drink.name}}</div>
-      <div #cardImage class="card-image">
-        <div class="left-control" (mousedown)="choose($event, 'left', false)"
-          (touchstart)="choose($event, 'left', true)">
+      <ng-container *ngIf="step === 1">
+        <div class="card-title">{{drink.name}}</div>
+        <div #cardImage class="card-image">
+          <div class="left-control" (mousedown)="choose($event, 'left', false)"
+            (touchstart)="choose($event, 'left', true)">
+          </div>
+          <div class="right-control" (mousedown)="choose($event, 'right', false)"
+            (touchstart)="choose($event, 'right', true)"></div>
+          <div class="image-background"></div>
+          <img #image [src]="drink.image" class="image" />
         </div>
-        <div class="right-control" (mousedown)="choose($event, 'right', false)"
-          (touchstart)="choose($event, 'right', true)"></div>
-        <div class="image-background"></div>
-        <img #image src="{{drink.image}}" class="image" />
-      </div>
-      <div *ngIf="isFinished" class="card-info">
-        <p #hint class="hint glint">{{hintText}}</p>
-        <p>{{description}}</p>
-      </div>
-      <!-- <div *ngIf="isFinished" class="button-box">
-        <div class="check">
-          <span class="material-icons" (click)="confirm()">check_circle_outline</span>
+        <div class="card-info">
+          <ng-container *ngIf="isFinished">
+            <div class="hint-box">
+              <p *ngIf="showHint" class="hint glint">{{hintText}}</p>
+            </div>
+            <p>{{description}}</p>
+          </ng-container>
         </div>
-        <div class="restart">
-          <span class="material-icons" (click)="recommendDrinks()">replay</span>
+      </ng-container>
+      <ng-container *ngIf="step === 2">
+        <div class="sub-background">
+          <span>{{drink.name}}</span>
         </div>
-      </div> -->
+        <div *ngIf="isFinished" class="button-box">
+          <div class="restart">
+            <span class="material-icons" (click)="recommendDrinks(1)">replay</span>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </section>
 </main>

@@ -6,6 +6,7 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { CommonService } from 'src/app/service/common.service';
 import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
+import { MessageService } from 'src/app/service/message.service';
 
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 
@@ -23,9 +24,11 @@ export class DrinkComponent implements OnInit, OnDestroy {
   gocha: boolean;
   drinksData: drinksData[];
   drink: drinksData;
+  step: number;
   isFinished: boolean;
   showLeftFirework: boolean;
   showRightFirework: boolean;
+  showHint: boolean;
   hintText: string;
   description: string;
   chooseType: string;
@@ -39,7 +42,6 @@ export class DrinkComponent implements OnInit, OnDestroy {
       this.handleChoosenCard(e);
     } else { return; }
     this.dragEnabled = false;
-    this.description = '還是?';
   }
 
   @HostListener('document:touchend', ['$event'])
@@ -48,7 +50,6 @@ export class DrinkComponent implements OnInit, OnDestroy {
       this.handleChoosenCard(e.changedTouches[0]);
     } else { return; }
     this.dragEnabled = false;
-    this.description = '還是?';
   }
 
   constructor(
@@ -58,19 +59,36 @@ export class DrinkComponent implements OnInit, OnDestroy {
     private common: CommonService,
     private domService: DomService,
     private sharedService: SharedService,
+    private message: MessageService,
   ) { }
 
   ngOnInit() {
+    this.step = 0;
     this.infoMessage = '今天飲料喝什麼?';
 
     // TODO: Replace API with this
     this.drinksData = [
-      { name: '綠茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101143220000001.png&w=280&h=350&zc=2' },
-      { name: '紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1705151055490000001.png&w=280&h=350&zc=2' },
-      { name: '奶茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1904241008320000001.png&w=280&h=350&zc=2' },
+      {
+        name: '綠茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101143220000001.png&w=280&h=350&zc=2',
+        subDrinks: [{ name: '普洱茶' }, { name: '烏龍茶' }, { name: '多多綠' }]
+      },
+      {
+        name: '紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1705151055490000001.png&w=280&h=350&zc=2',
+        subDrinks: [{ name: '大正紅茶' }, { name: '錫蘭紅茶' }]
+      },
+      {
+        name: '奶茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1904241008320000001.png&w=280&h=350&zc=2',
+        subDrinks: [{ name: '珍珠奶茶' }, { name: '鮮奶茶' }]
+      },
       { name: '珍珠鮮奶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1904240957570000001.png&w=280&h=350&zc=2' },
-      { name: '果汁', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1801251627300000001.png&w=280&h=350&zc=2' },
-      { name: '冬瓜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144190000001.png&w=280&h=350&zc=2' },
+      {
+        name: '果汁', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1801251627300000001.png&w=280&h=350&zc=2',
+        subDrinks: [{ name: '柳橙' }, { name: '檸檬' }]
+      },
+      {
+        name: '冬瓜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144190000001.png&w=280&h=350&zc=2',
+        subDrinks: [{ name: '冬瓜茶' }, { name: '冬瓜檸檬' }, { name: '冬瓜鮮奶' }, { name: '冬瓜綠茶' }]
+      },
       { name: '多多綠', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144260000001.png&w=280&h=350&zc=2' },
       { name: '冰淇淋紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144340000001.png&w=280&h=350&zc=2' },
       { name: '蜂蜜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/2002121650500000001.png&w=280&h=350&zc=2' },
@@ -85,35 +103,53 @@ export class DrinkComponent implements OnInit, OnDestroy {
     }
   }
 
-  recommendDrinks() {
-    if (this.isFinished) {
+  recommendDrinks(step: number) {
+    this.step = step;
+    if (this.isFinished && this.imageRef) {
       this.renderer.removeClass(this.imageRef.nativeElement, 'faderight');
       this.renderer.removeClass(this.imageRef.nativeElement, 'fadeLeft');
     }
     this.gocha = true;
     this.isFinished = this.showLeftFirework = this.showRightFirework = false;
 
-    const shuffledDrinks = this.shuffle(this.drinksData);
+    let shuffledDrinks: any[];
+    if (step === 1) {
+      shuffledDrinks = this.shuffle(this.drinksData);
+    } else if (step === 2) {
+      if (!this.drink.subDrinks) { return; }
+      shuffledDrinks = this.shuffle(this.drink.subDrinks);
+    }
+
     const concatedData = shuffledDrinks
       .concat(shuffledDrinks)
       .concat(shuffledDrinks)
       .concat(shuffledDrinks); // Concat data triple times
-    const drinksDataLength = this.drinksData.length;
+    this.randomDrinks(concatedData, step);
+  }
+
+  randomDrinks(dataList: any[], step: number) {
+    let drinksDataLength: number;
+    if (step === 1) {
+      drinksDataLength = this.drinksData.length;
+    } else if (step === 2) {
+      drinksDataLength = this.drink.subDrinks.length;
+    }
+
     const choesnIndex = Math.floor(Math.random() * drinksDataLength);
-    for (let i = 0; i < concatedData.length; i++) {
+    for (let i = 0; i < dataList.length; i++) {
       const flag = (i === drinksDataLength * 3 + choesnIndex) ? true : false;
       setTimeout(() => {
         if (flag) {
-          this.isFinished = this.showLeftFirework = true;
-          this.renderer.addClass(this.hintRef.nativeElement, 'glint'); // Add glint animation
-          setTimeout(() => { this.showRightFirework = true; }, 500); // Right firework delay 500ms
+          this.step = step++;
+          this.isFinished = this.showLeftFirework = this.showHint = true;
+          setTimeout(() => { this.showRightFirework = true; }, 500); // Right firework delay 0.5s
           // Add cursor pointer to cardImage when not on mobile
           const isMobile = this.common.detectDeviceType().mobile;
           if (!isMobile) {
             this.renderer.addClass(this.cardImageRef.nativeElement, 'pointer');
           }
         }
-        this.drink = concatedData[i];
+        this.drink = dataList[i];
       }, 100 * Math.pow(i / 2, 1.5)); // 參數隨便調的啦
       if (flag) { break; } // Break point
     }
@@ -135,6 +171,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
   choose(e: any, type: string, isMobile: boolean) {
     if (!this.isFinished) { return; }
 
+    this.showHint = false;
     if (type === this.cons.DIRECTION.left) {
       this.chooseType = this.cons.DIRECTION.left;
       this.description = '我不想喝啦! (往左滑動)';
@@ -142,7 +179,6 @@ export class DrinkComponent implements OnInit, OnDestroy {
       this.chooseType = this.cons.DIRECTION.right;
       this.description = '進入下一層? (往右滑動)';
     }
-    this.renderer.removeClass(this.hintRef.nativeElement, 'glint'); // Remove glint animation
 
     if (!isMobile) {
       e.preventDefault();
@@ -154,9 +190,8 @@ export class DrinkComponent implements OnInit, OnDestroy {
   }
 
   handleChoosenCard(e: any) {
-    setTimeout(() => {
-      this.renderer.addClass(this.hintRef.nativeElement, 'glint'); // Add glint animation
-    }, 3000);
+    this.description = '還是?';
+    setTimeout(() => { this.showHint = true; }, 3000);
 
     const distanceX = e.clientX - this.originPos.x;
     if (this.chooseType === this.cons.DIRECTION.left) {
@@ -174,7 +209,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
           if (status) {
             this.renderer.addClass(this.imageRef.nativeElement, 'fadeLeft');
             setTimeout(() => {
-              this.recommendDrinks(); // Redo random drinks
+              this.recommendDrinks(1); // Redo random drinks
               this.description = '';
             }, 500);
           }
@@ -185,7 +220,14 @@ export class DrinkComponent implements OnInit, OnDestroy {
       } else { return; }
     } else if (this.chooseType === this.cons.DIRECTION.right) {
       if (distanceX > 0) {
+        if (!this.drink.subDrinks) {
+          this.message.add({ type: this.cons.MESSAGE_TYPE.info, title: '沒有下一層囉!', content: '' });
+          this.description = '就是這個啦!';
+          return;
+        }
         this.renderer.addClass(this.imageRef.nativeElement, 'fadeRight');
+        this.step = 2;
+        this.recommendDrinks(2);
       } else { return; }
     }
   }
