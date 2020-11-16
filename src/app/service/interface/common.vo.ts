@@ -35,6 +35,7 @@ interface Menu {
     title: string
     router: string
     icon: string
+    active: boolean
 }
 
 interface UtilitiesMenu {

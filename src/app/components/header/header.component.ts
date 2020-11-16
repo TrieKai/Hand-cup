@@ -98,7 +98,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         );
         this.domService.attachComponent(componentRef, this.document.body);
         return;
-      } else if (!status) {
+      } else {
         this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
         this.sidebarStatus = false;
         const lockScreenComponentRef = this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef);

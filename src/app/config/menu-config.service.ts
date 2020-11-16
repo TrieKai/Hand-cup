@@ -6,14 +6,14 @@ import { RouterConstantsService as routerCons } from '../util/constants/router-c
 // import { LoginComponent } from 'src/app/components/login/login.component';
 
 const menuCons = new MenuConstantsService();
-const home: Menu = { title: menuCons.HOME, router: routerCons.ROUTER_HOME, icon: menuCons.HOME_ICON };
+const home: Menu = { title: menuCons.HOME, router: routerCons.ROUTER_HOME, icon: menuCons.HOME_ICON, active: true };
 const menus: Menu[] = [
-  { title: menuCons.DRINK, router: routerCons.ROUTER_DRINK, icon: menuCons.DRINK_ICON },
-  { title: menuCons.DRINK_SHOP, router: routerCons.ROUTER_DRINKSHOP, icon: menuCons.DRINK_SHOP_ICON },
-  { title: menuCons.COMPARE, router: '', icon: menuCons.COMPARE_ICON },
-  { title: menuCons.RECOMMENDATION, router: '', icon: menuCons.RECOMMENDATION_ICON },
-  { title: menuCons.COLLECTION, router: '', icon: menuCons.COLLECTION_ICON },
-  { title: menuCons.NEWEST, router: '', icon: menuCons.NEWEST_ICON },
+  { title: menuCons.DRINK, router: routerCons.ROUTER_DRINK, icon: menuCons.DRINK_ICON, active: true },
+  { title: menuCons.DRINK_SHOP, router: routerCons.ROUTER_DRINKSHOP, icon: menuCons.DRINK_SHOP_ICON, active: true },
+  { title: menuCons.COMPARE, router: '', icon: menuCons.COMPARE_ICON, active: false },
+  { title: menuCons.RECOMMENDATION, router: '', icon: menuCons.RECOMMENDATION_ICON, active: false },
+  { title: menuCons.COLLECTION, router: '', icon: menuCons.COLLECTION_ICON, active: false },
+  { title: menuCons.NEWEST, router: '', icon: menuCons.NEWEST_ICON, active: false },
 ];
 // const utilitiesMenus: Menu[] = [
 //   { title: menuCons.LOGIN, router: '', icon: menuCons.LOGIN_ICON, componentRef: LoginComponent },

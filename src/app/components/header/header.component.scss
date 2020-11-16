@@ -3,226 +3,245 @@
 
 html,
 body {
-    overflow-x: hidden;
-    height    : 100%;
+  overflow-x: hidden;
+  height    : 100%;
 }
 
 body {
-    background: #fff;
-    padding   : 0;
-    margin    : 0;
+  background: #fff;
+  padding   : 0;
+  margin    : 0;
 }
 
 .toolBar-title {
-    @include display-flex();
-    margin-left: 10px;
-    width      : auto;
-    height     : auto;
-    font-size  : 28px;
-    outline    : none;
-    cursor     : pointer;
+  @include display-flex();
+  margin-left: 10px;
+  width      : auto;
+  height     : auto;
+  font-size  : 38px;
+  outline    : none;
+  cursor     : pointer;
 }
 
 .home-icon {
-    width : 48px;
-    height: 48px;
+  width : 48px;
+  height: 48px;
 
-    @media screen and (max-width: rwdBoundary(small)) {
-        width : 40px;
-        height: 40px;
-        margin: 5px 0;
-    }
+  @media screen and (max-width: rwdBoundary(small)) {
+    width : 40px;
+    height: 40px;
+    margin: 5px 0;
+  }
 }
 
 .search-container {
-    position    : fixed;
-    right       : 40px;
-    margin-right: 15px;
-    width       : 250px;
-    order       : 1;
+  position    : fixed;
+  right       : 40px;
+  margin-right: 15px;
+  width       : 250px;
+  order       : 1;
 
-    @media screen and (max-width: rwdBoundary(small)) {
-        position: unset;
-        margin  : 5px 0;
-        width   : calc(100% - 70px);
-        order   : 2;
-    }
+  @media screen and (max-width: rwdBoundary(small)) {
+    position: unset;
+    margin  : 5px 0;
+    width   : calc(100% - 70px);
+    order   : 2;
+  }
 }
 
 .account-button {
-    @include display-flex();
-    position : fixed;
-    right    : 10px;
-    font-size: 30px;
-    cursor   : pointer;
-    order    : 2;
+  @include display-flex();
+  position : fixed;
+  right    : 10px;
+  font-size: 30px;
+  cursor   : pointer;
+  order    : 2;
 
-    @media screen and (max-width: rwdBoundary(small)) {
-        top  : 10px;
-        order: 1;
-    }
+  @media screen and (max-width: rwdBoundary(small)) {
+    top  : 10px;
+    order: 1;
+  }
 
-    img {
-        width        : 30px;
-        height       : 30px;
-        border-radius: 50%;
-    }
+  img {
+    width        : 30px;
+    height       : 30px;
+    border-radius: 50%;
+  }
 }
 
 .header {
-    @include display-flex();
-    align-items     : center;
-    margin          : 0 auto;
-    padding-left    : 45px;
-    width           : 100%;
-    max-width       : 100%;
-    box-shadow      : none;
-    background-color: #FFFFFF;
-    position        : fixed;
-    height          : height(header) !important;
-    overflow        : hidden;
-    z-index         : zIndex(header);
+  @include display-flex();
+  align-items     : center;
+  margin          : 0 auto;
+  padding-left    : 45px;
+  width           : 100%;
+  max-width       : 100%;
+  box-shadow      : none;
+  background-color: #FFFFFF;
+  position        : fixed;
+  height          : height(header) !important;
+  overflow        : hidden;
+  z-index         : zIndex(header);
 
-    @media screen and (max-width: rwdBoundary(small)) {
-        @include flex-wrap(wrap);
-        height: height(header_small) !important;
-    }
+  @media screen and (max-width: rwdBoundary(small)) {
+    @include flex-wrap(wrap);
+    height: height(header_small) !important;
+  }
 }
 
 .main-container {
-    display    : block;
-    margin     : 0 auto;
-    padding-top: height(header);
-    height     : 100%;
+  display    : block;
+  margin     : 0 auto;
+  padding-top: height(header);
+  height     : 100%;
 
-    @media screen and (max-width: rwdBoundary(small)) {
-        padding-top: height(header_small);
-    }
+  @media screen and (max-width: rwdBoundary(small)) {
+    padding-top: height(header_small);
+  }
 }
 
 .sidebar-menu {
-    height    : 100%;
-    position  : fixed;
-    left      : 0;
-    width     : 250px;
-    height    : height(layoutBasic);
-    margin-top: height(header);
-    background: linear-gradient(45deg, #e0e8ee, #fdf4f4);
-    @include transform(translateX(-250px));
-    @include transition(transform 250ms ease-in-out);
-    z-index: zIndex(header);
+  height    : 100%;
+  position  : fixed;
+  left      : 0;
+  width     : 250px;
+  height    : height(layoutBasic);
+  margin-top: height(header);
+  background: linear-gradient(45deg, #e0e8ee, #fdf4f4);
+  @include transform(translateX(-250px));
+  @include transition(transform 250ms ease-in-out);
+  z-index: zIndex(header);
 
-    @media screen and (max-width: rwdBoundary(small)) {
-        margin-top: height(header_small);
-        height    : height(layoutBasic_small);
+  @media screen and (max-width: rwdBoundary(small)) {
+    margin-top: height(header_small);
+    height    : height(layoutBasic_small);
+  }
+
+  .sidebar-menu-inner {
+    margin    : 0;
+    padding   : 0;
+    max-height: 100%;
+    overflow-y: auto;
+
+    li {
+      @include display-flex();
+      align-items   : center;
+      list-style    : none;
+      padding       : 20px;
+      position      : relative;
+      color         : #222;
+      text-transform: uppercase;
+      font-weight   : bold;
+      outline       : none;
+      cursor        : pointer;
+
+      .menu-icon {
+        width : 30px;
+        height: 30px;
+      }
+
+      .menu-span {
+        position   : relative;
+        margin-left: 10px;
+        font-size  : 22px;
+        outline    : none;
+      }
+
+      .divide-line {
+        position     : absolute;
+        border-bottom: #111 1px solid;
+      }
     }
 
-    .sidebar-menu-inner {
-        margin    : 0;
-        padding   : 0;
-        max-height: 100%;
-        overflow-y: auto;
-        cursor    : pointer;
-
-        li {
-            @include display-flex();
-            align-items   : center;
-            list-style    : none;
-            padding       : 20px;
-            position      : relative;
-            color         : #222;
-            text-transform: uppercase;
-            font-weight   : bold;
-
-            .menu-icon {
-                width : 30px;
-                height: 30px;
-            }
-
-            .menu-span {
-                margin-left: 10px;
-                font-size  : 18px;
-                outline    : none;
-            }
-
-            .divide-line {
-                position     : absolute;
-                border-bottom: #111 1px solid;
-            }
-        }
-
-        li:after {
-            content   : "";
-            background: #333;
-            width     : calc(100% - 40px);
-            height    : 1px;
-            position  : absolute;
-            bottom    : 0;
-            opacity   : 0.2;
-        }
+    li:after {
+      content   : "";
+      background: #333;
+      width     : calc(100% - 40px);
+      height    : 1px;
+      position  : absolute;
+      bottom    : 0;
+      opacity   : 0.2;
     }
+
+    .beta {
+      color         : gray;
+      pointer-events: none;
+
+      .menu-span:after {
+        content      : "BETA";
+        position     : absolute;
+        top          : -5px;
+        padding      : 3px;
+        font-size    : 12px;
+        color        : #fff;
+        background   : #777;
+        border-radius: 3px;
+        @include transform(scale(0.8));
+      }
+    }
+  }
 }
 
 .open~.sidebar-menu {
-    @include transform(translateX(0));
+  @include transform(translateX(0));
 }
 
 .sidebar-icon-toggle {
-    @include display-flex();
-    @include flex-direction(column);
-    position       : fixed;
-    justify-content: space-evenly;
-    width          : 100%;
-    height         : 100%;
-    top            : 22px;
-    left           : 15px;
-    width          : 22px;
-    height         : 22px;
-    @include transition(all 0.3s);
-    cursor : pointer;
-    z-index: zIndex(header);
+  @include display-flex();
+  @include flex-direction(column);
+  position       : fixed;
+  justify-content: space-evenly;
+  width          : 100%;
+  height         : 100%;
+  top            : 22px;
+  left           : 15px;
+  width          : 22px;
+  height         : 22px;
+  @include transition(all 0.3s);
+  cursor : pointer;
+  z-index: zIndex(header);
 
-    @media screen and (max-width: rwdBoundary(small)) {
-        top: 34px;
-    }
+  @media screen and (max-width: rwdBoundary(small)) {
+    top: 34px;
+  }
 }
 
 .hamburger {
-    position        : absolute;
-    width           : 100%;
-    height          : 3px;
-    background-color: gray;
-    @include transition(all 0.3s);
+  position        : absolute;
+  width           : 100%;
+  height          : 3px;
+  background-color: gray;
+  @include transition(all 0.3s);
 }
 
 .horizontal {
-    position: relative;
-    @include transition(all 0.3s);
+  position: relative;
+  @include transition(all 0.3s);
 }
 
 .diagonal.part-1 {
-    position: relative;
-    @include transition(all 0.3s);
+  position: relative;
+  @include transition(all 0.3s);
 }
 
 .diagonal.part-2 {
-    position: relative;
-    @include transition(all 0.3s);
+  position: relative;
+  @include transition(all 0.3s);
 }
 
 .open>.horizontal {
-    opacity: 0;
-    @include transition(all 0.3s);
+  opacity: 0;
+  @include transition(all 0.3s);
 }
 
 .open>.diagonal.part-1 {
-    margin-top: 3.5px;
-    @include transform(rotate(135deg));
-    @include transition(all 0.3s);
+  margin-top: 3.5px;
+  @include transform(rotate(135deg));
+  @include transition(all 0.3s);
 }
 
 .open>.diagonal.part-2 {
-    margin-top: -22px;
-    @include transform(rotate(-135deg));
-    @include transition(all 0.3s);
+  margin-top: -22px;
+  @include transform(rotate(-135deg));
+  @include transition(all 0.3s);
 }

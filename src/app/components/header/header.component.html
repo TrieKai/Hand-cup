@@ -53,9 +53,10 @@
 </label>
 <div class="sidebar-menu" #sidebarMenu>
   <ul class="sidebar-menu-inner">
-    <li *ngFor="let menu of menuList">
+    <li *ngFor="let menu of menuList" [ngClass]="{'beta': !menu.active}" [routerLink]="menu.router"
+      (click)="handleSidebar()">
       <img class="menu-icon" [src]="menu.icon" alt="menu_icon" />
-      <span class="menu-span" [routerLink]="menu.router" (click)="handleSidebar()">{{menu.title}}</span>
+      <span class="menu-span">{{menu.title}}</span>
     </li>
   </ul>
 </div>
