@@ -5,6 +5,7 @@ import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { LoginService } from 'src/app/service/login.service';
+import { MessageService } from 'src/app/service/message.service';
 
 import { ForgotPasswordComponent } from '../login/forgot-password/forgot-password.component';
 
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
     private cons: ConstantsService,
     private renderer: Renderer2,
     private loginService: LoginService,
+    private message: MessageService,
   ) { }
 
   ngOnInit() {
@@ -45,9 +47,10 @@ export class LoginComponent implements OnInit {
         if (email === '' || email === null || email === undefined) {
           this.renderer.addClass(this.loginEmailRef.nativeElement, 'error');
           return;
-        }
+        } else if (!this.loginService.validateEmail(email)) { return; }
         if (password === '' || password === null || password === undefined) {
           this.renderer.addClass(this.loginPasswordRef.nativeElement, 'error');
+          this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.VALIDATE_MESSAGE.passwordFormat, content: '' });
           return;
         }
         resolve();
@@ -77,11 +80,12 @@ export class LoginComponent implements OnInit {
         if (email === '' || email === null || email === undefined) {
           this.renderer.addClass(this.signUpEmailRef.nativeElement, 'error');
           return;
-        }
+        } else if (!this.loginService.validateEmail(email)) { return; }
         if (password === '' || password === null || password === undefined) {
           this.renderer.addClass(this.signUpPasswordRef.nativeElement, 'error');
+          this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.VALIDATE_MESSAGE.passwordFormat, content: '' });
           return;
-        }
+        } else if (!this.loginService.validatePassword(password)) { return; }
         resolve();
       }, 10);
     });

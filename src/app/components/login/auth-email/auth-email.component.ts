@@ -100,10 +100,9 @@ export class AuthEmailComponent implements OnInit {
     const password = this.newPasswordRef.nativeElement.value;
     console.log(password)
     if (password === '' || password === null || password === undefined) {
-      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '密碼格式錯誤', content: '' });
+      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.VALIDATE_MESSAGE.passwordFormat, content: '' });
       return;
-    } else {
-      await this.loginService.resetPassword(this.email, password, this.APIKey);
-    }
+    } else if (!this.loginService.validateEmail(this.email)) { return; }
+    await this.loginService.resetPassword(this.email, password, this.APIKey);
   }
 }

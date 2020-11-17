@@ -39,11 +39,13 @@ export class ReAuthComponent implements OnInit {
   }
 
   async confirm() {
-    if (this.passwordRef.nativeElement.value === '' || this.passwordRef.nativeElement.value === null || this.passwordRef.nativeElement.value === undefined) {
+    const password = this.passwordRef.nativeElement.value;
+    if (password === '' || password === null || password === undefined) {
       this.renderer.addClass(this.passwordRef.nativeElement, 'error');
+      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.VALIDATE_MESSAGE.passwordFormat, content: '' });
       return;
-    }
-    const status = await this.loginService.reAuth(this.email, this.passwordRef.nativeElement.value);
+    } else if (!this.loginService.validatePassword(password)) { return; }
+    const status = await this.loginService.reAuth(this.email, password);
     if (status) {
       this.renderer.addClass(this.firstPageRef.nativeElement, 'moveToLeft');
       this.renderer.addClass(this.secondPageRef.nativeElement, 'moveToLeft');

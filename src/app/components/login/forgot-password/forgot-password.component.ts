@@ -4,6 +4,7 @@ import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { LoginService } from 'src/app/service/login.service';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -20,6 +21,7 @@ export class ForgotPasswordComponent implements OnInit {
     private cons: ConstantsService,
     private loginService: LoginService,
     private renderer: Renderer2,
+    private message: MessageService,
   ) { }
 
   ngOnInit() {
@@ -31,7 +33,7 @@ export class ForgotPasswordComponent implements OnInit {
     if (email === '' || email === null || email === undefined) {
       this.renderer.addClass(this.emailRef.nativeElement, 'error');
       return;
-    }
+    } else if (!this.loginService.validateEmail(email)) { return; }
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
     const status = await this.loginService.sendPasswordResetEmail(this.emailRef.nativeElement.value);
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);

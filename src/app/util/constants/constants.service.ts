@@ -13,6 +13,7 @@ export class ConstantsService {
     error: 'error'
   };
 
+  // Direction
   public readonly DIRECTION = {
     top: 'top',
     right: 'right',
@@ -64,6 +65,12 @@ export class ConstantsService {
   public readonly THIRD_PARTY_TYPE = {
     google: 'google',
     facebook: 'facebook',
+  };
+
+  public readonly VALIDATE_MESSAGE = {
+    emailFormat: '信箱格式錯誤',
+    passwordFormat: '密碼格式錯誤',
+    passwordLength: '密碼至少六位數',
   };
 
   // Info message

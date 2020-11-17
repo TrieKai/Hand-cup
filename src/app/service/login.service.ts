@@ -169,4 +169,20 @@ export class LoginService {
       console.log('password reset:', resp);
     }
   }
+
+  validateEmail(email: string): boolean {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const status = re.test(email);
+    if (!status) { this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: this.cons.VALIDATE_MESSAGE.emailFormat, content: '' }); }
+    return status;
+  }
+
+  validatePassword(password: string): boolean {
+    if (password.length < 6) {
+      this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: this.cons.VALIDATE_MESSAGE.passwordLength, content: '' });
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
