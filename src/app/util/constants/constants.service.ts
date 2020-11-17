@@ -77,6 +77,7 @@ export class ConstantsService {
   public readonly INFO_MESSAGE = {
     drinks: '今天飲料喝甚麼?',
     drinkShops: '今天飲料喝哪家?',
+    myMap: '我的地圖',
     emailVerify: '信箱驗證',
     resetPassword: '重設密碼',
   };

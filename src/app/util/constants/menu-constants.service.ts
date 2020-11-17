@@ -14,7 +14,7 @@ export class MenuConstantsService {
   public readonly DRINK_SHOP: string = "今天飲料喝哪家?";
   public readonly COMPARE: string = "比較模式";
   public readonly RECOMMENDATION: string = "客製化推薦";
-  public readonly COLLECTION: string = "我的收藏";
+  public readonly COLLECTION: string = "我的地圖";
   public readonly NEWEST: string = "What's new!";
 
   public readonly DRINK_ICON: string = "../../assets/img/Icon-What kinda drink.png";

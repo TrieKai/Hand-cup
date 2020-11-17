@@ -6,14 +6,16 @@ import { RouterConstantsService as routerCons } from './util/constants/router-co
 import { HomeComponent } from './components/home/home.component';
 import { DrinkComponent } from './components/drink/drink.component';
 import { DrinkShopComponent } from './components/drink-shop/drink-shop.component';
-import { AuthEmailComponent } from './components/login/auth-email/auth-email.component';
+import { MyMapComponent } from './components/my-map/my-map.component';
+// import { AuthEmailComponent } from './components/login/auth-email/auth-email.component';
 
 const routes: Routes = [
   { path: '', redirectTo: routerCons.ROUTER_HOME, pathMatch: 'full' },
   { path: routerCons.ROUTER_HOME, component: HomeComponent },
   { path: routerCons.ROUTER_DRINK, component: DrinkComponent },
   { path: routerCons.ROUTER_DRINKSHOP, component: DrinkShopComponent },
-  { path: routerCons.ROUTER_AUTHEMAIL, component: AuthEmailComponent },
+  { path: routerCons.ROUTER_MYMAP, component: MyMapComponent },
+  // { path: routerCons.ROUTER_AUTHEMAIL, component: AuthEmailComponent },
 ];
 
 @NgModule({

@@ -16,7 +16,7 @@ import { GlobalService as global } from 'src/app/service/global.service';
   styleUrls: ['./drink-shop-map.component.scss']
 })
 export class DrinkShopMapComponent implements OnInit {
-  @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
+  @ViewChild('mapContainer', { static: false }) gmap: ElementRef<HTMLDivElement>;
   map: google.maps.Map;
   coordinate: Coordinate = { latitude: null, longitude: null };
   place: google.maps.places.PlacesService;
@@ -215,14 +215,15 @@ export class DrinkShopMapComponent implements OnInit {
       if (isDevMode() || global.showLog) {
         console.log(infoWindowData)
       }
-      this.addMarkerWithTimeout(infoWindowData, index * 1000).then((value) => {
-        if (index + 1 === this.resultArray.length) {
-          // Switch scenes with a delay of 1500 ms
-          setTimeout(() => {
-            this.handleTransformScenes();
-          }, 1500);
-        }
-      });
+      this.addMarkerWithTimeout(infoWindowData, index * 1000)
+        .then((value) => {
+          if (index + 1 === this.resultArray.length) {
+            // Switch scenes with a delay of 1500 ms
+            setTimeout(() => {
+              this.handleTransformScenes();
+            }, 1500);
+          }
+        });
 
       return result;
     });

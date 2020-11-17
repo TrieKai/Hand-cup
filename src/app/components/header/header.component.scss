@@ -1,18 +1,6 @@
 @import '../../assets/css/common.scss';
 @import '../../assets/css/special-property.scss';
 
-html,
-body {
-  overflow-x: hidden;
-  height    : 100%;
-}
-
-body {
-  background: #fff;
-  padding   : 0;
-  margin    : 0;
-}
-
 .toolBar-title {
   @include display-flex();
   margin-left: 10px;

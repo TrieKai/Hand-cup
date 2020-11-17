@@ -30,6 +30,7 @@ import { LockScreenComponent } from './components/common/lock-screen/lock-screen
 import { ReviewComponent } from './components/drink-shop/drink-shop-card/review/review.component';
 import { ConfirmComponent } from './components/common/confirm/confirm.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { MyMapComponent } from './components/my-map/my-map.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         AuthEmailComponent,
         ReviewComponent,
         ConfirmComponent,
+        MyMapComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),

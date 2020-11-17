@@ -1,0 +1,12 @@
+@import '../../assets/css/special-property.scss';
+@import '../../assets/css//common.scss';
+
+#map {
+  margin: auto;
+  height: height(layout);
+  width : 100%;
+
+  @media screen and (max-width: rwdBoundary(small)) {
+    height: height(layout_small);
+  }
+}
