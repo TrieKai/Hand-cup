@@ -164,7 +164,6 @@ export class DrinkComponent implements OnInit, OnDestroy {
       array[i] = array[j];
       array[j] = temp;
     }
-
     return array;
   }
 
@@ -191,7 +190,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
 
   handleChoosenCard(e: any) {
     this.description = '還是?';
-    setTimeout(() => { this.showHint = true; }, 3000);
+    this.showHint = true;
 
     const distanceX = e.clientX - this.originPos.x;
     if (this.chooseType === this.cons.DIRECTION.left) {
