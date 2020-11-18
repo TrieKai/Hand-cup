@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, isDevMode } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { SharedService } from 'src/app/shared/shared.service';
+import { GlobalService as global } from 'src/app/service/global.service';
 import { MapService } from 'src/app/service/map.service';
-import { LoginService } from 'src/app/service/login.service';
 
 @Component({
   selector: 'app-my-map',
@@ -17,13 +18,15 @@ export class MyMapComponent implements OnInit {
   map: google.maps.Map;
   coordinate: Coordinate = { latitude: null, longitude: null };
   markers: google.maps.Marker[] = [];
+  myMapList: MyMap;
+  sharedSubscribe: Subscription;
+  userId: string;
 
   constructor(
     private cons: ConstantsService,
     private geolocationService: GeolocationService,
     private sharedService: SharedService,
     private mapService: MapService,
-    private loginService: LoginService,
   ) { }
 
   ngOnInit() {
@@ -35,31 +38,60 @@ export class MyMapComponent implements OnInit {
         this.coordinate.latitude = pos.lat;
         this.mapInitializer();
       });
+
+    this.sharedSubscribe = this.sharedService.onInitEmitted.subscribe(() => {
+      const userData: firebase.UserInfo = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
+      if (userData) {
+        this.userId = userData.uid;
+        this.initData();
+      }
+    });
   }
 
   mapInitializer() {
     const coordinates: google.maps.LatLng = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
     const mapOptions: google.maps.MapOptions = {
       center: coordinates,
-      zoom: 13,
+      zoom: 11,
       mapTypeControl: false,
     };
     this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
-    this.showMarks();
   }
 
-  async showMarks() {
-    const userId = this.loginService.getFirebaseUserData().uid;
+  async initData() {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
-    const dataList = await this.mapService.getMyMapList(userId);
+    this.myMapList = await this.mapService.getMyMapList(this.userId);
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
-    dataList.forEach((data) => {
+    if (isDevMode() || global.showLog) {
+      console.log(this.myMapList);
+    }
+    this.showMarks();
+  };
+
+  async showMarks() {
+    if (this.myMapList.favorites.length === 0 && this.myMapList.visiteds.length === 0) {
+      alert('沒有東西啦哭哭')
+      return;
+    }
+
+    this.myMapList.favorites.forEach((favorite) => {
       const marker = new google.maps.Marker({
-        position: { lat: data.latitude, lng: data.longitude },
+        position: { lat: favorite.latitude, lng: favorite.longitude },
         map: this.map,
         icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
         animation: google.maps.Animation.DROP,
       });
+      marker.setMap(this.map);
+      this.markers.push(marker); // 統一管理 marker
+    });
+    this.myMapList.visiteds.forEach((visited) => {
+      const marker = new google.maps.Marker({
+        position: { lat: visited.latitude, lng: visited.longitude },
+        map: this.map,
+        icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        animation: google.maps.Animation.DROP,
+      });
+      marker.setMap(this.map);
       this.markers.push(marker); // 統一管理 marker
     });
   }

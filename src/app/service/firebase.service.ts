@@ -128,6 +128,10 @@ export class FirebaseService {
     return this.authenticated;
   }
 
+  test(){
+    return this.afAuth.auth.onAuthStateChanged;
+  }
+
   async checkTokenExpired(): Promise<boolean> {
     const now = new Date().toUTCString();
     let tokenExpired: boolean;

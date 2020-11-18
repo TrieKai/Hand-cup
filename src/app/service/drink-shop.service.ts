@@ -116,6 +116,20 @@ export class DrinkShopService {
     }
   }
 
+  async getVisitedShop(userId: string): Promise<any[]> {
+    const url = this.apiCons.VISITED_SHOP + '/' + userId;
+    const header: HttpHeaders = this.api.getHeader();
+    const resp: RespData = await this.api.get(url, null, header);
+    if (isDevMode() || global.showLog) {
+      console.log(resp);
+    }
+    if (this.common.checkAPIResp(resp)) {
+      return resp.body.data;
+    } else {
+      return null;
+    }
+  }
+
   async visitedShop(status: boolean, placeId: string, userId: string): Promise<boolean> {
     if (status) {
       const header: HttpHeaders = this.api.getHeader();

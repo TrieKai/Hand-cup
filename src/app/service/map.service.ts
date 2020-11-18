@@ -40,7 +40,7 @@ export class MapService {
     }
   }
 
-  async getMyMapList(userId: string): Promise<any[]> {
+  async getMyMapList(userId: string): Promise<MyMap> {
     const header: HttpHeaders = this.api.getHeader();
     const resp: RespData = await this.api.get(this.apiCons.GET_MYMAP + userId, null, header);
     if (isDevMode() || global.showLog) {
@@ -49,7 +49,7 @@ export class MapService {
     if (this.common.checkAPIResp(resp)) {
       return resp.body.data;
     } else {
-      return [];
+      return null;
     }
   }
 }
