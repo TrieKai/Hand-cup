@@ -63,7 +63,11 @@ export class LoginComponent implements OnInit {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.loginComponentRef));
           // await this.loginService.updatePassword(password); // TODO: Forgot password email by normal process
-          await this.loginService.login(false, password);
+          const status = await this.loginService.login(false, password);
+          if (!status) {
+            this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登入發生錯誤', content: '' });
+            this.loginService.logOut();
+          }
         }
       });
   }
@@ -94,10 +98,13 @@ export class LoginComponent implements OnInit {
     await this.loginService.signUpFireBase(email, password)
       .then(async (status) => {
         if (status) {
-          this.signUpEmailRef.nativeElement.value = '';
-          this.signUpPasswordRef.nativeElement.value = '';
+          this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.loginComponentRef));
           await this.loginService.signUp(null, password);
-          await this.loginService.login(false, password);
+          const status = await this.loginService.login(false, password);
+          if (!status) {
+            this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登入發生錯誤', content: '' });
+            this.loginService.logOut();
+          }
         }
       });
   }
@@ -107,8 +114,12 @@ export class LoginComponent implements OnInit {
       .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.loginComponentRef));
-          await this.loginService.signUp(this.cons.THIRD_PARTY_TYPE.google);
-          await this.loginService.login(true);
+          await this.loginService.signUp(this.cons.SIGNUP_TYPE.google);
+          const status = await this.loginService.login(true);
+          if (!status) {
+            this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登入發生錯誤', content: '' });
+            this.loginService.logOut();
+          }
         }
       });
   }
@@ -118,8 +129,12 @@ export class LoginComponent implements OnInit {
       .then(async (status) => {
         if (status) {
           this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.loginComponentRef));
-          await this.loginService.signUp(this.cons.THIRD_PARTY_TYPE.facebook);
-          await this.loginService.login(true);
+          await this.loginService.signUp(this.cons.SIGNUP_TYPE.facebook);
+          const status = await this.loginService.login(true);
+          if (!status) {
+            this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登入發生錯誤', content: '' });
+            this.loginService.logOut();
+          }
         }
       });
   }

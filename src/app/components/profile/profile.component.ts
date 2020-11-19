@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.name = userData.displayName;
     this.photoURL = userData.photoURL;
     const providerId = userData.providerData[0].providerId;
-    if (providerId.indexOf(this.cons.THIRD_PARTY_TYPE.google) === -1 && providerId.indexOf(this.cons.THIRD_PARTY_TYPE.google) === -1) {
+    if (providerId.indexOf(this.cons.SIGNUP_TYPE.google) === -1 && providerId.indexOf(this.cons.SIGNUP_TYPE.google) === -1) {
       this.thirdParty = false;
     } else {
       this.thirdParty = true;

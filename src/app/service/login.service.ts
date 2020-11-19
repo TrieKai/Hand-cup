@@ -49,7 +49,7 @@ export class LoginService {
       });
   }
 
-  async login(thirdParty: boolean, password?: string) {
+  async login(thirdParty: boolean, password?: string): Promise<boolean> {
     const user = this.firebaseService.getUserData();
     const header: HttpHeaders = this.api.getHeader();
     const body: LoginReq = {
@@ -62,12 +62,16 @@ export class LoginService {
       console.log('login:', resp);
     }
     if (!this.common.checkAPIResp(resp)) {
-      return;
+      return false;
+    }
+    if (!this.common.checkAPIStatus(resp)) {
+      return false;
     }
     this.cookie.setCookie(this.cons.TOKEN, resp.body.data);
 
     const userPreferData = await this.getUserPreferData();
     this.localStorage.updateLocalStorage(userPreferData);
+    return true;
   }
 
   async signUpFireBase(email: string, password: string): Promise<boolean> {
@@ -82,7 +86,7 @@ export class LoginService {
       name: thirdParty ? user.displayName : null,
       email: user.email,
       password: thirdParty ? user.uid : password, // 如果是第三方登入的話就沒有密碼, 以 uid 來代替密碼
-      type: thirdParty
+      type: thirdParty ? thirdParty : this.cons.SIGNUP_TYPE.email
     };
     const resp: RespData = await this.api.post(this.apiCons.SIGNUP, body, header);
     if (isDevMode() || global.showLog) {

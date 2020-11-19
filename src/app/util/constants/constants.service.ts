@@ -66,7 +66,8 @@ export class ConstantsService {
   };
 
   // Third party type
-  public readonly THIRD_PARTY_TYPE = {
+  public readonly SIGNUP_TYPE = {
+    email: 'email',
     google: 'google',
     facebook: 'facebook',
   };
