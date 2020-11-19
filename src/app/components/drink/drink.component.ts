@@ -203,19 +203,21 @@ export class DrinkComponent implements OnInit, OnDestroy {
         this.domService.attachComponent(componentRef, this.document.body);
 
         this.confirmBS = this.sharedService.getStatus(this.cons.SHAREDSTATUS.isConfirm); // Confirm listener
-        this.confirmBS.subscribe((status) => {
-          if (status === null) { return; }
-          if (status) {
-            this.renderer.addClass(this.imageRef.nativeElement, 'fadeLeft');
-            setTimeout(() => {
-              this.recommendDrinks(1); // Redo random drinks
-              this.description = '';
-            }, 500);
-          }
-          // Unscribe confirm listener
-          this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.isConfirm);
-          this.confirmBS.unsubscribe();
-        });
+        this.confirmBS
+          .pipe()
+          .subscribe((status) => {
+            if (status === null) { return; }
+            if (status) {
+              this.renderer.addClass(this.imageRef.nativeElement, 'fadeLeft');
+              setTimeout(() => {
+                this.recommendDrinks(1); // Redo random drinks
+                this.description = '';
+              }, 500);
+            }
+            // Unscribe confirm listener
+            this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.isConfirm);
+            this.confirmBS.unsubscribe();
+          });
       } else { return; }
     } else if (this.chooseType === this.cons.DIRECTION.right) {
       if (distanceX > 0) {

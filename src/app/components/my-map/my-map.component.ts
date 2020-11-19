@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, isDevMode } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, isDevMode, OnDestroy, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Subscription, BehaviorSubject } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -6,28 +7,39 @@ import { GeolocationService } from 'src/app/service/geolocation.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { GlobalService as global } from 'src/app/service/global.service';
 import { MapService } from 'src/app/service/map.service';
+import { MessageService } from 'src/app/service/message.service';
+import { LoginService } from 'src/app/service/login.service';
+import { DomService } from 'src/app/util/dom.service';
+
+import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 
 @Component({
   selector: 'app-my-map',
   templateUrl: './my-map.component.html',
   styleUrls: ['./my-map.component.scss']
 })
-export class MyMapComponent implements OnInit {
+export class MyMapComponent implements OnInit, OnDestroy {
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef<HTMLDivElement>;
   infoMessage: string;
   map: google.maps.Map;
   coordinate: Coordinate = { latitude: null, longitude: null };
-  markers: google.maps.Marker[] = [];
+  favMarkers: google.maps.Marker[] = [];
+  visMarkers: google.maps.Marker[] = [];
   myMapList: MyMap;
   sharedSubscribe: Subscription;
   userId: string;
   userDataBS: BehaviorSubject<any>;
+  loginSubscribe: Subscription;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private cons: ConstantsService,
     private geolocationService: GeolocationService,
     private sharedService: SharedService,
     private mapService: MapService,
+    private message: MessageService,
+    private loginService: LoginService,
+    private domService: DomService,
   ) { }
 
   ngOnInit() {
@@ -39,16 +51,31 @@ export class MyMapComponent implements OnInit {
         this.coordinate.latitude = pos.lat;
         this.mapInitializer();
       });
-    this.userDataBS = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
-    this.userDataBS.subscribe((userData) => {
-      if (userData) {
-        this.userId = userData.uid;
-        this.initData();
-      }
-    });
+    this.loginSubscribe = this.loginService.checkUserLoggedIn()
+      .subscribe(status => {
+        if (status) {
+          this.userDataBS = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
+          this.userDataBS.subscribe((userData) => {
+            console.log(userData)
+            if (userData) {
+              this.userId = userData.uid;
+            }
+          });
+          this.initData();
+        } else {
+          const componentRef = this.domService.createComponent(
+            ConfirmComponent,
+            this.cons.SHAREDCOMPONENT.confirmComponentRef,
+            { closeButton: false, cancelButton: false, title: '', message: '請先登入~' }
+          );
+          this.domService.attachComponent(componentRef, this.document.body);
+        }
+      });
   }
 
   ngOnDestroy(): void {
+    // this.favMarkers.forEach((favMarker) => { favMarker.setMap(null); });
+    // this.visMarkers.forEach((visMarker) => { visMarker.setMap(null); });
     if (this.userDataBS) {
       this.sharedService.deleteSharedData(this.cons.SHAREDDATA.userData);
       this.userDataBS.unsubscribe();
@@ -76,30 +103,34 @@ export class MyMapComponent implements OnInit {
   };
 
   async showMarks() {
-    if (this.myMapList.favorites.length === 0 && this.myMapList.visiteds.length === 0) {
-      alert('沒有東西啦哭哭')
+    if (!this.myMapList.favorites && !this.myMapList.visiteds) {
+      this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '您似乎是還沒收藏店家唷~', content: '' });
       return;
     }
 
-    this.myMapList.favorites.forEach((favorite) => {
-      const marker = new google.maps.Marker({
-        position: { lat: favorite.latitude, lng: favorite.longitude },
-        map: this.map,
-        icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-        animation: google.maps.Animation.DROP,
+    if (this.myMapList.favorites && this.myMapList.favorites instanceof Array) {
+      this.myMapList.favorites.forEach((favorite) => {
+        const marker = new google.maps.Marker({
+          position: { lat: favorite.latitude, lng: favorite.longitude },
+          map: this.map,
+          icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+          animation: google.maps.Animation.DROP,
+        });
+        marker.setMap(this.map);
+        this.favMarkers.push(marker); // 統一管理 marker
       });
-      marker.setMap(this.map);
-      this.markers.push(marker); // 統一管理 marker
-    });
-    this.myMapList.visiteds.forEach((visited) => {
-      const marker = new google.maps.Marker({
-        position: { lat: visited.latitude, lng: visited.longitude },
-        map: this.map,
-        icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-        animation: google.maps.Animation.DROP,
+    }
+    if (this.myMapList.visiteds && this.myMapList.visiteds instanceof Array) {
+      this.myMapList.visiteds.forEach((visited) => {
+        const marker = new google.maps.Marker({
+          position: { lat: visited.latitude, lng: visited.longitude },
+          map: this.map,
+          icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+          animation: google.maps.Animation.DROP,
+        });
+        marker.setMap(this.map);
+        this.visMarkers.push(marker); // 統一管理 marker
       });
-      marker.setMap(this.map);
-      this.markers.push(marker); // 統一管理 marker
-    });
+    }
   }
 }

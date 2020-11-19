@@ -10,7 +10,9 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
   styleUrls: ['./confirm.component.scss']
 })
 export class ConfirmComponent implements OnInit {
-  @Input() closeButton: boolean;
+  @Input() closeButton: boolean = true;
+  @Input() cancelButton: boolean = true;
+  @Input() confirmButton: boolean = true;
   @Input() title: string;
   @Input() message: string;
   componentKey: string;
@@ -32,7 +34,7 @@ export class ConfirmComponent implements OnInit {
   closeDialog() {
     this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.confirmComponentRef));
   }
-  
+
   cancel() {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.isConfirm, false);
     this.closeDialog();

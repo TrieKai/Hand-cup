@@ -34,7 +34,7 @@ export class LoginService {
     firebaseService.checkAuthStatus();
   }
 
-  checkUserLoggedIn(): Subject<boolean> {
+  checkUserLoggedIn(): Subject<any> {
     return this.firebaseService.userLoggedIn;
   }
 

@@ -46,10 +46,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscribe = this.loginService.checkUserLoggedIn().subscribe(status => {
-      console.log('profile service status: ', status)
-      this.isLogin = status;
-    });
+    this.subscribe = this.loginService.checkUserLoggedIn()
+      .subscribe(status => {
+        // console.log('profile login status: ', status)
+        this.isLogin = status;
+      });
     const userData = this.profileService.getUserData();
     this.name = userData.displayName;
     this.photoURL = userData.photoURL;

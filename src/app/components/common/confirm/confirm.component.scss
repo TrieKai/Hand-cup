@@ -10,7 +10,7 @@
   grid-template-areas  :
     "title title"
     "content content"
-    "cancel confirm";
+    "button button";
   position      : relative;
   width         : 300px;
   height        : 150px;
@@ -48,22 +48,19 @@
     font-weight : bold;
   }
 
-  button {
-    margin       : auto;
-    padding      : 5px;
-    width        : 100px;
-    color        : #fff;
-    background   : #333;
-    border       : none;
-    border-radius: 2px;
-  }
+  .button-box {
+    grid-area: button;
+    @include display-flex();
 
-  .cancel {
-    grid-area: cancel;
-  }
-
-  .confirm {
-    grid-area: confirm;
+    button {
+      margin       : auto;
+      padding      : 5px;
+      width        : 100px;
+      color        : #fff;
+      background   : #333;
+      border       : none;
+      border-radius: 2px;
+    }
   }
 }
 

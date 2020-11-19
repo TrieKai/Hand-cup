@@ -5,32 +5,34 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
-    selector: 'app-drink-shop',
-    templateUrl: './drink-shop.component.html',
-    styleUrls: ['./drink-shop.component.scss']
+  selector: 'app-drink-shop',
+  templateUrl: './drink-shop.component.html',
+  styleUrls: ['./drink-shop.component.scss']
 })
 export class DrinkShopComponent implements OnInit, OnDestroy {
-    showMap: boolean;
-    showMapSB: BehaviorSubject<boolean>;
-    infoMessage: string;
+  showMap: boolean;
+  showMapSB: BehaviorSubject<boolean>;
+  infoMessage: string;
 
-    constructor(
-        private cons: ConstantsService,
-        private sharedService: SharedService,
-    ) { }
+  constructor(
+    private cons: ConstantsService,
+    private sharedService: SharedService,
+  ) { }
 
-    ngOnInit() {
-        this.infoMessage = this.cons.INFO_MESSAGE.drinkShops;
-        this.showMapSB = this.sharedService.setStatus(this.cons.SHAREDSTATUS.showMap, true);
-        this.showMapSB.subscribe((status) => {
-            this.showMap = status;
-        });
+  ngOnInit() {
+    this.infoMessage = this.cons.INFO_MESSAGE.drinkShops;
+    this.showMapSB = this.sharedService.setStatus(this.cons.SHAREDSTATUS.showMap, true);
+    this.showMapSB
+      .pipe()
+      .subscribe((status) => {
+        this.showMap = status;
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.showMapSB) {
+      this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.showMap);
+      this.showMapSB.unsubscribe();
     }
-
-    ngOnDestroy() {
-        if (this.showMapSB) {
-            this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.showMap);
-            this.showMapSB.unsubscribe();
-        }
-    }
+  }
 }

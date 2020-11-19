@@ -7,7 +7,9 @@
     <div class="content-box">
       {{message}}
     </div>
-    <button class="cancel pointer" (click)="cancel()">{{cancelText}}</button>
-    <button class="confirm pointer" (click)="confirm()">{{confirmText}}</button>
+    <div class="button-box">
+      <button *ngIf="cancelButton" class="pointer" (click)="cancel()">{{cancelText}}</button>
+      <button *ngIf="confirmButton" class="pointer" (click)="confirm()">{{confirmText}}</button>
+    </div>
   </div>
 </app-dialog>

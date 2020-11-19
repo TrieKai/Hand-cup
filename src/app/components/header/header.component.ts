@@ -53,9 +53,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.menuList = this.menuCfg.getMenu();
     // this.utilitiesMenuList = this.menuCfg.getUtilitiesMenu();
     this.home = this.menuCfg.getHome();
-    this.loginSubscribe = this.loginService.checkUserLoggedIn().subscribe(status => {
-      this.isLogin = status;
-    });
+    this.loginSubscribe = this.loginService.checkUserLoggedIn()
+      .subscribe(status => {
+        // console.log('header login status: ', status)
+        this.isLogin = status;
+      });
     this.userDataBS = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
     this.userDataBS.subscribe((userData) => {
       if (userData) { this.userPhotoURL = userData.photoURL; }
@@ -67,9 +69,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.htmlElementService.set(this.cons.HTMLSHAREDDATA.searchInputRef, this.searchComponent.searchInputRef.nativeElement);
 
     this.lockScreenBS = this.sharedService.setStatus(this.cons.SHAREDSTATUS.lockScreen, false);
-    this.lockScreenBS.subscribe((status) => {
-      this.handleSidebar(status);
-    });
+    this.lockScreenBS
+      .pipe()
+      .subscribe((status) => {
+        this.handleSidebar(status);
+      });
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { AngularFireAuth } from "@angular/fire/auth";
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -13,7 +13,7 @@ import * as firebase from 'firebase';
 export class FirebaseService {
   signIn: boolean;
   authenticated: boolean;
-  userLoggedIn = new BehaviorSubject<boolean>(false);
+  userLoggedIn = new Subject();
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -119,10 +119,9 @@ export class FirebaseService {
 
   checkAuthStatus(): boolean {
     this.afAuth.auth.onAuthStateChanged((user) => {
-      console.log('=== Firebase checkAuthStatus ===')
+      console.log('===== Firebase checkAuthStatus =====')
       this.authenticated = !!user;
       this.userLoggedIn.next(this.authenticated);
-      // this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, user); // For user photo
       this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, user); // For user photo
     });
 
