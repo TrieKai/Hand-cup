@@ -25,7 +25,7 @@ export class ForgotPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.componentKey = this.cons.SHAREDDATA.forgotPasswordComponentRef;
+    this.componentKey = this.cons.SHAREDCOMPONENT.forgotPasswordComponentRef;
   }
 
   async confirm() {
@@ -38,7 +38,7 @@ export class ForgotPasswordComponent implements OnInit {
     const status = await this.loginService.sendPasswordResetEmail(this.emailRef.nativeElement.value);
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
     if (status) {
-      this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.forgotPasswordComponentRef));
+      this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.forgotPasswordComponentRef));
     }
   }
 }

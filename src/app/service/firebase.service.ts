@@ -122,14 +122,11 @@ export class FirebaseService {
       console.log('=== Firebase checkAuthStatus ===')
       this.authenticated = !!user;
       this.userLoggedIn.next(this.authenticated);
+      // this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, user); // For user photo
       this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, user); // For user photo
     });
 
     return this.authenticated;
-  }
-
-  test(){
-    return this.afAuth.auth.onAuthStateChanged;
   }
 
   async checkTokenExpired(): Promise<boolean> {

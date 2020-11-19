@@ -24,7 +24,7 @@ export class DomService {
       Object.assign(componentRef.instance as object, componentProps);
     }
     // Set componentRef into shared data service
-    this.sharedService.setSharedData(name, componentRef);
+    this.sharedService.setSharedComponent(name, componentRef);
 
     return componentRef;
   }

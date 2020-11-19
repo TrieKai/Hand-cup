@@ -271,6 +271,7 @@ export class DrinkShopMapComponent implements OnInit {
 
   handleTransformScenes() {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.showMap, false);
+    // this.sharedService.setSharedData(this.cons.SHAREDDATA.drinkShopResults, this.resultArray);
     this.sharedService.setSharedData(this.cons.SHAREDDATA.drinkShopResults, this.resultArray);
   }
 

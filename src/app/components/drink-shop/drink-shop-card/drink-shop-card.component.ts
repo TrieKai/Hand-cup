@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, isDevMode } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
-import { GlobalService as global } from 'src/app/service/global.service'
+import { GlobalService as global } from 'src/app/service/global.service';
 
 @Component({
   selector: 'app-drink-shop-card',
@@ -17,6 +18,7 @@ export class DrinkShopCardComponent implements OnInit {
   chosenShopDetail: drinkShopDetail;
   showChosenCard: boolean = false;
   showPreviewCard: boolean = false;
+  drinkShopResultsBS: BehaviorSubject<any>;
 
   constructor(
     private cons: ConstantsService,
@@ -25,9 +27,19 @@ export class DrinkShopCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.resultArray = this.sharedService.getSharedData(this.cons.SHAREDDATA.drinkShopResults);
+    this.drinkShopResultsBS = this.sharedService.getSharedData(this.cons.SHAREDDATA.drinkShopResults);
+    this.drinkShopResultsBS.subscribe((drinkShopResults) => {
+      if (drinkShopResults) { this.resultArray = drinkShopResults; }
+    });
     if (isDevMode() || global.showLog) {
       console.log(this.resultArray);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.drinkShopResultsBS) {
+      this.sharedService.deleteSharedData(this.cons.SHAREDDATA.drinkShopResults);
+      this.drinkShopResultsBS.unsubscribe();
     }
   }
 

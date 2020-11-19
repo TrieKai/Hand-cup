@@ -24,6 +24,6 @@ export class DialogComponent implements OnInit {
   }
 
   closeDialog() {
-    this.domService.destroyComponent(this.sharedService.getSharedData(this.componentKey));
+    this.domService.destroyComponent(this.sharedService.getSharedComponent(this.componentKey));
   }
 }

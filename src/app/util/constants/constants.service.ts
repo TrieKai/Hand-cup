@@ -21,10 +21,8 @@ export class ConstantsService {
     left: 'left'
   };
 
-  // Shared data
-  public readonly SHAREDDATA = {
-    userData: 'userData',
-    drinkShopResults: 'drinkShopResults',
+  // Shared component
+  public readonly SHAREDCOMPONENT = {
     loginComponentRef: 'loginComponentRef',
     profileComponentRef: 'profileComponentRef',
     reAuthComponentRef: 'reAuthComponentRef',
@@ -34,7 +32,13 @@ export class ConstantsService {
     confirmComponentRef: 'confirmComponentRef',
   };
 
-  // HTML Shared data
+  // Shared data
+  public readonly SHAREDDATA = {
+    userData: 'userData',
+    drinkShopResults: 'drinkShopResults',
+  };
+
+  // Shared HTML data
   public readonly HTMLSHAREDDATA = {
     searchInputRef: 'searchInputRef',
   };

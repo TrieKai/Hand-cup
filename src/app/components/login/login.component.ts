@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.componentKey = this.cons.SHAREDDATA.loginComponentRef;
+    this.componentKey = this.cons.SHAREDCOMPONENT.loginComponentRef;
   }
 
   async login() {
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
     await this.loginService.loginFireBase(email, password)
       .then(async (status) => {
         if (status) {
-          this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+          this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.loginComponentRef));
           // await this.loginService.updatePassword(password); // TODO: Forgot password email by normal process
           await this.loginService.login(false, password);
         }
@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit {
     await this.loginService.signUpWithGoogle()
       .then(async (status) => {
         if (status) {
-          this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+          this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.loginComponentRef));
           await this.loginService.signUp(this.cons.THIRD_PARTY_TYPE.google);
           await this.loginService.login(true);
         }
@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
     await this.loginService.signUpWithFacebook()
       .then(async (status) => {
         if (status) {
-          this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.loginComponentRef));
+          this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.loginComponentRef));
           await this.loginService.signUp(this.cons.THIRD_PARTY_TYPE.facebook);
           await this.loginService.login(true);
         }
@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit {
   }
 
   async forgotPassword() {
-    const componentRef = this.domService.createComponent(ForgotPasswordComponent, this.cons.SHAREDDATA.forgotPasswordComponentRef);
+    const componentRef = this.domService.createComponent(ForgotPasswordComponent, this.cons.SHAREDCOMPONENT.forgotPasswordComponentRef);
     this.domService.attachComponent(componentRef, this.document.body);
   }
 }

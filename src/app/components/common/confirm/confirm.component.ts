@@ -26,11 +26,11 @@ export class ConfirmComponent implements OnInit {
   ngOnInit() {
     this.confirmText = this.cons.CONFIRM_TEXT.confirm;
     this.cancelText = this.cons.CONFIRM_TEXT.cancel;
-    this.componentKey = this.cons.SHAREDDATA.confirmComponentRef;
+    this.componentKey = this.cons.SHAREDCOMPONENT.confirmComponentRef;
   }
 
   closeDialog() {
-    this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.confirmComponentRef));
+    this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.confirmComponentRef));
   }
   
   cancel() {

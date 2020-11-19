@@ -92,7 +92,7 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
     this.isMobile = this.common.detectDeviceType().mobile;
     this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
     if (window.innerWidth < 600) { this.smallScreen = true; }
-    this.componentKey = this.cons.SHAREDDATA.reviewComponentRef;
+    this.componentKey = this.cons.SHAREDCOMPONENT.reviewComponentRef;
   }
 
   ngAfterViewInit() {
@@ -116,7 +116,7 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
   openDialog(index: number): void {
     const componentRef = this.domService.createComponent(
       ReviewComponent,
-      this.cons.SHAREDDATA.reviewComponentRef,
+      this.cons.SHAREDCOMPONENT.reviewComponentRef,
       { data: this.chosenShopDetail.reviews[index] }
     );
     this.domService.attachComponent(componentRef, this.document.body);

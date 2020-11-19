@@ -10,9 +10,7 @@ import { GlobalService as global } from 'src/app/service/global.service';
 export class SharedService {
   private onInit = new Subject<any>();
   onInitEmitted = this.onInit.asObservable();
-  protected commonSharedData: commonSharedData = {
-    userData: null,
-    drinkShopResults: [],
+  protected sharedComponent: commonSharedComponent = {
     loginComponentRef: null,
     profileComponentRef: null,
     reAuthComponentRef: null,
@@ -31,25 +29,60 @@ export class SharedService {
     this.onInit.next();
   }
 
-  setSharedData(key: string, value: any): commonSharedData {
+  setSharedComponent(key: string, value: any): commonSharedComponent {
     if (isDevMode() || global.showLog) {
-      console.log('setCommonSharedData:', key, value);
+      console.log('setSharedComponent:', key, value);
     }
-    if (this.hasKey(key)) {
-      this.commonSharedData[key] = value;
+    if (this.hasSharedComponent(key)) {
+      this.sharedComponent[key] = value;
       this.onInitEmit();
-      return this.commonSharedData[key];
+      return this.sharedComponent[key];
     } else {
       return null;
     }
   }
 
-  getSharedData(key: string) {
-    return this.commonSharedData[key];
+  getSharedComponent(key: string) {
+    return this.sharedComponent[key];
   }
 
-  hasKey(key: string) {
-    return this.commonSharedData.hasOwnProperty(key);
+  hasSharedComponent(key: string) {
+    return this.sharedComponent.hasOwnProperty(key);
+  }
+
+  private sharedData = new BehaviorSubject<commonSharedData>({
+    userData: null,
+    drinkShopResults: [],
+  });
+
+  public setSharedData(key: string, value: any): BehaviorSubject<any> {
+    if (isDevMode() || global.showLog) {
+      console.log('setSharedData:', key, value);
+    }
+    if (this.hasData(key)) {
+      this.sharedData[key].next(value);
+    } else {
+      this.sharedData[key] = new BehaviorSubject(value);
+    }
+    return this.sharedData[key];
+  }
+
+  public getSharedData(key: string): BehaviorSubject<any> {
+    if (!this.hasData(key)) {
+      this.sharedData[key] = new BehaviorSubject(null);
+    }
+    return this.sharedData[key];
+  }
+
+  public deleteSharedData(key: string) {
+    if (this.hasData(key)) {
+      this.sharedData[key].next(null);
+      delete this.sharedData[key];
+    }
+  }
+
+  public hasData(key: string) {
+    return (this.sharedData[key] instanceof BehaviorSubject);
   }
 
   protected statuses: SharedStatus = {

@@ -197,7 +197,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
       if (distanceX < 0) {
         const componentRef = this.domService.createComponent(
           ConfirmComponent,
-          this.cons.SHAREDDATA.confirmComponentRef,
+          this.cons.SHAREDCOMPONENT.confirmComponentRef,
           { closeButton: true, title: '', message: '確定要重新選飲料嗎?' }
         );
         this.domService.attachComponent(componentRef, this.document.body);

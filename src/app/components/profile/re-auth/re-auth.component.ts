@@ -31,11 +31,11 @@ export class ReAuthComponent implements OnInit {
 
   ngOnInit() {
     this.email = this.loginService.getFirebaseUserData().email;
-    this.componentKey = this.cons.SHAREDDATA.reAuthComponentRef;
+    this.componentKey = this.cons.SHAREDCOMPONENT.reAuthComponentRef;
   }
 
   closeDialog() {
-    this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.reAuthComponentRef));
+    this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.reAuthComponentRef));
   }
 
   async confirm() {
@@ -63,7 +63,7 @@ export class ReAuthComponent implements OnInit {
           this.loginService.updatePassword(confirmPassword);
         });
       this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
-      this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.reAuthComponentRef));
+      this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.reAuthComponentRef));
     } else {
       this.renderer.addClass(this.newPasswordRef.nativeElement, 'error');
       this.renderer.addClass(this.confirmPasswordRef.nativeElement, 'error');

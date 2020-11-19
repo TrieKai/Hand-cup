@@ -16,7 +16,7 @@ export class ReviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.componentKey = this.cons.SHAREDDATA.reviewComponentRef;
+    this.componentKey = this.cons.SHAREDCOMPONENT.reviewComponentRef;
   }
 
   openUrl(url: string): void {

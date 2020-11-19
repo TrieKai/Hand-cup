@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   loginSubscribe: Subscription;
   sharedSubscribe: Subscription;
   lockScreenBS: BehaviorSubject<boolean>;
+  userDataBS: BehaviorSubject<any>;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -55,8 +56,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loginSubscribe = this.loginService.checkUserLoggedIn().subscribe(status => {
       this.isLogin = status;
     });
-    this.sharedSubscribe = this.sharedService.onInitEmitted.subscribe(() => {
-      const userData: firebase.UserInfo = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
+    this.userDataBS = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
+    this.userDataBS.subscribe((userData) => {
       if (userData) { this.userPhotoURL = userData.photoURL; }
     });
   }
@@ -83,6 +84,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.lockScreen);
       this.lockScreenBS.unsubscribe();
     }
+    if (this.userDataBS) {
+      this.sharedService.deleteSharedData(this.cons.SHAREDDATA.userData);
+      this.lockScreenBS.unsubscribe();
+    }
   }
 
   handleSidebar(status?: boolean) {
@@ -94,16 +99,15 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
         const componentRef = this.domService.createComponent(
           LockScreenComponent,
-          this.cons.SHAREDDATA.lockScreenComponentRef
+          this.cons.SHAREDCOMPONENT.lockScreenComponentRef
         );
         this.domService.attachComponent(componentRef, this.document.body);
         return;
       } else {
         this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
         this.sidebarStatus = false;
-        const lockScreenComponentRef = this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef);
+        const lockScreenComponentRef = this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.lockScreenComponentRef);
         if (lockScreenComponentRef) { this.domService.destroyComponent(lockScreenComponentRef); }
-        // this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef));
         return;
       }
     } else {
@@ -113,18 +117,19 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
         const componentRef = this.domService.createComponent(
           LockScreenComponent,
-          this.cons.SHAREDDATA.lockScreenComponentRef
+          this.cons.SHAREDCOMPONENT.lockScreenComponentRef
         );
         this.domService.attachComponent(componentRef, this.document.body);
       } else {
         this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
-        this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.lockScreenComponentRef));
+        const lockScreenComponentRef = this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.lockScreenComponentRef);
+        if (lockScreenComponentRef) { this.domService.destroyComponent(lockScreenComponentRef); }
       }
     }
   }
 
   login() {
-    const componentRef = this.domService.createComponent(LoginComponent, this.cons.SHAREDDATA.loginComponentRef);
+    const componentRef = this.domService.createComponent(LoginComponent, this.cons.SHAREDCOMPONENT.loginComponentRef);
     this.domService.attachComponent(componentRef, this.document.body);
     // this.isLogin = true;
   }
@@ -137,7 +142,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   profile() {
     const userData = this.loginService.getFirebaseUserData();
     if (userData) {
-      const componentRef = this.domService.createComponent(ProfileComponent, this.cons.SHAREDDATA.profileComponentRef);
+      const componentRef = this.domService.createComponent(ProfileComponent, this.cons.SHAREDCOMPONENT.profileComponentRef);
       this.domService.attachComponent(componentRef, this.document.body);
     } else {
       this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '請先登入唷', content: '' });

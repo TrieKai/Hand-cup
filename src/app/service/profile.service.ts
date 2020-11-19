@@ -36,6 +36,7 @@ export class ProfileService {
             console.log('=== updateProfile ===')
             await this.firebaseService.updateProfile(userData);
             const updatedUserData = this.firebaseService.getUserData();
+            // this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, updatedUserData);
             this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, updatedUserData);
           }
         }

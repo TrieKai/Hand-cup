@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, isDevMode } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { GeolocationService } from 'src/app/service/geolocation.service';
@@ -21,6 +21,7 @@ export class MyMapComponent implements OnInit {
   myMapList: MyMap;
   sharedSubscribe: Subscription;
   userId: string;
+  userDataBS: BehaviorSubject<any>;
 
   constructor(
     private cons: ConstantsService,
@@ -38,14 +39,20 @@ export class MyMapComponent implements OnInit {
         this.coordinate.latitude = pos.lat;
         this.mapInitializer();
       });
-
-    this.sharedSubscribe = this.sharedService.onInitEmitted.subscribe(() => {
-      const userData: firebase.UserInfo = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
+    this.userDataBS = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
+    this.userDataBS.subscribe((userData) => {
       if (userData) {
         this.userId = userData.uid;
         this.initData();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userDataBS) {
+      this.sharedService.deleteSharedData(this.cons.SHAREDDATA.userData);
+      this.userDataBS.unsubscribe();
+    }
   }
 
   mapInitializer() {

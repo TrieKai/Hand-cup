@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } else {
       this.thirdParty = true;
     }
-    this.componentKey = this.cons.SHAREDDATA.profileComponentRef;
+    this.componentKey = this.cons.SHAREDCOMPONENT.profileComponentRef;
   }
 
   ngOnDestroy(): void {
@@ -120,13 +120,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     await this.profileService.updateProfileFireBase(userData)
       .then(async () => {
         await this.profileService.updateProfile(this.name);
-        this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.profileComponentRef));
+        this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.profileComponentRef));
       });
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
   }
 
   closeDialog() {
-    this.domService.destroyComponent(this.sharedService.getSharedData(this.cons.SHAREDDATA.profileComponentRef));
+    this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.profileComponentRef));
   }
 
   reAuth() {
@@ -134,7 +134,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先登入' });
       return;
     }
-    const componentRef = this.domService.createComponent(ReAuthComponent, this.cons.SHAREDDATA.reAuthComponentRef);
+    const componentRef = this.domService.createComponent(ReAuthComponent, this.cons.SHAREDCOMPONENT.reAuthComponentRef);
     this.domService.attachComponent(componentRef, this.document.body);
   }
 
