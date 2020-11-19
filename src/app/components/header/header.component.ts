@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.home = this.menuCfg.getHome();
     this.loginSubscribe = this.loginService.checkUserLoggedIn()
       .subscribe(status => {
-        // console.log('header login status: ', status)
+        if (status === null) { return; }
         this.isLogin = status;
       });
     this.userDataBS = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);

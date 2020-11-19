@@ -50,7 +50,7 @@ export class SharedService {
     return this.sharedComponent.hasOwnProperty(key);
   }
 
-  private sharedData = new BehaviorSubject<commonSharedData>({
+  protected sharedData = new BehaviorSubject<commonSharedData>({
     userData: null,
     drinkShopResults: [],
   });

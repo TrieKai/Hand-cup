@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscribe = this.loginService.checkUserLoggedIn()
       .subscribe(status => {
-        // console.log('profile login status: ', status)
+        if (status === null) { return; }
         this.isLogin = status;
       });
     const userData = this.profileService.getUserData();

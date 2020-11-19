@@ -1,4 +1,4 @@
-import { Component, Injectable, isDevMode } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -31,6 +31,7 @@ export class LoginService {
     private localStorage: LocalstorageService,
     private common: CommonService,
   ) {
+    console.log('Login constructor')
     firebaseService.checkAuthStatus();
   }
 

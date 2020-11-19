@@ -1,6 +1,7 @@
 import { Component, OnInit, PLATFORM_ID, Inject, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { GlobalService as global } from 'src/app/service/global.service';
 import { SharedService } from 'src/app/shared/shared.service';
@@ -31,10 +32,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.onloadingSB = this.sharedService.getStatus(this.cons.SHAREDSTATUS.onloading);
     this.onloadingSB
-      .pipe()
-      .subscribe((status) => {
-        this.onloading = !!status;
-      });
+      .pipe(
+        tap(status => { this.onloading = !!status; })
+      )
+    // .subscribe((status) => {
+    //   this.onloading = !!status;
+    // });
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, isDevMode, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, isDevMode, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Subscription, BehaviorSubject } from 'rxjs';
 
@@ -44,24 +44,36 @@ export class MyMapComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.infoMessage = this.cons.INFO_MESSAGE.myMap;
-    this.geolocationService.getPosition()
+    this.initData();
+  }
+
+  ngOnDestroy(): void {
+    if (this.userDataBS) {
+      this.sharedService.deleteSharedData(this.cons.SHAREDDATA.userData);
+      this.userDataBS.unsubscribe();
+    }
+  }
+
+  async initData() {
+    await this.geolocationService.getPosition()
       .then(pos => {
         console.log(`Positon: ${pos.lng} ${pos.lat}`);
         this.coordinate.longitude = pos.lng;
         this.coordinate.latitude = pos.lat;
         this.mapInitializer();
       });
+
     this.loginSubscribe = this.loginService.checkUserLoggedIn()
       .subscribe(status => {
+        if (status === null) { return; }
         if (status) {
           this.userDataBS = this.sharedService.getSharedData(this.cons.SHAREDDATA.userData);
-          this.userDataBS.subscribe((userData) => {
-            console.log(userData)
+          this.userDataBS.subscribe(userData => {
             if (userData) {
               this.userId = userData.uid;
+              this.getMyMapList();
             }
           });
-          this.initData();
         } else {
           const componentRef = this.domService.createComponent(
             ConfirmComponent,
@@ -69,17 +81,11 @@ export class MyMapComponent implements OnInit, OnDestroy {
             { closeButton: false, cancelButton: false, title: '', message: '請先登入~' }
           );
           this.domService.attachComponent(componentRef, this.document.body);
+
+          this.favMarkers.forEach((favMarker) => { favMarker.setMap(null); });
+          this.visMarkers.forEach((visMarker) => { visMarker.setMap(null); });
         }
       });
-  }
-
-  ngOnDestroy(): void {
-    // this.favMarkers.forEach((favMarker) => { favMarker.setMap(null); });
-    // this.visMarkers.forEach((visMarker) => { visMarker.setMap(null); });
-    if (this.userDataBS) {
-      this.sharedService.deleteSharedData(this.cons.SHAREDDATA.userData);
-      this.userDataBS.unsubscribe();
-    }
   }
 
   mapInitializer() {
@@ -92,7 +98,7 @@ export class MyMapComponent implements OnInit, OnDestroy {
     this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
   }
 
-  async initData() {
+  async getMyMapList() {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
     this.myMapList = await this.mapService.getMyMapList(this.userId);
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
@@ -100,14 +106,13 @@ export class MyMapComponent implements OnInit, OnDestroy {
       console.log(this.myMapList);
     }
     this.showMarks();
-  };
+  }
 
   async showMarks() {
     if (!this.myMapList.favorites && !this.myMapList.visiteds) {
       this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '您似乎是還沒收藏店家唷~', content: '' });
       return;
     }
-
     if (this.myMapList.favorites && this.myMapList.favorites instanceof Array) {
       this.myMapList.favorites.forEach((favorite) => {
         const marker = new google.maps.Marker({

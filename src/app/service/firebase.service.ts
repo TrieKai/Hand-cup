@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { AngularFireAuth } from "@angular/fire/auth";
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -13,7 +13,7 @@ import * as firebase from 'firebase';
 export class FirebaseService {
   signIn: boolean;
   authenticated: boolean;
-  userLoggedIn = new Subject();
+  userLoggedIn = new BehaviorSubject<any>(null);
 
   constructor(
     private afAuth: AngularFireAuth,
