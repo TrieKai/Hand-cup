@@ -32,6 +32,7 @@
     "@angular/pwa": "^0.1002.0",
     "@angular/router": "~8.2.14",
     "@angular/service-worker": "~8.2.14",
+    "@googlemaps/markerclustererplus": "^1.0.3",
     "@nguniversal/express-engine": "^10.1.0",
     "@types/gapi": "0.0.39",
     "@types/gapi.auth2": "0.0.51",

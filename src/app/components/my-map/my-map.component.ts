@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, isDevMode, Inject 
 import { DOCUMENT } from '@angular/common';
 import { Subscription, BehaviorSubject } from 'rxjs';
 
+import MarkerClusterer from '@googlemaps/markerclustererplus';
+
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { SharedService } from 'src/app/shared/shared.service';
@@ -25,6 +27,7 @@ export class MyMapComponent implements OnInit, OnDestroy {
   coordinate: Coordinate = { latitude: null, longitude: null };
   favMarkers: google.maps.Marker[] = [];
   visMarkers: google.maps.Marker[] = [];
+  mixMarkers: google.maps.Marker[] = [];
   myMapList: MyMap;
   sharedSubscribe: Subscription;
   userId: string;
@@ -137,5 +140,39 @@ export class MyMapComponent implements OnInit, OnDestroy {
         this.visMarkers.push(marker); // 統一管理 marker
       });
     }
+
+    this.handleClusterMarkers();
+  }
+
+  handleClusterMarkers() {
+    // Handle mix markers
+    for (let i = 0; i < this.favMarkers.length; i++) {
+      for (let j = 0; j < this.visMarkers.length; j++) {
+        if (this.favMarkers[i].getPosition().equals(this.visMarkers[j].getPosition())) {
+          const mixMarker = new google.maps.Marker({
+            position: { lat: this.favMarkers[i].getPosition().lat(), lng: this.favMarkers[i].getPosition().lng() },
+            map: this.map,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+            animation: google.maps.Animation.DROP,
+          });
+          mixMarker.setMap(this.map);
+          this.mixMarkers.push(mixMarker);
+
+          // Delete same position elememt from array
+          this.favMarkers[i].setMap(null);
+          this.favMarkers.splice(i, 1);
+          i--;
+          this.visMarkers[j].setMap(null);
+          this.visMarkers.splice(j, 1);
+          j--;
+          break;
+        }
+      }
+    }
+
+    const allMarkers = this.favMarkers.concat(this.visMarkers).concat(this.mixMarkers);
+    new MarkerClusterer(this.map, allMarkers, {
+      imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+    });
   }
 }
