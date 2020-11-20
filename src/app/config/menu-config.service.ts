@@ -10,9 +10,9 @@ const home: Menu = { title: menuCons.HOME, router: routerCons.ROUTER_HOME, icon:
 const menus: Menu[] = [
   { title: menuCons.DRINK, router: routerCons.ROUTER_DRINK, icon: menuCons.DRINK_ICON, active: true },
   { title: menuCons.DRINK_SHOP, router: routerCons.ROUTER_DRINKSHOP, icon: menuCons.DRINK_SHOP_ICON, active: true },
+  { title: menuCons.COLLECTION, router: routerCons.ROUTER_MYMAP, icon: menuCons.COLLECTION_ICON, active: true },
   { title: menuCons.COMPARE, router: '', icon: menuCons.COMPARE_ICON, active: false },
   { title: menuCons.RECOMMENDATION, router: '', icon: menuCons.RECOMMENDATION_ICON, active: false },
-  { title: menuCons.COLLECTION, router: '', icon: menuCons.COLLECTION_ICON, active: false },
   { title: menuCons.NEWEST, router: '', icon: menuCons.NEWEST_ICON, active: false },
 ];
 // const utilitiesMenus: Menu[] = [

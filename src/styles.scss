@@ -3,42 +3,63 @@
 @import 'app/assets/css/special-property.scss';
 
 * {
-    font-family: "Ubuntu", sans-serif, "cwTeXYen";
+  font-family: "Ubuntu", sans-serif, "cwTeXYen";
 
-    &::-webkit-scrollbar-track {
-        // box-shadow        : inset 0 0 5px rgba(0, 0, 0, 0.2);
-        // -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-        background-color: #F5F5F5;
-    }
+  &::-webkit-scrollbar-track {
+    // box-shadow        : inset 0 0 5px rgba(0, 0, 0, 0.2);
+    // -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background-color: #F5F5F5;
+  }
 
-    &::-webkit-scrollbar {
-        width           : 10px;
-        background-color: #F5F5F5;
-    }
+  &::-webkit-scrollbar {
+    width           : 10px;
+    background-color: #F5F5F5;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        border-radius   : 10px;
-        background-color: #a8b2b9;
-    }
+  &::-webkit-scrollbar-thumb {
+    border-radius   : 10px;
+    background-color: #a8b2b9;
+  }
 }
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    margin  : 0;
-    overflow: hidden;
+  margin  : 0;
+  overflow: hidden;
 }
 
 .info-bar {
-    @include display-flex();
-    justify-content : center;
-    align-items     : center;
-    width           : 100%;
-    height          : height(infoBar);
-    font-size       : 24px;
-    color           : white;
-    background-color: color(themeOfBlue);
+  @include display-flex();
+  justify-content : center;
+  align-items     : center;
+  width           : 100%;
+  height          : height(infoBar);
+  font-size       : 24px;
+  color           : white;
+  background-color: color(themeOfBlue);
+}
+
+// Google info window
+.gm-style-iw {
+  padding      : 15px !important;
+  padding-right: 15px !important;
+  width        : 300px !important;
+  height       : 300px !important;
+  max-height   : 300px !important;
+  box-shadow   : 0 1px 6px rgba(178, 178, 178, 0.6) !important;
+  border       : 1px solid rgba(72, 181, 233, 0.6);
+
+  @media screen and (max-height: 626px) {
+    padding-right: 0 !important;
+  }
+
+  .gm-style-iw-d {
+    height    : 270px !important;
+    max-height: 100% !important;
+    overflow-y: auto !important;
+  }
 }

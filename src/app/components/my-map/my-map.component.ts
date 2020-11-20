@@ -12,6 +12,7 @@ import { MapService } from 'src/app/service/map.service';
 import { MessageService } from 'src/app/service/message.service';
 import { LoginService } from 'src/app/service/login.service';
 import { DomService } from 'src/app/util/dom.service';
+import { DrinkShopService } from 'src/app/service/drink-shop.service';
 
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 
@@ -25,10 +26,13 @@ export class MyMapComponent implements OnInit, OnDestroy {
   infoMessage: string;
   map: google.maps.Map;
   coordinate: Coordinate = { latitude: null, longitude: null };
+  myMapList: MyMap;
+  favMapList: MyMapContent[];
+  visMapList: MyMapContent[];
+  mixMapList: MyMapContent[];
   favMarkers: google.maps.Marker[] = [];
   visMarkers: google.maps.Marker[] = [];
   mixMarkers: google.maps.Marker[] = [];
-  myMapList: MyMap;
   sharedSubscribe: Subscription;
   userId: string;
   userDataBS: BehaviorSubject<any>;
@@ -43,6 +47,7 @@ export class MyMapComponent implements OnInit, OnDestroy {
     private message: MessageService,
     private loginService: LoginService,
     private domService: DomService,
+    private drinkShopService: DrinkShopService,
   ) { }
 
   ngOnInit() {
@@ -116,63 +121,176 @@ export class MyMapComponent implements OnInit, OnDestroy {
       this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '您似乎是還沒收藏店家唷~', content: '' });
       return;
     }
-    if (this.myMapList.favorites && this.myMapList.favorites instanceof Array) {
-      this.myMapList.favorites.forEach((favorite) => {
-        const marker = new google.maps.Marker({
-          position: { lat: favorite.latitude, lng: favorite.longitude },
-          map: this.map,
-          icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-          animation: google.maps.Animation.DROP,
-        });
-        marker.setMap(this.map);
-        this.favMarkers.push(marker); // 統一管理 marker
+    this.handleMapDataList();
+
+    this.favMapList.forEach(fav => {
+      const marker = new google.maps.Marker({
+        position: { lat: fav.latitude, lng: fav.longitude },
+        map: this.map,
+        icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        animation: google.maps.Animation.DROP,
       });
-    }
-    if (this.myMapList.visiteds && this.myMapList.visiteds instanceof Array) {
-      this.myMapList.visiteds.forEach((visited) => {
-        const marker = new google.maps.Marker({
-          position: { lat: visited.latitude, lng: visited.longitude },
-          map: this.map,
-          icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-          animation: google.maps.Animation.DROP,
-        });
-        marker.setMap(this.map);
-        this.visMarkers.push(marker); // 統一管理 marker
+      marker.setMap(this.map);
+      this.favMarkers.push(marker); // 統一管理 marker
+      this.handleInfoWindow({
+        position: { latitude: fav.latitude, longitude: fav.longitude },
+        name: fav.name,
+        img: fav.image,
+        rating: fav.rating,
+        ratingNum: fav.ratings_total,
+        views: fav.views,
+      }, marker, 'fav');
+    });
+    this.visMapList.forEach(vis => {
+      const marker = new google.maps.Marker({
+        position: { lat: vis.latitude, lng: vis.longitude },
+        map: this.map,
+        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+        animation: google.maps.Animation.DROP,
       });
-    }
+      marker.setMap(this.map);
+      this.visMarkers.push(marker); // 統一管理 marker
+      this.handleInfoWindow({
+        position: { latitude: vis.latitude, longitude: vis.longitude },
+        name: vis.name,
+        img: vis.image,
+        rating: vis.rating,
+        ratingNum: vis.ratings_total,
+        views: vis.views,
+      }, marker, 'vis');
+    });
+    this.mixMapList.forEach(mix => {
+      const marker = new google.maps.Marker({
+        position: { lat: mix.latitude, lng: mix.longitude },
+        map: this.map,
+        icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+        animation: google.maps.Animation.DROP,
+      });
+      marker.setMap(this.map);
+      this.mixMarkers.push(marker); // 統一管理 marker
+      this.handleInfoWindow({
+        position: { latitude: mix.latitude, longitude: mix.longitude },
+        name: mix.name,
+        img: mix.image,
+        rating: mix.rating,
+        ratingNum: mix.ratings_total,
+        views: mix.views,
+      }, marker, 'mix');
+    });
 
     this.handleClusterMarkers();
   }
 
-  handleClusterMarkers() {
-    // Handle mix markers
-    for (let i = 0; i < this.favMarkers.length; i++) {
-      for (let j = 0; j < this.visMarkers.length; j++) {
-        if (this.favMarkers[i].getPosition().equals(this.visMarkers[j].getPosition())) {
-          const mixMarker = new google.maps.Marker({
-            position: { lat: this.favMarkers[i].getPosition().lat(), lng: this.favMarkers[i].getPosition().lng() },
-            map: this.map,
-            icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
-            animation: google.maps.Animation.DROP,
-          });
-          mixMarker.setMap(this.map);
-          this.mixMarkers.push(mixMarker);
-
-          // Delete same position elememt from array
-          this.favMarkers[i].setMap(null);
-          this.favMarkers.splice(i, 1);
+  handleMapDataList() {
+    this.favMapList = this.myMapList.favorites;
+    this.visMapList = this.myMapList.visiteds;
+    this.mixMapList = [];
+    for (let i = 0; i < this.favMapList.length; i++) {
+      for (let j = 0; j < this.visMapList.length; j++) {
+        if (
+          this.favMapList[i].latitude === this.visMapList[j].latitude &&
+          this.favMapList[i].longitude === this.visMapList[j].longitude &&
+          this.favMapList[i].name === this.visMapList[j].name
+        ) {
+          this.mixMapList.push(this.favMapList[i]);
+          this.favMapList.splice(i, 1);
           i--;
-          this.visMarkers[j].setMap(null);
-          this.visMarkers.splice(j, 1);
+          this.visMapList.splice(j, 1);
           j--;
           break;
         }
       }
     }
+  }
 
+  handleClusterMarkers() {
     const allMarkers = this.favMarkers.concat(this.visMarkers).concat(this.mixMarkers);
     new MarkerClusterer(this.map, allMarkers, {
       imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
     });
+  }
+
+  handleInfoWindow(data: InfoWindowData, marker: google.maps.Marker, type: string) {
+    let typeName: string;
+    switch (type) {
+      case 'fav':
+        typeName = '喜愛的店家';
+        break;
+      case 'vis':
+        typeName = '曾經造訪的店家';
+        break;
+      case 'mix':
+        typeName = '喜愛&曾經造訪的店家';
+        break;
+    }
+    const infoWindow = new google.maps.InfoWindow({
+      content:
+        '<div id="infoWindowBox">' +
+        '<div id="infoWindowImg" style="background-image: url(' + data.img + ');"></div>' +
+        '<div id="descriptionWrapper">' +
+        '<div id="typeName">' + typeName + '</div>' +
+        '<div><h1 id="titleName">' + data.name + '</h1></div>' +
+        '<div id="ratingWrapper">' +
+        '<span>' + data.rating + '</span>' +
+        '<ol id="ratingStarsWrapper">' + this.drinkShopService.handleRatingStar(data.rating) + '</ol>' +
+        '</div>' +
+        '</div>' +
+        '</div>',
+      maxWidth: 400,
+    });
+    google.maps.event.addListener(infoWindow, 'domready', this.infoWindowStyle);
+    marker.addListener('click', () => {
+      infoWindow.open(this.map, marker);
+    });
+  }
+
+  infoWindowStyle() {
+    const infoWindowWrapperElement = document.getElementsByClassName('gm-style-iw-c')[0] as HTMLElement; // google infoWindow 最外面
+    const infoWindowcontainerElement = document.getElementsByClassName('gm-style-iw-d')[0] as HTMLElement; // google infowindow 裡層
+    const infoWindowBoxElement = document.getElementById('infoWindowBox'); // 自己寫的 infowindow box
+    const infoWindowImgElement = document.getElementById('infoWindowImg'); // image in infowindow
+    const descriptionWrapperElement = document.getElementById('descriptionWrapper');
+    const typeNameElement = document.getElementById('typeName');
+    const titleNameElement = document.getElementById('titleName');
+    const ratingWrapperElement = document.getElementById('ratingWrapper');
+    const ratingStarsWrapperElement = document.getElementById('ratingStarsWrapper');
+    const ratingStarElementList = document.getElementsByClassName('ratingStar');
+
+    infoWindowWrapperElement.style.padding = '0px';
+    infoWindowcontainerElement.style.overflow = 'hidden'; // 去掉 infoWidow scroll 效果
+
+    infoWindowBoxElement.style.width = '270px';
+    infoWindowBoxElement.style.height = '270px';
+
+    descriptionWrapperElement.style.padding = '15px 5px';
+
+    typeNameElement.style.color = 'coral';
+    typeNameElement.style.fontSize = '16px';
+
+    titleNameElement.style.margin = '0';
+    titleNameElement.style.fontSize = '1.375rem';
+    titleNameElement.style.fontWeight = '600';
+    titleNameElement.style.lineHeight = '1.75rem';
+
+    ratingWrapperElement.style.marginTop = '8px';
+    ratingWrapperElement.style.display = 'flex';
+    ratingWrapperElement.style.alignItems = 'center';
+
+    ratingStarsWrapperElement.style.display = 'inline-flex';
+    ratingStarsWrapperElement.style.display = '-webkit-inline-flex';
+    ratingStarsWrapperElement.style.display = '-ms-inline-flexbox';
+    ratingStarsWrapperElement.style.paddingLeft = '6px';
+
+    Array.prototype.forEach.call(ratingStarElementList, (ratingStarElement: ElementCSSInlineStyle) => {
+      ratingStarElement.style.backgroundSize = '14px 14px';
+      ratingStarElement.style.width = '14px';
+      ratingStarElement.style.height = '13px';
+      ratingStarElement.style.display = 'inline-block';
+    });
+
+    infoWindowImgElement.style.backgroundPosition = 'center center';
+    infoWindowImgElement.style.backgroundSize = 'cover';
+    infoWindowImgElement.style.width = '100%';
+    infoWindowImgElement.style.height = '50%';
   }
 }
