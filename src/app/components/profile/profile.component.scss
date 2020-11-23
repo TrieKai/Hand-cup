@@ -4,10 +4,10 @@
 .settings-box {
   @include display-flex();
   @include flex-direction(column);
-  min-height    : 300px;
-  max-width     : 310px;
-  max-height    : 95%;
-  background    : linear-gradient(to left, #9cc5ff, #92eefa);
+  min-height: 300px;
+  max-width : 310px;
+  max-height: 95%;
+  @include linear-gradient(to left, #9cc5ff, #92eefa);
   border-radius : 2px;
   box-shadow    : 0px 2px 3px rgba(0, 0, 0, 0.2);
   overflow-x    : hidden;

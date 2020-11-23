@@ -30,7 +30,7 @@
       min-width  : 100%;
       padding    : 20px 15px;
       padding-top: 0px;
-      background : linear-gradient(to left, #955DFF, #6FAAFF);
+      @include linear-gradient(to left, #955DFF, #6FAAFF);
 
       &:nth-of-type(1) {
         .input {
@@ -149,7 +149,7 @@
       }
 
       &.signup {
-        background: linear-gradient(to left, #6FAAFF, #955DFF);
+        @include linear-gradient(to left, #6FAAFF, #955DFF);
       }
 
       .sign-up-btn {

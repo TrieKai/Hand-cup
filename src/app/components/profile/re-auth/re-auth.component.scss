@@ -3,11 +3,11 @@
 
 .re-auth-box {
   @include display-flex();
-  position      : relative;
-  min-height    : 300px;
-  max-width     : 310px;
-  max-height    : 95%;
-  background    : linear-gradient(to left, #c5dfad, #e7e1c5);
+  position  : relative;
+  min-height: 300px;
+  max-width : 310px;
+  max-height: 95%;
+  @include linear-gradient(to left, #c5dfad, #e7e1c5);
   border-radius : 2px;
   box-shadow    : 0px 2px 3px rgba(0, 0, 0, 0.2);
   overflow      : hidden;

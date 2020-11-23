@@ -95,7 +95,7 @@
   width     : 250px;
   height    : height(layoutBasic);
   margin-top: height(header);
-  background: linear-gradient(45deg, #e0e8ee, #fdf4f4);
+  @include linear-gradient(45deg, #e0e8ee, #fdf4f4);
   @include transform(translateX(-250px));
   @include transition(transform 250ms ease-in-out);
   z-index: zIndex(header);
