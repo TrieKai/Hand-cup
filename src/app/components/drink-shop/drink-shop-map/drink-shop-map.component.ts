@@ -179,6 +179,7 @@ export class DrinkShopMapComponent implements OnInit {
   async getNearByLocations() {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
     const respData = await this.mapService.getNearByLocations(this.coordinate, this.distance);
+    // this.mapService.getNearByLocationsByFrontend(this.map, { location: { lat: this.coordinate.latitude, lng: this.coordinate.longitude }, radius: 300, keyword: '飲料店' });
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
     if (this.resultArray.length > 0) {
       this.resultArray = []; // Reset array

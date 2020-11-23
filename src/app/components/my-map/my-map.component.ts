@@ -107,9 +107,10 @@ export class MyMapComponent implements OnInit, OnDestroy {
   }
 
   async getMyMapList() {
-    this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
+    // TODO: Fix unknown loading error
+    // this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
     this.myMapList = await this.mapService.getMyMapList(this.userId);
-    this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
+    // this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
     if (isDevMode() || global.showLog) {
       console.log(this.myMapList);
     }

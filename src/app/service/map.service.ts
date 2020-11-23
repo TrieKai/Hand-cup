@@ -17,10 +17,13 @@ export class MapService {
     private common: CommonService,
   ) { }
 
-  // async getNearByLocationsByFrontend(map: google.maps.Map, request: object, callBackFunc: any): Promise<void> {
-  //   const placesService = new google.maps.places.PlacesService(map);
-  //   placesService.nearbySearch(request, callBackFunc);
-  // }
+  async getNearByLocationsByFrontend(map: google.maps.Map, request: google.maps.places.PlaceSearchRequest): Promise<void> {
+    const callbackFunc = (results: any[], status: string) => {
+      console.log(results, status)
+    }
+    const placesService = new google.maps.places.PlacesService(map);
+    placesService.nearbySearch(request, callbackFunc);
+  }
 
   async getNearByLocations(coordinate: Coordinate, distance: number): Promise<any[]> {
     const header: HttpHeaders = this.api.getHeader();

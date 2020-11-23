@@ -45,17 +45,12 @@ body {
 
 // Google info window
 .gm-style-iw {
-  padding      : 15px !important;
-  padding-right: 15px !important;
-  width        : 300px !important;
-  height       : 300px !important;
-  max-height   : 300px !important;
-  box-shadow   : 0 1px 6px rgba(178, 178, 178, 0.6) !important;
-  border       : 1px solid rgba(72, 181, 233, 0.6);
-
-  @media screen and (max-height: 626px) {
-    padding-right: 0 !important;
-  }
+  padding   : 15px 0 15px 15px !important;
+  width     : 300px !important;
+  height    : 300px !important;
+  max-height: 300px !important;
+  box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6) !important;
+  border    : 1px solid rgba(72, 181, 233, 0.6);
 
   .gm-style-iw-d {
     height    : 270px !important;

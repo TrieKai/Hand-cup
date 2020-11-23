@@ -5,7 +5,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { MessageService } from 'src/app/service/message.service';
 import { SharedService } from 'src/app/shared/shared.service';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
