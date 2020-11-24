@@ -33,10 +33,14 @@ export class MyMapComponent implements OnInit, OnDestroy {
   favMarkers: google.maps.Marker[] = [];
   visMarkers: google.maps.Marker[] = [];
   mixMarkers: google.maps.Marker[] = [];
+  markerClusterer: MarkerClusterer;
   sharedSubscribe: Subscription;
   userId: string;
   userDataBS: BehaviorSubject<any>;
   loginSubscribe: Subscription;
+  favCheck: boolean = true;
+  visCheck: boolean = true;
+  mixCheck: boolean = true;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -90,8 +94,8 @@ export class MyMapComponent implements OnInit, OnDestroy {
           );
           this.domService.attachComponent(componentRef, this.document.body);
 
-          this.favMarkers.forEach((favMarker) => { favMarker.setMap(null); });
-          this.visMarkers.forEach((visMarker) => { visMarker.setMap(null); });
+          this.favMarkers.forEach(favMarker => { favMarker.setMap(null); });
+          this.visMarkers.forEach(visMarker => { visMarker.setMap(null); });
         }
       });
   }
@@ -114,16 +118,58 @@ export class MyMapComponent implements OnInit, OnDestroy {
     if (isDevMode() || global.showLog) {
       console.log(this.myMapList);
     }
-    this.showMarks();
+    this.initMarkers();
   }
 
-  async showMarks() {
+  initMarkers() {
     if (!this.myMapList.favorites && !this.myMapList.visiteds) {
       this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '您似乎是還沒收藏店家唷~', content: '' });
       return;
     }
-    this.handleMapDataList();
+    this.classifyMapDataList();
 
+    this.showFavMarkers();
+    this.showVisMarkers();
+    this.showMixMarkers();
+
+    this.handleClusterMarkers();
+  }
+
+  showMarkers(type: number, event?: any) {
+    switch (type) {
+      case 1:
+        this.favCheck = !this.favCheck;
+        if (this.favCheck) {
+          this.showFavMarkers();
+        } else {
+          this.favMarkers.forEach(fav => { fav.setMap(null); });
+          this.favMarkers = [];
+        }
+        break;
+      case 2:
+        this.visCheck = !this.visCheck;
+        if (this.visCheck) {
+          this.showVisMarkers();
+        } else {
+          this.visMarkers.forEach(vis => { vis.setMap(null); });
+          this.visMarkers = [];
+        }
+        break;
+      case 3:
+        this.mixCheck = !this.mixCheck;
+        if (this.mixCheck) {
+          this.showMixMarkers();
+        } else {
+          this.mixMarkers.forEach(mix => { mix.setMap(null); });
+          this.mixMarkers = [];
+        }
+        break;
+    }
+
+    this.handleClusterMarkers();
+  }
+
+  showFavMarkers() {
     this.favMapList.forEach(fav => {
       const marker = new google.maps.Marker({
         position: { lat: fav.latitude, lng: fav.longitude },
@@ -142,6 +188,9 @@ export class MyMapComponent implements OnInit, OnDestroy {
         views: fav.views,
       }, marker, 'fav');
     });
+  }
+
+  showVisMarkers() {
     this.visMapList.forEach(vis => {
       const marker = new google.maps.Marker({
         position: { lat: vis.latitude, lng: vis.longitude },
@@ -160,6 +209,9 @@ export class MyMapComponent implements OnInit, OnDestroy {
         views: vis.views,
       }, marker, 'vis');
     });
+  }
+
+  showMixMarkers() {
     this.mixMapList.forEach(mix => {
       const marker = new google.maps.Marker({
         position: { lat: mix.latitude, lng: mix.longitude },
@@ -178,11 +230,9 @@ export class MyMapComponent implements OnInit, OnDestroy {
         views: mix.views,
       }, marker, 'mix');
     });
-
-    this.handleClusterMarkers();
   }
 
-  handleMapDataList() {
+  classifyMapDataList() {
     this.favMapList = this.myMapList.favorites;
     this.visMapList = this.myMapList.visiteds;
     this.mixMapList = [];
@@ -205,8 +255,19 @@ export class MyMapComponent implements OnInit, OnDestroy {
   }
 
   handleClusterMarkers() {
-    const allMarkers = this.favMarkers.concat(this.visMarkers).concat(this.mixMarkers);
-    new MarkerClusterer(this.map, allMarkers, {
+    if (this.markerClusterer) { this.markerClusterer.clearMarkers(); } // Clear cluster markers first
+
+    let allMarkers: google.maps.Marker[] = [];
+    if (this.favCheck) {
+      allMarkers = allMarkers.concat(this.favMarkers);
+    }
+    if (this.visCheck) {
+      allMarkers = allMarkers.concat(this.visMarkers);
+    }
+    if (this.mixCheck) {
+      allMarkers = allMarkers.concat(this.mixMarkers);
+    }
+    this.markerClusterer = new MarkerClusterer(this.map, allMarkers, {
       imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
     });
   }

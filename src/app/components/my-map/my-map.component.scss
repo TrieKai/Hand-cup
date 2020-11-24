@@ -43,21 +43,11 @@ section {
         }
       }
 
-      label {
-        @include display-flex();
-        align-items: center;
-        width      : 100%;
-
-        @media screen and (max-width: rwdBoundary(small)) {
-          width: auto;
-        }
-
-        .icon {
-          display      : inline-block;
-          width        : 15px;
-          height       : 15px;
-          border-radius: 50%;
-        }
+      .icon {
+        display      : inline-block;
+        width        : 15px;
+        height       : 15px;
+        border-radius: 50%;
       }
     }
 
@@ -103,4 +93,8 @@ section {
       height: height(layout_myMap_small);
     }
   }
+}
+
+.pointer {
+  cursor: pointer;
 }

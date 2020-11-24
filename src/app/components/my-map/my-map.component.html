@@ -1,27 +1,23 @@
 <div class="info-bar">{{infoMessage}}</div>
 <section>
   <div class="selection-container">
-    <div class="selection-box">
-      <input id="favorites" type="checkbox" class="checkbox" />
-      <label for="favorites">
-        <span class="icon"></span>
-        想去的地方
-      </label>
-    </div>
-    <div class="selection-box">
-      <input id="visiteds" type="checkbox" class="checkbox" />
-      <label for="visiteds">
-        <span class="icon"></span>
-        去過的地方
-      </label>
-    </div>
-    <div class="selection-box">
-      <input id="mix" type="checkbox" class="checkbox" />
-      <label for="mix">
-        <span class="icon"></span>
-        想去&去過的地方
-      </label>
-    </div>
+    <label for="favorites" class="selection-box pointer">
+      <input id="favorites" type="checkbox" class="checkbox pointer" [checked]="favCheck"
+        (change)="showMarkers(1, $event)" />
+      <span class="icon"></span>
+      想去的地方
+    </label>
+    <label for="visiteds" class="selection-box pointer">
+      <input id="visiteds" type="checkbox" class="checkbox pointer" [checked]="visCheck"
+        (change)="showMarkers(2, $event)" />
+      <span class="icon"></span>
+      去過的地方
+    </label>
+    <label for="mix" class="selection-box pointer">
+      <input id="mix" type="checkbox" class="checkbox pointer" [checked]="mixCheck" (change)="showMarkers(3, $event)" />
+      <span class="icon"></span>
+      想去&去過的地方
+    </label>
   </div>
   <div #mapContainer id="map"></div>
 </section>
