@@ -103,7 +103,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
         const componentRef = this.domService.createComponent(
           LockScreenComponent,
-          this.cons.SHAREDCOMPONENT.lockScreenComponentRef
+          this.cons.SHAREDCOMPONENT.lockScreenComponentRef,
+          { zIndex: 30 }
         );
         this.domService.attachComponent(componentRef, this.document.body);
         return;
@@ -121,7 +122,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
         const componentRef = this.domService.createComponent(
           LockScreenComponent,
-          this.cons.SHAREDCOMPONENT.lockScreenComponentRef
+          this.cons.SHAREDCOMPONENT.lockScreenComponentRef,
+          { zIndex: 30 }
         );
         this.domService.attachComponent(componentRef, this.document.body);
       } else {
