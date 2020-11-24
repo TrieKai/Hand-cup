@@ -53,6 +53,11 @@
     // Use 99.9vh becuz 100vh will show scroll bar
     @return calc(99.9vh - 100px - 45px); // Minus header[100px] & infoBar[45px]
   }
+
+  @if $type==layout_myMap_small {
+    // Use 99.9vh becuz 100vh will show scroll bar
+    @return calc(99.9vh - 100px - 45px - 35px); // Minus header[100px] & infoBar[45px] & selectionBox[35px]
+  }
 }
 
 @function color($type) {

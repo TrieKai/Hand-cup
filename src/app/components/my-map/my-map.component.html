@@ -1,2 +1,27 @@
 <div class="info-bar">{{infoMessage}}</div>
-<div #mapContainer id="map"></div>
+<section>
+  <div class="selection-container">
+    <div class="selection-box">
+      <input id="favorites" type="checkbox" class="checkbox" />
+      <label for="favorites">
+        <span class="icon"></span>
+        想去的地方
+      </label>
+    </div>
+    <div class="selection-box">
+      <input id="visiteds" type="checkbox" class="checkbox" />
+      <label for="visiteds">
+        <span class="icon"></span>
+        去過的地方
+      </label>
+    </div>
+    <div class="selection-box">
+      <input id="mix" type="checkbox" class="checkbox" />
+      <label for="mix">
+        <span class="icon"></span>
+        想去&去過的地方
+      </label>
+    </div>
+  </div>
+  <div #mapContainer id="map"></div>
+</section>

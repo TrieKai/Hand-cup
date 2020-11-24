@@ -1,12 +1,106 @@
 @import '../../assets/css/special-property.scss';
 @import '../../assets/css//common.scss';
 
-#map {
-  margin: auto;
-  height: height(layout);
-  width : 100%;
+section {
+  position: relative;
 
-  @media screen and (max-width: rwdBoundary(small)) {
-    height: height(layout_small);
+  .selection-container {
+    @include display-flex();
+    flex-direction: column;
+    position      : absolute;
+    top           : 0;
+    left          : 0;
+    width         : 200px;
+    z-index       : 1;
+
+    @media screen and (max-width: rwdBoundary(small)) {
+      flex-direction: row;
+      position      : initial;
+      width         : 100%;
+    }
+
+    .selection-box {
+      @include display-flex();
+      justify-content: end;
+      align-items    : center;
+      width          : 100%;
+      height         : calc(35px - 2px); // Minus border width
+      background     : #fff;
+      font-size      : 17px;
+      border         : #555 solid;
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        justify-content: center;
+        width          : 33.3%;
+        font-size      : 14px;
+      }
+
+      .checkbox {
+        margin: 3px 5px 3px 10px;
+
+        @media screen and (max-width: rwdBoundary(small)) {
+          margin: 3px 5px 3px 3px;
+        }
+      }
+
+      label {
+        @include display-flex();
+        align-items: center;
+        width      : 100%;
+
+        @media screen and (max-width: rwdBoundary(small)) {
+          width: auto;
+        }
+
+        .icon {
+          display      : inline-block;
+          width        : 15px;
+          height       : 15px;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .selection-box:nth-child(1) {
+      border-width: 1px 1px 0 1px;
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        border-width: 1px 0 1px 1px;
+      }
+
+      .icon {
+        background: #FD7567;
+      }
+    }
+
+    .selection-box:nth-child(2) {
+      border-width: 1px;
+
+      .icon {
+        background: #6B94FF;
+      }
+    }
+
+    .selection-box:nth-child(3) {
+      border-width: 0 1px 1px 1px;
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        border-width: 1px 1px 1px 0;
+      }
+
+      .icon {
+        background: #FDF569;
+      }
+    }
+  }
+
+  #map {
+    margin: auto;
+    height: height(layout);
+    width : 100%;
+
+    @media screen and (max-width: rwdBoundary(small)) {
+      height: height(layout_myMap_small);
+    }
   }
 }

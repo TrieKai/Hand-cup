@@ -9,6 +9,10 @@
   font-size  : 36px;
   outline    : none;
   cursor     : pointer;
+
+  @media screen and (max-width: rwdBoundary(small)) {
+    font-size: 32px;
+  }
 }
 
 .home-icon {
