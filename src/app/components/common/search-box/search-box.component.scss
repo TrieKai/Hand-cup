@@ -23,11 +23,12 @@ $border-radius: 5px;
 }
 
 .search-input {
-  position: relative;
-  padding : 0 20px;
-  outline : 0;
-  width   : 100%;
-  @include linear-gradient(45deg, #e0e8ee, #fdf4f4);
+  position     : relative;
+  padding      : 0 20px;
+  outline      : 0;
+  width        : 100%;
+  background   : linear-gradient(45deg, #e0e8ee, #fdf4f4);
+  background   : -webkit-linear-gradient(45deg, #e0e8ee, #fdf4f4);
   border-radius: $border-radius;
   font-size    : 18px;
   appearance   : none; // for iOS input[type="search"] roundedness issue. border-radius alone doesn't work

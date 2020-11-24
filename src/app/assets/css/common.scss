@@ -121,10 +121,3 @@
   -webkit-user-select: $settings;
   -moz-user-select   : $settings;
 }
-
-@mixin linear-gradient ($direction, $color1, $color2) {
-  background: linear-gradient($direction, $color1, $color2);
-  background: -webkit-linear-gradient($direction, $color1, $color2);
-  background: -moz-linear-gradient($direction, $color1, $color2);
-  background: -ms-linear-gradient($direction, $color1, $color2);
-}
