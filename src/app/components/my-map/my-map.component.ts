@@ -24,6 +24,7 @@ import { ConfirmComponent } from '../../components/common/confirm/confirm.compon
 export class MyMapComponent implements OnInit, OnDestroy {
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef<HTMLDivElement>;
   @ViewChild('filterContent', { static: false }) filterContentRef: ElementRef<HTMLDivElement>;
+  @ViewChild('container', { static: false }) containerRef: ElementRef<HTMLDivElement>;
   infoMessage: string;
   map: google.maps.Map;
   coordinate: Coordinate = { latitude: null, longitude: null };
@@ -42,7 +43,7 @@ export class MyMapComponent implements OnInit, OnDestroy {
   favCheck: boolean = true;
   visCheck: boolean = true;
   mixCheck: boolean = true;
-  filterStatus: boolean = false;
+  filterStatus: boolean = true;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -361,9 +362,11 @@ export class MyMapComponent implements OnInit, OnDestroy {
 
   handleFilter() {
     if (this.filterStatus) {
-      this.renderer.removeClass(this.filterContentRef.nativeElement, 'open');
+      this.renderer.addClass(this.containerRef.nativeElement, 'close-container');
+      this.renderer.addClass(this.filterContentRef.nativeElement, 'close-content');
     } else {
-      this.renderer.addClass(this.filterContentRef.nativeElement, 'open');
+      this.renderer.removeClass(this.containerRef.nativeElement, 'close-container');
+      this.renderer.removeClass(this.filterContentRef.nativeElement, 'close-content');
     }
     this.filterStatus = !this.filterStatus;
   }

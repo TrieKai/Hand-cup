@@ -11,8 +11,8 @@ section {
     top           : 0;
     left          : 0;
     width         : 300px;
-    border-radius : 5px;
-    box-shadow    : 0 3px 25px 0 rgba(0, 0, 0, 0.3), 0 3px 7px 0 rgba(0, 0, 0, 0.19);
+    border-radius : 0 0 5px 5px;
+    box-shadow    : 0 3px 25px 0 rgba(0, 0, 0, 0.3);
     overflow      : hidden;
     z-index       : 1;
 
@@ -56,12 +56,16 @@ section {
       @include display-flex();
       flex-direction: column;
       width         : 100%;
-      @include transform(translateY(-120px));
-      @include transition(transform 250ms ease-in-out);
+      height        : 120px;
+      @include transform(translateY(0));
+      @include transition(all 250ms linear);
       z-index: -1;
 
       @media screen and (max-width: rwdBoundary(small)) {
         flex-direction: row;
+        height        : 40px !important;
+        @include transform(translateY(0) !important);
+        z-index: initial;
       }
 
       .selection-box {
@@ -80,10 +84,6 @@ section {
         }
 
         &:nth-child(1) {
-          @media screen and (max-width: rwdBoundary(small)) {
-            border-width: 1px 0 1px 1px;
-          }
-
           .icon {
             background: #FD7567;
           }
@@ -96,10 +96,6 @@ section {
         }
 
         &:nth-child(3) {
-          @media screen and (max-width: rwdBoundary(small)) {
-            border-width: 1px 1px 1px 0;
-          }
-
           .icon {
             background: #FDF569;
           }
@@ -123,6 +119,15 @@ section {
         }
       }
     }
+
+    .close-content {
+      @include transform(translateY(-120px));
+      height: 0;
+    }
+  }
+
+  .close-container {
+    box-shadow: none;
   }
 
   #map {
@@ -134,10 +139,6 @@ section {
       height: height(layout_myMap_small);
     }
   }
-}
-
-.open {
-  @include transform(translateY(0) !important);
 }
 
 .pointer {
