@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, isDevMode, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, isDevMode, Inject, Renderer2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Subscription, BehaviorSubject } from 'rxjs';
 
@@ -23,6 +23,7 @@ import { ConfirmComponent } from '../../components/common/confirm/confirm.compon
 })
 export class MyMapComponent implements OnInit, OnDestroy {
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef<HTMLDivElement>;
+  @ViewChild('filterContent', { static: false }) filterContentRef: ElementRef<HTMLDivElement>;
   infoMessage: string;
   map: google.maps.Map;
   coordinate: Coordinate = { latitude: null, longitude: null };
@@ -41,6 +42,7 @@ export class MyMapComponent implements OnInit, OnDestroy {
   favCheck: boolean = true;
   visCheck: boolean = true;
   mixCheck: boolean = true;
+  filterStatus: boolean = false;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -52,6 +54,7 @@ export class MyMapComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private domService: DomService,
     private drinkShopService: DrinkShopService,
+    private renderer: Renderer2,
   ) { }
 
   ngOnInit() {
@@ -354,5 +357,14 @@ export class MyMapComponent implements OnInit, OnDestroy {
     infoWindowImgElement.style.backgroundSize = 'cover';
     infoWindowImgElement.style.width = '100%';
     infoWindowImgElement.style.height = '50%';
+  }
+
+  handleFilter() {
+    if (this.filterStatus) {
+      this.renderer.removeClass(this.filterContentRef.nativeElement, 'open');
+    } else {
+      this.renderer.addClass(this.filterContentRef.nativeElement, 'open');
+    }
+    this.filterStatus = !this.filterStatus;
   }
 }

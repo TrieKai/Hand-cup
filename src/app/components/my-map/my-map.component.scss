@@ -10,7 +10,10 @@ section {
     position      : absolute;
     top           : 0;
     left          : 0;
-    width         : 200px;
+    width         : 300px;
+    border-radius : 5px;
+    box-shadow    : 0 3px 25px 0 rgba(0, 0, 0, 0.3), 0 3px 7px 0 rgba(0, 0, 0, 0.19);
+    overflow      : hidden;
     z-index       : 1;
 
     @media screen and (max-width: rwdBoundary(small)) {
@@ -19,67 +22,105 @@ section {
       width         : 100%;
     }
 
-    .selection-box {
-      @include display-flex();
-      justify-content: end;
-      align-items    : center;
-      width          : 100%;
-      height         : calc(35px - 2px); // Minus border width
-      background     : #fff;
-      font-size      : 17px;
-      border         : #555 solid;
+    .title {
+      padding   : 10px;
+      font-size : 20px;
+      color     : #fff;
+      background: #CC3333;
 
       @media screen and (max-width: rwdBoundary(small)) {
-        justify-content: center;
-        width          : 33.3%;
-        font-size      : 14px;
+        display: none;
       }
 
-      .checkbox {
-        margin: 3px 5px 3px 10px;
+      span {
+        height: 100%;
+      }
 
-        @media screen and (max-width: rwdBoundary(small)) {
-          margin: 3px 5px 3px 3px;
+      .minimize {
+        position: absolute;
+        right   : 10px;
+        width   : 24px;
+        height  : 24px;
+
+        .minimize-icon::before {
+          content : "";
+          position: absolute;
+          top     : 10px;
+          width   : 20px;
+          border  : 2px #eee solid;
         }
       }
-
-      .icon {
-        display      : inline-block;
-        width        : 15px;
-        height       : 15px;
-        border-radius: 50%;
-      }
     }
 
-    .selection-box:nth-child(1) {
-      border-width: 1px 1px 0 1px;
+    .content {
+      @include display-flex();
+      flex-direction: column;
+      width         : 100%;
+      @include transform(translateY(-120px));
+      @include transition(transform 250ms ease-in-out);
+      z-index: -1;
 
       @media screen and (max-width: rwdBoundary(small)) {
-        border-width: 1px 0 1px 1px;
+        flex-direction: row;
       }
 
-      .icon {
-        background: #FD7567;
-      }
-    }
+      .selection-box {
+        @include display-flex();
+        justify-content: flex-start;
+        align-items    : center;
+        width          : 100%;
+        height         : 40px;
+        background     : #fff;
+        font-size      : 17px;
 
-    .selection-box:nth-child(2) {
-      border-width: 1px;
+        @media screen and (max-width: rwdBoundary(small)) {
+          justify-content: center;
+          width          : 33.3%;
+          font-size      : 14px;
+        }
 
-      .icon {
-        background: #6B94FF;
-      }
-    }
+        &:nth-child(1) {
+          @media screen and (max-width: rwdBoundary(small)) {
+            border-width: 1px 0 1px 1px;
+          }
 
-    .selection-box:nth-child(3) {
-      border-width: 0 1px 1px 1px;
+          .icon {
+            background: #FD7567;
+          }
+        }
 
-      @media screen and (max-width: rwdBoundary(small)) {
-        border-width: 1px 1px 1px 0;
-      }
+        &:nth-child(2) {
+          .icon {
+            background: #6B94FF;
+          }
+        }
 
-      .icon {
-        background: #FDF569;
+        &:nth-child(3) {
+          @media screen and (max-width: rwdBoundary(small)) {
+            border-width: 1px 1px 1px 0;
+          }
+
+          .icon {
+            background: #FDF569;
+          }
+        }
+
+        .checkbox {
+          margin: 3px 5px 3px 10px;
+          width : 20px;
+          height: 20px;
+
+          @media screen and (max-width: rwdBoundary(small)) {
+            margin: 3px 5px 3px 3px;
+          }
+        }
+
+        .icon {
+          display      : inline-block;
+          width        : 15px;
+          height       : 15px;
+          border-radius: 50%;
+        }
       }
     }
   }
@@ -93,6 +134,10 @@ section {
       height: height(layout_myMap_small);
     }
   }
+}
+
+.open {
+  @include transform(translateY(0) !important);
 }
 
 .pointer {

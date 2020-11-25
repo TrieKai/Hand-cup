@@ -96,6 +96,10 @@
     @return 40;
   }
 
+  @else if $type==infoBar {
+    @return 10;
+  }
+
   @else {
     @return initial;
   }

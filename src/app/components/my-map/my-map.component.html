@@ -1,23 +1,32 @@
 <div class="info-bar">{{infoMessage}}</div>
 <section>
   <div class="selection-container">
-    <label for="favorites" class="selection-box pointer">
-      <input id="favorites" type="checkbox" class="checkbox pointer" [checked]="favCheck"
-        (change)="showMarkers(1, $event)" />
-      <span class="icon"></span>
-      想去的地方
-    </label>
-    <label for="visiteds" class="selection-box pointer">
-      <input id="visiteds" type="checkbox" class="checkbox pointer" [checked]="visCheck"
-        (change)="showMarkers(2, $event)" />
-      <span class="icon"></span>
-      去過的地方
-    </label>
-    <label for="mix" class="selection-box pointer">
-      <input id="mix" type="checkbox" class="checkbox pointer" [checked]="mixCheck" (change)="showMarkers(3, $event)" />
-      <span class="icon"></span>
-      想去&去過的地方
-    </label>
+    <div class="title">
+      <span>Filter</span>
+      <span #filterToogle class="minimize pointer" (click)="handleFilter()">
+        <i class="minimize-icon"></i>
+      </span>
+    </div>
+    <div #filterContent class="content">
+      <label for="favorites" class="selection-box pointer">
+        <input id="favorites" type="checkbox" class="checkbox pointer" [checked]="favCheck"
+          (change)="showMarkers(1, $event)" />
+        <span class="icon"></span>
+        想去的地方
+      </label>
+      <label for="visiteds" class="selection-box pointer">
+        <input id="visiteds" type="checkbox" class="checkbox pointer" [checked]="visCheck"
+          (change)="showMarkers(2, $event)" />
+        <span class="icon"></span>
+        去過的地方
+      </label>
+      <label for="mix" class="selection-box pointer">
+        <input id="mix" type="checkbox" class="checkbox pointer" [checked]="mixCheck"
+          (change)="showMarkers(3, $event)" />
+        <span class="icon"></span>
+        想去&去過的地方
+      </label>
+    </div>
   </div>
   <div #mapContainer id="map"></div>
 </section>
