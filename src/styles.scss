@@ -24,50 +24,55 @@
 
   // Check box
   input[type="checkbox"] {
-    cursor            : pointer;
-    -webkit-appearance: none;
-    -moz-appearance   : none;
-    appearance        : none;
-    outline           : 0;
-    background        : lightgray;
-    height            : 16px;
-    width             : 16px;
-    border            : 1px solid white;
-  }
+    display: none;
 
-  input[type="checkbox"]:checked {
-    background: #2aa1c0;
-  }
+    &+label {
+      position   : relative;
+      display    : flex;
+      align-items: center;
+      height     : 100%;
+      line-height: 20px;
+      cursor     : pointer;
 
-  input[type="checkbox"]:hover {
-    filter: brightness(90%);
-  }
+      &::before {
+        content         : "";
+        display         : block;
+        width           : 19px;
+        height          : 19px;
+        background-color: #fff;
+        box-sizing      : border-box;
+        border          : solid 2px #d3d6d6;
+        border-radius   : 3px;
+        transition      : all 0.3s;
+      }
+    }
 
-  input[type="checkbox"]:disabled {
-    background    : #e6e6e6;
-    opacity       : 0.6;
-    pointer-events: none;
-  }
+    &:hover+label:before {
+      border: 2px solid #0073e6;
+    }
 
-  input[type="checkbox"]:after {
-    content     : '';
-    position    : relative;
-    left        : 40%;
-    top         : 20%;
-    width       : 15%;
-    height      : 40%;
-    border      : solid #fff;
-    border-width: 0 2px 2px 0;
-    transform   : rotate(45deg);
-    display     : none;
-  }
+    &:checked+label {
+      &::before {
+        // position  : relative;
+        background: #0073e6;
+        border    : 1px solid #0073e6;
+      }
 
-  input[type="checkbox"]:checked:after {
-    display: block;
-  }
-
-  input[type="checkbox"]:disabled:after {
-    border-color: #7b7b7b;
+      &::after {
+        content    : "L";
+        position   : absolute;
+        top        : 7px;
+        left       : 0px;
+        display    : block;
+        width      : 16px;
+        height     : 16px;
+        color      : #fff;
+        font-size  : 13px;
+        font-family: arial;
+        font-weight: bold;
+        transform  : scaleX(-1) rotate(-40deg);
+      }
+    }
   }
 }
 

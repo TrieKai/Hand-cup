@@ -41,6 +41,7 @@ section {
         right   : 10px;
         width   : 24px;
         height  : 24px;
+        cursor  : pointer;
 
         .minimize-icon::before {
           content : "";
@@ -72,6 +73,7 @@ section {
         @include display-flex();
         justify-content: flex-start;
         align-items    : center;
+        padding-left   : 10px;
         width          : 100%;
         height         : 40px;
         background     : #fff;
@@ -79,6 +81,7 @@ section {
 
         @media screen and (max-width: rwdBoundary(small)) {
           justify-content: center;
+          padding        : 0;
           width          : 33.3%;
           font-size      : 14px;
         }
@@ -113,6 +116,7 @@ section {
 
         .icon {
           display      : inline-block;
+          margin-left  : 5px;
           width        : 15px;
           height       : 15px;
           border-radius: 50%;
@@ -139,8 +143,4 @@ section {
       height: height(layout_myMap_small);
     }
   }
-}
-
-.pointer {
-  cursor: pointer;
 }

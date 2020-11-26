@@ -3,29 +3,35 @@
   <div #container class="selection-container">
     <div class="title">
       <span>Filter</span>
-      <span #filterToogle class="minimize pointer" (click)="handleFilter()">
+      <span #filterToogle class="minimize" (click)="handleFilter()">
         <i class="minimize-icon"></i>
       </span>
     </div>
     <div #filterContent class="content">
-      <label for="favorites" class="selection-box pointer">
-        <input id="favorites" type="checkbox" class="checkbox pointer" [checked]="favCheck"
+      <div class="selection-box">
+        <input id="favorites" type="checkbox" class="checkbox" [checked]="favCheck"
           (change)="showMarkers(1, $event)" />
-        <span class="icon"></span>
-        想去的地方
-      </label>
-      <label for="visiteds" class="selection-box pointer">
-        <input id="visiteds" type="checkbox" class="checkbox pointer" [checked]="visCheck"
+        <label for="favorites">
+          <span class="icon"></span>
+          想去的地方
+        </label>
+      </div>
+      <div class="selection-box">
+        <input id="visiteds" type="checkbox" class="checkbox" [checked]="visCheck"
           (change)="showMarkers(2, $event)" />
-        <span class="icon"></span>
-        去過的地方
-      </label>
-      <label for="mix" class="selection-box pointer">
-        <input id="mix" type="checkbox" class="checkbox pointer" [checked]="mixCheck"
+        <label for="visiteds">
+          <span class="icon"></span>
+          去過的地方
+        </label>
+      </div>
+      <div class="selection-box">
+        <input id="mix" type="checkbox" class="checkbox" [checked]="mixCheck"
           (change)="showMarkers(3, $event)" />
-        <span class="icon"></span>
-        想去&去過的地方
-      </label>
+        <label for="mix">
+          <span class="icon"></span>
+          想去&去過的地方
+        </label>
+      </div>
     </div>
   </div>
   <div #mapContainer id="map"></div>
