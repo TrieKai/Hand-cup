@@ -8,8 +8,7 @@
   margin         : auto;
   width          : 100%;
   height         : height(layout);
-  background     : linear-gradient(180deg, #a3e6e9 0%, #FFFFFF 100%);
-  background     : -webkit-linear-gradient(180deg, #a3e6e9 0%, #FFFFFF 100%);
+  background     : #a3e6e9;
   overflow-y     : auto;
 
   @media screen and (max-width: rwdBoundary(small)) {

@@ -31,10 +31,20 @@
     @include display-flex();
     justify-content : center;
     align-items     : center;
-    width           : 50%;
-    height          : 60%;
+    width           : 650px;
+    height          : 500px;
     background-color: whitesmoke;
     border-radius   : 5px;
+
+    @media screen and (max-width: rwdBoundary(middle)) {
+      width : 80%;
+      height: 70%;
+    }
+
+    @media screen and (max-width: rwdBoundary(small)) {
+      width : 90%;
+      height: 80%;
+    }
 
     .pressBtn {
       @include display-flex();
