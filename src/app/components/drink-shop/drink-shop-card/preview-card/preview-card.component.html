@@ -14,26 +14,28 @@
       <li *ngIf="chosenShopDetail.formatted_phone_number">
         電話: {{chosenShopDetail.formatted_phone_number}}
       </li>
-      <li>
-        評論:
-        <div *ngIf="chosenShopDetail.reviews" class="review-container">
-          <div class="review-title">
-            <div class="author-box">
-              <img class="author-img" src="{{chosenShopDetail.reviews[0].profile_photo_url}}" alt="author_img" />
-              <span class="author-name"
-                title="{{chosenShopDetail.reviews[0].author_name}}">{{chosenShopDetail.reviews[0].author_name}}</span>
+      <ng-container *ngIf="chosenShopDetail.reviews">
+        <li>
+          <span>評論:</span>
+          <div class="review-container">
+            <div class="review-title">
+              <div class="author-box">
+                <img class="author-img" src="{{chosenShopDetail.reviews[0].profile_photo_url}}" alt="author_img" />
+                <span class="author-name"
+                  title="{{chosenShopDetail.reviews[0].author_name}}">{{chosenShopDetail.reviews[0].author_name}}</span>
+              </div>
+              <div class="rating-box">
+                <span class="author-rating">{{chosenShopDetail.reviews[0].rating}}</span>
+                <app-rating-stars class="rating-stars" [rating]="chosenShopDetail.reviews[0].rating"></app-rating-stars>
+              </div>
+              <span class="review-time"
+                title="{{chosenShopDetail.reviews[0].time * 1000 | date:'long'}}">{{chosenShopDetail.reviews[0].time * 1000 | date:'yyyy/MM/dd'}}</span>
             </div>
-            <div class="rating-box">
-              <span class="author-rating">{{chosenShopDetail.reviews[0].rating}}</span>
-              <app-rating-stars class="rating-stars" [rating]="chosenShopDetail.reviews[0].rating"></app-rating-stars>
-            </div>
-            <span class="review-time"
-              title="{{chosenShopDetail.reviews[0].time * 1000 | date:'long'}}">{{chosenShopDetail.reviews[0].time * 1000 | date:'yyyy/MM/dd'}}</span>
+            <div class="text-box">{{chosenShopDetail.reviews[0].text}}</div>
           </div>
-          <div class="text-box">{{chosenShopDetail.reviews[0].text}}</div>
-        </div>
-        <span *ngIf="!chosenShopDetail.reviews">尚未有評論</span>
-      </li>
+          <span *ngIf="!chosenShopDetail.reviews">尚未有評論</span>
+        </li>
+      </ng-container>
     </ul>
   </div>
 </div>

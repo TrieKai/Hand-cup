@@ -14,7 +14,6 @@
   height       : 65vh;
   width        : 100%;
   border-radius: 5px;
-  box-shadow   : 5px 5px 15px rgba(0, 0, 0, 0.6);
   cursor       : default;
 
   @media screen and (max-width: rwdBoundary(middle)) {
@@ -61,13 +60,14 @@
 
   .chosen-card-content {
     grid-area                 : content;
+    margin                    : 15px 0;
     height                    : 100%;
     background-color          : white;
     text-align                : left;
     color                     : color(themeOfPink);
     font-size                 : 20px;
     border-bottom-right-radius: 5px;
-    overflow                  : hidden;
+    overflow-y                : auto;
 
     ul {
       list-style-position: inside;

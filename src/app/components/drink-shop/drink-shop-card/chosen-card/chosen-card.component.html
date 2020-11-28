@@ -75,7 +75,7 @@
   </app-image-slider>
   <div class="chosen-card-content">
     <div class="content-box">
-      <div class="wtf">
+      <section>
         <div title="{{chosenShop.name}}" class="list">店名: {{chosenShop.name}}</div>
         <div class="list">評分: {{ratingText}}</div>
         <div class="list">評價數: {{chosenShop.ratings_total}}</div>
@@ -100,7 +100,7 @@
             <i-price [size]="22" [color]="'#aaaaaa'" [opacity]="0.8"></i-price>
           </ng-container>
         </div>
-      </div>
+      </section>
       <ng-container *ngIf="chosenShopDetail.reviews">
         <div class="reviews">
           <span class="list">評論: </span>
