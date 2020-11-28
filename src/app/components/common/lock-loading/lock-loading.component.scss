@@ -19,8 +19,74 @@
   @include display-flex();
   align-items     : center;
   justify-content : center;
-  background-color: #fdecff;
-  opacity         : 0.3;
+  background-color: rgb(206, 197, 188, 0.3);
   width           : 100%;
   height          : 100%;
+}
+
+.loader {
+  position: absolute;
+  top     : calc(50% - 20px);
+  left    : calc(50% - 20px);
+}
+
+@include keyframes(loader) {
+  0% {
+    left: -100px
+  }
+
+  100% {
+    left: 110%;
+  }
+}
+
+.box {
+  position     : absolute;
+  top          : 0;
+  left         : 0;
+  width        : 50px;
+  height       : 50px;
+  background   : rgb(255, 255, 255, 1);
+  border-radius: 3px;
+  @include animation(animate .5s linear infinite);
+}
+
+@include keyframes(animate) {
+  17% {
+    border-bottom-right-radius: 3px;
+  }
+
+  25% {
+    @include transform(translateY(9px) rotate(22.5deg));
+  }
+
+  50% {
+    @include transform(translateY(18px) scale(1, .9) rotate(45deg));
+    border-bottom-right-radius: 40px;
+  }
+
+  75% {
+    @include transform(translateY(9px) rotate(67.5deg));
+  }
+
+  100% {
+    @include transform(translateY(0) rotate(90deg));
+  }
+}
+
+.shadow {
+  position     : absolute;
+  top          : 59px;
+  left         : 0;
+  width        : 50px;
+  height       : 5px;
+  background   : rgb(0, 0, 0, 0.5);
+  border-radius: 50%;
+  @include animation(shadow .5s linear infinite);
+}
+
+@include keyframes(shadow) {
+  50% {
+    @include transform(scale(1.2, 1));
+  }
 }

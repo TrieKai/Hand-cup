@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatNativeDateModule } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -27,7 +26,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     MatMenuModule,
     MatSelectModule,
-    MatProgressSpinnerModule,
     MatStepperModule,
     MatNativeDateModule,
     MatDatepickerModule,
@@ -43,7 +41,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     MatMenuModule,
     MatSelectModule,
-    MatProgressSpinnerModule,
     MatStepperModule,
     MatNativeDateModule,
     MatDatepickerModule,
