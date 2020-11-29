@@ -254,7 +254,10 @@ export class DrinkShopMapComponent implements OnInit {
         const marker = new google.maps.Marker({
           position: { lat: data.position.latitude, lng: data.position.longitude },
           map: this.map,
-          icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+          icon: {
+            url: "assets/icons/icon-location-mark.png",
+            scaledSize: new google.maps.Size(26.76, 35.32)
+          },
           animation: google.maps.Animation.DROP,
         });
         this.markers.push(marker); // 統一管理 marker
