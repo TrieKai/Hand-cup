@@ -72,6 +72,22 @@
 
         section {
           margin: 5px 0;
+
+          .unfavorite {
+            color: tomato;
+          }
+
+          .favorite {
+            color: darkred;
+          }
+
+          .add_location_alt {
+            color: wheat;
+          }
+
+          .wrong_location {
+            color: tomato;
+          }
         }
       }
     }

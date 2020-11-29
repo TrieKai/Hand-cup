@@ -3,11 +3,11 @@
     <span>恭喜! 今天飲料喝這家~</span>
     <div *ngIf="chosenShopDetail.place_id && (!isMobile && !smallScreen)" class="info-box center">
       <span *ngIf="!checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons unfavorite"
-        title="收藏這家!" (click)="favoritetShop(chosenShopDetail.place_id)">
+        title="想去!" (click)="favoritetShop(chosenShopDetail.place_id)">
         favorite_border
       </span>
       <span *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'favorite')" class="material-icons favorite"
-        title="取消收藏" (click)="unFavoriteShop(chosenShopDetail.place_id)">
+        title="不想去~" (click)="unFavoriteShop(chosenShopDetail.place_id)">
         favorite
       </span>
       <div
@@ -15,10 +15,10 @@
         <span class="material-icons not_listed_location">
           not_listed_location
         </span>
-        <span class="material-icons add_location_alt" (click)="visited(chosenShopDetail.place_id)">
+        <span class="material-icons add_location_alt" title="去過了!"(click)="visited(chosenShopDetail.place_id)">
           add_location_alt
         </span>
-        <span class="material-icons wrong_location" (click)="unVisited(chosenShopDetail.place_id)">
+        <span class="material-icons wrong_location" title="沒去過~"(click)="unVisited(chosenShopDetail.place_id)">
           wrong_location
         </span>
       </div>
@@ -35,14 +35,14 @@
             <span class="material-icons unfavorite">
               favorite_border
             </span>
-            <span class="info-text">收藏這家!</span>
+            <span class="info-text">想去!</span>
           </div>
           <div *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'favorite')"
             (click)="unFavoriteShop(chosenShopDetail.place_id)">
             <span class="material-icons favorite">
               favorite
             </span>
-            <span class="info-text">取消收藏</span>
+            <span class="info-text">不想去~</span>
           </div>
         </section>
         <section class="center">
@@ -51,14 +51,14 @@
             <span class="material-icons add_location_alt">
               add_location_alt
             </span>
-            <span class="info-text">未造訪過</span>
+            <span class="info-text">去過了!</span>
           </div>
           <div *ngIf="checkLocalStorage(chosenShopDetail.place_id, 'visited')"
             (click)="unVisited(chosenShopDetail.place_id)">
             <span class="material-icons wrong_location">
               wrong_location
             </span>
-            <span class="info-text">曾造訪過</span>
+            <span class="info-text">沒去過~</span>
           </div>
         </section>
         <section class="center">

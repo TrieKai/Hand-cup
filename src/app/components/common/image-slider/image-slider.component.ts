@@ -30,9 +30,11 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy, O
 
   ngAfterViewInit(): void {
     this.changeImage(0);
-    this.customizeStyles.forEach((style) => {
-      this.renderer.setStyle(this.imageRef.nativeElement, Object.keys(style)[0], Object.values(style)[0]);
-    });
+    if (this.imageRef) {
+      this.customizeStyles.forEach((style) => {
+        this.renderer.setStyle(this.imageRef.nativeElement, Object.keys(style)[0], Object.values(style)[0]);
+      });
+    }
     if (this.imageContainerRef) {
       this.listen = this.renderer.listen(this.imageContainerRef.nativeElement, 'mousewheel', (e: WheelEvent) => {
         e.deltaY > 0 ?
@@ -43,7 +45,7 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy, O
   }
 
   ngOnDestroy(): void {
-    this.listen();
+    if (this.listen) { this.listen(); } // Remove listener
   }
 
   openLink() {
@@ -57,7 +59,9 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy, O
       ? index = imagesLength - 1 : index === imagesLength
         ? index = 0 : null;
     this.nowImageIndex = index;
-    this.renderer.setStyle(this.imageRef.nativeElement, 'background-image', 'url(' + this.images[index] + ')');
+    if (this.imageRef) {
+      this.renderer.setStyle(this.imageRef.nativeElement, 'background-image', 'url(' + this.images[index] + ')');
+    }
     this.dotBoxRef.nativeElement.childNodes.forEach((dot, i) => {
       if (i === 0) { return; } // index 0 is ng-binding
       if (i - 1 === this.nowImageIndex) {

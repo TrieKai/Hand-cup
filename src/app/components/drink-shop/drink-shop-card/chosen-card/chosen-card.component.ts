@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input, Renderer2, Inject, ViewChild, ElementRef, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener, Input, Renderer2, Inject, ViewChild, ElementRef, SimpleChanges, OnChanges, AfterViewInit, OnDestroy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -17,7 +17,7 @@ import { ReviewComponent } from '../review/review.component';
   templateUrl: './chosen-card.component.html',
   styleUrls: ['./chosen-card.component.scss']
 })
-export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
+export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() chosenShop: drinkShopResults;
   @ViewChild('dots', { static: false }) dotsRef: ElementRef<HTMLDivElement>;
   @ViewChild('dropdown', { static: false }) dropdownRef: ElementRef<HTMLDivElement>;
@@ -93,6 +93,10 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit {
     this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
     if (window.innerWidth < 600) { this.smallScreen = true; }
     this.componentKey = this.cons.SHAREDCOMPONENT.reviewComponentRef;
+  }
+
+  ngOnDestroy(): void {
+    if (this.listen) { this.listen(); } // Remove listener
   }
 
   ngAfterViewInit() {
