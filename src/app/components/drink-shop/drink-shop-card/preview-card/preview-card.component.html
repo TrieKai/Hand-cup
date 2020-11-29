@@ -2,7 +2,7 @@
   <div class="chosen-card-title">
     <span>來偷偷看這家~</span>
   </div>
-  <div class="chosen-card-image" [ngStyle]="{'background-image':'url(' + chosenShop.image_url + ')'}"></div>
+  <div #image class="chosen-card-image"></div>
   <div class="chosen-card-content">
     <ul>
       <li title="{{chosenShop.name}}">店名: {{chosenShop.name}}</li>

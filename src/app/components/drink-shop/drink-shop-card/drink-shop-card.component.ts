@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, isDevMode, OnDestroy } from '@angular/core';
+import { Component, OnInit, isDevMode, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -12,7 +12,6 @@ import { GlobalService as global } from 'src/app/service/global.service';
   styleUrls: ['./drink-shop-card.component.scss']
 })
 export class DrinkShopCardComponent implements OnInit, OnDestroy {
-  @ViewChild('cardContainer', { static: false }) cardContainer: ElementRef<HTMLDivElement>;
   resultArray: drinkShopResults[] = [];
   chosenShop: drinkShopResults;
   chosenShopDetail: drinkShopDetail;

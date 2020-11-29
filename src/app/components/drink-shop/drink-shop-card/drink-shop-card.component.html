@@ -1,4 +1,4 @@
-<div #cardContainer class="card-container" *ngIf="!showChosenCard&&!showPreviewCard">
+<section class="card-container" *ngIf="!showChosenCard&&!showPreviewCard">
   <div class="button-box">
     <button mat-raised-button (click)="handleTransformScenes('map')">返回</button>
     <button mat-raised-button class="draw-button" (click)="handleDraw()">抽卡</button>
@@ -6,33 +6,33 @@
   <div class="space-box"></div>
   <ng-container *ngFor="let result of resultArray; let i = index;">
     <div class="card" (click)="previewCard(i)">
-      <div class="card-image" [ngStyle]="{'background-image':'url(' + result.image_url + ')'}"></div>
       <div class="card-text">
         <h2>{{result.name}}</h2>
       </div>
+      <div class="card-image" [ngStyle]="{'background-image': 'url(' + result.image_url + ')'}"></div>
       <div class="card-stats">
         <div class="stat">
           <div class="stat-box">
             <div class="value">{{result.rating}}</div>
-            <div class="type">rating</div>
+            <div class="type">評價</div>
           </div>
         </div>
         <div class="stat">
           <div class="stat-box">
             <div class="value">{{result.ratings_total}}</div>
-            <div class="type">comments</div>
+            <div class="type">評論數</div>
           </div>
         </div>
         <div class="stat border">
           <div class="stat-box">
             <div class="value">{{result.views}}</div>
-            <div class="type">views</div>
+            <div class="type">觀看數</div>
           </div>
         </div>
       </div>
     </div>
   </ng-container>
-</div>
+</section>
 
 <div class="card-container" *ngIf="showPreviewCard">
   <div class="button-box">

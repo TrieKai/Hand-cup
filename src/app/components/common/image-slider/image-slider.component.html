@@ -1,4 +1,4 @@
-<div #imageContainer class="image-container">
+<div *ngIf="images.length !== 0" #imageContainer class="image-container">
   <div class="material-icons link" title="導向至作者" (click)="openLink()">link</div>
   <div class="left-arrow-box" (click)="changeImage(nowImageIndex - 1)">
     <div class="left-arrow"></div>
@@ -13,3 +13,4 @@
     </div>
   </div>
 </div>
+<div *ngIf="images.length === 0" class="no-data"></div>

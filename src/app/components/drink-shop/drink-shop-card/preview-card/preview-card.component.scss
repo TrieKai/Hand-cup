@@ -5,7 +5,7 @@
   @include display-grid();
   align-items          : center;
   justify-content      : center;
-  grid-template-columns: 300px 450px;
+  grid-template-columns: 350px 450px;
   grid-template-rows   : 40px calc(65vh - 40px);
   grid-template-areas  :
     "title title"

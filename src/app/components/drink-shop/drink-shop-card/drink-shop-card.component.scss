@@ -58,10 +58,9 @@
 }
 
 .card-image {
-  grid-area                 : image;
-  // border-top-left-radius : 15px;
-  // border-top-right-radius: 15px;
-  background-size           : cover;
+  grid-area       : image;
+  background-size : cover;
+  background-color: gray;
 }
 
 .card-text {

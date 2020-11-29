@@ -33,11 +33,13 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy, O
     this.customizeStyles.forEach((style) => {
       this.renderer.setStyle(this.imageRef.nativeElement, Object.keys(style)[0], Object.values(style)[0]);
     });
-    this.listen = this.renderer.listen(this.imageContainerRef.nativeElement, 'mousewheel', (e: WheelEvent) => {
-      e.deltaY > 0 ?
-        this.changeImage(this.nowImageIndex + 1) : e.deltaY < 0 ?
-          this.changeImage(this.nowImageIndex - 1) : null;
-    });
+    if (this.imageContainerRef) {
+      this.listen = this.renderer.listen(this.imageContainerRef.nativeElement, 'mousewheel', (e: WheelEvent) => {
+        e.deltaY > 0 ?
+          this.changeImage(this.nowImageIndex + 1) : e.deltaY < 0 ?
+            this.changeImage(this.nowImageIndex - 1) : null;
+      });
+    }
   }
 
   ngOnDestroy(): void {
