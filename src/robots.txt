@@ -5,3 +5,5 @@ Allow: /home
 Allow: /drink
 Allow: /drinkShop
 Allow: /myMap
+
+Sitemap: https://handcup.herokuapp.com/sitemap.xml
