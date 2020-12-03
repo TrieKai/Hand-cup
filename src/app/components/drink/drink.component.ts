@@ -24,6 +24,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
   gocha: boolean;
   drinksData: drinksData[];
   drink: drinksData;
+  chosenDrinkType: drinksData; // Chosen drink type by step 1
   step: number;
   isFinished: boolean;
   showLeftFirework: boolean;
@@ -67,32 +68,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
     this.infoMessage = '今天飲料喝什麼?';
 
     // TODO: Replace API with this
-    this.drinksData = [
-      {
-        name: '綠茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101143220000001.png&w=280&h=350&zc=2',
-        subDrinks: [{ name: '普洱茶' }, { name: '烏龍茶' }, { name: '多多綠' }]
-      },
-      {
-        name: '紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1705151055490000001.png&w=280&h=350&zc=2',
-        subDrinks: [{ name: '大正紅茶' }, { name: '錫蘭紅茶' }]
-      },
-      {
-        name: '奶茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1904241008320000001.png&w=280&h=350&zc=2',
-        subDrinks: [{ name: '珍珠奶茶' }, { name: '鮮奶茶' }]
-      },
-      { name: '珍珠鮮奶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1904240957570000001.png&w=280&h=350&zc=2' },
-      {
-        name: '果汁', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1801251627300000001.png&w=280&h=350&zc=2',
-        subDrinks: [{ name: '柳橙' }, { name: '檸檬' }]
-      },
-      {
-        name: '冬瓜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144190000001.png&w=280&h=350&zc=2',
-        subDrinks: [{ name: '冬瓜茶' }, { name: '冬瓜檸檬' }, { name: '冬瓜鮮奶' }, { name: '冬瓜綠茶' }]
-      },
-      { name: '多多綠', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144260000001.png&w=280&h=350&zc=2' },
-      { name: '冰淇淋紅茶', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/1703101144340000001.png&w=280&h=350&zc=2' },
-      { name: '蜂蜜檸檬', image: 'https://www.chingshin.tw/includes/timthumb.php?src=upload/product_catalog/2002121650500000001.png&w=280&h=350&zc=2' },
-    ];
+    this.drinksData = this.cons.DRINKS;
     this.hintText = '請點選圖片左右邊來選擇';
   }
 
@@ -116,8 +92,8 @@ export class DrinkComponent implements OnInit, OnDestroy {
     if (step === 1) {
       shuffledDrinks = this.shuffle(this.drinksData);
     } else if (step === 2) {
-      if (!this.drink.subDrinks) { return; }
-      shuffledDrinks = this.shuffle(this.drink.subDrinks);
+      if (!this.chosenDrinkType.subDrinks) { return; }
+      shuffledDrinks = this.shuffle(this.chosenDrinkType.subDrinks);
     }
 
     const concatedData = shuffledDrinks
@@ -132,7 +108,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
     if (step === 1) {
       drinksDataLength = this.drinksData.length;
     } else if (step === 2) {
-      drinksDataLength = this.drink.subDrinks.length;
+      drinksDataLength = this.chosenDrinkType.subDrinks.length;
     }
 
     const choesnIndex = Math.floor(Math.random() * drinksDataLength);
@@ -140,14 +116,19 @@ export class DrinkComponent implements OnInit, OnDestroy {
       const flag = (i === drinksDataLength * 3 + choesnIndex) ? true : false;
       setTimeout(() => {
         if (flag) {
-          this.step = step++;
           this.isFinished = this.showLeftFirework = this.showHint = true;
           setTimeout(() => { this.showRightFirework = true; }, 500); // Right firework delay 0.5s
-          // Add cursor pointer to cardImage when not on mobile
-          const isMobile = this.common.detectDeviceType().mobile;
-          if (!isMobile) {
-            this.renderer.addClass(this.cardImageRef.nativeElement, 'pointer');
+
+          if (step === 1) {
+            // Add cursor pointer to cardImage when not on mobile
+            const isMobile = this.common.detectDeviceType().mobile;
+            if (!isMobile) {
+              this.renderer.addClass(this.cardImageRef.nativeElement, 'pointer');
+            }
+            this.chosenDrinkType = dataList[i]; // Set chosen drink type
           }
+
+          this.step = step++;
         }
         this.drink = dataList[i];
       }, 100 * Math.pow(i / 2, 1.5)); // 參數隨便調的啦

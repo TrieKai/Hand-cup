@@ -200,11 +200,12 @@
         width      : 100%;
         height     : 20%;
 
-        .restart {
+        .control {
           width: 100%;
 
           span {
-            font-size: 36px;
+            margin   : 0 25px;
+            font-size: 45px;
             cursor   : pointer;
           }
         }

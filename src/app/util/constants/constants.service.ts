@@ -108,5 +108,37 @@ export class ConstantsService {
   // Upload resource key
   public readonly UPLOAD_RESOURCE_KEY = 'file';
 
+  // Drinks
+  public readonly DRINKS: drinksData[] = [
+    {
+      name: '原茶系列', image: 'assets/img/drinks/茗茶.png',
+      subDrinks: [{ name: '高山青茶' }, { name: '大吉嶺紅茶' }, { name: '東方美人茶' }, { name: '鐵觀音' }, { name: '阿薩姆紅茶' }, { name: '伯爵紅茶' }, { name: '烏龍茶' }, { name: '日月潭紅茶' }, { name: '玄米茶' }, { name: '蕎麥茶' }]
+    },
+    {
+      name: '奶茶系列', image: 'assets/img/drinks/奶茶.png',
+      subDrinks: [{ name: '烏龍(鮮)奶茶' }, { name: '綠(鮮)奶茶' }, { name: '(鮮)奶茶' }, { name: '鐵觀音(鮮)奶茶' }, { name: '芋香(鮮)奶茶' }, { name: '可可(鮮)奶茶' }, { name: '白蘭地(鮮)奶茶' }, { name: '胚芽(鮮)奶茶' }]
+    },
+    {
+      name: '果茶系列', image: 'assets/img/drinks/果醋.png',
+      subDrinks: [{ name: '檸檬紅茶' }, { name: '葡萄柚綠茶' }, { name: '芒果青茶' }, { name: '蔓越莓綠茶' }, { name: '百香果綠' }]
+    },
+    {
+      name: '果汁系列', image: 'assets/img/drinks/鮮果.png',
+      subDrinks: [{ name: '木瓜牛乳' }, { name: '芭樂汁' }, { name: '檸檬汁' }, { name: '金桔檸檬' }, { name: '葡萄柚汁' }]
+    },
+    {
+      name: '花草茶系列', image: 'assets/img/drinks/熱飲.png',
+      subDrinks: [{ name: '洛神花茶' }, { name: '玫瑰花茶' }, { name: '迷迭香茶' }, { name: '薰衣草茶' }, { name: '桂花茶' }, { name: '菊花茶' }, { name: '薄荷葉茶' }, { name: '馬鞭草茶' }, { name: '洛神' }, { name: '檸檬草茶' }]
+    },
+    {
+      name: '特調系列', image: 'assets/img/drinks/特調.png',
+      subDrinks: [{ name: '蜂蜜紅茶' }, { name: '蜂蜜綠茶' }, { name: '蜂蜜露' }, { name: '多多綠' }, { name: '檸檬多多' }, { name: '冬瓜檸檬' }, { name: '港式凍檸茶' }, { name: '冬瓜青茶' }, { name: '冬瓜茶' }, { name: '芒果多多' }]
+    },
+    {
+      name: '鮮奶系列', image: 'assets/img/drinks/優多.png',
+      subDrinks: [{ name: '芋頭鮮奶' }, { name: '珍珠鮮奶' }, { name: '冬瓜鮮奶' }, { name: '蜂蜜鮮奶' }]
+    }
+  ];
+
   constructor() { }
 }
