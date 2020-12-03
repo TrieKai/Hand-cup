@@ -14,7 +14,7 @@ export class DomService {
     private sharedService: SharedService,
   ) { }
 
-  createComponent(component: any, name: string, componentProps?: object) {
+  createComponent(component: any, name: string, componentProps?: object): ComponentRef<any> {
     // Create a component reference from the component 
     const componentRef = this.componentFactoryResolver
       .resolveComponentFactory(component)

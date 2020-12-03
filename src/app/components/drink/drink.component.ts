@@ -80,6 +80,16 @@ export class DrinkComponent implements OnInit, OnDestroy {
   }
 
   recommendDrinks(step: number) {
+    const componentRef = this.domService.createComponent(
+      ConfirmComponent,
+      this.cons.SHAREDCOMPONENT.confirmComponentRef,
+      { closeButton: false, title: '你好啊冒險者', message: '想不想要收到最新通知~' }
+    );
+    this.domService.attachComponent(componentRef, this.document.body);
+    componentRef.instance.callback.subscribe((status: boolean) => {
+      // TODO: Notification
+    });
+
     this.step = step;
     if (this.isFinished && this.imageRef) {
       this.renderer.removeClass(this.imageRef.nativeElement, 'faderight');
@@ -182,7 +192,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
           { closeButton: true, title: '', message: '確定要重新選飲料嗎?' }
         );
         this.domService.attachComponent(componentRef, this.document.body);
-
+        // TODO: Better callback way
         this.confirmBS = this.sharedService.getStatus(this.cons.SHAREDSTATUS.isConfirm); // Confirm listener
         this.confirmBS
           .pipe()

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
+import { SwUpdate } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './util/material/material.module';
@@ -33,50 +34,56 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MyMapComponent } from './components/my-map/my-map.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HomeComponent,
-        DrinkComponent,
-        DrinkShopComponent,
-        HeaderComponent,
-        DrinkShopMapComponent,
-        DrinkShopCardComponent,
-        LoginComponent,
-        ProfileComponent,
-        ChosenCardComponent,
-        PreviewCardComponent,
-        ReAuthComponent,
-        ForgotPasswordComponent,
-        AuthEmailComponent,
-        ReviewComponent,
-        ConfirmComponent,
-        MyMapComponent,
-    ],
-    imports: [
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
-        AppRoutingModule,
-        HttpClientModule,
-        MaterialModule,
-        CommonComponentModule,
-        BrowserAnimationsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule,
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    ],
-    providers: [],
-    bootstrap: [AppComponent],
-    entryComponents: [
-        DrinkComponent,
-        DrinkShopComponent,
-        DialogComponent,
-        LoginComponent,
-        ProfileComponent,
-        ReAuthComponent,
-        ForgotPasswordComponent,
-        AuthEmailComponent,
-        LockScreenComponent,
-        ReviewComponent,
-        ConfirmComponent,
-    ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    DrinkComponent,
+    DrinkShopComponent,
+    HeaderComponent,
+    DrinkShopMapComponent,
+    DrinkShopCardComponent,
+    LoginComponent,
+    ProfileComponent,
+    ChosenCardComponent,
+    PreviewCardComponent,
+    ReAuthComponent,
+    ForgotPasswordComponent,
+    AuthEmailComponent,
+    ReviewComponent,
+    ConfirmComponent,
+    MyMapComponent,
+  ],
+  imports: [
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    AppRoutingModule,
+    HttpClientModule,
+    MaterialModule,
+    CommonComponentModule,
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DrinkComponent,
+    DrinkShopComponent,
+    DialogComponent,
+    LoginComponent,
+    ProfileComponent,
+    ReAuthComponent,
+    ForgotPasswordComponent,
+    AuthEmailComponent,
+    LockScreenComponent,
+    ReviewComponent,
+    ConfirmComponent,
+  ],
 })
-export class AppModule { }
+export class AppModule {
+  constructor(swUpdate: SwUpdate) {
+    swUpdate.available.subscribe(() => {
+      window.location.reload();
+    });
+  }
+}

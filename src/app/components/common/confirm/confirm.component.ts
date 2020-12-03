@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { DomService } from 'src/app/util/dom.service';
 import { SharedService } from 'src/app/shared/shared.service';
@@ -15,6 +15,7 @@ export class ConfirmComponent implements OnInit {
   @Input() confirmButton: boolean = true;
   @Input() title: string;
   @Input() message: string;
+  @Output() callback = new EventEmitter<boolean>();
   componentKey: string;
   confirmText: string;
   cancelText: string;
@@ -38,10 +39,12 @@ export class ConfirmComponent implements OnInit {
   cancel() {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.isConfirm, false);
     this.closeDialog();
+    this.callback.emit(false);
   }
 
   confirm() {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.isConfirm, true);
     this.closeDialog();
+    this.callback.emit(true);
   }
 }
