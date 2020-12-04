@@ -186,9 +186,8 @@ export class DrinkShopMapComponent implements OnInit {
     }
     if (respData.length > 0) {
       this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, respData, 5); // 抓附近的五個地點
-      this.messageService.add({ type: this.cons.MESSAGE_TYPE.warn, title: '', content: '附近似乎沒飲料店?\n或許等一下就有了!' });
     } else {
-      this.messageService.add({ type: this.cons.MESSAGE_TYPE.warn, title: '', content: '附近似乎沒飲料店? 或許等一下就有了' });
+      this.messageService.add({ type: this.cons.MESSAGE_TYPE.warn, title: '', content: '附近似乎沒飲料店<br/>或許等一下就有了' });
     }
     if (isDevMode() || global.showLog) {
       console.log('resultArray:', this.resultArray);
