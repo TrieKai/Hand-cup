@@ -1,7 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { MessageService } from 'src/app/service/message.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
+import { DomService } from 'src/app/util/dom.service';
+
+import { ConfirmComponent } from '../components/common/confirm/confirm.component';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +14,10 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 export class CommonService {
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private message: MessageService,
     private cons: ConstantsService,
+    private domService: DomService,
   ) { }
 
   detectDeviceType(): DeviceType {
@@ -56,5 +63,38 @@ export class CommonService {
     } else {
       return false;
     }
+  }
+
+  async subNotification(): Promise<boolean> {
+    const componentRef = this.domService.createComponent(
+      ConfirmComponent,
+      this.cons.SHAREDCOMPONENT.confirmComponentRef,
+      { closeButton: false, title: '同意啦哪次不同意的', message: '想不想要收到最新通知~' }
+    );
+    this.domService.attachComponent(componentRef, this.document.body);
+    return componentRef.instance.callback
+      .toPromise()
+      .then(async (status: boolean) => {
+        if (status) {
+          await Notification.requestPermission()
+            .then(result => {
+              switch (result) {
+                case 'granted':
+                  this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '', content: '感謝您的訂閱!' });
+                  break;
+                case 'denied':
+                  this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '', content: '通知已被封鎖OAO' });
+                  break;
+                case 'default':
+                  this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '', content: '我晚點再問您要不要訂閱QQ' });
+                  break;
+              }
+            });
+          return true;
+        } else {
+          this.message.add({ type: this.cons.MESSAGE_TYPE.warn, title: '', content: '我晚點再問您要不要訂閱QQ' });
+          return false;
+        }
+      });
   }
 }

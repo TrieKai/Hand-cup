@@ -40,11 +40,13 @@ export class ConfirmComponent implements OnInit {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.isConfirm, false);
     this.closeDialog();
     this.callback.emit(false);
+    this.callback.complete();
   }
 
   confirm() {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.isConfirm, true);
     this.closeDialog();
     this.callback.emit(true);
+    this.callback.complete();
   }
 }

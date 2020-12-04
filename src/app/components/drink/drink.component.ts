@@ -1,6 +1,5 @@
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, HostListener, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, HostListener, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { CommonService } from 'src/app/service/common.service';
@@ -15,12 +14,11 @@ import { ConfirmComponent } from '../../components/common/confirm/confirm.compon
   templateUrl: './drink.component.html',
   styleUrls: ['./drink.component.scss']
 })
-export class DrinkComponent implements OnInit, OnDestroy {
+export class DrinkComponent implements OnInit {
   @ViewChild('cardImage', { static: false }) cardImageRef: ElementRef<HTMLDivElement>;
   @ViewChild('image', { static: false }) imageRef: ElementRef<HTMLImageElement>;
   @ViewChild('hint', { static: false }) hintRef: ElementRef<HTMLParagraphElement>;
   infoMessage: string;
-  confirmBS: BehaviorSubject<boolean>; // Confirm callback trigger
   gocha: boolean;
   drinksData: drinksData[];
   drink: drinksData;
@@ -36,6 +34,7 @@ export class DrinkComponent implements OnInit, OnDestroy {
   dragEnabled: boolean;
   originPos: { x: number, y: number } = { x: 0, y: 0 };
   newPos: { x: number, y: number } = { x: 0, y: 0 };
+  showSubNotification: boolean;
 
   @HostListener('document:mouseup', ['$event'])
   onDrop(e: any) {
@@ -70,26 +69,11 @@ export class DrinkComponent implements OnInit, OnDestroy {
     // TODO: Replace API with this
     this.drinksData = this.cons.DRINKS;
     this.hintText = '請點選圖片左右邊來選擇';
-  }
-
-  ngOnDestroy(): void {
-    if (this.confirmBS) {
-      this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.isConfirm);
-      this.confirmBS.unsubscribe();
-    }
+    console.log(Notification.permission)
+    this.showSubNotification = Notification.permission === 'granted' ? false : true; // Except from granted
   }
 
   recommendDrinks(step: number) {
-    const componentRef = this.domService.createComponent(
-      ConfirmComponent,
-      this.cons.SHAREDCOMPONENT.confirmComponentRef,
-      { closeButton: false, title: '你好啊冒險者', message: '想不想要收到最新通知~' }
-    );
-    this.domService.attachComponent(componentRef, this.document.body);
-    componentRef.instance.callback.subscribe((status: boolean) => {
-      // TODO: Notification
-    });
-
     this.step = step;
     if (this.isFinished && this.imageRef) {
       this.renderer.removeClass(this.imageRef.nativeElement, 'faderight');
@@ -136,8 +120,13 @@ export class DrinkComponent implements OnInit, OnDestroy {
               this.renderer.addClass(this.cardImageRef.nativeElement, 'pointer');
             }
             this.chosenDrinkType = dataList[i]; // Set chosen drink type
+          } else if (step === 2) {
+            setTimeout(async () => {
+              if (this.showSubNotification) {
+                this.showSubNotification = await this.common.subNotification();
+              }
+            }, 1500);
           }
-
           this.step = step++;
         }
         this.drink = dataList[i];
@@ -192,12 +181,9 @@ export class DrinkComponent implements OnInit, OnDestroy {
           { closeButton: true, title: '', message: '確定要重新選飲料嗎?' }
         );
         this.domService.attachComponent(componentRef, this.document.body);
-        // TODO: Better callback way
-        this.confirmBS = this.sharedService.getStatus(this.cons.SHAREDSTATUS.isConfirm); // Confirm listener
-        this.confirmBS
-          .pipe()
-          .subscribe((status) => {
-            if (status === null) { return; }
+        componentRef.instance.callback
+          .toPromise()
+          .then((status: boolean) => {
             if (status) {
               this.renderer.addClass(this.imageRef.nativeElement, 'fadeLeft');
               setTimeout(() => {
@@ -205,9 +191,6 @@ export class DrinkComponent implements OnInit, OnDestroy {
                 this.description = '';
               }, 500);
             }
-            // Unscribe confirm listener
-            this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.isConfirm);
-            this.confirmBS.unsubscribe();
           });
       } else { return; }
     } else if (this.chooseType === this.cons.DIRECTION.right) {
