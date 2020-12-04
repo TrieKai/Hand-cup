@@ -1,10 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Subscription } from 'rxjs';
 
 import { MessageService } from 'src/app/service/message.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DomService } from 'src/app/util/dom.service';
+import { CloudMessagingService } from 'src/app/service/cloud-messaging.service';
 
 import { ConfirmComponent } from '../components/common/confirm/confirm.component';
 
@@ -18,6 +18,7 @@ export class CommonService {
     private message: MessageService,
     private cons: ConstantsService,
     private domService: DomService,
+    private cloudMessaging: CloudMessagingService,
   ) { }
 
   detectDeviceType(): DeviceType {
@@ -80,6 +81,8 @@ export class CommonService {
             .then(result => {
               switch (result) {
                 case 'granted':
+                  this.cloudMessaging.registerNotification();
+
                   this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '', content: '感謝您的訂閱!' });
                   break;
                 case 'denied':

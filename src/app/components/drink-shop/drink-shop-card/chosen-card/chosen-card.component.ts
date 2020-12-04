@@ -9,6 +9,7 @@ import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { MessageService } from 'src/app/service/message.service';
 import { DomService } from 'src/app/util/dom.service';
+import { GlobalService as global } from 'src/app/service/global.service';
 
 import { ReviewComponent } from '../review/review.component';
 
@@ -81,11 +82,17 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
     if (this.chosenShop.rating === 0) {
       this.ratingText = '尚未有評分'
     } else {
       this.ratingText = this.chosenShop.rating;
     }
+    setTimeout(async () => {
+      if (global.showSubNotification && Notification.permission !== 'granted') {
+        global.showSubNotification = await this.common.subNotification();
+      }
+    }, 1500);
   }
 
   ngOnInit() {

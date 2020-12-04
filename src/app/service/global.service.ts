@@ -7,5 +7,7 @@ export class GlobalService {
   // for developer
   public static showLog = false;
 
+  public static showSubNotification = true;
+
   constructor() { }
 }

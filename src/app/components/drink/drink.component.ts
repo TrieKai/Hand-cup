@@ -4,8 +4,8 @@ import { DOCUMENT } from '@angular/common';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { CommonService } from 'src/app/service/common.service';
 import { DomService } from 'src/app/util/dom.service';
-import { SharedService } from 'src/app/shared/shared.service';
 import { MessageService } from 'src/app/service/message.service';
+import { GlobalService as global } from 'src/app/service/global.service';
 
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 
@@ -34,7 +34,6 @@ export class DrinkComponent implements OnInit {
   dragEnabled: boolean;
   originPos: { x: number, y: number } = { x: 0, y: 0 };
   newPos: { x: number, y: number } = { x: 0, y: 0 };
-  showSubNotification: boolean;
 
   @HostListener('document:mouseup', ['$event'])
   onDrop(e: any) {
@@ -58,7 +57,6 @@ export class DrinkComponent implements OnInit {
     private renderer: Renderer2,
     private common: CommonService,
     private domService: DomService,
-    private sharedService: SharedService,
     private message: MessageService,
   ) { }
 
@@ -69,8 +67,6 @@ export class DrinkComponent implements OnInit {
     // TODO: Replace API with this
     this.drinksData = this.cons.DRINKS;
     this.hintText = '請點選圖片左右邊來選擇';
-    console.log(Notification.permission)
-    this.showSubNotification = Notification.permission === 'granted' ? false : true; // Except from granted
   }
 
   recommendDrinks(step: number) {
@@ -122,8 +118,8 @@ export class DrinkComponent implements OnInit {
             this.chosenDrinkType = dataList[i]; // Set chosen drink type
           } else if (step === 2) {
             setTimeout(async () => {
-              if (this.showSubNotification) {
-                this.showSubNotification = await this.common.subNotification();
+              if (global.showSubNotification && Notification.permission !== 'granted') {
+                global.showSubNotification = await this.common.subNotification();
               }
             }, 1500);
           }
