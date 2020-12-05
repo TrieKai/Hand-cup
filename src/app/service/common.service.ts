@@ -82,7 +82,6 @@ export class CommonService {
               switch (result) {
                 case 'granted':
                   this.cloudMessaging.registerNotification();
-
                   this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '', content: '感謝您的訂閱!' });
                   break;
                 case 'denied':

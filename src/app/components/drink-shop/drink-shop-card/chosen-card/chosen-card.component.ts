@@ -88,11 +88,6 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit, On
     } else {
       this.ratingText = this.chosenShop.rating;
     }
-    setTimeout(async () => {
-      if (global.showSubNotification && Notification.permission !== 'granted') {
-        global.showSubNotification = await this.common.subNotification();
-      }
-    }, 1500);
   }
 
   ngOnInit() {
@@ -100,6 +95,11 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit, On
     this.imageSliderStyles.push({ 'border-bottom-left-radius': '5px' });
     if (window.innerWidth < 600) { this.smallScreen = true; }
     this.componentKey = this.cons.SHAREDCOMPONENT.reviewComponentRef;
+    setTimeout(async () => {
+      if (global.showSubNotification && Notification.permission !== 'granted') {
+        global.showSubNotification = await this.common.subNotification();
+      }
+    }, 1500);
   }
 
   ngOnDestroy(): void {
