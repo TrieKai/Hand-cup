@@ -30,6 +30,7 @@ export class ConstantsService {
     lockScreenComponentRef: 'lockScreenComponentRef',
     reviewComponentRef: 'reviewComponentRef',
     confirmComponentRef: 'confirmComponentRef',
+    tourComponentRef: 'tourComponentRef',
   };
 
   // Shared data

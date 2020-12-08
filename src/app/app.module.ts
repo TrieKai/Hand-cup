@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './util/material/material.module';
@@ -29,8 +30,8 @@ import { AuthEmailComponent } from './components/login/auth-email/auth-email.com
 import { LockScreenComponent } from './components/common/lock-screen/lock-screen.component';
 import { ReviewComponent } from './components/drink-shop/drink-shop-card/review/review.component';
 import { ConfirmComponent } from './components/common/confirm/confirm.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { MyMapComponent } from './components/my-map/my-map.component';
+import { TourComponent } from './components/common/tour/tour.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { MyMapComponent } from './components/my-map/my-map.component';
     ReviewComponent,
     ConfirmComponent,
     MyMapComponent,
+    TourComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -77,6 +79,7 @@ import { MyMapComponent } from './components/my-map/my-map.component';
     LockScreenComponent,
     ReviewComponent,
     ConfirmComponent,
+    TourComponent,
   ],
 })
 export class AppModule { }
