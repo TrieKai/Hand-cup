@@ -1,7 +1,7 @@
 {
   "name": "Boba-maps",
   "short_name": "Boba-maps",
-  "theme_color": "#1976d2",
+  "theme_color": "#9AD5E3",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",

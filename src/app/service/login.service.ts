@@ -31,7 +31,6 @@ export class LoginService {
     private localStorage: LocalstorageService,
     private common: CommonService,
   ) {
-    console.log('Login constructor')
     firebaseService.checkAuthStatus();
   }
 
