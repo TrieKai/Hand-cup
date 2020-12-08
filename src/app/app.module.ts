@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
-import { SwUpdate } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './util/material/material.module';
@@ -80,10 +79,4 @@ import { MyMapComponent } from './components/my-map/my-map.component';
     ConfirmComponent,
   ],
 })
-export class AppModule {
-  constructor(swUpdate: SwUpdate) {
-    swUpdate.available.subscribe(() => {
-      window.location.reload();
-    });
-  }
-}
+export class AppModule { }
