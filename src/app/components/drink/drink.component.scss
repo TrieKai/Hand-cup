@@ -215,7 +215,7 @@
 }
 
 .active {
-  animation: card-animation 0.7s ease-in-out;
+  @include animation(card-animation 0.7s ease-in-out);
 }
 
 .fadeLeft {
@@ -229,7 +229,7 @@
 }
 
 .glint {
-  animation: glint 2.5s ease-in-out infinite;
+  @include animation(glint 2.5s ease-in-out infinite);
 }
 
 .pointer {

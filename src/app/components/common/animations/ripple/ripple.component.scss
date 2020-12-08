@@ -1,0 +1,56 @@
+@import '../../../../assets/css/common.scss';
+@import '../../../../assets/css/special-property.scss';
+
+.ripple {
+  width        : 10px;
+  height       : 10px;
+  border-radius: 50%;
+}
+
+.ripple-outter {
+  position  : absolute;
+  background: #6c96b8;
+  opacity   : 0.5;
+  @include transition(all);
+  @include animation(ripple-outter ease-in-out infinite);
+  @include animation-duration(1.5s);
+}
+
+.ripple-inner {
+  position  : absolute;
+  background: #528bb9;
+  opacity   : 0.7;
+  @include transition(all);
+  @include animation(ripple-inner ease-in-out infinite);
+  @include animation-duration(1.5s);
+  @include animation-delay(.2s);
+}
+
+.ripple-center {
+  position  : relative;
+  background: #2179c0;
+}
+
+@include keyframes(ripple-outter) {
+  from {
+    opacity: 1;
+    @include transform(scale3d(0.75, 0.75, 1));
+  }
+
+  to {
+    opacity: 0;
+    @include transform(scale3d(5, 5, 1));
+  }
+}
+
+@include keyframes(ripple-inner) {
+  from {
+    opacity: 1;
+    @include transform(scale3d(0.75, 0.75, 1));
+  }
+
+  to {
+    opacity: 0;
+    @include transform(scale3d(5, 5, 1));
+  }
+}

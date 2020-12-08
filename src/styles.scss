@@ -43,7 +43,7 @@
         box-sizing      : border-box;
         border          : solid 2px #d3d6d6;
         border-radius   : 3px;
-        transition      : all 0.3s;
+        @include transition(all 0.3s);
       }
     }
 

@@ -25,6 +25,7 @@ import { GoogleComponent } from './icons/google/google.component';
 import { FacebookComponent } from './icons/facebook/facebook.component';
 // animations
 import { FireworkComponent } from './animations/firework/firework.component';
+import { RippleComponent } from './animations/ripple/ripple.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { FireworkComponent } from './animations/firework/firework.component';
     GoogleComponent,
     FacebookComponent,
     FireworkComponent,
+    RippleComponent,
   ],
   imports: [
     CommonModule,
@@ -78,6 +80,7 @@ import { FireworkComponent } from './animations/firework/firework.component';
     FacebookComponent,
     // animations
     FireworkComponent,
+    RippleComponent,
   ]
 })
 export class CommonComponentModule { }
