@@ -20,8 +20,8 @@
   box-shadow    : 0px 2px 3px rgba(0, 0, 0, 0.2);
   overflow      : hidden;
   pointer-events: initial;
-  animation     : popupWindow 0.5s;
-  z-index       : zIndex(dialogWindow);
+  @include animation(popupWindow 0.5s);
+  z-index: zIndex(dialogWindow);
 
   .close-btn {
     position: absolute;

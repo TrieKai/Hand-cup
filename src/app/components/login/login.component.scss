@@ -15,7 +15,7 @@
   box-shadow    : 0px 2px 3px rgba(0, 0, 0, 0.2);
   overflow      : hidden;
   pointer-events: initial;
-  animation     : popupWindow 0.5s;
+  @include animation(popupWindow 0.5s);
   @include transform(translateZ(0px));
   z-index: zIndex(dialogWindow);
 
@@ -219,8 +219,7 @@
 }
 
 .error {
-  animation        : shake .5s linear;
-  -webkit-animation: shake .5s linear;
+  @include animation(shake .5s linear);
 }
 
 input[type=radio] {
@@ -255,14 +254,14 @@ input[type=radio] {
         }
 
         .divid-line {
-          opacity  : 1;
-          animation: show 1s 0s;
+          opacity: 1;
+          @include animation(show 1s 0s);
 
           &::before,
           &::after {
-            content  : "";
-            width    : 50%;
-            animation: expand 2s 0.8s;
+            content: "";
+            width  : 50%;
+            @include animation(expand 2s 0.8s);
           }
         }
       }

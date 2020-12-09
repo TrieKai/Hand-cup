@@ -12,8 +12,8 @@
     }
 
     .left-arrow-box>.left-arrow {
-      opacity  : 1;
-      animation: left-arrow-in 0.7s ease-in-out;
+      opacity: 1;
+      @include animation(left-arrow-in 0.7s ease-in-out);
     }
 
     .right-arrow-box>.right-arrow {
@@ -22,8 +22,8 @@
     }
 
     .dot-box {
-      opacity  : 1;
-      animation: dot-box-in 0.5s ease-in-out;
+      opacity: 1;
+      @include animation(dot-box-in 0.5s ease-in-out);
     }
   }
 
@@ -57,7 +57,7 @@
       border-top : 3px solid #fff;
       border-left: 3px solid #fff;
       opacity    : 0;
-      animation  : left-arrow-out 0.5s ease-in-out;
+      @include animation(left-arrow-out 0.5s ease-in-out);
       @include transform(translateX(-30px) rotate(-45deg));
     }
   }
@@ -90,7 +90,7 @@
       border-top  : 3px solid #fff;
       border-right: 3px solid #fff;
       opacity     : 0;
-      animation   : right-arrow-out 0.5s ease-in-out;
+      @include animation(right-arrow-out 0.5s ease-in-out);
       @include transform(translateX(30px) rotate(45deg));
     }
   }
@@ -101,7 +101,7 @@
     left           : 50%;
     list-style-type: none;
     opacity        : 0;
-    animation      : dot-box-out 0.5s ease-in-out;
+    @include animation(dot-box-out 0.5s ease-in-out);
     @include transform(translate(-50%, -30px));
 
     .dot {
@@ -141,10 +141,6 @@
       }
     }
   }
-}
-
-.animation {
-  opacity: 1;
 }
 
 @include keyframes(left-arrow-in) {
