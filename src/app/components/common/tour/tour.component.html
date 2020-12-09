@@ -1,12 +1,15 @@
-<div class="overlay-container">
-  <!-- <div #targetRect class="target-rect"></div> -->
-  <!-- <div class="overlay-background"></div> -->
-  <div class="arrow"></div>
-  <section #tourBox class="tour-box">
-    <p>abc</p>
-    <div class="button">
-      <button>prev</button>
-      <button>next</button>
-    </div>
-  </section>
+<div #ripple class="ripple-box">
+  <app-ripple></app-ripple>
 </div>
+<section #tourBox class="tour-box">
+  <div class="title">{{title}}</div>
+  <div class="content">{{content}}</div>
+  <div class="button-box">
+    <div>
+      <button *ngIf="showBack" class="back" (click)="back()">Back</button>
+    </div>
+    <div>
+      <button *ngIf="showNext" class="next" (click)="next()">Next</button>
+    </div>
+  </div>
+</section>

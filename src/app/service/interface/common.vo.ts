@@ -52,6 +52,14 @@ interface Message {
   sticky?: boolean
 }
 
+interface TourData {
+  step: number;
+  target: Element;
+  title: string;
+  content: string;
+  action: Function;
+}
+
 interface commonSharedData {
   userData: any
   drinkShopResults: drinkShopResults[]

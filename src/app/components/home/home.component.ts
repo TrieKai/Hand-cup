@@ -34,11 +34,14 @@ export class HomeComponent implements OnInit {
       this.mapInitializer();
     });
 
-    console.log(document.querySelector('#hamburger'))
     const componentRef = this.domService.createComponent(
       TourComponent,
       this.cons.SHAREDCOMPONENT.tourComponentRef,
-      { step: 3, target: document.querySelector('#hamburger') }
+      {
+        data: [
+          { step: 1, target: document.querySelector('#hamburger'), title: '選單', content: '點擊選單後可以切換功能' }
+        ]
+      }
     );
     this.domService.attachComponent(componentRef, this.document.body);
   }
