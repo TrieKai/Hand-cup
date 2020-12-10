@@ -46,7 +46,7 @@
     </div> -->
   </mat-menu>
 </div>
-<label #sidebarIconToggle id="hamburger" class="sidebar-icon-toggle" (click)="handleSidebar()">
+<label #sidebarIconToggle id="hamburger" class="sidebar-icon-toggle" (click)="handleSidebar(!showMenu)">
   <div class="hamburger diagonal part-1"></div>
   <div class="hamburger horizontal"></div>
   <div class="hamburger diagonal part-2"></div>
@@ -54,7 +54,7 @@
 <div class="sidebar-menu" #sidebarMenu>
   <ul class="sidebar-menu-inner">
     <li *ngFor="let menu of menuList" [ngClass]="{'beta': !menu.active}" [routerLink]="menu.router"
-      (click)="handleSidebar()">
+      (click)="handleSidebar(!showMenu)">
       <img class="menu-icon" [src]="menu.icon" alt="menu_icon" />
       <span class="menu-span">{{menu.title}}</span>
     </li>

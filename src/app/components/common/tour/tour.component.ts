@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, Renderer2, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
@@ -10,7 +10,7 @@ import { LocalstorageService } from 'src/app/util/localstorage.service';
   templateUrl: './tour.component.html',
   styleUrls: ['./tour.component.scss']
 })
-export class TourComponent implements OnInit {
+export class TourComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @Input() data: TourData[];
   @ViewChild('tourBox', { static: false }) tourBoxRef: ElementRef;
   @ViewChild('ripple', { static: false }) rippleRef: ElementRef;
@@ -28,6 +28,7 @@ export class TourComponent implements OnInit {
     private sharedService: SharedService,
     private domService: DomService,
     private localStorageService: LocalstorageService,
+    private readonly changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -41,6 +42,10 @@ export class TourComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.renderTour();
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 
   back() {

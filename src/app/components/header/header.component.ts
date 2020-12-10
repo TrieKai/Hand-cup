@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   sidebarStatus: boolean = false;
   isLogin: boolean;
   userPhotoURL: string;
+  showMenu: boolean;
   loginSubscribe: Subscription;
   sharedSubscribe: Subscription;
   tourSubscribe: Subscription;
@@ -65,7 +66,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.tourSubscribe = this.sharedService.tourObservable
       .subscribe(step => {
-        step <= 4  ? this.handleSidebar(true) : this.handleSidebar(false);
+        if (step <= 4 && !this.showMenu) {
+          this.handleSidebar(true);
+        } else if (step > 5 && this.showMenu) {
+          this.handleSidebar(false);
+        }
       });
   }
 
@@ -102,43 +107,25 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  handleSidebar(status?: boolean) {
-    // When status variable not undefined
-    if (status !== undefined) {
-      if (status) {
-        this.renderer.addClass(this.sidebarToggle.nativeElement, 'open'); // Open
-        this.sidebarStatus = true;
+  handleSidebar(status: boolean) {
+    this.showMenu = status;
+    if (status) {
+      this.renderer.addClass(this.sidebarToggle.nativeElement, 'open'); // Open
+      this.sidebarStatus = true;
 
-        const componentRef = this.domService.createComponent(
-          LockScreenComponent,
-          this.cons.SHAREDCOMPONENT.lockScreenComponentRef,
-          { zIndex: 30 }
-        );
-        this.domService.attachComponent(componentRef, this.document.body);
-        return;
-      } else {
-        this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
-        this.sidebarStatus = false;
-        const lockScreenComponentRef = this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.lockScreenComponentRef);
-        if (lockScreenComponentRef) { this.domService.destroyComponent(lockScreenComponentRef); }
-        return;
-      }
+      const componentRef = this.domService.createComponent(
+        LockScreenComponent,
+        this.cons.SHAREDCOMPONENT.lockScreenComponentRef,
+        { zIndex: 30 }
+      );
+      this.domService.attachComponent(componentRef, this.document.body);
+      return;
     } else {
-      this.sidebarStatus = !this.sidebarStatus; // Change status
-      if (this.sidebarStatus) {
-        this.renderer.addClass(this.sidebarToggle.nativeElement, 'open'); // Open
-
-        const componentRef = this.domService.createComponent(
-          LockScreenComponent,
-          this.cons.SHAREDCOMPONENT.lockScreenComponentRef,
-          { zIndex: 30 }
-        );
-        this.domService.attachComponent(componentRef, this.document.body);
-      } else {
-        this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
-        const lockScreenComponentRef = this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.lockScreenComponentRef);
-        if (lockScreenComponentRef) { this.domService.destroyComponent(lockScreenComponentRef); }
-      }
+      this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
+      this.sidebarStatus = false;
+      const lockScreenComponentRef = this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.lockScreenComponentRef);
+      if (lockScreenComponentRef) { this.domService.destroyComponent(lockScreenComponentRef); }
+      return;
     }
   }
 
