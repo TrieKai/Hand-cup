@@ -1,15 +1,19 @@
-<div #ripple class="ripple-box">
-  <app-ripple></app-ripple>
-</div>
-<section #tourBox class="tour-box">
-  <div class="title">{{title}}</div>
-  <div class="content">{{content}}</div>
-  <div class="button-box">
-    <div>
-      <button *ngIf="showBack" class="back" (click)="back()">Back</button>
-    </div>
-    <div>
-      <button *ngIf="showNext" class="next" (click)="next()">Next</button>
-    </div>
+<app-dialog *ngIf="!finishTour" [componentKey]="componentKey">
+  <div #ripple class="ripple-box">
+    <app-ripple></app-ripple>
   </div>
-</section>
+  <section #tourBox class="tour-box">
+    <i-close [width]="25" [height]="25" [color]="'#808080'" class="close-btn" (click)="close()"></i-close>
+    <div class="title">{{title}}</div>
+    <div class="content">{{content}}</div>
+    <div class="button-box">
+      <div>
+        <button *ngIf="showBack" class="back" (click)="back()">Back</button>
+      </div>
+      <div>
+        <button *ngIf="showNext" class="next" (click)="next()">Next</button>
+        <button *ngIf="!showNext" class="finish" (click)="finish()">Finish</button>
+      </div>
+    </div>
+  </section>
+</app-dialog>

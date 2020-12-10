@@ -28,7 +28,7 @@ export class LoginService {
     private apiCons: ApiConstantsService,
     private api: ApiService,
     private cookie: CookieService,
-    private localStorage: LocalstorageService,
+    private localStorageService: LocalstorageService,
     private common: CommonService,
   ) {
     firebaseService.checkAuthStatus();
@@ -70,7 +70,7 @@ export class LoginService {
     this.cookie.setCookie(this.cons.TOKEN, resp.body.data);
 
     const userPreferData = await this.getUserPreferData();
-    this.localStorage.updateLocalStorage(userPreferData);
+    this.localStorageService.updateLocalStorage(userPreferData);
     return true;
   }
 

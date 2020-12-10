@@ -10,7 +10,9 @@ export class ConstantsService {
   // Status
   public readonly STATUS = {
     success: 'success',
-    error: 'error'
+    error: 'error',
+    true: 'true',
+    false: 'false',
   };
 
   // Direction
@@ -98,7 +100,8 @@ export class ConstantsService {
   // Local storage
   public readonly LOCAL_STORAGE_TYPE = {
     favorite: 'favorite',
-    visited: 'visited'
+    visited: 'visited',
+    tour: 'tour',
   };
 
   // Upload target

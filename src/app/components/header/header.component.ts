@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   userPhotoURL: string;
   loginSubscribe: Subscription;
   sharedSubscribe: Subscription;
+  tourSubscribe: Subscription;
   lockScreenBS: BehaviorSubject<boolean>;
   userDataBS: BehaviorSubject<any>;
 
@@ -62,6 +63,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userDataBS.subscribe((userData) => {
       if (userData) { this.userPhotoURL = userData.photoURL; }
     });
+    this.tourSubscribe = this.sharedService.tourObservable
+      .subscribe(step => {
+        step <= 4  ? this.handleSidebar(true) : this.handleSidebar(false);
+      });
   }
 
   ngAfterViewInit(): void {
@@ -91,6 +96,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.userDataBS) {
       this.sharedService.deleteSharedData(this.cons.SHAREDDATA.userData);
       this.lockScreenBS.unsubscribe();
+    }
+    if (this.tourSubscribe) {
+      this.tourSubscribe.unsubscribe();
     }
   }
 

@@ -53,11 +53,11 @@ interface Message {
 }
 
 interface TourData {
-  step: number;
-  target: Element;
-  title: string;
-  content: string;
-  action: Function;
+  step: number
+  target: Element
+  title: string
+  content: string
+  timeout: number
 }
 
 interface commonSharedData {
@@ -73,6 +73,7 @@ interface commonSharedComponent {
   lockScreenComponentRef: any
   reviewComponentRef: any
   confirmComponentRef: any
+  tourComponentRef: any
 }
 
 interface htmlSharedData {

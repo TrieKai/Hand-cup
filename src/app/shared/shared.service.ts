@@ -8,8 +8,11 @@ import { GlobalService as global } from 'src/app/service/global.service';
   providedIn: 'root'
 })
 export class SharedService {
-  private onInit = new Subject<any>();
-  onInitEmitted = this.onInit.asObservable();
+  // Tour
+  private tourSubject = new Subject<number>();
+  tourObservable = this.tourSubject.asObservable();
+
+  // Component
   protected sharedComponent: commonSharedComponent = {
     loginComponentRef: null,
     profileComponentRef: null,
@@ -18,15 +21,21 @@ export class SharedService {
     lockScreenComponentRef: null,
     reviewComponentRef: null,
     confirmComponentRef: null,
+    tourComponentRef: null,
+  };
+
+  // Status
+  protected statuses: SharedStatus = {
+    onloading: false,
+    lockScreen: false,
+    showMap: false,
+    isConfirm: false,
   };
 
   constructor() { }
 
-  onInitEmit() {
-    if (isDevMode() || global.showLog) {
-      console.log('onInitEmit');
-    }
-    this.onInit.next();
+  setTourStep(step: number) {
+    this.tourSubject.next(step);
   }
 
   setSharedComponent(key: string, value: any): commonSharedComponent {
@@ -35,7 +44,7 @@ export class SharedService {
     }
     if (this.hasSharedComponent(key)) {
       this.sharedComponent[key] = value;
-      this.onInitEmit();
+      // this.onInitEmit();
       return this.sharedComponent[key];
     } else {
       return null;
@@ -84,13 +93,6 @@ export class SharedService {
   public hasData(key: string) {
     return (this.sharedData[key] instanceof BehaviorSubject);
   }
-
-  protected statuses: SharedStatus = {
-    onloading: false,
-    lockScreen: false,
-    showMap: false,
-    isConfirm: false,
-  };
 
   public setStatus(key: string, value: boolean): BehaviorSubject<boolean> {
     if (isDevMode() || global.showLog) {
