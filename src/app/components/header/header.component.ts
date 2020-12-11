@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { RouterConfigService } from 'src/app/config/router-config.service';
 import { MenuConfigService } from 'src/app/config/menu-config.service';
@@ -10,6 +11,7 @@ import { DomService } from 'src/app/util/dom.service';
 import { LoginService } from 'src/app/service/login.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { MessageService } from 'src/app/service/message.service';
+import { RouterConstantsService as routerCons } from 'src/app/util/constants/router-constants.service';
 
 import { LockScreenComponent } from '../common/lock-screen/lock-screen.component';
 import { LoginComponent } from '../login/login.component';
@@ -48,6 +50,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     private loginService: LoginService,
     private sharedService: SharedService,
     private message: MessageService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +69,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.tourSubscribe = this.sharedService.tourObservable
       .subscribe(step => {
+        switch (step) {
+          case 2:
+            this.router.navigate([`/${routerCons.ROUTER_DRINK}`]);
+            break;
+          case 3:
+            this.router.navigate([`/${routerCons.ROUTER_DRINKSHOP}`]);
+            break;
+          case 4:
+            this.router.navigate([`/${routerCons.ROUTER_MYMAP}`]);
+            break;
+        }
         if (step <= 4 && !this.showMenu) {
           this.handleSidebar(true);
         } else if (step > 5 && this.showMenu) {
