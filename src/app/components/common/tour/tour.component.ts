@@ -12,8 +12,8 @@ import { LocalstorageService } from 'src/app/util/localstorage.service';
 })
 export class TourComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @Input() data: TourData[];
-  @ViewChild('tourBox', { static: false }) tourBoxRef: ElementRef;
-  @ViewChild('ripple', { static: false }) rippleRef: ElementRef;
+  @ViewChild('tourBox', { static: false }) tourBoxRef: ElementRef<HTMLDivElement>;
+  @ViewChild('ripple', { static: false }) rippleRef: ElementRef<HTMLDivElement>;
   componentKey: string;
   showBack: boolean;
   showNext: boolean;
@@ -52,6 +52,9 @@ export class TourComponent implements OnInit, AfterViewInit, AfterViewChecked {
     if (this.currentStep <= 2) {
       this.showBack = false;
     }
+    if (this.currentStep === this.data.length) {
+      this.showNext = true;
+    }
     this.currentStep--;
     this.renderTour();
   }
@@ -61,6 +64,7 @@ export class TourComponent implements OnInit, AfterViewInit, AfterViewChecked {
       this.showNext = false;
     }
     this.currentStep++;
+    this.showBack = true;
     this.renderTour();
   }
 
@@ -75,11 +79,39 @@ export class TourComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   renderTour() {
     const rect = this.data[this.currentStep - 1].target.getBoundingClientRect();
+    // Ripple position
     this.renderer.setStyle(this.rippleRef.nativeElement, 'top', `${rect.top - 5}px`);
     this.renderer.setStyle(this.rippleRef.nativeElement, 'left', `${rect.left - 5}px`);
 
-    this.renderer.setStyle(this.tourBoxRef.nativeElement, 'top', `${rect.top + rect.height + 30}px`);
-    this.renderer.setStyle(this.tourBoxRef.nativeElement, 'left', `${rect.left}px`);
+    // Box position
+    if (this.data[this.currentStep - 1].position) {
+      const position = this.data[this.currentStep - 1].position;
+      position.top ?
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'top', `${position.top}px`) :
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'top', 'initial');
+      position.right ?
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'right', `${position.right}px`) :
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'right', 'initial');
+      position.bottom ?
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'bottom', `${position.bottom}px`) :
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'bottom', 'initial');
+      position.left ?
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'left', `${position.left}px`) :
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'left', 'initial');
+    } else {
+      if ((window.innerWidth - rect.left) > 260) { // 260px 為 tour box 固定寬度
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'left', `${rect.left}px`);
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'right', 'initial');
+      } else {
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'right', `${rect.left}px`);
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'left', 'initial');
+      }
+      if ((window.innerHeight - rect.top) > 174) { // 174px 為 tour box 最大高度
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'top', `${rect.top + rect.height + 30}px`);
+      } else {
+        this.renderer.setStyle(this.tourBoxRef.nativeElement, 'top', `${rect.top - 174}px`);
+      }
+    }
 
     this.title = this.data[this.currentStep - 1].title;
     this.content = this.data[this.currentStep - 1].content;
