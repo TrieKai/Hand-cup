@@ -5,6 +5,11 @@
 * {
   font-family: "Ubuntu", sans-serif, "cwTeXYen";
 
+  // Button
+  button {
+    outline: none;
+  }
+
   // Scroll bar
   &::-webkit-scrollbar-track {
     // box-shadow        : inset 0 0 5px rgba(0, 0, 0, 0.2);

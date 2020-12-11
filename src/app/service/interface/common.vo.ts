@@ -58,6 +58,12 @@ interface TourData {
   title: string
   content: string
   timeout: number
+  position?: {
+    top?: number
+    right?: number
+    left?: number
+    bottom?: number
+  }
 }
 
 interface commonSharedData {

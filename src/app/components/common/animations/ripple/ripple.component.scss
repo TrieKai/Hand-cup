@@ -29,6 +29,7 @@
 .ripple-center {
   position  : relative;
   background: #2179c0;
+  opacity   : 0.8;
 }
 
 @include keyframes(ripple-outter) {

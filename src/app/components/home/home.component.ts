@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
         const componentRef = this.domService.createComponent(
           ConfirmComponent,
           this.cons.SHAREDCOMPONENT.confirmComponentRef,
-          { title: '', message: '需要做功能導覽介紹嗎?' }
+          { title: '', message: '需要導覽介紹嗎?' }
         );
         this.domService.attachComponent(componentRef, this.document.body);
         componentRef.instance.callback
@@ -71,11 +71,11 @@ export class HomeComponent implements OnInit {
                 this.cons.SHAREDCOMPONENT.tourComponentRef,
                 {
                   data: [
-                    { step: 1, target: document.querySelector('#hamburger'), title: '選單', content: '點擊選單後可以切換功能', timeout: 2000 },
+                    { step: 1, target: document.querySelector('#hamburger'), title: '選單', content: '點擊選單後可以切換功能', timeout: 250 },
                     { step: 2, target: document.querySelectorAll('.menu-span')[0], title: '選單功能介紹', content: '「今天飲料喝甚麼?」 可以隨機為你選出飲料品項', timeout: 0 },
                     { step: 3, target: document.querySelectorAll('.menu-span')[1], title: '選單功能介紹', content: '「今天飲料喝哪家?」 可以隨機為你選出離你最近的五家飲料店', timeout: 0 },
                     { step: 4, target: document.querySelectorAll('.menu-span')[2], title: '選單功能介紹', content: '「我的地圖」 可以找到你曾經收藏的飲料店', timeout: 0 },
-                    { step: 5, target: document.querySelector('.account-button'), title: '登入與設定', content: '點擊選單後可以進行登入', timeout: 0 },
+                    { step: 5, target: document.querySelector('.account-button'), title: '登入與設定', content: '點擊選單後可以進行登入', timeout: 0, position: { top: 70, right: 40 } },
                   ]
                 }
               );
