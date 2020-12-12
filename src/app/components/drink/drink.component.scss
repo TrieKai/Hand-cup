@@ -1,7 +1,7 @@
 @import '../../assets/css/common.scss';
 @import '../../assets/css/special-property.scss';
 
-.main {
+article {
   @include display-flex();
   @include flex-wrap(wrap);
   justify-content : center;

@@ -1,35 +1,39 @@
-<div class="info-bar">{{infoMessage}}</div>
-<section>
-  <div #container class="selection-container">
-    <div class="title">
-      <span>Filter</span>
-      <span #filterToogle class="minimize" (click)="handleFilter()">
-        <i class="minimize-icon"></i>
-      </span>
-    </div>
-    <div #filterContent class="content">
-      <div class="selection-box">
-        <input id="favorites" type="checkbox" class="checkbox" [checked]="favCheck" (change)="showMarkers(1, $event)" />
-        <label for="favorites">
-          <span class="icon"></span>
-          <span class="text">想去的</span>
-        </label>
+<main class="main-content">
+  <div class="info-bar">{{infoMessage}}</div>
+  <article>
+    <section #container class="selection-container">
+      <div class="title">
+        <span>Filter</span>
+        <span #filterToogle class="minimize" (click)="handleFilter()">
+          <i class="minimize-icon"></i>
+        </span>
       </div>
-      <div class="selection-box">
-        <input id="visiteds" type="checkbox" class="checkbox" [checked]="visCheck" (change)="showMarkers(2, $event)" />
-        <label for="visiteds">
-          <span class="icon"></span>
-          <span class="text">去過的</span>
-        </label>
+      <div #filterContent class="content">
+        <div class="selection-box">
+          <input id="favorites" type="checkbox" class="checkbox" [checked]="favCheck"
+            (change)="showMarkers(1, $event)" />
+          <label for="favorites">
+            <span class="icon"></span>
+            <span class="text">想去的</span>
+          </label>
+        </div>
+        <div class="selection-box">
+          <input id="visiteds" type="checkbox" class="checkbox" [checked]="visCheck"
+            (change)="showMarkers(2, $event)" />
+          <label for="visiteds">
+            <span class="icon"></span>
+            <span class="text">去過的</span>
+          </label>
+        </div>
+        <div class="selection-box">
+          <input id="mix" type="checkbox" class="checkbox" [checked]="mixCheck" (change)="showMarkers(3, $event)" />
+          <label for="mix">
+            <span class="icon"></span>
+            <span class="text">想去且去過了</span>
+          </label>
+        </div>
       </div>
-      <div class="selection-box">
-        <input id="mix" type="checkbox" class="checkbox" [checked]="mixCheck" (change)="showMarkers(3, $event)" />
-        <label for="mix">
-          <span class="icon"></span>
-          <span class="text">想去且去過了</span>
-        </label>
-      </div>
-    </div>
-  </div>
-  <div #mapContainer id="map"></div>
-</section>
+    </section>
+    <section #mapContainer id="map"></section>
+  </article>
+</main>

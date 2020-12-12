@@ -1,45 +1,47 @@
-<nav class="info-bar">{{infoMessage}}</nav>
-<main class="main">
-  <app-firework *ngIf="showLeftFirework" class="firework-left"></app-firework>
-  <app-firework *ngIf="showRightFirework" class="firework-right"></app-firework>
-  <section *ngIf="!gocha" class="box">
-    <div class="pressBtn" (click)="recommendDrinks(1)">
-      <span>PRESS</span>
-    </div>
-  </section>
-  <section *ngIf="gocha && drink" class="card-section" [ngClass]="{'active': isFinished}">
-    <div class="card-container">
-      <ng-container *ngIf="step === 1">
-        <div class="card-title">{{drink.name}}</div>
-        <div #cardImage class="card-image">
-          <div class="left-control" (mousedown)="choose($event, 'left', false)"
-            (touchstart)="choose($event, 'left', true)">
-          </div>
-          <div class="right-control" (mousedown)="choose($event, 'right', false)"
-            (touchstart)="choose($event, 'right', true)"></div>
-          <div class="image-background"></div>
-          <img #image [src]="drink.image" class="image" />
-        </div>
-        <div class="card-info">
-          <ng-container *ngIf="isFinished">
-            <div class="hint-box">
-              <p *ngIf="showHint" class="hint glint">{{hintText}}</p>
+<main class="main-content">
+  <nav class="info-bar">{{infoMessage}}</nav>
+  <article>
+    <app-firework *ngIf="showLeftFirework" class="firework-left"></app-firework>
+    <app-firework *ngIf="showRightFirework" class="firework-right"></app-firework>
+    <section *ngIf="!gocha" class="box">
+      <div class="pressBtn" (click)="recommendDrinks(1)">
+        <span>PRESS</span>
+      </div>
+    </section>
+    <section *ngIf="gocha && drink" class="card-section" [ngClass]="{'active': isFinished}">
+      <div class="card-container">
+        <ng-container *ngIf="step === 1">
+          <div class="card-title">{{drink.name}}</div>
+          <div #cardImage class="card-image">
+            <div class="left-control" (mousedown)="choose($event, 'left', false)"
+              (touchstart)="choose($event, 'left', true)">
             </div>
-            <p>{{description}}</p>
-          </ng-container>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="step === 2">
-        <div class="sub-background">
-          <span>{{drink.name}}</span>
-        </div>
-        <div *ngIf="isFinished" class="button-box">
-          <div class="control">
-            <span class="material-icons" (click)="recommendDrinks(2)" title="返回上一層">arrow_back</span>
-            <span class="material-icons" (click)="recommendDrinks(1)" title="重新洗牌啦">replay</span>
+            <div class="right-control" (mousedown)="choose($event, 'right', false)"
+              (touchstart)="choose($event, 'right', true)"></div>
+            <div class="image-background"></div>
+            <img #image [src]="drink.image" class="image" />
           </div>
-        </div>
-      </ng-container>
-    </div>
-  </section>
+          <div class="card-info">
+            <ng-container *ngIf="isFinished">
+              <div class="hint-box">
+                <p *ngIf="showHint" class="hint glint">{{hintText}}</p>
+              </div>
+              <p>{{description}}</p>
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="step === 2">
+          <div class="sub-background">
+            <span>{{drink.name}}</span>
+          </div>
+          <div *ngIf="isFinished" class="button-box">
+            <div class="control">
+              <span class="material-icons" (click)="recommendDrinks(2)" title="返回上一層">arrow_back</span>
+              <span class="material-icons" (click)="recommendDrinks(1)" title="重新洗牌啦">replay</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+  </article>
 </main>

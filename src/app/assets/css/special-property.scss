@@ -30,13 +30,11 @@
   }
 
   @if $type==layoutBasic {
-    // Use 99.9vh becuz 100vh will show scroll bar
-    @return calc(99.9vh - 65px); // Minus header[65px]
+    @return calc(100% - 65px); // Minus header[65px]
   }
 
   @if $type==layout {
-    // Use 99.9vh becuz 100vh will show scroll bar
-    @return calc(99.9vh - 65px - 45px); // Minus header[65px] & infoBar[45px]
+    @return calc(100% - 65px - 45px); // Minus header[65px] & infoBar[45px]
   }
 
   // ========== Small area =========== //
@@ -45,18 +43,28 @@
   }
 
   @if $type==layoutBasic_small {
-    // Use 99.9vh becuz 100vh will show scroll bar
-    @return calc(99.9vh - 100px); // Minus header[100px]
+    @return calc(100% - 100px); // Minus header[100px]
   }
 
   @if $type==layout_small {
-    // Use 99.9vh becuz 100vh will show scroll bar
-    @return calc(99.9vh - 100px - 45px); // Minus header[100px] & infoBar[45px]
+    @return calc(100% - 100px - 45px); // Minus header[100px] & infoBar[45px]
   }
 
   @if $type==layout_myMap_small {
-    // Use 99.9vh becuz 100vh will show scroll bar
-    @return calc(99.9vh - 100px - 45px - 35px); // Minus header[100px] & infoBar[45px] & selectionBox[35px]
+    @return calc(100% - 40px); // Minus selectionBox[40px]
+  }
+}
+
+@function contentPosition($type) {
+
+  // ========== Normal area =========== //
+  @if $type==layout {
+    @return 65px; // header[65px]
+  }
+
+  // ========== Small area =========== //
+  @if $type==layout_small {
+    @return 100px; // header[100px]
   }
 }
 

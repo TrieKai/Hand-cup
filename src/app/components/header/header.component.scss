@@ -81,17 +81,6 @@
   }
 }
 
-.main-container {
-  display    : block;
-  margin     : 0 auto;
-  padding-top: height(header);
-  height     : 100%;
-
-  @media screen and (max-width: rwdBoundary(small)) {
-    padding-top: height(header_small);
-  }
-}
-
 .sidebar-menu {
   height    : 100%;
   position  : fixed;

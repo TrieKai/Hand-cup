@@ -15,10 +15,10 @@
         <span class="material-icons not_listed_location">
           not_listed_location
         </span>
-        <span class="material-icons add_location_alt" title="去過了!"(click)="visited(chosenShopDetail.place_id)">
+        <span class="material-icons add_location_alt" title="去過了!" (click)="visited(chosenShopDetail.place_id)">
           add_location_alt
         </span>
-        <span class="material-icons wrong_location" title="沒去過~"(click)="unVisited(chosenShopDetail.place_id)">
+        <span class="material-icons wrong_location" title="沒去過~" (click)="unVisited(chosenShopDetail.place_id)">
           wrong_location
         </span>
       </div>
@@ -75,7 +75,7 @@
   </app-image-slider>
   <div class="chosen-card-content">
     <div class="content-box">
-      <section>
+      <section class="data-box">
         <div title="{{chosenShop.name}}" class="list">店名: {{chosenShop.name}}</div>
         <div class="list">評分: {{ratingText}}</div>
         <div class="list">評價數: {{chosenShop.ratings_total}}</div>
