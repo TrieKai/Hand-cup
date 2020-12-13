@@ -16,7 +16,7 @@ export class UploadService {
     private api: ApiService,
   ) { }
 
-  async uploadFile(targetType: string, file: File, token?: string): Promise<any> {
+  async uploadFile(targetType: string, file: File, token?: string): Promise<RespData> {
     const param = {
       targetType: targetType
     };
@@ -30,6 +30,6 @@ export class UploadService {
     if (isDevMode() || global.showLog) {
       console.log('uploadResource:', resp);
     }
-    return resp.body.data;
+    return resp;
   }
 }

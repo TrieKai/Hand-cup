@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.message.add({ 'type': this.cons.MESSAGE_TYPE.error, 'title': '錯誤', 'content': '上傳照片發生錯誤' });
           return;
         }
-        this.photoURL = resp;
+        this.photoURL = resp.body.data;
         this.message.add({ 'type': this.cons.MESSAGE_TYPE.success, 'title': '成功', 'content': '上傳照片成功' });
       } else {
         this.message.add({ 'type': this.cons.MESSAGE_TYPE.warn, 'title': '警告', 'content': '請先選擇照片' });
