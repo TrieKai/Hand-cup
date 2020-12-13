@@ -1,24 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CookieService {
 
-  constructor() { }
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+  ) { }
 
-  setCookie(name: string, value: string, expireDays?: number) {
+  setCookie(name: string, value: string, expireTime?: number) {
     let expires = '';
-    if (expireDays) {
-      const date: Date = new Date();
-      date.setTime(date.getTime() + expireDays * 24 * 60 * 60 * 1000);
-      expires = `; expires=${date.toUTCString()}`;
+    if (expireTime) {
+      const date: Date = new Date(expireTime * 1000);
+      expires = `; expires=${date}`;
     }
-    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}${expires}; path=/;`;
+    this.document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}${expires}; path=/;`;
   }
 
   getCookie(name: string) {
-    const cookieAll: Array<string> = document.cookie.split('; ');
+    const cookieAll: Array<string> = this.document.cookie.split('; ');
     const cookieName = encodeURIComponent(name) + '=';
     for (const cookie of cookieAll) {
       if (cookie.indexOf(cookieName) === 0) {
@@ -29,6 +31,6 @@ export class CookieService {
   }
 
   deleteCookie(name: string) {
-    document.cookie = `${encodeURIComponent(name)}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;`;
+    this.document.cookie = `${encodeURIComponent(name)}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;`;
   }
 }

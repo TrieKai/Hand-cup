@@ -5,6 +5,7 @@ import { MessageService } from 'src/app/service/message.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DomService } from 'src/app/util/dom.service';
 import { CloudMessagingService } from 'src/app/service/cloud-messaging.service';
+import { FirebaseService } from 'src/app/service/firebase.service';
 
 import { ConfirmComponent } from '../components/common/confirm/confirm.component';
 
@@ -19,6 +20,7 @@ export class CommonService {
     private cons: ConstantsService,
     private domService: DomService,
     private cloudMessaging: CloudMessagingService,
+    private firebaseService: FirebaseService,
   ) { }
 
   detectDeviceType(): DeviceType {
@@ -64,6 +66,33 @@ export class CommonService {
     } else {
       return false;
     }
+  }
+
+  checkTokenValid(token: string): boolean {
+    const payload: JwtPayload = this.parseJwt(token);
+    if (!payload.authorized) {
+      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '發生錯誤請重新登入', content: '' });
+      return false;
+    }
+    if (payload.user_id !== this.firebaseService.getUserData().uid) {
+      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '發生錯誤請重新登入', content: '' });
+      return false;
+    }
+    if (payload.exp < Date.now() / 1000) {
+      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登入逾時請重新登入', content: '' });
+      return false;
+    }
+    return true;
+  }
+
+  parseJwt(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
   }
 
   async subNotification(): Promise<boolean> {

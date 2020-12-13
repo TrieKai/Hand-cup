@@ -67,7 +67,8 @@ export class LoginService {
     if (!this.common.checkAPIStatus(resp)) {
       return false;
     }
-    this.cookie.setCookie(this.cons.TOKEN, resp.body.data);
+    const jwtResp: JwtPayload = this.common.parseJwt(resp.body.data);
+    this.cookie.setCookie(this.cons.TOKEN, resp.body.data, jwtResp.exp);
 
     const userPreferData = await this.getUserPreferData();
     this.localStorageService.updateLocalStorage(userPreferData);
@@ -145,10 +146,14 @@ export class LoginService {
       password: password
     };
     const token = this.cookie.getCookie(this.cons.TOKEN);
-    const header: HttpHeaders = this.api.getHeader(token);
-    const resp: RespData = await this.api.put(url, body, header);
-    if (isDevMode() || global.showLog) {
-      console.log('password update:', resp);
+    if (this.common.checkTokenValid(token)) {
+      const header: HttpHeaders = this.api.getHeader(token);
+      const resp: RespData = await this.api.put(url, body, header);
+      if (isDevMode() || global.showLog) {
+        console.log('password update:', resp);
+      }
+    } else {
+      this.logOut();
     }
   }
 

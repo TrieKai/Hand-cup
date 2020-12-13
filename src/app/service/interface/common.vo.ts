@@ -32,6 +32,12 @@ interface RespData {
   }
 }
 
+interface JwtPayload {
+  authorized: boolean
+  exp: number
+  user_id: string
+}
+
 interface Menu {
   title: string
   router: string

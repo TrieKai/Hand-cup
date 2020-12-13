@@ -8,6 +8,8 @@ import { ApiConstantsService } from 'src/app/util/constants/api-constants.servic
 import { ApiService } from 'src/app/util/api.service';
 import { CookieService } from 'src/app/util/cookie.service';
 import { GlobalService as global } from 'src/app/service/global.service';
+import { CommonService } from 'src/app/service/common.service';
+import { LoginService } from 'src/app/service/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,8 @@ export class ProfileService {
     private apiCons: ApiConstantsService,
     private api: ApiService,
     private cookie: CookieService,
+    private common: CommonService,
+    private loginService: LoginService,
   ) { }
 
   getUserData(): firebase.User {
@@ -50,10 +54,14 @@ export class ProfileService {
       name: name
     };
     const token = this.cookie.getCookie(this.cons.TOKEN);
-    const header: HttpHeaders = this.api.getHeader(token);
-    const resp: RespData = await this.api.put(url, body, header);
-    if (isDevMode() || global.showLog) {
-      console.log('user update:', resp);
+    if (this.common.checkTokenValid(token)) {
+      const header: HttpHeaders = this.api.getHeader(token);
+      const resp: RespData = await this.api.put(url, body, header);
+      if (isDevMode() || global.showLog) {
+        console.log('user update:', resp);
+      }
+    } else {
+      this.loginService.logOut();
     }
   }
 }
