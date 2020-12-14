@@ -71,7 +71,9 @@ export class DrinkComponent implements OnInit {
     this.hintText = '請點選圖片左右邊來選擇';
   }
 
-  recommendDrinks(step: number) {
+  async recommendDrinks(step: number) {
+    await this.loadImages(this.drinksData); // loaded drinks images first
+
     this.step = step;
     if (this.isFinished && this.imageRef) {
       this.renderer.removeClass(this.imageRef.nativeElement, 'faderight');
@@ -80,7 +82,6 @@ export class DrinkComponent implements OnInit {
     this.gocha = true;
     this.isFinished = this.showLeftFirework = this.showRightFirework = false;
 
-    this.loadImages(this.drinksData); // loaded images first
     let shuffledDrinks: any[];
     if (step === 1) {
       shuffledDrinks = this.shuffle(this.drinksData);
@@ -206,16 +207,22 @@ export class DrinkComponent implements OnInit {
     }
   }
 
-  loadImages(images: drinksData[]) {
+  loadImages(images: drinksData[]): Promise<void> {
     let i: number = 0;
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
-    images.forEach(image => {
-      const img = new Image();
-      img.onload = () => {
-        i++;
-        i === images.length ? this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false) : null;
-      }
-      img.src = image.image;
+
+    return new Promise((reslove, reject) => {
+      images.forEach(image => {
+        const img = new Image();
+        img.onload = () => {
+          i++;
+          if (i === images.length) {
+            this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
+            reslove();
+          }
+        }
+        img.src = image.image;
+      });
     });
   }
 }

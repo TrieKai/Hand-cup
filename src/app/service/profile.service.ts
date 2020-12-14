@@ -50,7 +50,7 @@ export class ProfileService {
     const body: UserUpdateReq = { name: name };
     const token = this.cookie.getCookie(this.cons.TOKEN);
 
-    return new Promise(async (res, rej) => {
+    return new Promise(async (reslove, reject) => {
       if (this.common.checkTokenValid(token)) {
         const header: HttpHeaders = this.api.getHeader(token);
         const resp: RespData = await this.api.put(url, body, header);
@@ -58,12 +58,12 @@ export class ProfileService {
           console.log('user update:', resp);
         }
         if (this.common.checkAPIResp(resp)) {
-          res(resp.body.data);
+          reslove(resp.body.data);
         } else {
-          rej();
+          reject();
         }
       } else {
-        rej();
+        reject();
       }
     });
   }
