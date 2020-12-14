@@ -6,6 +6,7 @@ import { CommonService } from 'src/app/service/common.service';
 import { DomService } from 'src/app/util/dom.service';
 import { MessageService } from 'src/app/service/message.service';
 import { GlobalService as global } from 'src/app/service/global.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 
@@ -58,6 +59,7 @@ export class DrinkComponent implements OnInit {
     private common: CommonService,
     private domService: DomService,
     private message: MessageService,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit() {
@@ -78,6 +80,7 @@ export class DrinkComponent implements OnInit {
     this.gocha = true;
     this.isFinished = this.showLeftFirework = this.showRightFirework = false;
 
+    this.loadImages(this.drinksData); // loaded images first
     let shuffledDrinks: any[];
     if (step === 1) {
       shuffledDrinks = this.shuffle(this.drinksData);
@@ -201,5 +204,18 @@ export class DrinkComponent implements OnInit {
         this.recommendDrinks(2);
       } else { return; }
     }
+  }
+
+  loadImages(images: drinksData[]) {
+    let i: number = 0;
+    this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
+    images.forEach(image => {
+      const img = new Image();
+      img.onload = () => {
+        i++;
+        i === images.length ? this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false) : null;
+      }
+      img.src = image.image;
+    });
   }
 }
