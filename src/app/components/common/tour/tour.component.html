@@ -8,10 +8,16 @@
     <div class="content">{{content}}</div>
     <div class="button-box">
       <div>
-        <button *ngIf="showBack" class="back" (click)="back()">Back</button>
+        <button *ngIf="showBack" class="back" (click)="back()">
+          <span class="material-icons">arrow_back_ios_new</span>
+          Back
+        </button>
       </div>
       <div>
-        <button *ngIf="showNext" class="next" (click)="next()">Next</button>
+        <button *ngIf="showNext" class="next" (click)="next()">
+          Next
+          <span class="material-icons">arrow_forward_ios</span>
+        </button>
         <button *ngIf="!showNext" class="finish" (click)="finish()">Finish</button>
       </div>
     </div>

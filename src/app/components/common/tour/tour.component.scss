@@ -8,7 +8,7 @@
 
 .tour-box {
   position      : absolute;
-  padding       : 10px;
+  padding       : 15px;
   width         : 260px;
   background    : #fff;
   box-shadow    : 5px 5px 15px 6px rgba(0, 0, 0, 0.2);
@@ -18,8 +18,8 @@
 
   .close-btn {
     position: absolute;
-    top     : 5px;
-    right   : 5px;
+    top     : 10px;
+    right   : 10px;
     cursor  : pointer;
   }
 
@@ -47,23 +47,49 @@
     }
 
     button {
-      margin: 5px;
-      width : 70px;
-      height: 30px;
-      border: 0;
-      cursor: pointer;
+      @include display-flex();
+      justify-content: center;
+      align-items    : center;
+      margin         : 5px;
+      width          : 75px;
+      height         : 30px;
+      border         : 0;
+      border-radius  : 7px;
+      font-size      : 16px;
+      cursor         : pointer;
     }
 
-    .back {}
+    .back {
+      color     : #0070f3;
+      background: #fff;
 
-    .next {
-      color     : #fff;
-      background: #2179c0;
+      &:hover {
+        color     : rgb(0, 112, 243);
+        background: rgba(0, 118, 255, 0.1);
+      }
+
+      span {
+        margin-right: 2px;
+        font-size   : 16px;
+      }
     }
 
+    .next,
     .finish {
       color     : #fff;
-      background: #183e5c;
+      color     : white;
+      background: #0070f3;
+      box-shadow: rgba(0, 118, 255, 0.39) 0px 4px 7px;
+
+      &:hover {
+        background: rgba(0, 118, 255, 0.9);
+        box-shadow: rgba(0, 118, 255, 0.23) 0px 6px 10px;
+      }
+
+      span {
+        margin-left: 2px;
+        font-size  : 16px;
+      }
     }
   }
 }
