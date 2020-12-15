@@ -6,6 +6,7 @@ import { CommonService } from 'src/app/service/common.service';
 import { DomService } from 'src/app/util/dom.service';
 import { MessageService } from 'src/app/service/message.service';
 import { GlobalService as global } from 'src/app/service/global.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 
@@ -58,6 +59,7 @@ export class DrinkComponent implements OnInit {
     private common: CommonService,
     private domService: DomService,
     private message: MessageService,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit() {
@@ -69,7 +71,9 @@ export class DrinkComponent implements OnInit {
     this.hintText = '請點選圖片左右邊來選擇';
   }
 
-  recommendDrinks(step: number) {
+  async recommendDrinks(step: number) {
+    await this.loadImages(this.drinksData); // loaded drinks images first
+
     this.step = step;
     if (this.isFinished && this.imageRef) {
       this.renderer.removeClass(this.imageRef.nativeElement, 'faderight');
@@ -201,5 +205,24 @@ export class DrinkComponent implements OnInit {
         this.recommendDrinks(2);
       } else { return; }
     }
+  }
+
+  loadImages(images: drinksData[]): Promise<void> {
+    let i: number = 0;
+    this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
+
+    return new Promise((reslove, reject) => {
+      images.forEach(image => {
+        const img = new Image();
+        img.onload = () => {
+          i++;
+          if (i === images.length) {
+            this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
+            reslove();
+          }
+        }
+        img.src = image.image;
+      });
+    });
   }
 }

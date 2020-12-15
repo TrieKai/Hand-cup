@@ -118,12 +118,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
       photoURL: this.photoURL
     }
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
-    // TODO: API server first
-    await this.profileService.updateProfileFireBase(userData)
-      .then(async () => {
-        await this.profileService.updateProfile(this.name);
-        this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.profileComponentRef));
-      });
+    try {
+      await this.profileService.updateProfile(this.name)
+      await this.profileService.updateProfileFireBase(userData)
+        .then(() => {
+          this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.profileComponentRef));
+        });
+    } catch (error) {
+      this.loginService.logOut();
+    }
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
   }
 

@@ -9,7 +9,6 @@ import { ApiService } from 'src/app/util/api.service';
 import { CookieService } from 'src/app/util/cookie.service';
 import { GlobalService as global } from 'src/app/service/global.service';
 import { CommonService } from 'src/app/service/common.service';
-import { LoginService } from 'src/app/service/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,6 @@ export class ProfileService {
     private api: ApiService,
     private cookie: CookieService,
     private common: CommonService,
-    private loginService: LoginService,
   ) { }
 
   getUserData(): firebase.User {
@@ -37,10 +35,9 @@ export class ProfileService {
         console.log('tokenExpired: ', tokenExpired)
         if (!tokenExpired) {
           if (this.firebaseService.checkAuthStatus()) {
-            console.log('=== updateProfile ===')
+            console.log('===== updateProfile =====')
             await this.firebaseService.updateProfile(userData);
             const updatedUserData = this.firebaseService.getUserData();
-            // this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, updatedUserData);
             this.sharedService.setSharedData(this.cons.SHAREDDATA.userData, updatedUserData);
           }
         }
@@ -50,18 +47,24 @@ export class ProfileService {
   async updateProfile(name: string) {
     const user = this.firebaseService.getUserData();
     const url = this.apiCons.UPDATE + '/' + user.uid;
-    const body: UserUpdateReq = {
-      name: name
-    };
+    const body: UserUpdateReq = { name: name };
     const token = this.cookie.getCookie(this.cons.TOKEN);
-    if (this.common.checkTokenValid(token)) {
-      const header: HttpHeaders = this.api.getHeader(token);
-      const resp: RespData = await this.api.put(url, body, header);
-      if (isDevMode() || global.showLog) {
-        console.log('user update:', resp);
+
+    return new Promise(async (reslove, reject) => {
+      if (this.common.checkTokenValid(token)) {
+        const header: HttpHeaders = this.api.getHeader(token);
+        const resp: RespData = await this.api.put(url, body, header);
+        if (isDevMode() || global.showLog) {
+          console.log('user update:', resp);
+        }
+        if (this.common.checkAPIResp(resp)) {
+          reslove(resp.body.data);
+        } else {
+          reject();
+        }
+      } else {
+        reject();
       }
-    } else {
-      this.loginService.logOut();
-    }
+    });
   }
 }
