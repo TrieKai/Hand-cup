@@ -68,18 +68,25 @@ export class CommonService {
     }
   }
 
-  checkTokenValid(token: string): boolean {
+  checkTokenValid(token: string, message: boolean): boolean {
+    if (!token) {
+      if (message) { this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '發生錯誤請重新登入', content: '' }); }
+      return false;
+    }
+
     const payload: JwtPayload = this.parseJwt(token);
     if (!payload.authorized) {
-      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '發生錯誤請重新登入', content: '' });
+      if (message) { this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '發生錯誤請重新登入', content: '' }) };
       return false;
     }
-    if (payload.user_id !== this.firebaseService.getUserData().uid) {
-      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '發生錯誤請重新登入', content: '' });
-      return false;
+    if (this.firebaseService.getUserData()) {
+      if (payload.user_id !== this.firebaseService.getUserData().uid) {
+        if (message) { this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '發生錯誤請重新登入', content: '' }) };
+        return false;
+      }
     }
     if (payload.exp < Date.now() / 1000) {
-      this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登入逾時請重新登入', content: '' });
+      if (message) { this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登入逾時請重新登入', content: '' }) };
       return false;
     }
     return true;

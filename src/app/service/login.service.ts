@@ -34,8 +34,19 @@ export class LoginService {
     firebaseService.checkAuthStatus();
   }
 
+  // Firebase
   checkUserLoggedIn(): Subject<any> {
     return this.firebaseService.userLoggedIn;
+  }
+
+  // Server
+  checkLogin(message: boolean = true): boolean {
+    const token = this.cookie.getCookie(this.cons.TOKEN);
+    if (this.common.checkTokenValid(token, message)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   async loginFireBase(email: string, password: string): Promise<boolean> {
@@ -129,8 +140,8 @@ export class LoginService {
     return [favResp.body.data, visResp.body.data];
   }
 
-  logOut() {
-    this.firebaseService.logOut();
+  logOut(message: boolean = true) {
+    this.firebaseService.logOut(message);
     this.cookie.deleteCookie(this.cons.TOKEN);
     this.router.navigateByUrl('/' + RouterConstantsService.ROUTER_HOME);
   }
@@ -146,7 +157,7 @@ export class LoginService {
       password: password
     };
     const token = this.cookie.getCookie(this.cons.TOKEN);
-    if (this.common.checkTokenValid(token)) {
+    if (this.checkLogin()) {
       const header: HttpHeaders = this.api.getHeader(token);
       const resp: RespData = await this.api.put(url, body, header);
       if (isDevMode() || global.showLog) {

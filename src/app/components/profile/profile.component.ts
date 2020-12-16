@@ -121,13 +121,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     try {
       await this.profileService.updateProfile(this.name)
       await this.profileService.updateProfileFireBase(userData)
-        .then(() => {
-          this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.profileComponentRef));
-        });
     } catch (error) {
       this.loginService.logOut();
     }
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
+    this.domService.destroyComponent(this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.profileComponentRef));
   }
 
   closeDialog() {

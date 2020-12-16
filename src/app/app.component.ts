@@ -7,6 +7,7 @@ import { GlobalService as global } from 'src/app/service/global.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DomService } from 'src/app/util/dom.service';
+import { LoginService } from 'src/app/service/login.service';
 
 import { ConfirmComponent } from './components/common/confirm/confirm.component';
 
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private cons: ConstantsService,
     private swUpdate: SwUpdate,
     private domService: DomService,
+    private loginService: LoginService,
   ) {
     this.swUpdate.available.subscribe(() => {
       const componentRef = this.domService.createComponent(
@@ -52,6 +54,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
 
+    if (!this.loginService.checkLogin()) {
+      this.loginService.logOut(false);
+    }
+    
     this.onloadingSB = this.sharedService.getStatus(this.cons.SHAREDSTATUS.onloading);
     this.onloadingSB
       .subscribe((status) => {

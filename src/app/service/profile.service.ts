@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/util/api.service';
 import { CookieService } from 'src/app/util/cookie.service';
 import { GlobalService as global } from 'src/app/service/global.service';
 import { CommonService } from 'src/app/service/common.service';
+import { LoginService } from 'src/app/service/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class ProfileService {
     private api: ApiService,
     private cookie: CookieService,
     private common: CommonService,
+    private loginService: LoginService,
   ) { }
 
   getUserData(): firebase.User {
@@ -44,14 +46,13 @@ export class ProfileService {
       });
   }
 
-  async updateProfile(name: string) {
-    const user = this.firebaseService.getUserData();
-    const url = this.apiCons.UPDATE + '/' + user.uid;
-    const body: UserUpdateReq = { name: name };
-    const token = this.cookie.getCookie(this.cons.TOKEN);
-
+  async updateProfile(name: string): Promise<any> {
     return new Promise(async (reslove, reject) => {
-      if (this.common.checkTokenValid(token)) {
+      if (this.loginService.checkLogin()) {
+        const user = this.firebaseService.getUserData();
+        const url = this.apiCons.UPDATE + '/' + user.uid;
+        const body: UserUpdateReq = { name: name };
+        const token = this.cookie.getCookie(this.cons.TOKEN);
         const header: HttpHeaders = this.api.getHeader(token);
         const resp: RespData = await this.api.put(url, body, header);
         if (isDevMode() || global.showLog) {

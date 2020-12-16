@@ -94,13 +94,17 @@ export class FirebaseService {
       });
   }
 
-  logOut() {
+  logOut(message: boolean) {
     this.afAuth.auth.signOut()
       .then(() => {
-        this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '通知', content: '已登出帳號' });
+        if (message) {
+          this.message.add({ type: this.cons.MESSAGE_TYPE.success, title: '通知', content: '已登出帳號' });
+        }
       })
       .catch((error) => {
-        this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登出發生錯誤', content: error });
+        if (message) {
+          this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: '登出發生錯誤', content: error });
+        }
       });
   }
 
