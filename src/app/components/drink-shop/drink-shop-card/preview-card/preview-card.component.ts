@@ -27,7 +27,7 @@ export class PreviewCardComponent implements OnInit, AfterViewInit {
     if (this.chosenShop.image_url) {
       this.renderer.setStyle(this.imageRef.nativeElement, 'background-image', 'url(' + this.chosenShop.image_url + ')');
     } else {
-      this.renderer.setStyle(this.imageRef.nativeElement, 'background-color', '#2b2b2b');
+      this.renderer.setStyle(this.imageRef.nativeElement, 'background-color', '#fff');
       this.renderer.setStyle(this.imageRef.nativeElement, 'background-image', 'url(assets/icons/no-data.png)');
     }
   }
