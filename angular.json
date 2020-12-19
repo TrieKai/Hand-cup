@@ -185,5 +185,8 @@
       }
     }
   },
-  "defaultProject": "handCup-project"
+  "defaultProject": "handCup-project",
+  "cli": {
+    "analytics": false
+  }
 }
