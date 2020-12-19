@@ -1,8 +1,5 @@
 import { Component, OnInit, Input, Pipe } from '@angular/core';
 
-@Pipe({
-  name: 'range'
-})
 @Component({
   selector: 'app-rating-stars',
   templateUrl: './rating-stars.component.html',

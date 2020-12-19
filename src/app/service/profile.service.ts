@@ -7,7 +7,7 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { ApiConstantsService } from 'src/app/util/constants/api-constants.service';
 import { ApiService } from 'src/app/util/api.service';
 import { CookieService } from 'src/app/util/cookie.service';
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../service/global.service';
 import { CommonService } from 'src/app/service/common.service';
 import { LoginService } from 'src/app/service/login.service';
 

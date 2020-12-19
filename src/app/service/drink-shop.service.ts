@@ -6,7 +6,7 @@ import { ApiConstantsService } from 'src/app/util/constants/api-constants.servic
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { CommonService } from 'src/app/service/common.service';
 
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../service/global.service';
 
 @Injectable({
   providedIn: 'root'

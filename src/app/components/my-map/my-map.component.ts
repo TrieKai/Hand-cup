@@ -7,7 +7,7 @@ import MarkerClusterer from '@googlemaps/markerclustererplus';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { SharedService } from 'src/app/shared/shared.service';
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../../service/global.service';
 import { MapService } from 'src/app/service/map.service';
 import { MessageService } from 'src/app/service/message.service';
 import { LoginService } from 'src/app/service/login.service';

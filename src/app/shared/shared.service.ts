@@ -2,7 +2,7 @@ import { Injectable, isDevMode } from '@angular/core';
 import { Subject } from 'rxjs/internal/Subject';
 import { BehaviorSubject } from 'rxjs';
 
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../service/global.service';
 
 @Injectable({
   providedIn: 'root'

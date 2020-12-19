@@ -3,7 +3,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { ApiService } from 'src/app/util/api.service';
 import { ApiConstantsService } from 'src/app/util/constants/api-constants.service';
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../service/global.service';
 import { CommonService } from 'src/app/service/common.service';
 
 @Injectable({

@@ -5,7 +5,7 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { CommonService } from 'src/app/service/common.service';
 import { DomService } from 'src/app/util/dom.service';
 import { MessageService } from 'src/app/service/message.service';
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../../service/global.service';
 import { SharedService } from 'src/app/shared/shared.service';
 
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';

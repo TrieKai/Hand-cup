@@ -5,7 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import 'firebase/messaging';
 
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../service/global.service';
 
 @Injectable({
   providedIn: 'root'

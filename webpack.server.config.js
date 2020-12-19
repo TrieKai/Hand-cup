@@ -1,7 +1,7 @@
 // Work around for https://github.com/angular/angular-cli/issues/7200
 
-import { join } from 'path';
-import * as webpack from 'webpack';
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'none',
@@ -18,7 +18,7 @@ module.exports = {
   },
   output: {
     // Puts the output at the root of the sanpeople folder
-    path: join(__dirname, 'dist'),
+    path: path.join(__dirname, 'dist'),
     filename: '[name].js'
   },
   module: {
@@ -36,13 +36,13 @@ module.exports = {
     new webpack.ContextReplacementPlugin(
       // fixes WARNING Critical dependency: the request of a dependency is an expression
       /(.+)?angular(\\|\/)core(.+)?/,
-      join(__dirname, 'src'), // location of your src
+      path.join(__dirname, 'src'), // location of your src
       {} // a map of your routes
     ),
     new webpack.ContextReplacementPlugin(
       // fixes WARNING Critical dependency: the request of a dependency is an expression
       /(.+)?express(\\|\/)(.+)?/,
-      join(__dirname, 'src'),
+      path.join(__dirname, 'src'),
       {}
     )
   ]

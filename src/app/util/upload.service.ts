@@ -3,7 +3,7 @@ import { Injectable, isDevMode } from '@angular/core';
 import { ApiConstantsService } from 'src/app/util/constants/api-constants.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { ApiService } from 'src/app/util/api.service';
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../service/global.service';
 
 @Injectable({
   providedIn: 'root'

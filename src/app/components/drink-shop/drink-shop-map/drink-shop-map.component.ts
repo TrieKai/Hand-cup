@@ -8,7 +8,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { HtmlElementService } from 'src/app/shared/html-element.service';
 import { MessageService } from 'src/app/service/message.service';
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../../../service/global.service';
 
 @Component({
   selector: 'app-drink-shop-map',

@@ -11,7 +11,7 @@ import { DomService } from 'src/app/util/dom.service';
 import { LoginService } from 'src/app/service/login.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { MessageService } from 'src/app/service/message.service';
-import { RouterConstantsService as routerCons } from 'src/app/util/constants/router-constants.service';
+import { RouterConstantsService as routerCons } from '../../util/constants/router-constants.service';
 
 import { LockScreenComponent } from '../common/lock-screen/lock-screen.component';
 import { LoginComponent } from '../login/login.component';

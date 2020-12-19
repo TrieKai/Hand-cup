@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
-import { GlobalService as global } from 'src/app/service/global.service';
+import { GlobalService as global } from '../../../service/global.service';
 
 @Component({
   selector: 'app-drink-shop-card',
