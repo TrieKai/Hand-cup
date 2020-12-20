@@ -4,6 +4,7 @@
   "scripts": {
     "start:heroku": "node dist/handCup-project-server/main.js",
     "postinstall": "npm run build:ssr",
+    "heroku-prebuild": "rm -rf node_modules && npm cache clean --force",
     "heroku-postbuild": "ng build --prod",
     "ng": "ng",
     "start": "ng serve",
