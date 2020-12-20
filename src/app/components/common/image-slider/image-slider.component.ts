@@ -62,13 +62,19 @@ export class ImageSliderComponent implements OnInit, AfterViewInit, OnDestroy, O
     if (this.imageRef) {
       this.renderer.setStyle(this.imageRef.nativeElement, 'background-image', 'url(' + this.images[index] + ')');
     }
-    this.dotBoxRef.nativeElement.childNodes.forEach((dot, i) => {
-      if (i === 0) { return; } // index 0 is ng-binding
-      if (i - 1 === this.nowImageIndex) {
-        this.renderer.addClass(dot.firstChild, 'active');
-      } else {
-        this.renderer.removeClass(dot.firstChild, 'active');
-      }
-    });
+    if (this.dotBoxRef) {
+      this.dotBoxRef.nativeElement.childNodes.forEach((dot, i) => {
+        // if (i === 0) { return; } // index 0 is ng-binding
+        if (i === this.nowImageIndex) {
+          if (dot.firstChild) {
+            this.renderer.addClass(dot.firstChild, 'active');
+          }
+        } else {
+          if (dot.firstChild) {
+            this.renderer.removeClass(dot.firstChild, 'active');
+          }
+        }
+      });
+    }
   }
 }

@@ -82,7 +82,6 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
     if (this.chosenShop.rating === 0) {
       this.ratingText = '尚未有評分'
     } else {
