@@ -108,10 +108,11 @@ body {
   position: absolute;
   top     : contentPosition(layout);
   width   : 100%;
-  height  : 100%;
+  height  : height(layoutBasic);
 
   @media screen and (max-width: rwdBoundary(small)) {
-    top: contentPosition(layout_small);
+    top   : contentPosition(layout_small);
+    height: height(layoutBasic_small);
   }
 }
 

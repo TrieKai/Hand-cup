@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
           this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.VALIDATE_MESSAGE.passwordFormat, content: '' });
           return;
         }
-        resolve();
+        resolve(null);
       }, 10);
     });
     // TODO: Better way to replace setTimeout
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
           this.message.add({ type: this.cons.MESSAGE_TYPE.error, title: this.cons.VALIDATE_MESSAGE.passwordFormat, content: '' });
           return;
         } else if (!this.loginService.validatePassword(password)) { return; }
-        resolve();
+        resolve(null);
       }, 10);
     });
     // TODO: Better way to replace setTimeout

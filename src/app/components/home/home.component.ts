@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
       console.log(`Positon: ${pos.lng} ${pos.lat}`);
       this.coordinate.longitude = pos.lng;
       this.coordinate.latitude = pos.lat;
-      this.mapInitializer();
+      // this.mapInitializer();
     });
 
     this.handleTour();

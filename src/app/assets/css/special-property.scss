@@ -34,7 +34,7 @@
   }
 
   @if $type==layout {
-    @return calc(100% - 65px - 45px); // Minus header[65px] & infoBar[45px]
+    @return calc(100% - 45px); // Minus infoBar[45px]
   }
 
   // ========== Small area =========== //
@@ -47,7 +47,7 @@
   }
 
   @if $type==layout_small {
-    @return calc(100% - 100px - 45px); // Minus header[100px] & infoBar[45px]
+    @return calc(100% - 45px); // Minus & infoBar[45px]
   }
 
   @if $type==layout_myMap_small {
