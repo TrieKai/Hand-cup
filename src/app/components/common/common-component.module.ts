@@ -23,6 +23,7 @@ import { StarEmptyComponent } from './icons/star-empty/star-empty.component';
 import { PriceComponent } from './icons/price/price.component';
 import { GoogleComponent } from './icons/google/google.component';
 import { FacebookComponent } from './icons/facebook/facebook.component';
+import { CloudComponent } from './icons/cloud/cloud.component';
 // animations
 import { FireworkComponent } from './animations/firework/firework.component';
 import { RippleComponent } from './animations/ripple/ripple.component';
@@ -48,6 +49,7 @@ import { RippleComponent } from './animations/ripple/ripple.component';
     PriceComponent,
     GoogleComponent,
     FacebookComponent,
+    CloudComponent,
     FireworkComponent,
     RippleComponent,
   ],
@@ -78,6 +80,7 @@ import { RippleComponent } from './animations/ripple/ripple.component';
     PriceComponent,
     GoogleComponent,
     FacebookComponent,
+    CloudComponent,
     // animations
     FireworkComponent,
     RippleComponent,
