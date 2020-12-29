@@ -11,6 +11,8 @@
 //   }
 // }
 
+$middle-boudary: 1080px;
+
 .overflow {
   overflow-x: hidden;
   overflow-y: auto;
@@ -23,7 +25,7 @@
   background-position: 50%;
   background-size    : cover;
   background-color   : #c8cad3;
-  background-image   : radial-gradient(circle at top left, #ffffff 58%, rgba(161, 176, 221, 0.64) 58%), url(https://communityimpact.com/uploads/images/2020/08/31/81464.jpeg);
+  background-image   : radial-gradient(circle at top left, #f6f8ff 58%, rgba(161, 176, 221, 0.64) 58%), url(https://communityimpact.com/uploads/images/2020/08/31/81464.jpeg);
 
   @media screen and (max-width: rwdBoundary(small)) {
     height: 400px;
@@ -35,7 +37,11 @@
     font-size: 30px;
 
     h1 {
-      width: 65%;
+      width: 75%;
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        margin-bottom: 5%;
+      }
     }
 
     button {
@@ -87,9 +93,9 @@
     @include animation(fade-in ease-in-out);
     @include animation-duration(2s);
 
-    @media screen and (min-width: rwdBoundary(large)) {
-      padding-right: 300px;
-      width        : calc(100% - 350px);
+    @media screen and (min-width: $middle-boudary) {
+      padding-right: 400px;
+      width        : calc(100% - 450px);
     }
   }
 
@@ -98,6 +104,7 @@
     @include display-flex();
     @include flex-direction (column);
     align-items     : center;
+    padding-top     : 50px;
     width           : 100%;
     background-color: #7fc1ff;
     border-radius   : 25vw 0 0 0;
@@ -107,24 +114,40 @@
     @include animation(fade-in ease-in-out);
     @include animation-duration(1s);
 
-    @media screen and (min-width: rwdBoundary(large)) {
-      position: absolute;
-      right   : 0;
-      bottom  : 0;
-      width   : 270px;
-      height  : 400px;
+    @media screen and (min-width: $middle-boudary) {
+      position   : absolute;
+      right      : 0;
+      bottom     : 0;
+      padding-top: 100px;
+      width      : 350px;
+      height     : 450px;
     }
 
     .category-box {
-      color: #fff;
+      @include display-flex();
+      @include flex-direction (column);
+      align-items  : center;
+      margin-bottom: 10px;
+      color        : #fff;
+      outline      : none;
+      cursor       : pointer;
 
       .category-image {
-        height       : 65px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
+        width        : 80px;
+        height       : 80px;
+        border-radius: 100%;
+        box-shadow   : 2px 2px 4px 0px rgb(0, 0, 0, 0.2);
+
+        img {
+          width : 100%;
+          height: 100%;
+        }
       }
 
       .category-text {
         margin-bottom: 10px;
+        font-size    : 22px;
       }
     }
   }

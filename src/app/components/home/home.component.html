@@ -5,7 +5,7 @@
   <section class="landing-top-container">
     <div class="landing-top-box">
       <h1>為你隨機選擇附近的飲料店</h1>
-      <button [routerLink]="routerLink">Get start</button>
+      <button [routerLink]="drinkshopLink">Get start</button>
     </div>
     <div class="cloud-box">
       <i-cloud></i-cloud>
@@ -19,25 +19,25 @@
       </div>
     </div>
     <div class="control-box">
-      <div class="category-box">
+      <div class="category-box" [routerLink]="drinkLink">
         <div class="category-image">
-          <img />
+          <img src="../../../assets/img/Icon-What kinda drink_white.png" />
         </div>
         <div class="category-text">
           <span>今天飲料喝甚麼?</span>
         </div>
       </div>
-      <div class="category-box">
+      <div class="category-box" [routerLink]="drinkshopLink">
         <div class="category-image">
-          <img />
+          <img src="../../../assets/img/Icon-Which shop_white.png" />
         </div>
         <div class="category-text">
           <span>今天飲料喝哪家?</span>
         </div>
       </div>
-      <div class="category-box">
+      <div class="category-box" [routerLink]="mymapLink">
         <div class="category-image">
-          <img />
+          <img src="../../../assets/img/Icon-Saved_white.png" />
         </div>
         <div class="category-text">
           <span>我的地圖</span>

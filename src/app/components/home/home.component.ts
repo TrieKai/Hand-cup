@@ -19,8 +19,9 @@ export class HomeComponent implements OnInit {
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
   map: google.maps.Map;
   coordinate: Coordinate = { latitude: null, longitude: null };
-  // coordinates: google.maps.LatLng;
-  routerLink = '/' + routerCons.ROUTER_DRINKSHOP;
+  drinkLink = '/' + routerCons.ROUTER_DRINK;
+  drinkshopLink = '/' + routerCons.ROUTER_DRINKSHOP;
+  mymapLink = '/' + routerCons.ROUTER_MYMAP;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
