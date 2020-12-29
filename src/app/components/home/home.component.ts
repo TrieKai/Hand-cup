@@ -4,7 +4,8 @@ import { DOCUMENT } from '@angular/common';
 import { GeolocationService } from 'src/app/service/geolocation.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DomService } from 'src/app/util/dom.service';
-import { LocalstorageService } from 'src/app/util/localstorage.service';;
+import { LocalstorageService } from 'src/app/util/localstorage.service';
+import { RouterConstantsService as routerCons } from 'src/app/util/constants/router-constants.service';
 
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 import { TourComponent } from '../../components/common/tour/tour.component';
@@ -18,39 +19,18 @@ export class HomeComponent implements OnInit {
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
   map: google.maps.Map;
   coordinate: Coordinate = { latitude: null, longitude: null };
-  coordinates: google.maps.LatLng;
+  // coordinates: google.maps.LatLng;
+  routerLink = '/' + routerCons.ROUTER_DRINKSHOP;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private geolocationService: GeolocationService,
     private domService: DomService,
     private cons: ConstantsService,
     private localStorageService: LocalstorageService,
   ) { }
 
   ngOnInit() {
-    this.geolocationService.getPosition().then(pos => {
-      console.log(`Positon: ${pos.lng} ${pos.lat}`);
-      this.coordinate.longitude = pos.lng;
-      this.coordinate.latitude = pos.lat;
-      // this.mapInitializer();
-    });
-
     this.handleTour();
-  }
-
-  mapInitializer() {
-    this.coordinates = new google.maps.LatLng(this.coordinate.latitude, this.coordinate.longitude);
-    const mapOptions: google.maps.MapOptions = {
-      center: this.coordinates,
-      zoom: 16,
-    };
-    const marker = new google.maps.Marker({
-      position: this.coordinates,
-      map: this.map,
-    });
-    this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
-    marker.setMap(this.map);
   }
 
   handleTour() {

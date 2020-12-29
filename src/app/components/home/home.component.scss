@@ -23,7 +23,7 @@
   background-position: 50%;
   background-size    : cover;
   background-color   : #c8cad3;
-  background-image   : radial-gradient(circle at top left, #ffffff 60%, rgba(161, 176, 221, 0.64) 60%), url(https://communityimpact.com/uploads/images/2020/08/31/81464.jpeg);
+  background-image   : radial-gradient(circle at top left, #ffffff 58%, rgba(161, 176, 221, 0.64) 58%), url(https://communityimpact.com/uploads/images/2020/08/31/81464.jpeg);
 
   @media screen and (max-width: rwdBoundary(small)) {
     height: 400px;
@@ -33,6 +33,10 @@
     padding  : 60px 70px;
     height   : calc(100% - 120px);
     font-size: 30px;
+
+    h1 {
+      width: 65%;
+    }
 
     button {
       margin-top    : 50px;
@@ -53,6 +57,12 @@
 
       @media screen and (max-width: rwdBoundary(middle)) {
         margin: 0;
+      }
+
+      @media screen and (max-width: rwdBoundary(small)) {
+        padding  : 13px 25px;
+        width    : 140px;
+        font-size: 14px;
       }
     }
   }
