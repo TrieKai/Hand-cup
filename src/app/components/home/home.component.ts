@@ -5,7 +5,7 @@ import { GeolocationService } from 'src/app/service/geolocation.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DomService } from 'src/app/util/dom.service';
 import { LocalstorageService } from 'src/app/util/localstorage.service';
-import { RouterConstantsService as routerCons } from 'src/app/util/constants/router-constants.service';
+import { RouterConstantsService as routerCons } from '../../util/constants/router-constants.service';
 
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 import { TourComponent } from '../../components/common/tour/tour.component';
