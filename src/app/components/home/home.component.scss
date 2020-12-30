@@ -37,10 +37,11 @@ $middle-boudary: 1080px;
     font-size: 30px;
 
     h1 {
-      width: 75%;
+      width: 70%;
 
       @media screen and (max-width: rwdBoundary(small)) {
         margin-bottom: 5%;
+        width        : 80%;
       }
     }
 

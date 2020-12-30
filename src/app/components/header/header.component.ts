@@ -114,7 +114,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if (this.userDataBS) {
       this.sharedService.deleteSharedData(this.cons.SHAREDDATA.userData);
-      this.lockScreenBS.unsubscribe();
+      this.userDataBS.unsubscribe();
     }
     if (this.tourSubscribe) {
       this.tourSubscribe.unsubscribe();

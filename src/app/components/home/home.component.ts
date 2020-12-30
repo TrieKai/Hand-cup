@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
-import { GeolocationService } from 'src/app/service/geolocation.service';
 import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { DomService } from 'src/app/util/dom.service';
 import { LocalstorageService } from 'src/app/util/localstorage.service';
