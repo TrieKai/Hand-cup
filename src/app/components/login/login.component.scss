@@ -59,14 +59,6 @@
         cursor    : pointer;
       }
 
-      .enter-btn {
-        cursor: pointer;
-
-        &:hover {
-          background: rgba(0, 0, 0, 0.4);
-        }
-      }
-
       .divid-line {
         overflow  : hidden;
         text-align: center;
@@ -154,10 +146,6 @@
         background: -webkit-linear-gradient(right, #6FAAFF, #955DFF);
       }
 
-      .sign-up-btn {
-        cursor: pointer;
-      }
-
       .title {
         margin-bottom: 10px;
         font-size    : 14px;
@@ -182,7 +170,8 @@
         outline      : none;
       }
 
-      input[type=submit] {
+      .login-btn,
+      .signup-btn {
         background   : rgba(0, 0, 0, 0.5);
         color        : #F6F7F9;
         height       : 40px;
@@ -191,6 +180,11 @@
         border       : none;
         border-radius: 4px;
         font-weight  : 600;
+        cursor       : pointer;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.4);
+        }
       }
     }
   }

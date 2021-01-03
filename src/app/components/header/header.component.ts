@@ -71,10 +71,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(step => {
         switch (step) {
           case 2:
-            this.router.navigate([`/${routerCons.ROUTER_DRINK}`]);
-            break;
-          case 3:
             this.router.navigate([`/${routerCons.ROUTER_DRINKSHOP}`]);
+            break;
+            case 3:
+            this.router.navigate([`/${routerCons.ROUTER_DRINK}`]);
             break;
           case 4:
             this.router.navigate([`/${routerCons.ROUTER_MYMAP}`]);
