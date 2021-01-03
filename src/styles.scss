@@ -91,6 +91,13 @@ body {
   overflow: hidden;
 }
 
+// For ios mobile safari
+@media screen and (max-device-width: 480px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
 .info-bar {
   @include display-flex();
   justify-content : center;
