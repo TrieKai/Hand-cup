@@ -14,7 +14,7 @@
         </div>
         <!-- <div class="forgot input" (click)="forgotPassword()">忘記密碼?</div> -->
         <div class="input">
-          <input class="enter-btn" type="submit" value="ENTER" (click)="login()" />
+          <button class="login-btn" (click)="login()">ENTER</button>
         </div>
         <p class="divid-line">or</p>
         <div class="third-login-box google input" (click)="signUpWithGoogle()">
@@ -36,7 +36,7 @@
           <input #signUpPassword class="text" type="password" placeholder="password" />
         </div>
         <div class="input">
-          <input class="sign-up-btn" type="submit" value="SIGN ME UP!" (click)="signUp()" />
+          <button class="signup-btn" (click)="signUp()">SIGN ME UP!</button>
         </div>
         <p class="divid-line">or</p>
         <div class="third-login-box google input" (click)="signUpWithGoogle()">
