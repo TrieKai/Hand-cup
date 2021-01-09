@@ -5,7 +5,7 @@
     <app-firework *ngIf="showRightFirework" class="firework-right"></app-firework>
     <section *ngIf="!gocha" class="box">
       <div class="pressBtn" (click)="recommendDrinks(1)">
-        <span>PRESS</span>
+        <span>G O</span>
       </div>
     </section>
     <section *ngIf="gocha && drink" class="card-section" [ngClass]="{'active': isFinished}">

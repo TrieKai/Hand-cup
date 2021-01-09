@@ -68,7 +68,7 @@ export class DrinkComponent implements OnInit {
 
     // TODO: Replace API with this
     this.drinksData = this.cons.DRINKS;
-    this.hintText = '請點選圖片左右邊來選擇';
+    this.hintText = '請點選並拖曳圖片的左右邊';
   }
 
   async recommendDrinks(step: number) {
