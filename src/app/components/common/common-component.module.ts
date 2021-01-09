@@ -24,6 +24,7 @@ import { PriceComponent } from './icons/price/price.component';
 import { GoogleComponent } from './icons/google/google.component';
 import { FacebookComponent } from './icons/facebook/facebook.component';
 import { CloudComponent } from './icons/cloud/cloud.component';
+import { CoffeeComponent } from './icons/coffee/coffee.component';
 // animations
 import { FireworkComponent } from './animations/firework/firework.component';
 import { RippleComponent } from './animations/ripple/ripple.component';
@@ -50,6 +51,7 @@ import { RippleComponent } from './animations/ripple/ripple.component';
     GoogleComponent,
     FacebookComponent,
     CloudComponent,
+    CoffeeComponent,
     FireworkComponent,
     RippleComponent,
   ],
@@ -81,6 +83,7 @@ import { RippleComponent } from './animations/ripple/ripple.component';
     GoogleComponent,
     FacebookComponent,
     CloudComponent,
+    CoffeeComponent,
     // animations
     FireworkComponent,
     RippleComponent,

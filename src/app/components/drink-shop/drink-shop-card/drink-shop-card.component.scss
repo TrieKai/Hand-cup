@@ -16,6 +16,26 @@
   }
 }
 
+.hint-box {
+  width     : 100%;
+  height    : 35px;
+  background: #fab18e;
+  color     : #fff;
+  text-align: center;
+  font-size : 24px;
+  cursor    : pointer;
+
+  .hint {
+    @include display-flex();
+    align-items    : center;
+    justify-content: center;
+    width          : 100%;
+    height         : 100%;
+    opacity        : 0;
+    @include animation(glint 2.5s ease-in-out infinite);
+  }
+}
+
 .button-box {
   position  : absolute;
   margin-top: 10px;

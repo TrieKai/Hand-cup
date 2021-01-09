@@ -1,4 +1,10 @@
-<section class="card-container" *ngIf="!showChosenCard&&!showPreviewCard">
+<div *ngIf="showChosenCard" class="hint-box" [routerLink]="drinkLink">
+  <div class="hint">
+    <span>喝飲料嗎</span>
+    <i-coffee></i-coffee>
+  </div>
+</div>
+<section class="card-container" *ngIf="!showChosenCard && !showPreviewCard">
   <div class="button-box">
     <button mat-raised-button (click)="handleTransformScenes('map')">返回</button>
     <button mat-raised-button class="draw-button" (click)="handleDraw()">抽卡</button>

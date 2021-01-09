@@ -80,6 +80,10 @@
   @if $type==themeOfPink {
     @return rgb(204, 151, 160);
   }
+
+  @if $type==themeOfBrown {
+    @return rgb(108, 95, 93);
+  }
 }
 
 @function zIndex($type) {
@@ -117,5 +121,19 @@
   from {
     opacity: 0;
     @include transform(translateY(50%) scale(0, 0));
+  }
+}
+
+@include keyframes(glint) {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }

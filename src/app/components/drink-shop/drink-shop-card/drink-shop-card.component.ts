@@ -5,6 +5,7 @@ import { ConstantsService } from 'src/app/util/constants/constants.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { DrinkShopService } from 'src/app/service/drink-shop.service';
 import { GlobalService as global } from '../../../service/global.service';
+import { RouterConstantsService as routerCons } from '../../../util/constants/router-constants.service';
 
 @Component({
   selector: 'app-drink-shop-card',
@@ -18,6 +19,7 @@ export class DrinkShopCardComponent implements OnInit, OnDestroy {
   showChosenCard: boolean = false;
   showPreviewCard: boolean = false;
   drinkShopResultsBS: BehaviorSubject<any>;
+  drinkLink: string = '/' + routerCons.ROUTER_DRINK;
 
   constructor(
     private cons: ConstantsService,
