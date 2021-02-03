@@ -13,6 +13,7 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
   showMap: boolean;
   showMapSB: BehaviorSubject<boolean>;
   infoMessage: string;
+  filterMode: boolean = false;
 
   constructor(
     private cons: ConstantsService,
@@ -34,5 +35,9 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
       this.sharedService.deleteStatus(this.cons.SHAREDSTATUS.showMap);
       this.showMapSB.unsubscribe();
     }
+  }
+
+  switch(status: boolean) {
+    console.log(status)
   }
 }

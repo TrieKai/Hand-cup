@@ -1,0 +1,77 @@
+#switch {
+  display: none;
+
+  &+label {
+    padding: 16px 20px;
+    display: block;
+    cursor : pointer;
+
+    &::before {
+      display: none;
+    }
+
+    .switch-inner {
+      position      : relative;
+      display       : inline-block;
+      width         : 40px;
+      height        : 22px;
+      vertical-align: top;
+      background    : #ECEFFC;
+      border-radius : 11px;
+      z-index       : 1;
+
+      &:before {
+        content      : '';
+        position     : absolute;
+        left         : -1px;
+        top          : 0;
+        right        : 0;
+        bottom       : 0;
+        background   : linear-gradient(90deg, #4F97FF, #275EFE);
+        border-radius: inherit;
+        opacity      : var(--gradient, 0);
+        transition   : opacity .4s;
+      }
+
+      .dot {
+        background   : #D1D6EE;
+        position     : absolute;
+        top          : -1px;
+        left         : -1px;
+        width        : 24px;
+        height       : 24px;
+        border-radius: 50%;
+        transform    : translateX(var(--offset, 0));
+        transition   : transform .4s, box-shadow .4s;
+        box-shadow   : -4px -4px 8px var(--light-shadow-2, transparent), 4px 4px 8px var(--shadow, transparent);
+
+        &:before {
+          content      : '';
+          position     : absolute;
+          top          : 0;
+          right        : 0;
+          bottom       : 0;
+          left         : 0;
+          border-radius: inherit;
+          background   : linear-gradient(160deg, #F1F4FF, #F9FAFF);
+          opacity      : var(--gradient, 0);
+          transition   : opacity .4s;
+        }
+      }
+    }
+  }
+
+  &:checked {
+    &+label {
+      --offset        : 18px;
+      --text          : #404660;
+      --gradient      : 1;
+      --shadow        : rgba(0, 6, 39, .1);
+      --light-shadow-2: rgba(255, 255, 255, .1);
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

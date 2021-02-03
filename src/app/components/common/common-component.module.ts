@@ -12,6 +12,7 @@ import { ImageEditorComponent } from './image-editor/image-editor.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { LockScreenComponent } from './lock-screen/lock-screen.component';
+import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
 // icon
 import { CloseComponent } from './icons/close/close.component';
 import { DoneComponent } from './icons/done/done.component';
@@ -40,6 +41,7 @@ import { RippleComponent } from './animations/ripple/ripple.component';
     ImageSliderComponent,
     SearchBoxComponent,
     LockScreenComponent,
+    ToggleSwitchComponent,
     CloseComponent,
     DoneComponent,
     InfoComponent,
@@ -71,6 +73,7 @@ import { RippleComponent } from './animations/ripple/ripple.component';
     ImageSliderComponent,
     SearchBoxComponent,
     LockScreenComponent,
+    ToggleSwitchComponent,
     // icons
     CloseComponent,
     DoneComponent,
