@@ -34,7 +34,7 @@ export class DrinkShopService {
     }
   }
 
-  getTopLocation(locataion: Coordinate, dataList: drinkShopResults[], number: number): any[] {
+  getTopLocation(locataion: Coordinate, dataList: drinkShopResults[], number?: number): any[] {
     if (dataList.length === 0) { return []; }
     if (isDevMode() || global.showLog) {
       console.log('latitude:', locataion.latitude, 'longitude:', locataion.longitude, 'dataList:', dataList)

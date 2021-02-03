@@ -21,7 +21,8 @@ export class DrinkShopMapComponent implements OnInit {
   coordinate: Coordinate = { latitude: null, longitude: null };
   place: google.maps.places.PlacesService;
   distance: number;
-  resultArray: drinkShopResults[] = [];
+  resultArray: drinkShopResults[] = []; // Top 5 shop in sorted shop list
+  allResultArray: drinkShopResults[] = []; // All sorted shop list
   isNextPage: boolean;
   currentMarker: google.maps.Marker;
   markers: google.maps.Marker[] = [];
@@ -183,14 +184,17 @@ export class DrinkShopMapComponent implements OnInit {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
     if (this.resultArray.length > 0) {
       this.resultArray = []; // Reset array
+      this.allResultArray = []; // Reset array
     }
     if (respData.length > 0) {
-      this.resultArray = this.drinkShopService.getTopLocation(this.coordinate, respData, 5); // 抓附近的五個地點
+      this.allResultArray = this.drinkShopService.getTopLocation(this.coordinate, respData); // 附近全部已排序的地點
+      this.resultArray = this.allResultArray.slice(0, 5); // 抓附近的五個地點
     } else {
       this.messageService.add({ type: this.cons.MESSAGE_TYPE.warn, title: '', content: '附近似乎沒飲料店<br/>或許等一下就有了' });
     }
     if (isDevMode() || global.showLog) {
       console.log('resultArray:', this.resultArray);
+      console.log('allResultArray:', this.allResultArray);
     }
     this.showAllLocation();
   }
@@ -275,8 +279,7 @@ export class DrinkShopMapComponent implements OnInit {
 
   handleTransformScenes() {
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.showMap, false);
-    // this.sharedService.setSharedData(this.cons.SHAREDDATA.drinkShopResults, this.resultArray);
-    this.sharedService.setSharedData(this.cons.SHAREDDATA.drinkShopResults, this.resultArray);
+    this.sharedService.setSharedData(this.cons.SHAREDDATA.drinkShopResults, this.allResultArray);
   }
 
   handleInfoWindow() {
