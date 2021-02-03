@@ -57,6 +57,7 @@
 }
 
 .card {
+  position: relative;
   @include display-grid();
   // grid-template-columns: calc(33vw - 60px);
   grid-template-columns: 300px;
@@ -69,12 +70,35 @@
   box-shadow           : 5px 5px 15px rgba(0, 0, 0, 0.9);
   text-align           : center;
   @include transition(0.5s ease);
-  cursor: pointer;
+
+  .remove-icon {
+    position: absolute;
+    right   : -10px;
+    top     : -10px;
+    @include display-flex();
+    align-items    : center;
+    justify-content: center;
+    width          : 30px;
+    height         : 30px;
+    background     : #cfcfcf;
+    border-radius  : 50%;
+    cursor         : pointer;
+  }
 }
 
-.card:hover {
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
-  @include transform(scale(1.15));
+.normal-mode {
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+    @include transform(scale(1.15));
+  }
+}
+
+.filter-mode {
+  @include filter(contrast(0.75));
+  @include animation(jiggle 0.2s infinite);
+  cursor: default;
 }
 
 .card-image {
@@ -136,5 +160,15 @@
     height          : 60px;
     background-color: color(themeOfBlue);
     border-radius   : 50%;
+  }
+}
+
+@include keyframes(jiggle) {
+  0% {
+    @include transform(rotate(-1deg));
+  }
+
+  50% {
+    @include transform(rotate(1deg));
   }
 }

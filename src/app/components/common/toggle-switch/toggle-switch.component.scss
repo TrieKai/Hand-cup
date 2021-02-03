@@ -2,7 +2,7 @@
   display: none;
 
   &+label {
-    padding: 16px 20px;
+    padding: 5px;
     display: block;
     cursor : pointer;
 
@@ -43,7 +43,7 @@
         border-radius: 50%;
         transform    : translateX(var(--offset, 0));
         transition   : transform .4s, box-shadow .4s;
-        box-shadow   : -4px -4px 8px var(--light-shadow-2, transparent), 4px 4px 8px var(--shadow, transparent);
+        box-shadow   : -4px -4px 8px var(--light-shadow, transparent), 4px 4px 8px var(--shadow, transparent);
 
         &:before {
           content      : '';
@@ -64,10 +64,9 @@
   &:checked {
     &+label {
       --offset        : 18px;
-      --text          : #404660;
       --gradient      : 1;
       --shadow        : rgba(0, 6, 39, .1);
-      --light-shadow-2: rgba(255, 255, 255, .1);
+      --light-shadow: rgba(255, 255, 255, .1);
 
       &::after {
         display: none;

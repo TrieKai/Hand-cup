@@ -11,7 +11,10 @@
   </div>
   <div class="space-box"></div>
   <ng-container *ngFor="let result of resultArray; let i = index;">
-    <div class="card" (click)="previewCard(i)">
+    <div class="card" [ngClass]="{'normal-mode': !filterMode, 'filter-mode': filterMode}" (click)="previewCard(i)">
+      <span *ngIf="filterMode" class="remove-icon" (click)="removeShop(i)">
+        <i-close></i-close>
+      </span>
       <div class="card-text">
         <h2>{{result.name}}</h2>
       </div>

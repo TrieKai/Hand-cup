@@ -121,3 +121,9 @@
   -webkit-user-select: $settings;
   -moz-user-select   : $settings;
 }
+
+@mixin filter ($settings) {
+  filter        : $settings;
+  -webkit-filter: $settings;
+  -ms-filter    : $settings;
+}

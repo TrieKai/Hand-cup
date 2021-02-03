@@ -38,6 +38,6 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
   }
 
   switch(status: boolean) {
-    console.log(status)
+    this.filterMode = status;
   }
 }

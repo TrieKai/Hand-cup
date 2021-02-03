@@ -1,4 +1,4 @@
-import { Component, OnInit, isDevMode, OnDestroy } from '@angular/core';
+import { Component, OnInit, isDevMode, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -12,7 +12,8 @@ import { RouterConstantsService as routerCons } from '../../../util/constants/ro
   templateUrl: './drink-shop-card.component.html',
   styleUrls: ['./drink-shop-card.component.scss']
 })
-export class DrinkShopCardComponent implements OnInit, OnDestroy {
+export class DrinkShopCardComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() filterMode: boolean;
   resultArray: drinkShopResults[] = [];
   chosenShop: drinkShopResults;
   chosenShopDetail: drinkShopDetail;
@@ -26,6 +27,10 @@ export class DrinkShopCardComponent implements OnInit, OnDestroy {
     private sharedService: SharedService,
     private drinkShopService: DrinkShopService,
   ) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.filterMode = changes.filterMode.currentValue;
+  }
 
   ngOnInit() {
     this.drinkShopResultsBS = this.sharedService.getSharedData(this.cons.SHAREDDATA.drinkShopResults);
@@ -64,11 +69,16 @@ export class DrinkShopCardComponent implements OnInit, OnDestroy {
   }
 
   async previewCard(index: number) {
+    if (this.filterMode) { return; }
     this.chosenShop = this.resultArray[index];
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);
     this.chosenShopDetail = await this.drinkShopService.getPlaceDetail(this.chosenShop.place_id);
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, false);
     this.showPreviewCard = true;
     this.showChosenCard = false;
+  }
+
+  removeShop(index: number) {
+    console.log(index)
   }
 }
