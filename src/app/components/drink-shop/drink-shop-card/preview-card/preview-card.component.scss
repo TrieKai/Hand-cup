@@ -17,11 +17,11 @@
   cursor       : default;
 
   @media screen and (max-width: rwdBoundary(middle)) {
-    grid-template-columns: 200px 350px;
+    grid-template-columns: 40vw 50vw;
   }
 
   @media screen and (max-width: rwdBoundary(small)) {
-    grid-template-columns: 300px;
+    grid-template-columns: 90vw;
     grid-template-rows   : 40px 225px 300px;
     grid-template-areas  :
       "title"
