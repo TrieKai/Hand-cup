@@ -23,7 +23,7 @@ export class DrinkShopService {
 
   async getPlaceDetail(placeId: string): Promise<drinkShopDetail> {
     const header: HttpHeaders = this.api.getHeader();
-    const resp: RespData = await this.api.get(this.apiCons.GET_PLACE_DETAIL + placeId, null, header);
+    const resp: RespData = await this.api.get(`${this.apiCons.GET_PLACE_DETAIL + placeId}/${this.cons.LANGUAGE.zh}`, null, header);
     if (isDevMode() || global.showLog) {
       console.log(resp);
     }

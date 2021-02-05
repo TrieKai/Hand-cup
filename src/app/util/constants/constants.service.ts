@@ -7,6 +7,9 @@ export class ConstantsService {
   // Google icon preUrl
   public readonly GOOGLE_ICON_BASE_URL = 'http://maps.gstatic.com/consumer/images/icons/';
 
+  // i18n type
+  public readonly LANGUAGE = { zh: 'zh', en: 'en', };
+
   // Status
   public readonly STATUS = {
     success: 'success',

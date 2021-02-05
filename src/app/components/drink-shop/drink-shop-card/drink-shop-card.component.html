@@ -10,37 +10,36 @@
     <button mat-raised-button class="draw-button" (click)="handleDraw()">抽卡</button>
   </div>
   <div class="space-box"></div>
-  <ng-container *ngFor="let result of results; let i = index;">
-    <div class="card" [ngClass]="{'normal-mode': !filterMode, 'filter-mode': filterMode}" (click)="previewCard(i)">
-      <span *ngIf="filterMode" class="remove-icon" (click)="removeShop(i)">
-        <i-close></i-close>
-      </span>
-      <div class="card-text">
-        <h2>{{result.name}}</h2>
+  <div *ngFor="let result of results; let i = index;" class="card"
+    [ngClass]="{'normal-mode': !filterMode, 'filter-mode': filterMode}" (click)="previewCard(i)">
+    <span *ngIf="filterMode" class="remove-icon" (click)="removeShop(i)">
+      <i-close></i-close>
+    </span>
+    <div class="card-text">
+      <h2>{{result.name}}</h2>
+    </div>
+    <div class="card-image" [ngStyle]="{'background-image': 'url(' + result.image_url + ')'}"></div>
+    <div class="card-stats">
+      <div class="stat">
+        <div class="stat-box">
+          <div class="value">{{result.rating}}</div>
+          <div class="type">評價</div>
+        </div>
       </div>
-      <div class="card-image" [ngStyle]="{'background-image': 'url(' + result.image_url + ')'}"></div>
-      <div class="card-stats">
-        <div class="stat">
-          <div class="stat-box">
-            <div class="value">{{result.rating}}</div>
-            <div class="type">評價</div>
-          </div>
+      <div class="stat">
+        <div class="stat-box">
+          <div class="value">{{result.ratings_total}}</div>
+          <div class="type">評論數</div>
         </div>
-        <div class="stat">
-          <div class="stat-box">
-            <div class="value">{{result.ratings_total}}</div>
-            <div class="type">評論數</div>
-          </div>
-        </div>
-        <div class="stat border">
-          <div class="stat-box">
-            <div class="value">{{result.views}}</div>
-            <div class="type">觀看數</div>
-          </div>
+      </div>
+      <div class="stat border">
+        <div class="stat-box">
+          <div class="value">{{result.views}}</div>
+          <div class="type">觀看數</div>
         </div>
       </div>
     </div>
-  </ng-container>
+  </div>
 </section>
 
 <div class="card-container" *ngIf="showPreviewCard">
