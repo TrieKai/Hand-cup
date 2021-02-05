@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
+import { GlobalService as global } from '../service/global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +27,16 @@ export class LocalstorageService {
   }
 
   updateLocalStorage(preferData: any[]) {
-    console.log(preferData)
+    if (isDevMode() || global.showLog) {
+      console.log(preferData);
+    }
     if (preferData === null) { return; }
     const favorites: userPreferData[] = preferData[0];
     const visiteds: userPreferData[] = preferData[1];
 
     localStorage.clear(); // Clear all storage
     favorites.forEach((favorite) => {
-      this.setLocalStorage(favorite.place_id, this.cons.LOCAL_STORAGE_TYPE.favorite);
+      this.setLocalStorage(favorite.place_id, `${this.cons.LOCAL_STORAGE_TYPE.favorite};`);
     });
 
     // Visited 比較複雜因為會跟前面的 favorite's key 重複
@@ -41,11 +44,11 @@ export class LocalstorageService {
       const value = this.getLocalStorage(visited.place_id);
       if (value) {
         if (value.indexOf(this.cons.LOCAL_STORAGE_TYPE.visited) === -1) {
-          const valueStr = value + this.cons.LOCAL_STORAGE_TYPE.visited + ';';
+          const valueStr = `${value + this.cons.LOCAL_STORAGE_TYPE.visited};`;
           this.setLocalStorage(visited.place_id, valueStr);
         }
       } else {
-        this.setLocalStorage(this.cons.LOCAL_STORAGE_TYPE.visited, visited.place_id);
+        this.setLocalStorage(visited.place_id, `${this.cons.LOCAL_STORAGE_TYPE.visited};`);
       }
     });
   }

@@ -153,10 +153,10 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit, On
 
     const status = this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite);
     if (status === false) {
-      const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.favorite + ';';
+      const valueStr = `${this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.favorite};`;
       this.localStorageService.setLocalStorage(placeId, valueStr);
     } else if (status === null) {
-      this.localStorageService.setLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.favorite + ';');
+      this.localStorageService.setLocalStorage(placeId, `${this.cons.LOCAL_STORAGE_TYPE.favorite};`);
     } else { return; }
   }
 
@@ -175,7 +175,7 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit, On
       if (index > -1) {
         valAry.splice(index, 1);
         if (valAry[0] !== '') {
-          this.localStorageService.setLocalStorage(placeId, valAry[0] + ';');
+          this.localStorageService.setLocalStorage(placeId, `${valAry[0]};`);
         } else {
           this.localStorageService.removeLocalStorage(placeId);
         }
@@ -193,10 +193,10 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit, On
 
     const value = this.localStorageService.getLocalStorage(placeId);
     if (value && !this.checkLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.visited)) {
-      const valueStr = this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.visited + ';';
+      const valueStr = `${this.localStorageService.getLocalStorage(placeId) + this.cons.LOCAL_STORAGE_TYPE.visited};`;
       this.localStorageService.setLocalStorage(placeId, valueStr);
     } else if (!value) {
-      this.localStorageService.setLocalStorage(placeId, this.cons.LOCAL_STORAGE_TYPE.visited + ';');
+      this.localStorageService.setLocalStorage(placeId, `${this.cons.LOCAL_STORAGE_TYPE.visited};`);
     }
   }
 
@@ -215,7 +215,7 @@ export class ChosenCardComponent implements OnInit, OnChanges, AfterViewInit, On
       if (index > -1) {
         valAry.splice(index, 1);
         if (valAry[0] !== '') {
-          this.localStorageService.setLocalStorage(placeId, valAry[0] + ';');
+          this.localStorageService.setLocalStorage(placeId, `${valAry[0]};`);
         } else {
           this.localStorageService.removeLocalStorage(placeId);
         }
