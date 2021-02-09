@@ -8,7 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class MessageBlockComponent implements OnInit {
   @Input() message: Message;
   @Input() index: number;
-  @Output() remove = new EventEmitter();
+  @Output() remove = new EventEmitter<number>();
   class: { [key: string]: boolean };
 
   constructor() { }

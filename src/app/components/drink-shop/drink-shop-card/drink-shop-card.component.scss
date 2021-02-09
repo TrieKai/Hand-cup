@@ -163,6 +163,10 @@
   }
 }
 
+.disable {
+  cursor: not-allowed;
+}
+
 @include keyframes(jiggle) {
   0% {
     @include transform(rotate(-1deg));

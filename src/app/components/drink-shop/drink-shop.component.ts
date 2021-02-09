@@ -40,4 +40,8 @@ export class DrinkShopComponent implements OnInit, OnDestroy {
   switch(status: boolean) {
     this.filterMode = status;
   }
+
+  filterModeChange(status: boolean) {
+    this.filterMode = status;
+  }
 }

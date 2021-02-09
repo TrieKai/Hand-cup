@@ -6,7 +6,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./toggle-switch.component.scss']
 })
 export class ToggleSwitchComponent implements OnInit {
-  @Output() statusEmitter = new EventEmitter();
+  @Output() statusEmitter = new EventEmitter<boolean>();
   @Input() status: boolean = false;
 
   constructor() { }

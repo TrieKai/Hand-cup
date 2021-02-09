@@ -1,4 +1,4 @@
-import { Component, OnInit, isDevMode, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, isDevMode, OnDestroy, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { ConstantsService } from 'src/app/util/constants/constants.service';
@@ -15,6 +15,7 @@ import { RouterConstantsService as routerCons } from '../../../util/constants/ro
 })
 export class DrinkShopCardComponent implements OnInit, OnDestroy, OnChanges {
   @Input() filterMode: boolean;
+  @Output() filterModeChange = new EventEmitter<boolean>();
   results: drinkShopResults[] = []; // 取前五
   allResults: drinkShopResults[] = []; // 全部的結果
   chosenShop: drinkShopResults;
@@ -65,6 +66,11 @@ export class DrinkShopCardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   async handleDraw(): Promise<void> {
+    if (this.results.length === 0) {
+      this.messageService.add({ type: this.cons.MESSAGE_TYPE.info, title: '恭喜恭喜，喝水囉!', content: '' });
+      return;
+    }
+    this.filterModeChange.emit(false); // switch to normal mode
     const randomIndex = Math.floor(Math.random() * Math.floor(this.results.length));
     this.chosenShop = this.results[randomIndex];
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);

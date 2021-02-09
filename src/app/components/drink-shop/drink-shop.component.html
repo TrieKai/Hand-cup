@@ -1,8 +1,9 @@
 <main class="main-content">
   <div class="info-bar">
     {{infoMessage}}
-    <app-toggle-switch *ngIf="!showMap" class="filter-switch" (statusEmitter)="switch($event)"></app-toggle-switch>
+    <app-toggle-switch *ngIf="!showMap" class="filter-switch" (statusEmitter)="switch($event)" [status]="filterMode">
+    </app-toggle-switch>
   </div>
   <app-drink-shop-map *ngIf="showMap"></app-drink-shop-map>
-  <app-drink-shop-card *ngIf="!showMap" [filterMode]="filterMode"></app-drink-shop-card>
+  <app-drink-shop-card *ngIf="!showMap" [filterMode]="filterMode" (filterModeChange)="filterModeChange($event)"></app-drink-shop-card>
 </main>
