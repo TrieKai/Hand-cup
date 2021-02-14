@@ -169,61 +169,35 @@
 }
 
 .sidebar-icon-toggle {
-  @include display-flex();
-  @include flex-direction(column);
-  position       : fixed;
-  justify-content: space-evenly;
-  width          : 100%;
-  height         : 100%;
-  top            : 22px;
-  left           : 15px;
-  width          : 22px;
-  height         : 22px;
-  @include transition(all 0.3s);
-  cursor : pointer;
-  z-index: zIndex(header);
+  position: fixed;
+  top     : 16px;
+  left    : 6px;
+  z-index : zIndex(header);
+  cursor  : pointer;
 
   @media screen and (max-width: rwdBoundary(small)) {
-    top: 34px;
+    top: 33.5px;
+  }
+
+  .open-icon {
+    @include transition(all .4s linear);
+  }
+
+  .close-icon {
+    @include transition(all .4s linear);
   }
 }
 
-.hamburger {
-  position        : absolute;
-  width           : 100%;
-  height          : 3px;
-  background-color: gray;
-  @include transition(all 0.3s);
+.open {
+  .close-icon {
+    opacity: 0.1;
+    @include transform(rotate(90deg) scale(0.9));
+  }
 }
 
-.horizontal {
-  position: relative;
-  @include transition(all 0.3s);
-}
-
-.diagonal.part-1 {
-  position: relative;
-  @include transition(all 0.3s);
-}
-
-.diagonal.part-2 {
-  position: relative;
-  @include transition(all 0.3s);
-}
-
-.open>.horizontal {
-  opacity: 0;
-  @include transition(all 0.3s);
-}
-
-.open>.diagonal.part-1 {
-  margin-top: 3.5px;
-  @include transform(rotate(135deg));
-  @include transition(all 0.3s);
-}
-
-.open>.diagonal.part-2 {
-  margin-top: -22px;
-  @include transform(rotate(-135deg));
-  @include transition(all 0.3s);
+.close {
+  .open-icon {
+    opacity: 0.1;
+    @include transform(rotate(90deg) scale(0.9));
+  }
 }

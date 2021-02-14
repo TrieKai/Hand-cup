@@ -46,11 +46,20 @@
     </div> -->
   </mat-menu>
 </div>
-<label #sidebarIconToggle id="hamburger" class="sidebar-icon-toggle" (click)="handleSidebar(!showMenu)">
-  <div class="hamburger diagonal part-1"></div>
-  <div class="hamburger horizontal"></div>
-  <div class="hamburger diagonal part-2"></div>
-</label>
+<a #sidebarIconToggle id="hamburger" class="sidebar-icon-toggle" (click)="handleSidebar(!showMenu)">
+  <svg *ngIf="showMenu" viewBox="0 0 64 64" width="33" height="33" class="open-icon">
+    <path
+      d="M37.5 32l15.793-15.793a1 1 0 0 0 0-1.414l-4.086-4.086a1 1 0 0 0-1.414 0L32 26.5 16.207 10.707a1 1 0 0 0-1.414 0l-4.086 4.086a1 1 0 0 0 0 1.414L26.5 32 10.707 47.793a1 1 0 0 0 0 1.414l4.086 4.086a1 1 0 0 0 1.414 0L32 37.5l15.793 15.793a1 1 0 0 0 1.414 0l4.086-4.086a1 1 0 0 0 0-1.414L37.5 32z"
+      fill="#808080">
+    </path>
+  </svg>
+  <svg *ngIf="!showMenu" viewBox="0 0 64 64" width="33" height="33" class="close-icon">
+    <path
+      d="M56 13v6a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h46a1 1 0 0 1 1 1zm-1 15H9a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h46a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1zm0 16H9a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h46a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1z"
+      fill="#808080">
+    </path>
+  </svg>
+</a>
 <div class="sidebar-menu" #sidebarMenu>
   <ul class="sidebar-menu-inner">
     <li *ngFor="let menu of menuList" [ngClass]="{'beta': !menu.active}" [routerLink]="menu.router"

@@ -73,7 +73,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           case 2:
             this.router.navigate([`/${routerCons.ROUTER_DRINKSHOP}`]);
             break;
-            case 3:
+          case 3:
             this.router.navigate([`/${routerCons.ROUTER_DRINK}`]);
             break;
           case 4:
@@ -122,9 +122,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleSidebar(status: boolean) {
-    this.showMenu = status;
+    setTimeout(() => {
+      this.showMenu = status;
+    }, 400);
     if (status) {
       this.renderer.addClass(this.sidebarToggle.nativeElement, 'open'); // Open
+      this.renderer.removeClass(this.sidebarToggle.nativeElement, 'close'); // Open
       this.sidebarStatus = true;
 
       const componentRef = this.domService.createComponent(
@@ -136,6 +139,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     } else {
       this.renderer.removeClass(this.sidebarToggle.nativeElement, 'open'); // Close
+      this.renderer.addClass(this.sidebarToggle.nativeElement, 'close'); // Close
       this.sidebarStatus = false;
       const lockScreenComponentRef = this.sharedService.getSharedComponent(this.cons.SHAREDCOMPONENT.lockScreenComponentRef);
       if (lockScreenComponentRef) { this.domService.destroyComponent(lockScreenComponentRef); }
