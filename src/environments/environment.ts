@@ -14,7 +14,7 @@ export const environment: env = {
     appId: "1:418227151279:web:d4225468cb48d2cd554f5a",
     measurementId: "G-FM963L3ZVB"
   },
-  url: 'http://bobamaps.ap-southeast-1.elasticbeanstalk.com',
+  url: 'http://bobamaps-env.eba-zmjkyksp.ap-southeast-1.elasticbeanstalk.com/',
   photoAPIKey: 'AIzaSyA1nG6Hz_vqvqHoA3s67b8tXEDdpglS0Bs',
 };
 
