@@ -57,6 +57,7 @@ export class DrinkShopCardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   handleTransformScenes(status: string): void {
+    this.filterModeChange.emit(false); // switch to normal mode
     if (status === 'map') {
       this.sharedService.setStatus(this.cons.SHAREDSTATUS.showMap, true);
     } else if (status === 'cards') {
@@ -71,6 +72,7 @@ export class DrinkShopCardComponent implements OnInit, OnDestroy, OnChanges {
       return;
     }
     this.filterModeChange.emit(false); // switch to normal mode
+    this.filterModeChange.emit(null); // Set switch disabled
     const randomIndex = Math.floor(Math.random() * Math.floor(this.results.length));
     this.chosenShop = this.results[randomIndex];
     this.sharedService.setStatus(this.cons.SHAREDSTATUS.onloading, true);

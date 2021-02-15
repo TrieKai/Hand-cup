@@ -1,6 +1,6 @@
 <span>
-  <input type="checkbox" id="switch" [(ngModel)]="status" (change)="switch(status ? true : false)" />
-  <label for="switch">
+  <input #checkbox type="checkbox" id="switch" [(ngModel)]="status" (change)="switch(status ? true : false)" />
+  <label for="switch" [ngClass]="{'disable': status === null}">
     <div class="switch-inner">
       <div class="dot"></div>
     </div>

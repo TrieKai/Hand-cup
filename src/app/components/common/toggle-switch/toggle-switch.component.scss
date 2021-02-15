@@ -4,7 +4,6 @@
   &+label {
     padding: 5px;
     display: block;
-    cursor : pointer;
 
     &::before {
       display: none;
@@ -63,9 +62,9 @@
 
   &:checked {
     &+label {
-      --offset        : 18px;
-      --gradient      : 1;
-      --shadow        : rgba(0, 6, 39, .1);
+      --offset      : 18px;
+      --gradient    : 1;
+      --shadow      : rgba(0, 6, 39, .1);
       --light-shadow: rgba(255, 255, 255, .1);
 
       &::after {
@@ -73,4 +72,8 @@
       }
     }
   }
+}
+
+.disable {
+  cursor: not-allowed;
 }
