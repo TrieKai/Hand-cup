@@ -39,7 +39,7 @@
     "@types/gapi.auth2": "0.0.51",
     "@types/googlemaps": "^3.40.0",
     "angularfire2": "^5.4.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "firebase": "^7.24.0",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.6.3",
